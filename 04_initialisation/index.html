@@ -41,10 +41,6 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../01-section/">01 section</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../01_legal_information_licensing_and_copyright/">Legal Information - Licensing and Copyright</a>
                 </li>
               </ul>
@@ -95,10 +91,6 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../06_error_handling/">Error Handling</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../06_webdyne_api/">WebDyne API</a>
                 </li>
               </ul>
@@ -107,31 +99,11 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../07_webdyne_api/">WebDyne API</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../08_miscellaneous/">Miscellaneous</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../08_preamble/">Preamble</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../09_extending_webdyne/">Extending WebDyne</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../09_terms_and_conditions_for_copying_distribution_and_modification/">TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../10_preamble/">Preamble</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../11_terms_and_conditions_for_copying_distribution_and_modification/">TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION</a>
                 </li>
               </ul>
       </div>
@@ -167,28 +139,28 @@ Scripts to automate the initialisation process for Apache and Lighttpd have been
 <p>Scripted installation is easiest if it works for your distribution - it will take care of all configuration file changes, directory permissions and ownership etc.</p>
 <h2 id="running-wdapacheinit-to-initialise-the-software-for-use-with-apachemod_perl">Running <code>wdapacheinit</code> to initialise the software for use with Apache/mod_perl</h2>
 <p>Once the WebDyne software in installed it must be initialized. The <code>wdapacheinit</code> command must be run to update the Apache configuration files so that WebDyne pages will be correctly interpreted:</p>
-<pre><code>[root@localhost ~]# /opt/webdyne/bin/wdapacheinit
+<p><div class="highlight"><pre><span></span><code>[root@localhost ~]# /opt/webdyne/bin/wdapacheinit
 
-[install] - Installation source directory '/opt/webdyne'.
-[install] - Using existing cache directory '/opt/webdyne/cache'.
+[install] - Installation source directory &#39;/opt/webdyne&#39;.
+[install] - Using existing cache directory &#39;/opt/webdyne/cache&#39;.
 [install] - Updating perl5lib config.
-[install] - Writing Apache config file '/etc/httpd/conf.d/webdyne.conf'.
+[install] - Writing Apache config file &#39;/etc/httpd/conf.d/webdyne.conf&#39;.
 [install] - Granting Apache write access to cache directory.
 [install] - Install completed.
-</code></pre>
-<p>By default WebDyne will create a cache directory in <code>/var/cache/webdyne</code> on Linux systems when a default CPAN install is done (no PREFIX specified). If a PREFIX is specified the cache directory will be created as <code>PREFIX/cache</code>. Use the <code>--cache</code> command-line option to specify an alternate location.</p>
+</code></pre></div>
+ By default WebDyne will create a cache directory in <code>/var/cache/webdyne</code> on Linux systems when a default CPAN install is done (no PREFIX specified). If a PREFIX is specified the cache directory will be created as <code>PREFIX/cache</code>. Use the <code>--cache</code> command-line option to specify an alternate location.</p>
 <p>Once <code>wdapacheinit</code> has been run the Apache server should be reloaded or restarted. Use a method appropriate for your Linux distribution.</p>
-<pre><code>[root@localhost ~]# service httpd restart
+<p><div class="highlight"><pre><span></span><code>[root@localhost ~]# service httpd restart
 Stopping httpd:                                            [  OK  ]
 Starting httpd:                                            [  OK  ]
-</code></pre>
-<p>WebDyne should be now ready for use.</p>
+</code></pre></div>
+ WebDyne should be now ready for use.</p>
 <p>If the Apache service does not restart, examine the error log (usually <code>/var/log/httpd/error.log</code>) for details.</p>
 <p>The script will look for Apache components (binary, configuration directories etc.) using common defaults. In the event that the script gives an error indicating that it cannot find a binary, directory or library you may need to specify the location manually. Run the script with the <code>--help</code> option to determine the appropriate syntax.</p>
 <h2 id="manual-configuration-of-apache">Manual configuration of Apache</h2>
 <p>If the <code>wdapacheinit</code> command does not work as expected on your system the Apache config files can be modified manually.</p>
 <p>Include the following section in the Apache httpd.conf file (or create a webdyne.conf file if you distribution supports conf.d style configuration files):</p>
-<pre><code>#  Put this in if WebDyne was installed using the PREFIX option to its own directory - replace
+<p><div class="highlight"><pre><span></span><code>#  Put this in if WebDyne was installed using the PREFIX option to its own directory - replace
 #  /opt/webdyne with the correct path to the perl5lib.pl library.
 #
 #  This will adjust the @INC path so all WebDyne modules (and modules WebDyne relies on) can be
@@ -213,7 +185,7 @@ PerlHandler   WebDyne
 #  Set a directory for storage of cache files. Make sure this exists already is writable by the 
 #  Apache daemon process.
 #
-PerlSetVar    WEBDYNE_CACHE_DN    '/opt/webdyne/cache'
+PerlSetVar    WEBDYNE_CACHE_DN    &#39;/opt/webdyne/cache&#39;
 
 
 #  Allow Apache to access the cache directory if it needs to serve pre-compiled pages from there.
@@ -223,46 +195,48 @@ Order allow,deny
 Allow from all
 Deny from none
 &amp;lt;/Directory&amp;gt;
-</code></pre>
-<p>!!! important</p>
-<pre><code>Substitute directory paths in the above example for the
+</code></pre></div>
+ !!! important</p>
+<p><div class="highlight"><pre><span></span><code>Substitute directory paths in the above example for the
 relevant/correct/appropriate ones on your system.
-</code></pre>
-<p>Create the cache directory and assign ownership and permission appropriate for your distribution (group name will vary by distribution - locate the correct one for your distribution)</p>
-<pre><code>[root@localhost ~]# mkdir /opt/webdyne/cache
+</code></pre></div>
+ Create the cache directory and assign ownership and permission appropriate for your distribution (group name will vary by distribution - locate the correct one for your distribution)</p>
+<p><div class="highlight"><pre><span></span><code>[root@localhost ~]# mkdir /opt/webdyne/cache
 [root@localhost ~]# chgrp apache /opt/webdyne/cache
 [root@localhost ~]# chmod 770 /opt/webdyne/cache
-</code></pre>
-<p>Restart Apache and check for any errors.</p>
+</code></pre></div>
+ Restart Apache and check for any errors.</p>
 <h2 id="running-wdlighttpdinit-to-initialise-the-software-for-use-with-lighttpdfastcgi">Running <code>wdlighttpdinit</code> to initialise the software for use with Lighttpd/FastCGI</h2>
 <p>If using WebDyne with Lighttpd download and install the <code>WebDyne::Install::Lighttpd</code> module. Then run the <code>wdlighttpdinit</code> command to update the Lighttpd configuration files so that WebDyne pages will be correctly interpreted:</p>
-<p>!!! important</p>
-<pre><code>WebDyne depends on the Lighttpd mod_fastcgi module (on RPM systems the
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+</div>
+<p><div class="highlight"><pre><span></span><code>WebDyne depends on the Lighttpd mod_fastcgi module (on RPM systems the
 package is sometimes called lighttpd-fastcgi). Please ensure the it is
 installed before running the initialisation script.
 
 [root@localhost ~]# /opt/webdyne/bin/wdlighttpdinit
 
-[install] - Installation source directory '/opt/webdyne'.
-[install] - Using existing cache directory '/opt/webdyne/cache'.
+[install] - Installation source directory &#39;/opt/webdyne&#39;.
+[install] - Using existing cache directory &#39;/opt/webdyne/cache&#39;.
 [install] - Updating perl5lib config.
-[install] - Writing Lighttpd config file '/etc/lighttpd/webdyne.conf'.
-[install] - Lighttpd config file 'lighttpd_conf_fn'
-[install] - Lighttpd config file '/etc/lighttpd/lighttpd.conf' updated.
+[install] - Writing Lighttpd config file &#39;/etc/lighttpd/webdyne.conf&#39;.
+[install] - Lighttpd config file &#39;lighttpd_conf_fn&#39;
+[install] - Lighttpd config file &#39;/etc/lighttpd/lighttpd.conf&#39; updated.
 [install] - Granting Lighttpd write access to cache directory.
 [install] - Install completed.
-</code></pre>
-<p>Once <code>wdlighttpinit</code> has been run the Lighttpd server should be reloaded or restarted. Use a method appropriate for your Linux distribution.</p>
-<pre><code>[root@localhost ~]# service lighttpd restart
+</code></pre></div>
+ Once <code>wdlighttpinit</code> has been run the Lighttpd server should be reloaded or restarted. Use a method appropriate for your Linux distribution.</p>
+<p><div class="highlight"><pre><span></span><code>[root@localhost ~]# service lighttpd restart
 Stopping lighttpd:                                            [  OK  ]
 Starting lighttpd:                                            [  OK  ]
-</code></pre>
-<p>WebDyne should be now ready for use.</p>
+</code></pre></div>
+ WebDyne should be now ready for use.</p>
 <p>If the Lighttpd service does not restart, examine the error log (usually <code>/var/log/lighttpd/error.log</code>) for details.</p>
 <h2 id="manual-configuration-of-lighttpd">Manual configuration of lighttpd</h2>
 <p>If the <code>wdlighttpdinit</code> command does not work on your system the Lighttpd config files can be modified manually..</p>
 <p>Include the following section into the lighttpd configuration file:</p>
-<pre><code>#  Include the Lighttpd FastCGI module - make sure it is present on the system, install if not
+<p><div class="highlight"><pre><span></span><code>#  Include the Lighttpd FastCGI module - make sure it is present on the system, install if not
 #
 #
 server.modules += (
@@ -291,8 +265,8 @@ fastcgi.server = (
         )
     )
 )
-</code></pre>
-<p># Getting Started/Basic Usage</p>
+</code></pre></div>
+ # Getting Started/Basic Usage</p>
 <p>Assuming the installation has completed with no errors you are now ready to start creating WebDyne pages and applications.</p>
 <h2 id="basics-integrating-perl-into-html">Basics - integrating Perl into HTML</h2>
 <p>Some code fragments to give a very high-level overview of how WebDyne can be implemented. First the most basic usage example:</p>
@@ -332,7 +306,7 @@ sub hello &#123; return localtime &#125;
 
 <p><a href="example/hello2.psp">Run</a></p>
 <p>Better - at least code and content are distinctly separated. Note that whatever the Perl code returns at the end of the routine is what is displayed. Although WebDyne will happily display returned strings or scalars, it is more efficient to return a scalar reference, e.g.:</p>
-<pre><code>#  Works
+<p><div class="highlight"><pre><span></span><code>#  Works
 #
 sub greeting { print &quot;Hello World&quot; }
 
@@ -353,7 +327,7 @@ sub greeting { my $var=&quot;Hello World&quot;; return \$var }
 sub greeting { return undef }
 
 
-# If you don't want to display anything return \undef,
+# If you don&#39;t want to display anything return \undef,
 #
 sub greeting { return \undef }
 
@@ -366,11 +340,11 @@ sub greeting { return 0 }
 #  If you want &quot;0&quot; to be displayed ..
 #
 sub greeting { return \0 }
-</code></pre>
-<p>Perl code in WebDyne pages must always return a non-undef/non-0/non-empty string value (i.e. it must return something that evals as "true"). If the code returns a non-true value (e.g. 0, undef, '') then WebDyne assumes an error has occurred in the routine. If you actually want to run some Perl code, but not display anything, you should return a reference to undef, (<code>\undef)</code>, e.g.:</p>
-<pre><code>sub log { &amp;amp;dosomething; return \undef }
-</code></pre>
-<p>Up until now all the Perl code has been contained within the WebDyne file. The following example shows an instance where the code is contained in a separate Perl module, which should be available somewhere in the <code>@INC</code> path.</p>
+</code></pre></div>
+ Perl code in WebDyne pages must always return a non-undef/non-0/non-empty string value (i.e. it must return something that evals as "true"). If the code returns a non-true value (e.g. 0, undef, '') then WebDyne assumes an error has occurred in the routine. If you actually want to run some Perl code, but not display anything, you should return a reference to undef, (<code>\undef)</code>, e.g.:</p>
+<p><div class="highlight"><pre><span></span><code>sub log { &amp;amp;dosomething; return \undef }
+</code></pre></div>
+ Up until now all the Perl code has been contained within the WebDyne file. The following example shows an instance where the code is contained in a separate Perl module, which should be available somewhere in the <code>@INC</code> path.</p>
 <pre>
 <span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
 <span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
@@ -890,28 +864,28 @@ Favourite colour 2:
 <p><a href="example/var4.psp">Run</a></p>
 <h2 id="integration-with-lincoln-steins-cgipm-module">Integration with Lincoln Stein's CGI.pm module</h2>
 <p>WebDyne makes extensive use of Lincoln Stein's CGI.pm module. Almost any CGI.pm function that renders HTML tags can be called from within a WebDyne template. The manual page for CGI.pm contains the following synopsis example:</p>
-<pre><code>use CGI qw/:standard/;
+<p><div class="highlight"><pre><span></span><code>use CGI qw/:standard/;
    print header,
-         start_html('A Simple Example'),
-         h1('A Simple Example'),
+         start_html(&#39;A Simple Example&#39;),
+         h1(&#39;A Simple Example&#39;),
          start_form,
-         &quot;What's your name? &quot;,textfield('name'),p,
-         &quot;What's the combination?&quot;, p,
-         checkbox_group(-name=&amp;gt;'words',
-                        -values=&amp;gt;['eenie','meenie','minie','moe'],
-                        -defaults=&amp;gt;['eenie','minie']), p,
-         &quot;What's your favorite color? &quot;,
-         popup_menu(-name=&amp;gt;'color',
-                    -values=&amp;gt;['red','green','blue','chartreuse']),p,
+         &quot;What&#39;s your name? &quot;,textfield(&#39;name&#39;),p,
+         &quot;What&#39;s the combination?&quot;, p,
+         checkbox_group(-name=&amp;gt;&#39;words&#39;,
+                        -values=&amp;gt;[&#39;eenie&#39;,&#39;meenie&#39;,&#39;minie&#39;,&#39;moe&#39;],
+                        -defaults=&amp;gt;[&#39;eenie&#39;,&#39;minie&#39;]), p,
+         &quot;What&#39;s your favorite color? &quot;,
+         popup_menu(-name=&amp;gt;&#39;color&#39;,
+                    -values=&amp;gt;[&#39;red&#39;,&#39;green&#39;,&#39;blue&#39;,&#39;chartreuse&#39;]),p,
          submit,
          end_form,
          hr;
 
     if (param()) {
-        print &quot;Your name is&quot;,em(param('name')),p,
-              &quot;The keywords are: &quot;,em(join(&quot;, &quot;,param('words'))),p,
-</code></pre>
-<p>If the example was ported to a WebDyne compatible page it might look something like this:</p>
+        print &quot;Your name is&quot;,em(param(&#39;name&#39;)),p,
+              &quot;The keywords are: &quot;,em(join(&quot;, &quot;,param(&#39;words&#39;))),p,
+</code></pre></div>
+ If the example was ported to a WebDyne compatible page it might look something like this:</p>
 <pre>
 <span class="h-com">&lt;!-- The same form from the CGI example --&gt;</span>
 
@@ -962,16 +936,16 @@ sub answers &#123;
 <p><a href="example/cgi1.psp">Run</a></p>
 <h2 id="more-on-cgipm-generated-tags">More on CGI.pm generated tags</h2>
 <p>We can use CGI.pm tags such as \&lt;popup_menu&gt;, instead of \&lt;select&gt;\&lt;option&gt;...\&lt;/select&gt;. The following example:</p>
-<pre><code>&amp;lt;popup_menu value=&quot;&amp;amp;#037{red=&amp;gt;Red, green=&amp;gt;Green, blue=&amp;gt;Blue}&quot;/&amp;gt;
-</code></pre>
-<p>is arguably easier to read than:</p>
-<pre><code>&amp;lt;select name=&quot;values&quot; tabindex=&quot;1&quot;&amp;gt;
+<p><div class="highlight"><pre><span></span><code>&amp;lt;popup_menu value=&quot;&amp;amp;#037{red=&amp;gt;Red, green=&amp;gt;Green, blue=&amp;gt;Blue}&quot;/&amp;gt;
+</code></pre></div>
+ is arguably easier to read than:</p>
+<p><div class="highlight"><pre><span></span><code>&amp;lt;select name=&quot;values&quot; tabindex=&quot;1&quot;&amp;gt;
 &amp;lt;option value=&quot;green&quot;&amp;gt;Green&amp;lt;/option&amp;gt;
 &amp;lt;option value=&quot;blue&quot;&amp;gt;Blue&amp;lt;/option&amp;gt;
 &amp;lt;option value=&quot;red&quot;&amp;gt;Red&amp;lt;/option&amp;gt;
 &amp;lt;/select&amp;gt;
-</code></pre>
-<p>So there is some readability benefit, however the real advantage shows when we consider the next example:</p>
+</code></pre></div>
+ So there is some readability benefit, however the real advantage shows when we consider the next example:</p>
 <pre>
 <span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
 <span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>

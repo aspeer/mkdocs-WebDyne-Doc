@@ -41,10 +41,6 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../01-section/">01 section</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../01_legal_information_licensing_and_copyright/">Legal Information - Licensing and Copyright</a>
                 </li>
               </ul>
@@ -55,6 +51,8 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Installation</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#compatibility">Compatibility</a>
     </li>
     </ul>
@@ -69,10 +67,6 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../06_error_handling/">Error Handling</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../06_webdyne_api/">WebDyne API</a>
                 </li>
               </ul>
@@ -81,31 +75,11 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../07_webdyne_api/">WebDyne API</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../08_miscellaneous/">Miscellaneous</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../08_preamble/">Preamble</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../09_extending_webdyne/">Extending WebDyne</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../09_terms_and_conditions_for_copying_distribution_and_modification/">TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../10_preamble/">Preamble</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../11_terms_and_conditions_for_copying_distribution_and_modification/">TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION</a>
                 </li>
               </ul>
       </div>
@@ -142,15 +116,16 @@ Install from the Perl CPAN library. Installs dependencies if required (also via 
 <p><code>perl -MCPAN -e "install WebDyne::Install::Lighttpd"</code></p>
 <p>To get the complete suite of WebDyne modules, including all installers and externsion modules (Session manager etc.) run:</p>
 <p><code>perl -MCPAN -e "install Bundle::WebDyne"</code></p>
-<p>!!! important</p>
-<pre><code>WebDyne must be initialised after installation. To get started quickly
-run `wdapacheinit` after CPAN installation to setup WebDyne for an
-Apache/mod_perl environment, or `wdlighttpdinit` for a Lighttpd/FastCGI
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>WebDyne must be initialised after installation ! To get started quickly
+run <code>wdapacheinit</code> after CPAN installation to setup WebDyne for an
+Apache/mod_perl environment, or <code>wdlighttpdinit</code> for a Lighttpd/FastCGI
 environment (make sure the Lighttpd FastCGI module is installed - it is
 often packaged as a separate component in many Linux distributions). See
-the [initialisation](#sect1-initialisation) section for more information
-</code></pre>
-<p>## Prerequisites</p>
+the <a href="#sect1-initialisation">initialisation</a> section for more information</p>
+</div>
+<h2 id="prerequisites">Prerequisites</h2>
 <p>WebDyne requires mod_perl available when running with Apache, or FastCGI support if running with Lighttpd. Installation on Windows requires ActiveState Perl be installed, and Apache/mod_perl be available.</p>
 <p>In pathological cases WebDyne can run in CGI mode (does not need mod_perl or FastCGI) however such a configuration is not supported by the installation scripts, and would be extremely inefficient and CPU intensive under any non-trivial load.</p>
 <h2 id="compatibility">Compatibility</h2>

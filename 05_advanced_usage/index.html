@@ -41,10 +41,6 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../01-section/">01 section</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../01_legal_information_licensing_and_copyright/">Legal Information - Licensing and Copyright</a>
                 </li>
               </ul>
@@ -77,10 +73,6 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../06_error_handling/">Error Handling</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../06_webdyne_api/">WebDyne API</a>
                 </li>
               </ul>
@@ -89,31 +81,11 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../07_webdyne_api/">WebDyne API</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../08_miscellaneous/">Miscellaneous</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../08_preamble/">Preamble</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../09_extending_webdyne/">Extending WebDyne</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../09_terms_and_conditions_for_copying_distribution_and_modification/">TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../10_preamble/">Preamble</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../11_terms_and_conditions_for_copying_distribution_and_modification/">TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION</a>
                 </li>
               </ul>
       </div>
@@ -410,8 +382,10 @@ The protocols file on this machine:
 
 <p><a href="example/include1.psp">Run</a></p>
 <p>If the file name is not an absolute path name is will be loaded relative to the directory of the parent file. For example if file "bar.psp" incorporates the tag\&lt;include file="foo.psp"/&gt; it will be expected that "foo.psp" is in the same directory as "bar.psp".</p>
-<p>!!! important</p>
-<pre><code>The include tag pulls in the target file at compile time. Changes to the
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+</div>
+<p><div class="highlight"><pre><span></span><code>The include tag pulls in the target file at compile time. Changes to the
 included file after the WebDyne page is run the first time (resulting in
 compilation) are not reflected in subsequent output. Thus the include
 tag should not be seen as a shortcut to a pseudo Content Management
@@ -422,8 +396,8 @@ not result in changes to the output (it will be stale).
 
 There are betters ways to build a CMS with WebDyne - use the include tag
 sparingly !
-</code></pre>
-<p>## Static Sections</p>
+</code></pre></div>
+ ## Static Sections</p>
 <p>Sometimes you want to generate dynamic output in a page once only (e.g. a last modified date, a sidebar menu etc.) Using WebDyne this can be done with Perl or CGI code flagged with the "static" attribute. Any dynamic tag so flagged will be rendered at compile time, and the resulting output will become part of the compiled page - it will not change on subsequent page views, or have to be re-run each time the page is loaded. An example:</p>
 <pre>
 <span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
@@ -702,13 +676,15 @@ sub countries &#123;
 <p>By simply adding the "static" attribute output on a sample machine increased from 55 Pages/sec to 280 Pages/sec ! Judicious use of the static tag in places with slow changing data can markedly increase efficiency of the WebDyne engine.</p>
 <h2 id="caching">Caching</h2>
 <p>WebDyne has the ability to cache the compiled version of a dynamic page according to specs you set via the API. When coupled with pages/blocks that are flagged as static this presents some powerful possibilities.</p>
-<p>!!! important</p>
-<pre><code>Caching will only work if `$WEBDYNE_CACHE_DN` is defined and set to a
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+</div>
+<p><div class="highlight"><pre><span></span><code>Caching will only work if `$WEBDYNE_CACHE_DN` is defined and set to a
 directory that the web server has write access to. If caching does not
 work check that \$`WEBDYNE_CACHE_DN` is defined and permissions set
 correctly for your web server.
-</code></pre>
-<p>There are many potential examples, but consider this one: you have a page that generates output by making a complex query to a database, which takes a lot of CPU and disk IO resources to generate. You need to update the page reasonably frequently (e.g. a weather forecast, near real time sales stats), but can't afford to have the query run every time someone view the page.</p>
+</code></pre></div>
+ There are many potential examples, but consider this one: you have a page that generates output by making a complex query to a database, which takes a lot of CPU and disk IO resources to generate. You need to update the page reasonably frequently (e.g. a weather forecast, near real time sales stats), but can't afford to have the query run every time someone view the page.</p>
 <p>WebDyne allows you to configure the page to cache the output for a period of time (say 5 minutes) before re-running the query. In this way users sees near real-time data without imposing a high load on the database/Web server.</p>
 <p>WebDyne knows to enable the caching code by looking for a meta tag, or by loading the <code>WebDyne::Cache</code> module in a __PERL__ block.</p>
 <p>The cache code can command WebDyne to recompile a page based on any arbitrary criteria it desires. As an example the following code will recompile the page every 10 seconds. If viewed in between refresh intervals WebDyne will serve up the cached HTML result using Apache r\$-&gt;lookup_file() or the FCGI equivalent, which is very fast.</p>
@@ -834,16 +810,18 @@ sub results &#123;
 &#125;</pre>
 
 <p><a href="example/cache2.psp">Run</a></p>
-<p>!!! important</p>
-<pre><code>Take care when using user-supplied input to generate the page UID. There
-is no inbuilt code in WebDyne to limit the number of UID\'s associated
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+</div>
+<p><div class="highlight"><pre><span></span><code>Take care when using user-supplied input to generate the page UID. There
+is no inbuilt code in WebDyne to limit the number of UID\&#39;s associated
 with a page. Unless we check it, a malicious user could potentially DOS
 the server by supplying endless random \&quot;months\&quot; to the above page with
 a script, causing WebDyne to create a new file for each UID - perhaps
 eventually filling the disk partition that holds the cache directory.
 That is why we check the month is valid in the code above.
-</code></pre>
-<p># Error Handling</p>
+</code></pre></div>
+ # Error Handling</p>
 <h2 id="error-messages">Error Messages</h2>
 <p>Sooner or later something is going to go wrong in your code. If this happens WebDyne will generate an error showing what the error was and attempting to give information on where it came from: Take the following example:</p>
 <pre>
@@ -884,14 +862,14 @@ sub hello &#123;
 default.
 </code></pre>
 <p>Examples</p>
-<pre><code>&amp;amp;#095&amp;amp;#095PERL&amp;amp;#095&amp;amp;#095
+<p><div class="highlight"><pre><span></span><code>&amp;amp;#095&amp;amp;#095PERL&amp;amp;#095&amp;amp;#095
 
 
 #  Good
 #
 sub hello {
 
-    return err('no foobar') if !$foobar;
+    return err(&#39;no foobar&#39;) if !$foobar;
 
 }
 
@@ -899,11 +877,11 @@ sub hello {
 #
 sub hello {
 
-    return die('no foobar') if !$foobar;
+    return die(&#39;no foobar&#39;) if !$foobar;
 
 }
-</code></pre>
-<p>## Error Checking</p>
+</code></pre></div>
+ ## Error Checking</p>
 <p>So far all the code examples have just assumed that any call to a WebDyne API method has been successful - no error checking is done. WebDyne always returns "undef" if an API method call fails - which should be checked for after every call in a best practice scenario.</p>
 <pre>
 <span class="h-ab">&lt;</span><span class="h-cgi_tag">start_html</span> <span class="h-attr">title</span>=<span class="h-attv">"Error</span>"<span class="h-ab">&gt;</span>
@@ -956,7 +934,7 @@ sub bar &#123;
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../04_initialisation/" class="btn btn-neutral float-left" title="Initialisation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../06_error_handling/" class="btn btn-neutral float-right" title="Error Handling">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../06_webdyne_api/" class="btn btn-neutral float-right" title="WebDyne API">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -982,7 +960,7 @@ sub bar &#123;
       <span><a href="../04_initialisation/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../06_error_handling/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../06_webdyne_api/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

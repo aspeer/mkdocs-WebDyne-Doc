@@ -41,10 +41,6 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../01-section/">01 section</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../01_legal_information_licensing_and_copyright/">Legal Information - Licensing and Copyright</a>
                 </li>
               </ul>
@@ -62,10 +58,6 @@
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../05_advanced_usage/">Advanced Usage</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../06_error_handling/">Error Handling</a>
                 </li>
               </ul>
               <ul class="current">
@@ -95,31 +87,11 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../07_webdyne_api/">WebDyne API</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../08_miscellaneous/">Miscellaneous</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../08_preamble/">Preamble</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../09_extending_webdyne/">Extending WebDyne</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../09_terms_and_conditions_for_copying_distribution_and_modification/">TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../10_preamble/">Preamble</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../11_terms_and_conditions_for_copying_distribution_and_modification/">TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION</a>
                 </li>
               </ul>
       </div>
@@ -204,12 +176,12 @@ Return a hash ref containing the meta data for this page. Alterations to meta da
 <p>Constants defined in the WebDyne::Constant package control various aspects of how WebDyne behaves. Constants can be modified globally by altering a system file (<code>/etc/webdyne.pm</code> under Linux distros), or by altering configuration parameters within the Apache or lighttpd/FastCGI web servers.</p>
 <h3 id="global-constants-file">Global constants file</h3>
 <p>WebDyne will look for a system constants file under <code>/etc/webdyne.pm</code> and set package variables according to values found in that file. The file is in Perl Data::Dumper format, and takes the format:</p>
-<pre><code># sample /etc/webdyne.pm file
+<p><div class="highlight"><pre><span></span><code># sample /etc/webdyne.pm file
 #
 $VAR1={
         WebDyne::Constant =&amp;gt; {
 
-                WEBDYNE_CACHE_DN       =&amp;gt; '/data1/webdyne/cache',
+                WEBDYNE_CACHE_DN       =&amp;gt; &#39;/data1/webdyne/cache&#39;,
                 WEBDYNE_STORE_COMMENTS =&amp;gt; 1,
                 #  ... more variables for WebDyne package
 
@@ -217,31 +189,33 @@ $VAR1={
 
        WebDyne::Session::Constant =&amp;gt; {
 
-                WEBDYNE_SESSION_ID_COOKIE_NAME =&amp;gt; 'session_cookie',
+                WEBDYNE_SESSION_ID_COOKIE_NAME =&amp;gt; &#39;session_cookie&#39;,
                 #  ... more variables for WebDyne::Session package
 
        },
 
 };
-</code></pre>
-<p>The file is not present by default and should be created if you wish to change any of the WebDyne constants from their default values.</p>
-<p>!!! important</p>
-<pre><code>Always check the syntax of the `/etc/webdyne.pm` file after editing by
+</code></pre></div>
+ The file is not present by default and should be created if you wish to change any of the WebDyne constants from their default values.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+</div>
+<p><div class="highlight"><pre><span></span><code>Always check the syntax of the `/etc/webdyne.pm` file after editing by
 running `perl -c -w /etc/webdyne.pm` to check that the file is readable
 by Perl.
-</code></pre>
-<p>### Setting WebDyne constants in Apache</p>
+</code></pre></div>
+ ### Setting WebDyne constants in Apache</p>
 <p>WebDyne constants can be set in an Apache httpd.conf file using the PerlSetVar directive:</p>
-<pre><code>PerlHandler     WebDyne
-PerlSetVar      WEBDYNE_CACHE_DN                '/data1/webdyne/cache'
+<p><div class="highlight"><pre><span></span><code>PerlHandler     WebDyne
+PerlSetVar      WEBDYNE_CACHE_DN                &#39;/data1/webdyne/cache&#39;
 PerlSetVar      WEBDYNE_STORE_COMMENTS          1
 
 #  From WebDyne::Session package
 #
-PerlSetVar      WEBDYNE_SESSION_ID_COOKIE_NAME  'session_cookie'
-</code></pre>
-<p>!!! important</p>
-<pre><code>WebDyne constants cannot be set on a per-location or per-directory
+PerlSetVar      WEBDYNE_SESSION_ID_COOKIE_NAME  &#39;session_cookie&#39;
+</code></pre></div>
+ !!! important</p>
+<p><div class="highlight"><pre><span></span><code>WebDyne constants cannot be set on a per-location or per-directory
 basis - they are read from the top level of the config file and set
 globally.
 
@@ -253,14 +227,14 @@ section in the httpd.conf file, e.g.:
 
     PerlHandler     WebDyne
     &amp;lt;Perl&amp;gt;
-    $WebDyne::Constant::WEBDYNE_CACHE_DN='/data1/webdyne/cache';
+    $WebDyne::Constant::WEBDYNE_CACHE_DN=&#39;/data1/webdyne/cache&#39;;
     $WebDyne::Constant::WEBDYNE_STORE_COMMENTS=1;
-    $WebDyne::Session::Constant::WEBDYNE_SESSION_ID_COOKIE_NAME='session_cookie';
+    $WebDyne::Session::Constant::WEBDYNE_SESSION_ID_COOKIE_NAME=&#39;session_cookie&#39;;
     &amp;lt;/Perl&amp;gt;
-</code></pre>
-<p>### Setting WebDyne constants in lighttpd/FastCGI</p>
+</code></pre></div>
+ ### Setting WebDyne constants in lighttpd/FastCGI</p>
 <p>WebDyne constants can be set in lighttpd/FastCGI using the bin-environment directive. Here is a sample lighttpd.conf file showing WebDyne constants:</p>
-<pre><code>fastcgi.server = ( &quot;.psp&quot; =&amp;gt;
+<p><div class="highlight"><pre><span></span><code>fastcgi.server = ( &quot;.psp&quot; =&amp;gt;
                    ( &quot;localhost&quot; =&amp;gt;
                       (
                         &quot;socket&quot; =&amp;gt; &quot;/tmp/psp-fastcgi.socket&quot;,
@@ -271,8 +245,8 @@ section in the httpd.conf file, e.g.:
                      )
                    )
                  )
-</code></pre>
-<p>### Constants Reference</p>
+</code></pre></div>
+ ### Constants Reference</p>
 <p>The following constants can be altered to change the behaviour of the WebDyne package. All these constants reside in the <code>WebDyne::Constant</code> package namespace.</p>
 <p><code>$WEBDYNE_CACHE_DN</code>
 The name of the directory that will hold partially compiled WebDyne cache files. Must exist and be writable by the Apache process</p>
@@ -345,7 +319,7 @@ When a method is called from a \&lt;perl&gt; routine the WebDyne AUTOLOAD method
 <p><code>WebDyneHandler</code>
 The name of the handler that WebDyne should invoke instead of handling the page internally. The only other handler available today is WebDyne::Chain.</p>
 <p>This directive exists primarily to allow lighttpd/FastCGI to invoke WebDyne::Chain as the primary handler. An example from the lighttpd.conf file (see the WebDyne::Chain documentation for information on the <code>WebDyneChain</code> directive):</p>
-<pre><code>fastcgi.server = ( &quot;.psp&quot; =&amp;gt;
+<p><div class="highlight"><pre><span></span><code>fastcgi.server = ( &quot;.psp&quot; =&amp;gt;
                    ( &quot;localhost&quot; =&amp;gt;
                       (
                         &quot;socket&quot; =&amp;gt; &quot;/tmp/psp-fastcgi.socket&quot;,
@@ -360,14 +334,14 @@ The name of the handler that WebDyne should invoke instead of handling the page 
                      )
                    )
                  )
-</code></pre>
-<p>It can be used in Apache httpd.conf files, but is not very efficient:</p>
-<pre><code>#  This will work, but is not very efficient
+</code></pre></div>
+ It can be used in Apache httpd.conf files, but is not very efficient:</p>
+<p><div class="highlight"><pre><span></span><code>#  This will work, but is not very efficient
 #
 &amp;lt;location /shop/&amp;gt;
 PerlHandler     WebDyne
-PerlSetVar      WebDyneHandler               'WebDyne::Chain'
-PerlSetVar      WebDyneChain                 'WebDyne::Session'
+PerlSetVar      WebDyneHandler               &#39;WebDyne::Chain&#39;
+PerlSetVar      WebDyneChain                 &#39;WebDyne::Session&#39;
 &amp;lt;/location&amp;gt;
 
 
@@ -375,11 +349,11 @@ PerlSetVar      WebDyneChain                 'WebDyne::Session'
 #
 &amp;lt;location /shop/&amp;gt;
 PerlHandler     WebDyne::Chain
-PerlSetVar      WebDyneChain                 'WebDyne::Session'
+PerlSetVar      WebDyneChain                 &#39;WebDyne::Session&#39;
 &amp;lt;/location&amp;gt;
-</code></pre>
-<p>As with Apache you can do per-location/directory configuration of WebDyne, however the configuration is a little more complex. The example below shows how to set different directives on a per location basis, using WebDyne and WebDyne::Chain directives as examples:</p>
-<pre><code>$HTTP[&quot;url&quot;] =~&quot;^/proxcube/&quot; {
+</code></pre></div>
+ As with Apache you can do per-location/directory configuration of WebDyne, however the configuration is a little more complex. The example below shows how to set different directives on a per location basis, using WebDyne and WebDyne::Chain directives as examples:</p>
+<p><div class="highlight"><pre><span></span><code>$HTTP[&quot;url&quot;] =~&quot;^/proxcube/&quot; {
 
         server.document-root = &quot;/opt/proxcube/lib/perl5/site_perl/5.8.6/ProxCube/HTML/html/&quot;,
 
@@ -421,13 +395,13 @@ $HTTP[&quot;url&quot;] =~&quot;^/example/&quot; {
                 )
         )
 }
-</code></pre>
-<p>!!! important</p>
-<pre><code>As noted in the configuration file the socket file names must be unique
+</code></pre></div>
+ !!! important</p>
+<p><div class="highlight"><pre><span></span><code>As noted in the configuration file the socket file names must be unique
 for each location that you want different WebDyne directives/constants
 for.
-</code></pre>
-<p># Miscellaneous</p>
+</code></pre></div>
+ # Miscellaneous</p>
 <h2 id="command-line-utilities">Command Line Utilities</h2>
 <p>Command line utilities are fairly basic at this stage. Installation location will vary depening on your distribution - most will default to <code>/usr/local/bin</code>, but may be installed elsewhere in some cases, especially if you have nominated a <code>PREFIX</code> option when using CPAN.</p>
 <p><code>wdapacheinit</code>
@@ -449,7 +423,7 @@ Contains a list of directories that WebDyne will look in for libraries. Effectiv
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../06_error_handling/" class="btn btn-neutral float-left" title="Error Handling"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../05_advanced_usage/" class="btn btn-neutral float-left" title="Advanced Usage"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../07_extending_webdyne/" class="btn btn-neutral float-right" title="Extending WebDyne">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -473,7 +447,7 @@ Contains a list of directories that WebDyne will look in for libraries. Effectiv
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../06_error_handling/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../05_advanced_usage/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../07_extending_webdyne/" style="color: #fcfcfc">Next &raquo;</a></span>
