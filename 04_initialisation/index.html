@@ -99,6 +99,14 @@
                 </li>
               </ul>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../06_webdyne_api/">WebDyne API</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../07_extending_webdyne/">Extending WebDyne</a>
+                </li>
+              </ul>
+              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../07_webdyne_api/">WebDyne API</a>
                 </li>
               </ul>
@@ -107,7 +115,15 @@
                 </li>
               </ul>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../08_preamble/">Preamble</a>
+                </li>
+              </ul>
+              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../09_extending_webdyne/">Extending WebDyne</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../09_terms_and_conditions_for_copying_distribution_and_modification/">TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION</a>
                 </li>
               </ul>
               <ul>
@@ -209,7 +225,9 @@ Deny from none
 &amp;lt;/Directory&amp;gt;
 </code></pre>
 <p>!!! important</p>
-<p>Substitute directory paths in the above example for the relevant/correct/appropriate ones on your system.</p>
+<pre><code>Substitute directory paths in the above example for the
+relevant/correct/appropriate ones on your system.
+</code></pre>
 <p>Create the cache directory and assign ownership and permission appropriate for your distribution (group name will vary by distribution - locate the correct one for your distribution)</p>
 <pre><code>[root@localhost ~]# mkdir /opt/webdyne/cache
 [root@localhost ~]# chgrp apache /opt/webdyne/cache
@@ -219,8 +237,11 @@ Deny from none
 <h2 id="running-wdlighttpdinit-to-initialise-the-software-for-use-with-lighttpdfastcgi">Running <code>wdlighttpdinit</code> to initialise the software for use with Lighttpd/FastCGI</h2>
 <p>If using WebDyne with Lighttpd download and install the <code>WebDyne::Install::Lighttpd</code> module. Then run the <code>wdlighttpdinit</code> command to update the Lighttpd configuration files so that WebDyne pages will be correctly interpreted:</p>
 <p>!!! important</p>
-<p>WebDyne depends on the Lighttpd mod_fastcgi module (on RPM systems the package is sometimes called lighttpd-fastcgi). Please ensure the it is installed before running the initialisation script.</p>
-<pre><code>[root@localhost ~]# /opt/webdyne/bin/wdlighttpdinit
+<pre><code>WebDyne depends on the Lighttpd mod_fastcgi module (on RPM systems the
+package is sometimes called lighttpd-fastcgi). Please ensure the it is
+installed before running the initialisation script.
+
+[root@localhost ~]# /opt/webdyne/bin/wdlighttpdinit
 
 [install] - Installation source directory '/opt/webdyne'.
 [install] - Using existing cache directory '/opt/webdyne/cache'.
@@ -275,12 +296,40 @@ fastcgi.server = (
 <p>Assuming the installation has completed with no errors you are now ready to start creating WebDyne pages and applications.</p>
 <h2 id="basics-integrating-perl-into-html">Basics - integrating Perl into HTML</h2>
 <p>Some code fragments to give a very high-level overview of how WebDyne can be implemented. First the most basic usage example:</p>
-<pre><code>#include &quot;example/hello1.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Note the perl tags --&gt;</span>
+
+Hello World <span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span> localtime() <span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+</pre>
+
 <p><a href="example/hello1.psp">Run</a></p>
 <p>So far not too exciting - after all we are still mixing code and content. Lets try again:</p>
-<pre><code>#include &quot;example/hello2.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Empty perl tag this time, but with method name as attribute --&gt;</span>
+
+Hello World <span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello</span>"<span class="h-ab">/&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+sub hello &#123; return localtime &#125;
+</pre>
+
 <p><a href="example/hello2.psp">Run</a></p>
 <p>Better - at least code and content are distinctly separated. Note that whatever the Perl code returns at the end of the routine is what is displayed. Although WebDyne will happily display returned strings or scalars, it is more efficient to return a scalar reference, e.g.:</p>
 <pre><code>#  Works
@@ -322,90 +371,522 @@ sub greeting { return \0 }
 <pre><code>sub log { &amp;amp;dosomething; return \undef }
 </code></pre>
 <p>Up until now all the Perl code has been contained within the WebDyne file. The following example shows an instance where the code is contained in a separate Perl module, which should be available somewhere in the <code>@INC</code> path.</p>
-<pre><code>#include &quot;example/hello3.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Perl tag with call to external module method --&gt;</span>
+
+Hello World <span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"MyModule::hello</span>"<span class="h-ab">/&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+</pre>
+
 <p>If not already resident the module (in this case "MyModule") will be loaded by WebDyne, so it must be available somewhere in the <code>@INC</code> path. The example above cannot be run because there is no "MyModule" package on this system.</p>
 <h2 id="use-of-the-perl-tag-for-in-line-code">Use of the \&lt;perl&gt; tag for in-line code.</h2>
 <p>The above examples show several variations of the <code>&amp;lt;perl&amp;gt;</code> tag in use. Perl code that is enclosed by <code>&amp;lt;perl&amp;gt;..&amp;lt;/perl&amp;gt;</code> tags is called <em>in-line</em> code:</p>
-<pre><code>#include &quot;example/inline1.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">pre</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Perl tag containing perl code which generates output --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+for (0..3) &#123;
+    print "Hello World\n"
+&#125;
+
+#  Must return a positive value, but don't want anything
+#  else displayed, so use \undef
+#
+\undef;
+
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+
+<span class="h-ab">&lt;/</span><span class="h-tag">pre</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+</pre>
+
 <p><a href="example/inline1.psp">Run</a></p>
 <p>This is the most straight-forward use of Perl within a HTML document, but does not really make for easy reading - the Perl code and HTML are intermingled. It may be OK for quick scripts etc, but a page will quickly become hard to read if there is a lot of in-line Perl code interspersed between the HTML.</p>
 <p>in-line Perl can be useful if you want a "quick" computation, e.g. insertion of the current year:</p>
-<pre><code>#include &quot;example/inline2.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Very quick and dirty block of perl code --&gt;</span>
+
+Copyright (C) <span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>(localtime())[5]+1900<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span> Foobar Gherkin corp.
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+</pre>
+
 <p><a href="example/inline2.psp">Run</a></p>
-<p>Which can be pretty handy, but looks a bit cumbersome - the tags interfere with the flow of the text, making it harder to read. For this reason in-line perl can also be flagged in a WebDyne page using the shortcuts <code>!{! .. !}</code>, or by the use of processing instructions (<strong><code>&amp;lt;? .. ?&amp;gt;</code></strong>) e.g.:</p>
-<pre><code>#include &quot;example/inline3.html&quot;
-</code></pre>
+<p>Which can be pretty handy, but looks a bit cumbersome - the tags interfere with the flow of the text, making it harder to read. For this reason in-line perl can also be flagged in a WebDyne page using the shortcuts <code>&amp;amp;#033{&amp;amp;#033&amp;amp;#033}</code>, or by the use of processing instructions (<strong><code>&amp;lt;? .. ?&amp;gt;</code></strong>) e.g.:</p>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Same code with alternative denotation --&gt;</span>
+
+The time is: !&#123;! localtime() !&#125;
+
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+
+The time is:  <span class="h-pi">&lt;? localtime() ?&gt;</span>
+
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+</pre>
+
 <p><a href="example/inline3.psp">Run</a></p>
-<p>The <code>!{! .. !}</code> denotation can also be used in tag attributes (processing instructions, and <code>&amp;lt;perl&amp;gt;</code> tags cannot):</p>
-<pre><code>#include &quot;example/inline4.html&quot;
-</code></pre>
+<p>The <code>&amp;amp;#033{&amp;amp;#033&amp;amp;#033}</code> denotation can also be used in tag attributes (processing instructions, and <code>&amp;lt;perl&amp;gt;</code> tags cannot):</p>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Perl code can be used in tag attributes also --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">font</span> <span class="h-attr">color</span>=<span class="h-attv">"!&#123;! (qw(red blue green))[rand 3] !&#125;</span>"<span class="h-ab">&gt;</span>
+
+Hello World
+
+<span class="h-ab">&lt;/</span><span class="h-tag">font</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+</pre>
+
 <p><a href="example/inline4.psp">Run</a></p>
 <h2 id="use-of-the-perl-tag-for-non-inline-code">Use of the \&lt;perl&gt; tag for non-inline code.</h2>
 <p>Any code that is not co-mingled with the HTML of a document is <em>non-inline</em> code. It can be segmented from the content HTML using the __PERL__ delimiter, or by being kept in a completely different package and referenced as an external Perl subroutine call. An example of non-inline code:</p>
-<pre><code>#include &quot;example/hello2.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Empty perl tag this time, but with method name as attribute --&gt;</span>
+
+Hello World <span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello</span>"<span class="h-ab">/&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+sub hello &#123; return localtime &#125;
+</pre>
+
 <p><a href="example/hello2.psp">Run</a></p>
 <p>Note that the <code>&amp;lt;perl&amp;gt;</code> tag in this example is explicitly closed and does not contain any content. However non-inline code can enclose HTML or text within the tags:</p>
-<pre><code>#include &quot;example/noninline1.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- The perl method will be called, but "Hello World" will not be displayed ! --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello</span>"<span class="h-ab">&gt;</span>
+Hello World 
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+sub hello &#123; return localtime() &#125;
+</pre>
+
 <p><a href="example/noninline1.psp">Run</a></p>
 <p>But this is not very interesting so far - the "Hello World" text is not displayed when the example is run !</p>
 <p>In order for text or HTML within a non-inline perl block to be displayed, it must be "rendered" into the output stream by the WebDyne engine. This is done by calling the render() method. Let's try that again:</p>
-<pre><code>#include &quot;example/noninline2.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- The perl method will be called, and this time the "Hello World" will be displayed--&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello</span>"<span class="h-ab">&gt;</span>
+Hello World 
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+sub hello &#123;
+
+    my $self=shift();
+    $self->render();
+
+&#125;
+</pre>
+
 <p><a href="example/noninline2.psp">Run</a></p>
 <p>And again, this time showing how to render the text block multiple times. Note that an array reference is returned by the Perl routine - this is fine, and is interpreted as an array of HTML text, which is concatenated and send to the browser.</p>
-<pre><code>#include &quot;example/noninline3.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- The "Hello World" text will be rendered multiple times --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+Hello World 
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+sub hello &#123;
+
+    my $self=shift();
+    my @html;
+    for (0..3) &#123; push @html, $self->render() &#125;;
+    return \@html;
+&#125;
+</pre>
+
 <p><a href="example/noninline3.psp">Run</a></p>
 <h2 id="passing-parameters-to-subroutines">Passing parameters to subroutines</h2>
 <p>The behaviour of a called __PERL__ subroutine can be modified by passing parameters which it can act on:</p>
-<pre><code>#include &quot;example/noninline7.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- The "Hello World" text will be rendered with the param name --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello</span>" <span class="h-attr">param</span>=<span class="h-attv">"Alice</span>"<span class="h-ab">/&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello</span>" <span class="h-attr">param</span>=<span class="h-attv">"Bob</span>"<span class="h-ab">/&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- We can pass an array or hashref also - see variables section for more info on this syntax --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello_again</span>" <span class="h-attr">param</span>=<span class="h-attv">"%&#123; firstname=>'Alice', lastname=>'Smith' &#125;</span>"<span class="h-ab">/&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+sub hello &#123;
+
+    my ($self, $param)=@_;
+    return \"Hello world $param"
+&#125;
+
+sub hello_again &#123;
+
+    my ($self, $param_hr)=@_;
+    my $firstname=$param_hr->&#123;'firstname'&#125;;
+    my $lastname =$param_hr->&#123;'lastname'&#125;;
+    return \"Hello world $firstname $lastname";
+
+&#125;</pre>
+
 <p><a href="example/noninline7.psp">Run</a></p>
 <h2 id="notes-about-__perl__-sections">Notes about __PERL__ sections</h2>
 <p>Code in __PERL__ sections has some particular properties. __PERL__ code is only executed once. Subroutines defined in a __PERL__ section can be called as many times as you want, but the code outside of subroutines is only executed the first time a page is loaded. No matter how many times it is run, in the following code <code>$i</code> will always be 1:</p>
-<pre><code>#include &quot;example/noninline4.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello</span>"<span class="h-ab">/&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello</span>"<span class="h-ab">/&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+my $i=0;
+$i++;
+
+my $x=0;
+
+sub hello &#123;
+
+    #  Note x may not increment as you expect because you will probably
+    #  get a different Apache process each time you load this page
+    #
+    return sprintf("value of i: $i, value of x in PID $$: %s", $x++)
+&#125;
+</pre>
+
 <p><a href="example/noninline4.psp">Run</a></p>
 <p>Lexical variables are not accessible outside of the __PERL__ section due to the way perl's eval() function works. The following example will fail:</p>
-<pre><code>#include &quot;example/noninline5.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+
+The value of $i is !&#123;! \$i !&#125;
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+my $i=5;</pre>
+
 <p><a href="example/noninline5.psp">Run</a></p>
 <p>Package defined vars declared in a __PERL__ section do work, with caveats:</p>
-<pre><code>#include &quot;example/noninline6.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Does not work --&gt;</span>
+The value of $i is !&#123;! \$::i !&#125;
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Ugly hack, does work though --&gt;</span>
+The value of $i is !&#123;! \$&#123;__PACKAGE__.::i&#125; !&#125;
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Probably best to just do this though --&gt;</span>
+The value of $i is !&#123;! &get_i() !&#125;
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Or this - see variable substitution section  --&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"render_i</span>"<span class="h-ab">&gt;</span>
+The value of $i is $&#123;i&#125;
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+our $i=5;
+
+sub get_i &#123; \$i &#125;
+
+sub render_i &#123; shift()->render(i=>$i) &#125;</pre>
+
 <p><a href="example/noninline6.psp">Run</a></p>
 <p>See the Variables/Substitution section for clean ways to insert variable contents into the page.</p>
 <h2 id="variables-substitution">Variables / Substitution</h2>
 <p>WebDyne starts to get more useful when variables are used to modify the content of a rendered text block. A simple example:</p>
-<pre><code>#include &quot;example/var1.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- The var $&#123;time&#125; will be substituted for the correspondingly named render parameter --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello</span>"<span class="h-ab">&gt;</span>
+Hello World $&#123;time&#125;
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+sub hello &#123; 
+    my $self=shift();
+    my $time=localtime();
+    $self->render( time=>$time );
+&#125;
+</pre>
+
 <p><a href="example/var1.psp">Run</a></p>
 <p>Note the passing of the <code>time</code> value as a parameter to be substituted when the text is rendered.</p>
 <p>Combine this with multiple call to the render() routine to display dynamic data:</p>
-<pre><code>#include &quot;example/var2.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Multiple variables can be supplied at once as render parameters --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello0</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+Hello World $&#123;time&#125;, loop iteration $&#123;i&#125;.
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">br</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">br</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello1</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+Hello World $&#123;time&#125;, loop iteration $&#123;i&#125;.
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+sub hello0 &#123;
+
+    my $self=shift();
+    my @html;
+    my $time=localtime();
+    for (my $i=0; $i<3; $i++) &#123; 
+        push @html, $self->render( time=>$time, i=>$i) 
+    &#125;;
+    return \@html;
+&#125;
+
+sub hello1 &#123;
+
+    #  Alternate syntax using print
+    #
+    my $self=shift();
+    my $time=localtime();
+    for (my $i=0; $i<3; $i++) &#123; 
+        print $self->render( time=>$time, i=>$i)
+    &#125;;
+    return \undef
+&#125;
+</pre>
+
 <p><a href="example/var2.psp">Run</a></p>
 <p>Variables can also be used to modify tag attributes:</p>
-<pre><code>#include &quot;example/var3.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Render paramaters also work in tag attributes --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">font</span> <span class="h-attr">color</span>=<span class="h-attv">"$&#123;color&#125;</span>"<span class="h-ab">&gt;</span>
+Hello World
+<span class="h-ab">&lt;/</span><span class="h-tag">font</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+sub hello &#123;
+
+    my $self=shift();
+    my @html;
+    for (0..3) &#123;
+        my $color=(qw(red green yellow blue orange))[rand 5];
+        push @html, $self->render( color=>$color );
+    &#125;
+    \@html;
+
+&#125;
+</pre>
+
 <p><a href="example/var3.psp">Run</a></p>
 <p>Other variable types are available also, including:</p>
-<pre><code>- `@{var,var,..}` for arrays, e.g. `@{'foo', 'bar'}`
-- `%{key=&amp;gt;value, key=&amp;gt;value, ..}` for hashes e.g.`%{ a=&amp;gt;1, b=&amp;gt;2 }`
-- `+{varname}` for CGI form parameters, e.g. `+{firstname}`
-- `*{varname}`for environment variables, e.g. `*{HTTP_USER_AGENT}`
-- `^{requestmethod}` for Apache request (`$r=Apache-&amp;gt;request`) object
-methods, e.g. `^{protocol}`. Only available for in Apache/mod_perl,
+<pre><code>- `&amp;amp;#064{var,var,..}` for arrays, e.g. `&amp;amp;#064{'foo', 'bar'}`
+- `&amp;amp;#037{key=&amp;gt;value, key=&amp;gt;value, ..}` for hashes e.g.`&amp;amp;#037{ a=&amp;gt;1, b=&amp;gt;2 }`
+- `&amp;amp;#043{varname}` for CGI form parameters, e.g. `&amp;amp;#043{firstname}`
+- `&amp;amp;#042{varname}`for environment variables, e.g. `&amp;amp;#042{HTTP_USER_AGENT}`
+- `&amp;amp;#094{requestmethod}` for Apache request (`$r=Apache-&amp;gt;request`) object
+methods, e.g. `&amp;amp;#094{protocol}`. Only available for in Apache/mod_perl,
 and only useful for request methods that return a scalar value.
 </code></pre>
 <p>The following template uses techniques and tags discussed later, but should provide an example of potential variable usage:</p>
-<pre><code>#include &quot;example/var4.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Variables<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Environment variables --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+<span class="h-com">&lt;!-- Short Way --&gt;</span>
+Mod Perl Version: *&#123;MOD_PERL&#125;
+<span class="h-ab">&lt;</span><span class="h-tag">br</span><span class="h-ab">&gt;</span>
+<span class="h-com">&lt;!-- Same as Perl code --&gt;</span>
+Mod Perl Version: 
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span> \$ENV&#123;'MOD_PERL'&#125; <span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+
+<span class="h-com">&lt;!-- Apache request record methods. Only methods that return a scalar result are usable --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+<span class="h-com">&lt;!-- Short Way --&gt;</span>
+Request Protocol: ^&#123;protocol&#125;
+<span class="h-ab">&lt;</span><span class="h-tag">br</span><span class="h-ab">&gt;</span>
+<span class="h-com">&lt;!-- Same as Perl code --&gt;</span>
+Request Protocol: 
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span> my $self=shift(); my $r=$self->r(); \$r->protocol() <span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+
+<span class="h-com">&lt;!-- CGI params --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">form</span><span class="h-ab">&gt;</span>
+Your Name: <span class="h-ab">&lt;</span><span class="h-cgi_tag">textfield</span> <span class="h-attr">name</span>=<span class="h-attv">"name</span>" <span class="h-attr">default</span>=<span class="h-attv">"Test</span>" <span class="h-attr">size</span>=<span class="h-attv">"12</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">submit</span> <span class="h-attr">name</span>=<span class="h-attv">"Submit</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">form</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+<span class="h-com">&lt;!-- Short Way --&gt;</span>
+You Entered: +&#123;name&#125;
+<span class="h-ab">&lt;</span><span class="h-tag">br</span><span class="h-ab">&gt;</span>
+<span class="h-com">&lt;!-- Same as Perl code --&gt;</span>
+You Entered: 
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span> my $self=shift(); my $cgi_or=$self->CGI(); \$cgi_or->param('name') <span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">br</span><span class="h-ab">&gt;</span>
+<span class="h-com">&lt;!-- CGI vars are also loaded into the %_ global var, so the above is the same as --&gt;</span>
+You Entered: 
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span> \$_&#123;'name'&#125; <span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+
+<span class="h-com">&lt;!-- Arrays --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">form</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+Favourite colour 1:
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">popup_menu</span> <span class="h-attr">name</span>=<span class="h-attv">"popup_menu</span>" <span class="h-attr">values</span>=<span class="h-attv">"@&#123;qw(red green blue)&#125;</span>"<span class="h-ab">&gt;</span>
+
+
+<span class="h-com">&lt;!-- Hashes --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+Favourite colour 2:
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">popup_menu</span> <span class="h-attr">name</span>=<span class="h-attv">"popup_menu</span>" 
+    <span class="h-attr">values</span>=<span class="h-attv">"%&#123;red=>Red, green=>Green, blue=>Blue&#125;</span>"<span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">form</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+</pre>
+
 <p><a href="example/var4.psp">Run</a></p>
 <h2 id="integration-with-lincoln-steins-cgipm-module">Integration with Lincoln Stein's CGI.pm module</h2>
 <p>WebDyne makes extensive use of Lincoln Stein's CGI.pm module. Almost any CGI.pm function that renders HTML tags can be called from within a WebDyne template. The manual page for CGI.pm contains the following synopsis example:</p>
@@ -431,12 +912,57 @@ and only useful for request methods that return a scalar value.
               &quot;The keywords are: &quot;,em(join(&quot;, &quot;,param('words'))),p,
 </code></pre>
 <p>If the example was ported to a WebDyne compatible page it might look something like this:</p>
-<pre><code>#include &quot;example/cgi1.html&quot;
-</code></pre>
+<pre>
+<span class="h-com">&lt;!-- The same form from the CGI example --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">start_html</span> <span class="h-attr">title</span>=<span class="h-attv">"A simple example</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">h1</span><span class="h-ab">&gt;</span>A Simple Example<span class="h-ab">&lt;/</span><span class="h-tag">h1</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">start_form</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+What's your name ? <span class="h-ab">&lt;</span><span class="h-cgi_tag">textfield</span> <span class="h-attr">name</span>=<span class="h-attv">"name</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+What's the combination ? <span class="h-ab">&lt;</span><span class="h-cgi_tag">checkbox_group</span> 
+    <span class="h-attr">name</span>=<span class="h-attv">"words</span>" <span class="h-attr">values</span>=<span class="h-attv">"@&#123;qw(eenie meenie minie moe)&#125;</span>" <span class="h-attr">defaults</span>=<span class="h-attv">"@&#123;qw(eenie minie)&#125;</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+What's your favourite color ? <span class="h-ab">&lt;</span><span class="h-cgi_tag">popup_menu</span> 
+    <span class="h-attr">name</span>=<span class="h-attv">"color</span>" <span class="h-attr">values</span>=<span class="h-attv">"@&#123;qw(red green blue chartreuse)&#125;</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">submit</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">end_form</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">hr</span><span class="h-ab">&gt;</span>
+
+
+<span class="h-com">&lt;!-- This section only rendered when form submitted --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"answers</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+Your name is: <span class="h-ab">&lt;</span><span class="h-tag">em</span><span class="h-ab">&gt;</span>+&#123;name&#125;<span class="h-ab">&lt;/</span><span class="h-tag">em</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+The keywords are: <span class="h-ab">&lt;</span><span class="h-tag">em</span><span class="h-ab">&gt;</span>$&#123;words&#125;<span class="h-ab">&lt;/</span><span class="h-tag">em</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+Your favorite color is: <span class="h-ab">&lt;</span><span class="h-tag">em</span><span class="h-ab">&gt;</span>+&#123;color&#125;<span class="h-ab">&lt;/</span><span class="h-tag">em</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+sub answers &#123;
+
+    my $self=shift();
+    my $cgi_or=$self->CGI();
+    if ($cgi_or->param()) &#123;
+        my $words=join(",", $cgi_or->param('words'));
+        return $self->render( words=>$words )
+    &#125;
+    else &#123;
+        return \undef;
+    &#125;
+
+&#125;
+</pre>
+
 <p><a href="example/cgi1.psp">Run</a></p>
 <h2 id="more-on-cgipm-generated-tags">More on CGI.pm generated tags</h2>
 <p>We can use CGI.pm tags such as \&lt;popup_menu&gt;, instead of \&lt;select&gt;\&lt;option&gt;...\&lt;/select&gt;. The following example:</p>
-<pre><code>&amp;lt;popup_menu value=&quot;%{red=&amp;gt;Red, green=&amp;gt;Green, blue=&amp;gt;Blue}&quot;/&amp;gt;
+<pre><code>&amp;lt;popup_menu value=&quot;&amp;amp;#037{red=&amp;gt;Red, green=&amp;gt;Green, blue=&amp;gt;Blue}&quot;/&amp;gt;
 </code></pre>
 <p>is arguably easier to read than:</p>
 <pre><code>&amp;lt;select name=&quot;values&quot; tabindex=&quot;1&quot;&amp;gt;
@@ -446,24 +972,157 @@ and only useful for request methods that return a scalar value.
 &amp;lt;/select&amp;gt;
 </code></pre>
 <p>So there is some readability benefit, however the real advantage shows when we consider the next example:</p>
-<pre><code>#include &quot;example/cgi5.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Generate all country names for picklist --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">form</span><span class="h-ab">&gt;</span>
+
+Your Country ?
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"countries</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">popup_menu</span> <span class="h-attr">values</span>=<span class="h-attv">"$&#123;countries_ar&#125;</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">form</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+use Locale::Country;
+
+sub countries &#123;
+
+    my $self=shift();
+    my @countries = sort &#123; $a cmp $b &#125; all_country_names();
+    $self->render( countries_ar=>\@countries );
+
+&#125;
+</pre>
+
 <p><a href="example/cgi5.psp">Run</a></p>
 <p>That saved a lot of typing !</p>
 <h2 id="access-to-cgi-query-form-and-keyword-parameters">Access to CGI query, form and keyword parameters</h2>
 <p>As mentioned above WebDyne makes extensive use of the CGI.pm Perl module. You can access a CGI object instance in any WebDyne template by calling the CGI() method:</p>
-<pre><code>#include &quot;example/cgi3.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Note use of CGI.pm derived textfield tag --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">form</span><span class="h-ab">&gt;</span>
+Enter your name: <span class="h-ab">&lt;</span><span class="h-cgi_tag">textfield</span> <span class="h-attr">name</span>=<span class="h-attv">"name</span>"<span class="h-ab">&gt;</span>
+<span class="h-ent">&amp;nbsp;</span>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">submit</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">form</span><span class="h-ab">&gt;</span>
+
+
+<span class="h-com">&lt;!-- And print out name if we have it --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello</span>"<span class="h-ab">&gt;</span>
+Hello $&#123;name&#125;, pleased to meet you.
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+sub hello &#123; 
+    my $self=shift();
+
+    #  Get CGI instance
+    #
+    my $cgi_or=$self->CGI();
+
+    #  Use CGI.pm param() method. Could also use other
+    #  methods like keywords(), Vars() etc.
+    #
+    my $name=$cgi_or->param('name');
+
+    $self->render( name=>$name);
+&#125;
+</pre>
+
 <p><a href="example/cgi3.psp">Run</a></p>
 <p>From there you can all any method supported by the CGI.pm module - see the CGI.pm manual page (<code>man CGI</code>)</p>
 <p>Since one of the most common code tasks is to access query parameters, WebDyne stores them in the <code>%_</code> global variable before any user defined Perl methods are called. For example:</p>
-<pre><code>#include &quot;example/cgi4.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">form</span><span class="h-ab">&gt;</span>
+Enter your name: <span class="h-ab">&lt;</span><span class="h-cgi_tag">textfield</span> <span class="h-attr">name</span>=<span class="h-attv">"name</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">submit</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">form</span><span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Quick and dirty, no perl code at all --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+Hello +&#123;name&#125;, pleased to meet you.
+
+
+<span class="h-com">&lt;!-- Traditional, using the CGI.pm param() call --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello1</span>"<span class="h-ab">&gt;</span>
+Hello $&#123;name&#125;, pleased to meet you.
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+
+<span class="h-com">&lt;!-- Quicker method using %_ global var --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello2</span>"<span class="h-ab">&gt;</span>
+Hello $&#123;name&#125;, pleased to meet you.
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+
+<span class="h-com">&lt;!-- Quick and dirty using inline Perl --&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+Hello !&#123;! \$_&#123;name&#125; !&#125;, pleased to meet you.
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+
+&#095;&#095;PERL&#095;&#095;
+
+sub hello1 &#123; 
+    my $self=shift();
+    my $cgi_or=$self->CGI();
+    my $name=$cgi_or->param('name');
+    $self->render( name=>$name);
+&#125;
+
+sub hello2 &#123; 
+
+    my $self=shift();
+
+    #  Quicker method of getting name param
+    #
+    my $name=$_&#123;'name'&#125;;
+    $self->render( name=>$name);
+&#125;
+
+</pre>
+
 <p><a href="example/cgi4.psp">Run</a></p>
 <h2 id="quick-pages-using-cgipms-start_htmlend_html-tags">Quick Pages using CGI.pm's \&lt;start_html&gt;\&lt;end_html&gt; tags</h2>
 <p>For rapid development you can take advantage of CGI.pm's \&lt;start_html&gt; and \&lt;end_html&gt; tags. The following page generates compliant HTML (view the page source after loading it to see for yourself):</p>
-<pre><code>#include &quot;example/cgi6.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">start_html</span> <span class="h-attr">title</span>=<span class="h-attv">"Quick Page</span>"<span class="h-ab">&gt;</span>
+The time is: !&#123;! localtime() !&#125;
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">end_html</span><span class="h-ab">&gt;</span></pre>
+
 <p><a href="example/cgi6.psp">Run</a></p>
 <p>The \&lt;start_html&gt; tag generates all the \&lt;html&gt;, \&lt;head&gt;, \&lt;title&gt; tags etc needed for a valid HTML page plus an opening body tag. Just enter the body content, then finish with \&lt;end_html&gt; to generate the closing \&lt;body&gt; and \&lt;html&gt; tags. See the CGI.pm manual page for more information.</p>
               

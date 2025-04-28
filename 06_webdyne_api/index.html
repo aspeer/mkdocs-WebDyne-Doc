@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://aspeer.github.io/mkdocs-WebDyne-Doc/07_webdyne_api/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://aspeer.github.io/mkdocs-WebDyne-Doc/06_webdyne_api/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
     <title>WebDyne API - WebDyne Documentation</title>
     <link rel="stylesheet" href="../css/theme.css" />
@@ -14,8 +14,8 @@
       <script>
         // Current page data
         var mkdocs_page_name = "WebDyne API";
-        var mkdocs_page_input_path = "07_webdyne_api.md";
-        var mkdocs_page_url = "/mkdocs-WebDyne-Doc/07_webdyne_api/";
+        var mkdocs_page_input_path = "06_webdyne_api.md";
+        var mkdocs_page_url = "/mkdocs-WebDyne-Doc/06_webdyne_api/";
       </script>
     
     <!--[if lt IE 9]>
@@ -68,14 +68,6 @@
                 <li class="toctree-l1"><a class="reference internal" href="../06_error_handling/">Error Handling</a>
                 </li>
               </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../06_webdyne_api/">WebDyne API</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../07_extending_webdyne/">Extending WebDyne</a>
-                </li>
-              </ul>
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">WebDyne API</a>
     <ul class="current">
@@ -87,13 +79,23 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#global-constants-file">Global constants file</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#setting-webdyne-constants-in-apache">Setting WebDyne constants in Apache</a>
-    </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#webdyne-directives">WebDyne Directives</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-line-utilities">Command Line Utilities</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#other-files-referenced-by-webdyne">Other files referenced by WebDyne</a>
+    </li>
     </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../07_extending_webdyne/">Extending WebDyne</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../07_webdyne_api/">WebDyne API</a>
                 </li>
               </ul>
               <ul>
@@ -151,7 +153,7 @@ Run Perl code either in-line (between the \&lt;perl&gt;..\&lt;/perl&gt;) tags, o
 <p>method=[Module::Name]::method
 <em>Optional</em>. Call an external perl subroutine in a pre-loaded module, or a subroutine in a __PERL__ block at then of the HTML: file</p>
 <p>param=scalar|array|hash
-<em>Optional</em>. Parameters to be supplied to perl routine. Supply array and hash using @{1,2} and %{a=&gt;1, b=&gt;2} conventions respectively.</p>
+<em>Optional</em>. Parameters to be supplied to perl routine. Supply array and hash using &#064;{1,2} and &#037;{a=&gt;1, b=&gt;2} conventions respectively.</p>
 <p>static=1
 <em>Optional</em>. This Perl code to be run once only and the output cached for all subsequent requests.</p>
 <p>\&lt;block&gt;
@@ -224,8 +226,11 @@ $VAR1={
 </code></pre>
 <p>The file is not present by default and should be created if you wish to change any of the WebDyne constants from their default values.</p>
 <p>!!! important</p>
-<p>Always check the syntax of the <code>/etc/webdyne.pm</code> file after editing by running <code>perl -c -w /etc/webdyne.pm</code> to check that the file is readable by Perl.</p>
-<h3 id="setting-webdyne-constants-in-apache">Setting WebDyne constants in Apache</h3>
+<pre><code>Always check the syntax of the `/etc/webdyne.pm` file after editing by
+running `perl -c -w /etc/webdyne.pm` to check that the file is readable
+by Perl.
+</code></pre>
+<p>### Setting WebDyne constants in Apache</p>
 <p>WebDyne constants can be set in an Apache httpd.conf file using the PerlSetVar directive:</p>
 <pre><code>PerlHandler     WebDyne
 PerlSetVar      WEBDYNE_CACHE_DN                '/data1/webdyne/cache'
@@ -236,16 +241,22 @@ PerlSetVar      WEBDYNE_STORE_COMMENTS          1
 PerlSetVar      WEBDYNE_SESSION_ID_COOKIE_NAME  'session_cookie'
 </code></pre>
 <p>!!! important</p>
-<p>WebDyne constants cannot be set on a per-location or per-directory basis - they are read from the top level of the config file and set globally.</p>
-<p>Some 1.x versions of mod_perl do not read PerlSetVar variables correctly. If you encounter this problem use a \&lt;Perl&gt;..\&lt;/Perl&gt; section in the httpd.conf file, e.g.:</p>
-<pre><code># Mod_perl 1.x
+<pre><code>WebDyne constants cannot be set on a per-location or per-directory
+basis - they are read from the top level of the config file and set
+globally.
 
-PerlHandler     WebDyne
-&amp;lt;Perl&amp;gt;
-$WebDyne::Constant::WEBDYNE_CACHE_DN='/data1/webdyne/cache';
-$WebDyne::Constant::WEBDYNE_STORE_COMMENTS=1;
-$WebDyne::Session::Constant::WEBDYNE_SESSION_ID_COOKIE_NAME='session_cookie';
-&amp;lt;/Perl&amp;gt;
+Some 1.x versions of mod_perl do not read PerlSetVar variables
+correctly. If you encounter this problem use a \&lt;Perl\&gt;..\&lt;/Perl\&gt;
+section in the httpd.conf file, e.g.:
+
+    # Mod_perl 1.x
+
+    PerlHandler     WebDyne
+    &amp;lt;Perl&amp;gt;
+    $WebDyne::Constant::WEBDYNE_CACHE_DN='/data1/webdyne/cache';
+    $WebDyne::Constant::WEBDYNE_STORE_COMMENTS=1;
+    $WebDyne::Session::Constant::WEBDYNE_SESSION_ID_COOKIE_NAME='session_cookie';
+    &amp;lt;/Perl&amp;gt;
 </code></pre>
 <p>### Setting WebDyne constants in lighttpd/FastCGI</p>
 <p>WebDyne constants can be set in lighttpd/FastCGI using the bin-environment directive. Here is a sample lighttpd.conf file showing WebDyne constants:</p>
@@ -412,13 +423,34 @@ $HTTP[&quot;url&quot;] =~&quot;^/example/&quot; {
 }
 </code></pre>
 <p>!!! important</p>
-<p>As noted in the configuration file the socket file names must be unique for each location that you want different WebDyne directives/constants for.</p>
+<pre><code>As noted in the configuration file the socket file names must be unique
+for each location that you want different WebDyne directives/constants
+for.
+</code></pre>
+<p># Miscellaneous</p>
+<h2 id="command-line-utilities">Command Line Utilities</h2>
+<p>Command line utilities are fairly basic at this stage. Installation location will vary depening on your distribution - most will default to <code>/usr/local/bin</code>, but may be installed elsewhere in some cases, especially if you have nominated a <code>PREFIX</code> option when using CPAN.</p>
+<p><code>wdapacheinit</code>
+Runs the WebDyne initialization routines, which create needed directories, modify and create Apache .conf files etc.</p>
+<p><code>wdcompile</code>
+Usage: <code>wdcompile filename.psp</code>. Will compile a .psp file and use Data::Dumper to display the WebDyne internal representation of the page tree structure. Useful as a troubleshooting tool to see how HTML::TreeBuilder has parsed your source file, and to show up any misplaced tags etc.</p>
+<p><code>wdrender</code>
+Usage: <code>wdrender filename.psp</code>. Will attempt to render the source file to screen using WebDyne. Can only do basic tasks - any advanced use (such as calls to the Apache request object) will fail.</p>
+<p><code>wddump</code>
+Usage: <code>wddump filename</code>. Where filename is a compiled WebDyne source file (usually in /var/webdyne/cache). Will dump out the saved data structure of the compiled file.</p>
+<p><code>wdfastcgi</code>
+Used to run WebDyne under FastCGI - not usually invoked interactively</p>
+<h2 id="other-files-referenced-by-webdyne">Other files referenced by WebDyne</h2>
+<p><code>/etc/webdyne.pm</code>
+Used for storage of local constants that override WebDyne defaults. See the <a href="#webdyne_constants">WebDyne::Constant</a> section for details</p>
+<p><code>/etc/perl5lib.pm</code>
+Contains a list of directories that WebDyne will look in for libraries. Effectively extends Perl's <code>@INC</code> variable. If you install CPAN or other Perl modules to a particular directory using <code>perl Makefile.PL PREFIX=/opt/mylibs</code>, then add '<code>/opt/mylibs</code>' to the <code>perl5lib.pm</code> file, WebDyne will find them.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../07_extending_webdyne/" class="btn btn-neutral float-left" title="Extending WebDyne"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../08_miscellaneous/" class="btn btn-neutral float-right" title="Miscellaneous">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../06_error_handling/" class="btn btn-neutral float-left" title="Error Handling"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../07_extending_webdyne/" class="btn btn-neutral float-right" title="Extending WebDyne">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -441,10 +473,10 @@ $HTTP[&quot;url&quot;] =~&quot;^/example/&quot; {
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../07_extending_webdyne/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../06_error_handling/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../08_miscellaneous/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../07_extending_webdyne/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

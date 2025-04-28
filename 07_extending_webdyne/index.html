@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://aspeer.github.io/mkdocs-WebDyne-Doc/09_extending_webdyne/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://aspeer.github.io/mkdocs-WebDyne-Doc/07_extending_webdyne/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
     <title>Extending WebDyne - WebDyne Documentation</title>
     <link rel="stylesheet" href="../css/theme.css" />
@@ -14,8 +14,8 @@
       <script>
         // Current page data
         var mkdocs_page_name = "Extending WebDyne";
-        var mkdocs_page_input_path = "09_extending_webdyne.md";
-        var mkdocs_page_url = "/mkdocs-WebDyne-Doc/09_extending_webdyne/";
+        var mkdocs_page_input_path = "07_extending_webdyne.md";
+        var mkdocs_page_url = "/mkdocs-WebDyne-Doc/07_extending_webdyne/";
       </script>
     
     <!--[if lt IE 9]>
@@ -72,8 +72,16 @@
                 <li class="toctree-l1"><a class="reference internal" href="../06_webdyne_api/">WebDyne API</a>
                 </li>
               </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../07_extending_webdyne/">Extending WebDyne</a>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Extending WebDyne</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#webdynechain">WebDyne::Chain</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#webdynestatic">WebDyne::Static</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#webdynesession">WebDyne::Session</a>
+    </li>
+    </ul>
                 </li>
               </ul>
               <ul>
@@ -88,16 +96,8 @@
                 <li class="toctree-l1"><a class="reference internal" href="../08_preamble/">Preamble</a>
                 </li>
               </ul>
-              <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Extending WebDyne</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#webdynechain">WebDyne::Chain</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#webdynestatic">WebDyne::Static</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#webdynesession">WebDyne::Session</a>
-    </li>
-    </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../09_extending_webdyne/">Extending WebDyne</a>
                 </li>
               </ul>
               <ul>
@@ -198,8 +198,18 @@ Function. Returns the unique session id assigned to the browser. Call via \$self
 <p><code>$WEBDYNE_SESSION_ID_COOKIE_NAME</code>
 Constant. Holds the name of the cookie that will be used to assign the session id in the users browser. Defaults to "session". Set as per <a href="#webdyne_constants">WebDyne::Constants</a> section. Resides in the <code>WebDyne::Session::Constant</code> package namespace.</p>
 <p>Example:</p>
-<pre><code>#include &quot;example/session1.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">start_html</span><span class="h-ab">&gt;</span>
+
+Session ID: !&#123;! shift()->session_id() !&#125;
+
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">end_html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+use WebDyne::Session;
+1;</pre>
+
 <p><a href="example/session1.psp">Run</a></p>
 <p>WebDyne::Session can also be used in conjunction with the <a href="#webdyne_chain">WebDyne::Chain</a> module to make session information available to all pages within a location. An example httpd.conf snippet:</p>
 <pre><code>&amp;lt;Location /&amp;gt;
@@ -236,12 +246,76 @@ Constant. Name of the file that will hold the state database. Can be just a file
 <p><code>$WEBDYNE_BERKELEYDB_STATE_DN</code>
 Constant.Name of the directory where the state file will be located. If an absolute filename (i.e. one that includes a directory name) is given above then this variable is ignored. Set as per <a href="#webdyne_constants">WebDyne::Constants</a> section. Defined in the <code>WebDyne::State::BerkeleyDB::Constant</code> namespace. Defaults to <code>$WEBDYNE_CACHE_DN</code></p>
 <p>Example:</p>
-<pre><code>#include &quot;example/state1.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">start_html</span> <span class="h-attr">title</span>=<span class="h-attv">"State</span>"<span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"state</span>"<span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">block</span> <span class="h-attr">name</span>=<span class="h-attv">"login</span>"<span class="h-ab">&gt;</span>
+You are logged in as user "$&#123;user&#125;"
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+The following data is associated with user $&#123;user&#125;:
+<span class="h-ab">&lt;</span><span class="h-tag">pre</span><span class="h-ab">&gt;</span>
+$&#123;data&#125;
+<span class="h-ab">&lt;/</span><span class="h-tag">pre</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">block</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">block</span> <span class="h-attr">name</span>=<span class="h-attv">"logout</span>"<span class="h-ab">&gt;</span>
+You are not logged in.
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">block</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">hr</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">form</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">submit</span> <span class="h-attr">name</span>=<span class="h-attv">"login</span>" <span class="h-attr">value</span>=<span class="h-attv">"Login</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">submit</span> <span class="h-attr">name</span>=<span class="h-attv">"logout</span>" <span class="h-attr">value</span>=<span class="h-attv">"Logout</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">submit</span> <span class="h-attr">name</span>=<span class="h-attv">"refresh</span>" <span class="h-attr">value</span>=<span class="h-attv">"Refresh</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">form</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">end_html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+use WebDyne::Session;
+use WebDyne::State::BerkeleyDB;
+use Data::Dumper;
+
+sub state &#123;
+
+    my $self=shift();
+
+    if ($_&#123;'login'&#125;) &#123;
+        $self->login('alice') || return err();
+        my %data=( fullname=>'Alice Smith', favourite_colour=>'Blue');
+        $self->state_store(&#123; data=>\%data &#125;) || return err();
+    &#125;
+    elsif ($_&#123;'logout'&#125;) &#123;
+        $self->logout
+    &#125;
+
+    if (my $user=$&#123; $self->user() || return err() &#125;) &#123;
+        my $data_hr=$self->state_fetch();
+        $self->render_block('login', user=>$user, data=>Dumper($data_hr));
+    &#125;
+    else &#123;
+        $self->render_block('logout');
+    &#125;
+
+    $self->render();
+
+&#125;
+</pre>
+
 <p><a href="example/state1.psp">Run</a></p>
 <p>!!! important</p>
-<p>State information is stored against the browser session ID, not against a user ID. The same user on two different machines will have two different state entries.</p>
-<p>WebDyne::State is meant for simplistic storage of state information - it is not meant for long term storage of user preferences or other data, and should not be used as a persistent database.</p>
+<pre><code>State information is stored against the browser session ID, not against
+a user ID. The same user on two different machines will have two
+different state entries.
+
+WebDyne::State is meant for simplistic storage of state information - it
+is not meant for long term storage of user preferences or other data,
+and should not be used as a persistent database.
+</code></pre>
 <p>WebDyne::State::BerkelyDB can also be used in conjunction with the <a href="#webdyne_chain">WebDyne::Chain</a> module to make state information available to all pages within a location. An example httpd.conf snippet:</p>
 <pre><code>&amp;lt;Location /&amp;gt;
 
@@ -264,12 +338,86 @@ Function. Set the file name of the template to be used. If no path is specified 
 Directive. Can be used to supply the template file name in a Apache or lighttpd/FastCGI configuration file.</p>
 <p>Example:</p>
 <p>The template:</p>
-<pre><code>#include &quot;example/template1.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">block</span> <span class="h-attr">name</span>=<span class="h-attv">"head</span>" <span class="h-attr">display</span>=<span class="h-attv">"1</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Template<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">block</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">table</span> <span class="h-attr">width</span>=<span class="h-attv">"100%</span>"<span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">tr</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">td</span> colspan=2 <span class="h-attr">bgcolor</span>=<span class="h-attv">"green</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">span</span> <span class="h-attr">style</span>=<span class="h-attv">"color:white;font-size:20px</span>"<span class="h-ab">&gt;</span>Site Name<span class="h-ab">&lt;/</span><span class="h-tag">span</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">td</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">tr</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">tr</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">td</span> <span class="h-attr">bgcolor</span>=<span class="h-attv">"green</span>" <span class="h-attr">width</span>=<span class="h-attv">"100px</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+Left
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+Menu
+<span class="h-ab">&lt;</span><span class="h-tag">p</span><span class="h-ab">&gt;</span>
+Here
+<span class="h-ab">&lt;/</span><span class="h-tag">td</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">td</span> <span class="h-attr">bgcolor</span>=<span class="h-attv">"white</span>"<span class="h-ab">&gt;</span>
+
+<span class="h-com">&lt;!-- Content goes here --&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">block</span> <span class="h-attr">name</span>=<span class="h-attv">"body</span>" <span class="h-attr">display</span>=<span class="h-attv">"1</span>"<span class="h-ab">&gt;</span>
+This is where the content will go
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">block</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">td</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">tr</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">tr</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">td</span> colspan=2 <span class="h-attr">bgcolor</span>=<span class="h-attv">"green</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">span</span> <span class="h-attr">style</span>=<span class="h-attv">"color:white</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"copyright</span>"<span class="h-ab">&gt;</span>
+Copyright (C) $&#123;year&#125; Foobar corp.
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">span</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">td</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">tr</span><span class="h-ab">&gt;</span>
+
+
+<span class="h-ab">&lt;/</span><span class="h-tag">table</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+sub copyright &#123;
+
+    shift()->render(year=>((localtime)[5]+1900));
+
+&#125;</pre>
+
 <p><a href="example/template1.psp">Run</a></p>
 <p>The content, run to view resulting merge:</p>
-<pre><code>#include &quot;example/content1.html&quot;
-</code></pre>
+<pre>
+<span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Content 1<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+This is my super content !
+<span class="h-ab">&lt;/</span><span class="h-tag">body</span><span class="h-ab">&gt;</span>
+
+<span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
+
+&#095;&#095;PERL&#095;&#095;
+
+use WebDyne::Template qw(template1.psp);
+</pre>
+
 <p><a href="example/content1.psp">Run</a></p>
 <p>In real life it is not desirable to put the template name into every content file (as was done in the above example), nor would we want to have to "use WebDyne::Template" in every content file.</p>
 <p>To overcome this WebDyne::Template can read the template file name using the Apache dir_config function, and assign a template on a per location basis using the WebDyneTemplate directive. Here is a sample httpd.conf file:</p>
@@ -286,8 +434,8 @@ PerlSetVar      WebDyneTemplate '/path/to/template.psp'
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../08_preamble/" class="btn btn-neutral float-left" title="Preamble"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../09_terms_and_conditions_for_copying_distribution_and_modification/" class="btn btn-neutral float-right" title="TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../06_webdyne_api/" class="btn btn-neutral float-left" title="WebDyne API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../07_webdyne_api/" class="btn btn-neutral float-right" title="WebDyne API">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -310,10 +458,10 @@ PerlSetVar      WebDyneTemplate '/path/to/template.psp'
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../08_preamble/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../06_webdyne_api/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../09_terms_and_conditions_for_copying_distribution_and_modification/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../07_webdyne_api/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
