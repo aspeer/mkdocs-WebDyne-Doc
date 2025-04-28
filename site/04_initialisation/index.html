@@ -41,6 +41,10 @@
                 </li>
               </ul>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../01-section/">01 section</a>
+                </li>
+              </ul>
+              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../01_legal_information_licensing_and_copyright/">Legal Information - Licensing and Copyright</a>
                 </li>
               </ul>
@@ -75,13 +79,13 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#variables-substitution">Variables / Substitution</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#integration-with-lincoln-steins-cgipm-module">Integration with Lincoln Stein\'s CGI.pm module</a>
+    <li class="toctree-l2"><a class="reference internal" href="#integration-with-lincoln-steins-cgipm-module">Integration with Lincoln Stein's CGI.pm module</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#more-on-cgipm-generated-tags">More on CGI.pm generated tags</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#access-to-cgi-query-form-and-keyword-parameters">Access to CGI query, form and keyword parameters</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#quick-pages-using-cgipms-start_htmlend_html-tags">Quick Pages using CGI.pm\'s \&lt;start_html>\&lt;end_html> tags</a>
+    <li class="toctree-l2"><a class="reference internal" href="#quick-pages-using-cgipms-start_htmlend_html-tags">Quick Pages using CGI.pm's \&lt;start_html>\&lt;end_html> tags</a>
     </li>
     </ul>
                 </li>
@@ -95,6 +99,14 @@
                 </li>
               </ul>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../06_webdyne_api/">WebDyne API</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../07_extending_webdyne/">Extending WebDyne</a>
+                </li>
+              </ul>
+              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../07_webdyne_api/">WebDyne API</a>
                 </li>
               </ul>
@@ -103,7 +115,15 @@
                 </li>
               </ul>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../08_preamble/">Preamble</a>
+                </li>
+              </ul>
+              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../09_extending_webdyne/">Extending WebDyne</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../09_terms_and_conditions_for_copying_distribution_and_modification/">TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION</a>
                 </li>
               </ul>
               <ul>
@@ -140,16 +160,10 @@
                 <h1 id="initialisation">Initialisation</h1>
 <p>After installation Web Server configuration files must be updated so that the WebDyne software will be used to generate output when a .psp file is invoked. WebDyne comes bundled with an installer for Apache (<code>wdapacheinit</code>), and installers for selected other web servers (e.g. <code>WebDyne::Install::Lighttpd</code>) are available separately from CPAN.</p>
 <p>Initialisation can be done via one of two methods:</p>
-<p>Manual Initialisation</p>
-<p>:   Web server configuration files can be hand-edited, and cache
-    directories manualy created.</p>
-<p>Script Initialisation</p>
-<p>:   Scripts to automate the initialisation process for Apache and
-    Lighttpd have been written - they will attempt to locate and update
-    the Web Server config files (and create neccessary directories, set
-    permissions etc.) as required. The scripts will work in common
-    cases, but may have trouble on unusual distributions, or if a custom
-    version of Apache (or other Web Server) is being used</p>
+<p>Manual Initialisation
+Web server configuration files can be hand-edited, and cache directories manualy created.</p>
+<p>Script Initialisation
+Scripts to automate the initialisation process for Apache and Lighttpd have been written - they will attempt to locate and update the Web Server config files (and create neccessary directories, set permissions etc.) as required. The scripts will work in common cases, but may have trouble on unusual distributions, or if a custom version of Apache (or other Web Server) is being used</p>
 <p>Scripted installation is easiest if it works for your distribution - it will take care of all configuration file changes, directory permissions and ownership etc.</p>
 <h2 id="running-wdapacheinit-to-initialise-the-software-for-use-with-apachemod_perl">Running <code>wdapacheinit</code> to initialise the software for use with Apache/mod_perl</h2>
 <p>Once the WebDyne software in installed it must be initialized. The <code>wdapacheinit</code> command must be run to update the Apache configuration files so that WebDyne pages will be correctly interpreted:</p>
@@ -210,10 +224,10 @@ Allow from all
 Deny from none
 &amp;lt;/Directory&amp;gt;
 </code></pre>
-<p>::: important
-Substitute directory paths in the above example for the
+<p>!!! important</p>
+<pre><code>Substitute directory paths in the above example for the
 relevant/correct/appropriate ones on your system.
-:::</p>
+</code></pre>
 <p>Create the cache directory and assign ownership and permission appropriate for your distribution (group name will vary by distribution - locate the correct one for your distribution)</p>
 <pre><code>[root@localhost ~]# mkdir /opt/webdyne/cache
 [root@localhost ~]# chgrp apache /opt/webdyne/cache
@@ -222,12 +236,12 @@ relevant/correct/appropriate ones on your system.
 <p>Restart Apache and check for any errors.</p>
 <h2 id="running-wdlighttpdinit-to-initialise-the-software-for-use-with-lighttpdfastcgi">Running <code>wdlighttpdinit</code> to initialise the software for use with Lighttpd/FastCGI</h2>
 <p>If using WebDyne with Lighttpd download and install the <code>WebDyne::Install::Lighttpd</code> module. Then run the <code>wdlighttpdinit</code> command to update the Lighttpd configuration files so that WebDyne pages will be correctly interpreted:</p>
-<p>::: important
-WebDyne depends on the Lighttpd mod_fastcgi module (on RPM systems the
+<p>!!! important</p>
+<pre><code>WebDyne depends on the Lighttpd mod_fastcgi module (on RPM systems the
 package is sometimes called lighttpd-fastcgi). Please ensure the it is
 installed before running the initialisation script.
-:::</p>
-<pre><code>[root@localhost ~]# /opt/webdyne/bin/wdlighttpdinit
+
+[root@localhost ~]# /opt/webdyne/bin/wdlighttpdinit
 
 [install] - Installation source directory '/opt/webdyne'.
 [install] - Using existing cache directory '/opt/webdyne/cache'.
@@ -353,7 +367,7 @@ sub greeting { return 0 }
 #
 sub greeting { return \0 }
 </code></pre>
-<p>Perl code in WebDyne pages must always return a non-undef/non-0/non-empty string value (i.e. it must return something that evals as \"true\"). If the code returns a non-true value (e.g. 0, undef, \'\') then WebDyne assumes an error has occurred in the routine. If you actually want to run some Perl code, but not display anything, you should return a reference to undef, (<code>\undef)</code>, e.g.:</p>
+<p>Perl code in WebDyne pages must always return a non-undef/non-0/non-empty string value (i.e. it must return something that evals as "true"). If the code returns a non-true value (e.g. 0, undef, '') then WebDyne assumes an error has occurred in the routine. If you actually want to run some Perl code, but not display anything, you should return a reference to undef, (<code>\undef)</code>, e.g.:</p>
 <pre><code>sub log { &amp;amp;dosomething; return \undef }
 </code></pre>
 <p>Up until now all the Perl code has been contained within the WebDyne file. The following example shows an instance where the code is contained in a separate Perl module, which should be available somewhere in the <code>@INC</code> path.</p>
@@ -371,7 +385,7 @@ Hello World <span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span
 <span class="h-ab">&lt;/</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
 </pre>
 
-<p>If not already resident the module (in this case \"MyModule\") will be loaded by WebDyne, so it must be available somewhere in the <code>@INC</code> path. The example above cannot be run because there is no \"MyModule\" package on this system.</p>
+<p>If not already resident the module (in this case "MyModule") will be loaded by WebDyne, so it must be available somewhere in the <code>@INC</code> path. The example above cannot be run because there is no "MyModule" package on this system.</p>
 <h2 id="use-of-the-perl-tag-for-in-line-code">Use of the \&lt;perl&gt; tag for in-line code.</h2>
 <p>The above examples show several variations of the <code>&amp;lt;perl&amp;gt;</code> tag in use. Perl code that is enclosed by <code>&amp;lt;perl&amp;gt;..&amp;lt;/perl&amp;gt;</code> tags is called <em>in-line</em> code:</p>
 <pre>
@@ -404,7 +418,7 @@ for (0..3) &#123;
 
 <p><a href="example/inline1.psp">Run</a></p>
 <p>This is the most straight-forward use of Perl within a HTML document, but does not really make for easy reading - the Perl code and HTML are intermingled. It may be OK for quick scripts etc, but a page will quickly become hard to read if there is a lot of in-line Perl code interspersed between the HTML.</p>
-<p>in-line Perl can be useful if you want a \"quick\" computation, e.g. insertion of the current year:</p>
+<p>in-line Perl can be useful if you want a "quick" computation, e.g. insertion of the current year:</p>
 <pre>
 <span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
 <span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
@@ -502,8 +516,8 @@ sub hello &#123; return localtime() &#125;
 </pre>
 
 <p><a href="example/noninline1.psp">Run</a></p>
-<p>But this is not very interesting so far - the \"Hello World\" text is not displayed when the example is run !</p>
-<p>In order for text or HTML within a non-inline perl block to be displayed, it must be \"rendered\" into the output stream by the WebDyne engine. This is done by calling the render() method. Let\'s try that again:</p>
+<p>But this is not very interesting so far - the "Hello World" text is not displayed when the example is run !</p>
+<p>In order for text or HTML within a non-inline perl block to be displayed, it must be "rendered" into the output stream by the WebDyne engine. This is done by calling the render() method. Let's try that again:</p>
 <pre>
 <span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
 <span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
@@ -628,7 +642,7 @@ sub hello &#123;
 </pre>
 
 <p><a href="example/noninline4.psp">Run</a></p>
-<p>Lexical variables are not accessible outside of the __PERL__ section due to the way perl\'s eval() function works. The following example will fail:</p>
+<p>Lexical variables are not accessible outside of the __PERL__ section due to the way perl's eval() function works. The following example will fail:</p>
 <pre>
 <span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
 <span class="h-ab">&lt;</span><span class="h-tag">head</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;</span><span class="h-tag">title</span><span class="h-ab">&gt;</span>Hello World<span class="h-ab">&lt;/</span><span class="h-tag">title</span><span class="h-ab">&gt;</span><span class="h-ab">&lt;/</span><span class="h-tag">head</span><span class="h-ab">&gt;</span>
@@ -874,8 +888,8 @@ Favourite colour 2:
 </pre>
 
 <p><a href="example/var4.psp">Run</a></p>
-<h2 id="integration-with-lincoln-steins-cgipm-module">Integration with Lincoln Stein\'s CGI.pm module</h2>
-<p>WebDyne makes extensive use of Lincoln Stein\'s CGI.pm module. Almost any CGI.pm function that renders HTML tags can be called from within a WebDyne template. The manual page for CGI.pm contains the following synopsis example:</p>
+<h2 id="integration-with-lincoln-steins-cgipm-module">Integration with Lincoln Stein's CGI.pm module</h2>
+<p>WebDyne makes extensive use of Lincoln Stein's CGI.pm module. Almost any CGI.pm function that renders HTML tags can be called from within a WebDyne template. The manual page for CGI.pm contains the following synopsis example:</p>
 <pre><code>use CGI qw/:standard/;
    print header,
          start_html('A Simple Example'),
@@ -1102,8 +1116,8 @@ sub hello2 &#123;
 </pre>
 
 <p><a href="example/cgi4.psp">Run</a></p>
-<h2 id="quick-pages-using-cgipms-start_htmlend_html-tags">Quick Pages using CGI.pm\'s \&lt;start_html&gt;\&lt;end_html&gt; tags</h2>
-<p>For rapid development you can take advantage of CGI.pm\'s \&lt;start_html&gt; and \&lt;end_html&gt; tags. The following page generates compliant HTML (view the page source after loading it to see for yourself):</p>
+<h2 id="quick-pages-using-cgipms-start_htmlend_html-tags">Quick Pages using CGI.pm's \&lt;start_html&gt;\&lt;end_html&gt; tags</h2>
+<p>For rapid development you can take advantage of CGI.pm's \&lt;start_html&gt; and \&lt;end_html&gt; tags. The following page generates compliant HTML (view the page source after loading it to see for yourself):</p>
 <pre>
 <span class="h-ab">&lt;</span><span class="h-cgi_tag">start_html</span> <span class="h-attr">title</span>=<span class="h-attv">"Quick Page</span>"<span class="h-ab">&gt;</span>
 The time is: !&#123;! localtime() !&#125;

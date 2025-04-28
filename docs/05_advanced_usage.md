@@ -296,9 +296,11 @@ The protocols file on this machine:
 
 [Run](example/include1.psp)
 
-If the file name is not an absolute path name is will be loaded relative to the directory of the parent file. For example if file \"bar.psp\" incorporates the tag\<include file=\"foo.psp\"/\> it will be expected that \"foo.psp\" is in the same directory as \"bar.psp\".
+If the file name is not an absolute path name is will be loaded relative to the directory of the parent file. For example if file "bar.psp" incorporates the tag\<include file="foo.psp"/\> it will be expected that "foo.psp" is in the same directory as "bar.psp".
 
-::: important
+!!! important
+
+```
 The include tag pulls in the target file at compile time. Changes to the
 included file after the WebDyne page is run the first time (resulting in
 compilation) are not reflected in subsequent output. Thus the include
@@ -308,13 +310,12 @@ not behave in the way you expect. The first time you run it the latest
 news is displayed. However updating the \"latest_news.txt\" file will
 not result in changes to the output (it will be stale).
 
-There are betters ways to build a CMS with WebDyne - use the include tag sparingly !
+There are betters ways to build a CMS with WebDyne - use the include tag
+sparingly !
+```
+ ## Static Sections
 
-:::
-
-## Static Sections
-
-Sometimes you want to generate dynamic output in a page once only (e.g. a last modified date, a sidebar menu etc.) Using WebDyne this can be done with Perl or CGI code flagged with the \"static\" attribute. Any dynamic tag so flagged will be rendered at compile time, and the resulting output will become part of the compiled page - it will not change on subsequent page views, or have to be re-run each time the page is loaded. An example:
+Sometimes you want to generate dynamic output in a page once only (e.g. a last modified date, a sidebar menu etc.) Using WebDyne this can be done with Perl or CGI code flagged with the "static" attribute. Any dynamic tag so flagged will be rendered at compile time, and the resulting output will become part of the compiled page - it will not change on subsequent page views, or have to be re-run each time the page is loaded. An example:
 
 <pre>
 <span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
@@ -356,7 +357,7 @@ sub mtime &#123;
 
 In fact the above page will render very quickly because it has no dynamic content at all once the \<perl\> content is flagged as static. The WebDyne engine will recognise this and store the page as a static HTML file in its cache. Whenever it is called WebDyne will use the Apache lookup_file() function to return the page as if it was just serving up static content.
 
-You can check this by looking at the content of the WebDyne cache directory (usually /var/webdyne/cache). Any file with a \".html\" extension represents the static version of a page.
+You can check this by looking at the content of the WebDyne cache directory (usually /var/webdyne/cache). Any file with a ".html" extension represents the static version of a page.
 
 Of course you can still mix static and dynamic Perl sections:
 
@@ -413,7 +414,7 @@ sub mtime &#123;
 
 [Run](example/static2.psp)
 
-If you want the whole pages to be static, then flagging everything with the \"static\" attribute can be cumbersome. There is a special meta tag which flags the entire page as static:
+If you want the whole pages to be static, then flagging everything with the "static" attribute can be cumbersome. There is a special meta tag which flags the entire page as static:
 
 <pre>
 <span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
@@ -478,7 +479,7 @@ sub mtime &#123;
 
 [Run](example/static3.psp)
 
-If you don\'t like the idea of setting the static flag in meta data, then \"using\" the special package \"WebDyne::Static\" will have exactly the same effect:
+If you don't like the idea of setting the static flag in meta data, then "using" the special package "WebDyne::Static" will have exactly the same effect:
 
 <pre>
 <span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
@@ -615,20 +616,21 @@ sub countries &#123;
 
 [Run](example/static4.psp)
 
-By simply adding the \"static\" attribute output on a sample machine increased from 55 Pages/sec to 280 Pages/sec ! Judicious use of the static tag in places with slow changing data can markedly increase efficiency of the WebDyne engine.
+By simply adding the "static" attribute output on a sample machine increased from 55 Pages/sec to 280 Pages/sec ! Judicious use of the static tag in places with slow changing data can markedly increase efficiency of the WebDyne engine.
 
 ## Caching
 
 WebDyne has the ability to cache the compiled version of a dynamic page according to specs you set via the API. When coupled with pages/blocks that are flagged as static this presents some powerful possibilities.
 
-::: important
+!!! important
+
+```
 Caching will only work if `$WEBDYNE_CACHE_DN` is defined and set to a
 directory that the web server has write access to. If caching does not
 work check that \$`WEBDYNE_CACHE_DN` is defined and permissions set
 correctly for your web server.
-:::
-
-There are many potential examples, but consider this one: you have a page that generates output by making a complex query to a database, which takes a lot of CPU and disk IO resources to generate. You need to update the page reasonably frequently (e.g. a weather forecast, near real time sales stats), but can\'t afford to have the query run every time someone view the page.
+```
+ There are many potential examples, but consider this one: you have a page that generates output by making a complex query to a database, which takes a lot of CPU and disk IO resources to generate. You need to update the page reasonably frequently (e.g. a weather forecast, near real time sales stats), but can't afford to have the query run every time someone view the page.
 
 WebDyne allows you to configure the page to cache the output for a period of time (say 5 minutes) before re-running the query. In this way users sees near real-time data without imposing a high load on the database/Web server.
 
@@ -692,7 +694,7 @@ sub cache &#123;
 
 [Run](example/cache1.psp)
 
-WebDyne uses the return value of the nominated cache routine to determine what UID (unique ID) to assign to the page. In the above example we returned \\undef, which signifies that the UID will remain unchanged.
+WebDyne uses the return value of the nominated cache routine to determine what UID (unique ID) to assign to the page. In the above example we returned \undef, which signifies that the UID will remain unchanged.
 
 You can start to get more advanced in your handling of cached pages by returning a different UID based on some arbitrary criteria. To extend our example above: say we have a page that generated sales figures for a given month. The SQL code to do this takes a long time, and we do not want to hit the database every time someone loads up the page. However we cannot just cache the output, as it will vary depending on the month the user chooses. We can tell the cache code to generate a different UID based on the month selected, then cache the resulting output.
 
@@ -768,7 +770,9 @@ sub results &#123;
 
 [Run](example/cache2.psp)
 
-::: important
+!!! important
+
+```
 Take care when using user-supplied input to generate the page UID. There
 is no inbuilt code in WebDyne to limit the number of UID\'s associated
 with a page. Unless we check it, a malicious user could potentially DOS
@@ -776,5 +780,144 @@ the server by supplying endless random \"months\" to the above page with
 a script, causing WebDyne to create a new file for each UID - perhaps
 eventually filling the disk partition that holds the cache directory.
 That is why we check the month is valid in the code above.
-:::
+```
+ # Error Handling
+
+## Error Messages
+
+Sooner or later something is going to go wrong in your code. If this happens WebDyne will generate an error showing what the error was and attempting to give information on where it came from: Take the following example:
+
+<pre>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">start_html</span> <span class="h-attr">title</span>=<span class="h-attv">"Error</span>"<span class="h-ab">&gt;</span>
+Let's divide by zero: !&#123;! my $z=0; return 5/$z !&#125;
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">end_html</span><span class="h-ab">&gt;</span>
+</pre>
+
+
+
+[Run](example/err1.psp)
+
+If you run the above example an error message will be displayed:.
+
+Error Message 1
+
+![](images/err1.png)
+
+In this example the backtrace is not particularly useful because the error occurred within in-line code, so all references in the backtrace are to internal WebDyne modules. However the code fragment clearly shows the line with the error, and the page line number where the error occurred (line 3) is given at the start of the message. The reference to "(eval 268) line 1" is a red herring - it is the 268th eval performed by this perl process, and the error occurred in line 1 of the text that the eval was passed - standard perl error text, but not really helpful here.
+
+If we have a look at another example:
+
+<pre>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">start_html</span> <span class="h-attr">title</span>=<span class="h-attv">"Error</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello</span>"<span class="h-ab">/&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">end_html</span><span class="h-ab">&gt;</span>
+
+&#095&#095PERL&#095&#095
+
+sub hello &#123;
+
+    die('bang !');
+
+&#125;
+</pre>
+
+
+
+[Run](example/err2.psp)
+
+And the corresponding screen shot:
+
+Error Message 2
+
+![](images/err2.png)
+
+The backtrace is somewhat more helpful. Looking through the backtrace we can see that the error occurred in the "hello" subroutine (invoked at line 3 of the page) on line 5 - In this case "line 5" means the 5th line down from the \_\_PERL\_\_ delimiter. The 32 digit hexadecimal number is the page unique ID - it is different for each page. WebDyne runs the code for each page in a package name space that includes the page's UID - in this way pages with identical subroutine names (e.g. two pages with a "hello" subroutine) can be accommodated with no collision.
+
+## Exceptions
+
+Errors (exceptions) can be generated within a WebDyne page in two ways:
+
+    - By calling die() as shown in example above.
+    - By returning an error message via the err() method, exported by
+    default.
+
+Examples
+
+```
+&amp;#095&amp;#095PERL&amp;#095&amp;#095
+
+
+#  Good
+#
+sub hello {
+
+    return err('no foobar') if !$foobar;
+
+}
+
+# Also OK
+#
+sub hello {
+
+    return die('no foobar') if !$foobar;
+
+}
+```
+ ## Error Checking
+
+So far all the code examples have just assumed that any call to a WebDyne API method has been successful - no error checking is done. WebDyne always returns "undef" if an API method call fails - which should be checked for after every call in a best practice scenario.
+
+<pre>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">start_html</span> <span class="h-attr">title</span>=<span class="h-attv">"Error</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"hello</span>"<span class="h-ab">&gt;</span>
+
+Hello World $&#123;foo&#125;
+
+<span class="h-ab">&lt;/</span><span class="h-webdyne_tag">perl</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">end_html</span><span class="h-ab">&gt;</span>
+
+&#095&#095PERL&#095&#095
+
+sub hello &#123;
+
+    #  Check for error after calling render function
+    #
+    shift()->render( bar=> 'Again') || return err();
+
+&#125;
+</pre>
+
+
+
+[Run](example/err3.psp)
+
+You can use the err() function to check for errors in WebDyne Perl code associated with a page, e.g.:
+
+<pre>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">start_html</span> <span class="h-attr">title</span>=<span class="h-attv">"Error</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-tag">form</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-cgi_tag">submit</span> <span class="h-attr">name</span>=<span class="h-attv">"Error</span>" <span class="h-attr">value</span>=<span class="h-attv">"Click here for error !</span>"<span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;/</span><span class="h-tag">form</span><span class="h-ab">&gt;</span>
+<span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span> <span class="h-attr">method</span>=<span class="h-attv">"foo</span>"<span class="h-ab">/&gt;</span><span class="h-ab">&lt;</span><span class="h-cgi_tag">end_html</span><span class="h-ab">&gt;</span>
+
+&#095&#095PERL&#095&#095
+
+sub foo &#123;
+
+    <span class="h-ent">&amp;bar() || return err();</span>
+    \undef;
+
+&#125;
+
+sub bar &#123;
+
+    return err('bang !') if $_&#123;'Error'&#125;;
+    \undef;
+&#125;</pre>
+
+
+
+[Run](example/err4.psp)
+
+Note that the backtrace in this example shows clearly where the error was triggered from.
 

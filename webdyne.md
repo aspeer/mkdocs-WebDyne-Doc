@@ -49,43 +49,41 @@ modules used to a lesser extent by WebDyne - I convey my thanks.
 
 WebDyne can be installed via the following methods:
 
-Perl CPAN
+Perl CPAN  
+Install from the Perl CPAN library. Installs dependencies if required
+(also via CPAN). Use this method if you are familiar with CPAN.
+Destination of the installated files is dependent on the local CPAN
+configuration, however in most cases it wil be to the Perl site library
+location. WebDyne supports installation to an alternate location using
+the PREFIX option in CPAN. Binaries are usually installed to `/usr/bin`
+or `/usr/local/bin` by CPAN, but may vary by distribution/local
+configuration.
 
-:   Install from the Perl CPAN library. Installs dependencies if
-    required (also via CPAN). Use this method if you are familiar with
-    CPAN. Destination of the installated files is dependent on the local
-    CPAN configuration, however in most cases it wil be to the Perl site
-    library location. WebDyne supports installation to an alternate
-    location using the PREFIX option in CPAN. Binaries are usually
-    installed to `/usr/bin` or `/usr/local/bin` by CPAN, but may vary by
-    distribution/local configuration.
+Assuming your CPAN environment is setup correctly you can run the
+command:
 
-    Assuming your CPAN environment is setup correctly you can run the
-    command:
+`perl -MCPAN -e "install WebDyne"`
 
-    `perl -MCPAN -e "install WebDyne"`
+To install the base WebDyne module, which includes the Apache installer.
 
-    To install the base WebDyne module, which includes the Apache
-    installer.
+To get the installer for Lighttpd (after the base package above is
+installed) run
 
-    To get the installer for Lighttpd (after the base package above is
-    installed) run
+`perl -MCPAN -e "install WebDyne::Install::Lighttpd"`
 
-    `perl -MCPAN -e "install WebDyne::Install::Lighttpd"`
+To get the complete suite of WebDyne modules, including all installers
+and externsion modules (Session manager etc.) run:
 
-    To get the complete suite of WebDyne modules, including all
-    installers and externsion modules (Session manager etc.) run:
+`perl -MCPAN -e "install Bundle::WebDyne"`
 
-    `perl -MCPAN -e "install Bundle::WebDyne"`
+!!! important
 
-::: important
-WebDyne must be initialised after installation. To get started quickly
-run `wdapacheinit` after CPAN installation to setup WebDyne for an
-Apache/mod_perl environment, or `wdlighttpdinit` for a Lighttpd/FastCGI
-environment (make sure the Lighttpd FastCGI module is installed - it is
-often packaged as a separate component in many Linux distributions). See
-the [initialisation](#sect1-initialisation) section for more information
-:::
+    WebDyne must be initialised after installation. To get started quickly
+    run `wdapacheinit` after CPAN installation to setup WebDyne for an
+    Apache/mod_perl environment, or `wdlighttpdinit` for a Lighttpd/FastCGI
+    environment (make sure the Lighttpd FastCGI module is installed - it is
+    often packaged as a separate component in many Linux distributions). See
+    the [initialisation](#sect1-initialisation) section for more information
 
 ## Prerequisites
 
@@ -112,7 +110,7 @@ WebDyne has been installed onto a Windows 2003 SP1 server running Apache
 2.0/mod_perl, Apache 2.2/mod_perl and IIS. The `wdapacheinit` installer
 may work in other Windows environments but has not been tested.
 
-# Initialisation {#sect1-initialisation}
+# Initialisation
 
 After installation Web Server configuration files must be updated so
 that the WebDyne software will be used to generate output when a .psp
@@ -122,19 +120,17 @@ file is invoked. WebDyne comes bundled with an installer for Apache
 
 Initialisation can be done via one of two methods:
 
-Manual Initialisation
+Manual Initialisation  
+Web server configuration files can be hand-edited, and cache directories
+manualy created.
 
-:   Web server configuration files can be hand-edited, and cache
-    directories manualy created.
-
-Script Initialisation
-
-:   Scripts to automate the initialisation process for Apache and
-    Lighttpd have been written - they will attempt to locate and update
-    the Web Server config files (and create neccessary directories, set
-    permissions etc.) as required. The scripts will work in common
-    cases, but may have trouble on unusual distributions, or if a custom
-    version of Apache (or other Web Server) is being used
+Script Initialisation  
+Scripts to automate the initialisation process for Apache and Lighttpd
+have been written - they will attempt to locate and update the Web
+Server config files (and create neccessary directories, set permissions
+etc.) as required. The scripts will work in common cases, but may have
+trouble on unusual distributions, or if a custom version of Apache (or
+other Web Server) is being used
 
 Scripted installation is easiest if it works for your distribution - it
 will take care of all configuration file changes, directory permissions
@@ -224,10 +220,10 @@ configuration files):
     Deny from none
     </Directory>
 
-::: important
-Substitute directory paths in the above example for the
-relevant/correct/appropriate ones on your system.
-:::
+!!! important
+
+    Substitute directory paths in the above example for the
+    relevant/correct/appropriate ones on your system.
 
 Create the cache directory and assign ownership and permission
 appropriate for your distribution (group name will vary by
@@ -246,11 +242,11 @@ If using WebDyne with Lighttpd download and install the
 command to update the Lighttpd configuration files so that WebDyne pages
 will be correctly interpreted:
 
-::: important
-WebDyne depends on the Lighttpd mod_fastcgi module (on RPM systems the
-package is sometimes called lighttpd-fastcgi). Please ensure the it is
-installed before running the initialisation script.
-:::
+!!! important
+
+    WebDyne depends on the Lighttpd mod_fastcgi module (on RPM systems the
+    package is sometimes called lighttpd-fastcgi). Please ensure the it is
+    installed before running the initialisation script.
 
     [root@localhost ~]# /opt/webdyne/bin/wdlighttpdinit
 
@@ -312,7 +308,7 @@ Include the following section into the lighttpd configuration file:
         )
     )
 
-# Getting Started/Basic Usage {#examples}
+# Getting Started/Basic Usage
 
 Assuming the installation has completed with no errors you are now ready
 to start creating WebDyne pages and applications.
@@ -405,10 +401,10 @@ scalars, it is more efficient to return a scalar reference, e.g.:
 
 Perl code in WebDyne pages must always return a
 non-undef/non-0/non-empty string value (i.e. it must return something
-that evals as \"true\"). If the code returns a non-true value (e.g. 0,
-undef, \'\') then WebDyne assumes an error has occurred in the routine.
-If you actually want to run some Perl code, but not display anything,
-you should return a reference to undef, (`\undef)`, e.g.:
+that evals as "true"). If the code returns a non-true value (e.g. 0,
+undef, '') then WebDyne assumes an error has occurred in the routine. If
+you actually want to run some Perl code, but not display anything, you
+should return a reference to undef, (`\undef)`, e.g.:
 
     sub log { &dosomething; return \undef }
 
@@ -432,9 +428,9 @@ Hello World <span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span
 </pre>
 
 
-If not already resident the module (in this case \"MyModule\") will be
+If not already resident the module (in this case "MyModule") will be
 loaded by WebDyne, so it must be available somewhere in the `@INC` path.
-The example above cannot be run because there is no \"MyModule\" package
+The example above cannot be run because there is no "MyModule" package
 on this system.
 
 ## Use of the \<perl\> tag for in-line code.
@@ -480,7 +476,7 @@ intermingled. It may be OK for quick scripts etc, but a page will
 quickly become hard to read if there is a lot of in-line Perl code
 interspersed between the HTML.
 
-in-line Perl can be useful if you want a \"quick\" computation, e.g.
+in-line Perl can be useful if you want a "quick" computation, e.g.
 insertion of the current year:
 
 <pre>
@@ -606,12 +602,12 @@ sub hello &#123; return localtime() &#125;
 
 [Run](example/noninline1.psp)
 
-But this is not very interesting so far - the \"Hello World\" text is
-not displayed when the example is run !
+But this is not very interesting so far - the "Hello World" text is not
+displayed when the example is run !
 
 In order for text or HTML within a non-inline perl block to be
-displayed, it must be \"rendered\" into the output stream by the WebDyne
-engine. This is done by calling the render() method. Let\'s try that
+displayed, it must be "rendered" into the output stream by the WebDyne
+engine. This is done by calling the render() method. Let's try that
 again:
 
 <pre>
@@ -761,7 +757,7 @@ sub hello &#123;
 [Run](example/noninline4.psp)
 
 Lexical variables are not accessible outside of the \_\_PERL\_\_ section
-due to the way perl\'s eval() function works. The following example will
+due to the way perl's eval() function works. The following example will
 fail:
 
 <pre>
@@ -952,17 +948,17 @@ sub hello &#123;
 
 Other variable types are available also, including:
 
--   `&#064{var,var,..}` for arrays, e.g. `&#064{'foo', 'bar'}`
+- `&#064{var,var,..}` for arrays, e.g. `&#064{'foo', 'bar'}`
 
--   `&#037{key=>value, key=>value, ..}` for hashes e.g.`&#037{ a=>1, b=>2 }`
+- `&#037{key=>value, key=>value, ..}` for hashes e.g.`&#037{ a=>1, b=>2 }`
 
--   `&#043{varname}` for CGI form parameters, e.g. `&#043{firstname}`
+- `&#043{varname}` for CGI form parameters, e.g. `&#043{firstname}`
 
--   `&#042{varname}`for environment variables, e.g. `&#042{HTTP_USER_AGENT}`
+- `&#042{varname}`for environment variables, e.g. `&#042{HTTP_USER_AGENT}`
 
--   `&#094{requestmethod}` for Apache request (`$r=Apache->request`) object
-    methods, e.g. `&#094{protocol}`. Only available for in Apache/mod_perl,
-    and only useful for request methods that return a scalar value.
+- `&#094{requestmethod}` for Apache request (`$r=Apache->request`) object
+  methods, e.g. `&#094{protocol}`. Only available for in Apache/mod_perl,
+  and only useful for request methods that return a scalar value.
 
 The following template uses techniques and tags discussed later, but
 should provide an example of potential variable usage:
@@ -1040,10 +1036,10 @@ Favourite colour 2:
 
 [Run](example/var4.psp)
 
-## Integration with Lincoln Stein\'s CGI.pm module
+## Integration with Lincoln Stein's CGI.pm module
 
-WebDyne makes extensive use of Lincoln Stein\'s CGI.pm module. Almost
-any CGI.pm function that renders HTML tags can be called from within a
+WebDyne makes extensive use of Lincoln Stein's CGI.pm module. Almost any
+CGI.pm function that renders HTML tags can be called from within a
 WebDyne template. The manual page for CGI.pm contains the following
 synopsis example:
 
@@ -1124,7 +1120,7 @@ sub answers &#123;
 ## More on CGI.pm generated tags
 
 We can use CGI.pm tags such as \<popup_menu\>, instead of
-\<select\>\<option\>\...\</select\>. The following example:
+\<select\>\<option\>...\</select\>. The following example:
 
     <popup_menu value="&#037{red=>Red, green=>Green, blue=>Blue}"/>
 
@@ -1299,9 +1295,9 @@ sub hello2 &#123;
 
 [Run](example/cgi4.psp)
 
-## Quick Pages using CGI.pm\'s \<start_html\>\<end_html\> tags
+## Quick Pages using CGI.pm's \<start_html\>\<end_html\> tags
 
-For rapid development you can take advantage of CGI.pm\'s \<start_html\>
+For rapid development you can take advantage of CGI.pm's \<start_html\>
 and \<end_html\> tags. The following page generates compliant HTML (view
 the page source after loading it to see for yourself):
 
@@ -1622,29 +1618,29 @@ The protocols file on this machine:
 [Run](example/include1.psp)
 
 If the file name is not an absolute path name is will be loaded relative
-to the directory of the parent file. For example if file \"bar.psp\"
-incorporates the tag\<include file=\"foo.psp\"/\> it will be expected
-that \"foo.psp\" is in the same directory as \"bar.psp\".
+to the directory of the parent file. For example if file "bar.psp"
+incorporates the tag\<include file="foo.psp"/\> it will be expected that
+"foo.psp" is in the same directory as "bar.psp".
 
-::: important
-The include tag pulls in the target file at compile time. Changes to the
-included file after the WebDyne page is run the first time (resulting in
-compilation) are not reflected in subsequent output. Thus the include
-tag should not be seen as a shortcut to a pseudo Content Management
-System. For example \<include file=\"latest_news.txt\"/\> will probably
-not behave in the way you expect. The first time you run it the latest
-news is displayed. However updating the \"latest_news.txt\" file will
-not result in changes to the output (it will be stale).
+!!! important
 
-There are betters ways to build a CMS with WebDyne - use the include tag
-sparingly !
-:::
+    The include tag pulls in the target file at compile time. Changes to the
+    included file after the WebDyne page is run the first time (resulting in
+    compilation) are not reflected in subsequent output. Thus the include
+    tag should not be seen as a shortcut to a pseudo Content Management
+    System. For example \<include file=\"latest_news.txt\"/\> will probably
+    not behave in the way you expect. The first time you run it the latest
+    news is displayed. However updating the \"latest_news.txt\" file will
+    not result in changes to the output (it will be stale).
+
+    There are betters ways to build a CMS with WebDyne - use the include tag
+    sparingly !
 
 ## Static Sections
 
 Sometimes you want to generate dynamic output in a page once only (e.g.
 a last modified date, a sidebar menu etc.) Using WebDyne this can be
-done with Perl or CGI code flagged with the \"static\" attribute. Any
+done with Perl or CGI code flagged with the "static" attribute. Any
 dynamic tag so flagged will be rendered at compile time, and the
 resulting output will become part of the compiled page - it will not
 change on subsequent page views, or have to be re-run each time the page
@@ -1695,7 +1691,7 @@ Apache lookup_file() function to return the page as if it was just
 serving up static content.
 
 You can check this by looking at the content of the WebDyne cache
-directory (usually /var/webdyne/cache). Any file with a \".html\"
+directory (usually /var/webdyne/cache). Any file with a ".html"
 extension represents the static version of a page.
 
 Of course you can still mix static and dynamic Perl sections:
@@ -1753,7 +1749,7 @@ sub mtime &#123;
 [Run](example/static2.psp)
 
 If you want the whole pages to be static, then flagging everything with
-the \"static\" attribute can be cumbersome. There is a special meta tag
+the "static" attribute can be cumbersome. There is a special meta tag
 which flags the entire page as static:
 
 <pre>
@@ -1818,9 +1814,9 @@ sub mtime &#123;
 
 [Run](example/static3.psp)
 
-If you don\'t like the idea of setting the static flag in meta data,
-then \"using\" the special package \"WebDyne::Static\" will have exactly
-the same effect:
+If you don't like the idea of setting the static flag in meta data, then
+"using" the special package "WebDyne::Static" will have exactly the same
+effect:
 
 <pre>
 <span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
@@ -1960,7 +1956,7 @@ sub countries &#123;
 
 [Run](example/static4.psp)
 
-By simply adding the \"static\" attribute output on a sample machine
+By simply adding the "static" attribute output on a sample machine
 increased from 55 Pages/sec to 280 Pages/sec ! Judicious use of the
 static tag in places with slow changing data can markedly increase
 efficiency of the WebDyne engine.
@@ -1971,18 +1967,18 @@ WebDyne has the ability to cache the compiled version of a dynamic page
 according to specs you set via the API. When coupled with pages/blocks
 that are flagged as static this presents some powerful possibilities.
 
-::: important
-Caching will only work if `$WEBDYNE_CACHE_DN` is defined and set to a
-directory that the web server has write access to. If caching does not
-work check that \$`WEBDYNE_CACHE_DN` is defined and permissions set
-correctly for your web server.
-:::
+!!! important
+
+    Caching will only work if `$WEBDYNE_CACHE_DN` is defined and set to a
+    directory that the web server has write access to. If caching does not
+    work check that \$`WEBDYNE_CACHE_DN` is defined and permissions set
+    correctly for your web server.
 
 There are many potential examples, but consider this one: you have a
 page that generates output by making a complex query to a database,
 which takes a lot of CPU and disk IO resources to generate. You need to
 update the page reasonably frequently (e.g. a weather forecast, near
-real time sales stats), but can\'t afford to have the query run every
+real time sales stats), but can't afford to have the query run every
 time someone view the page.
 
 WebDyne allows you to configure the page to cache the output for a
@@ -2057,7 +2053,7 @@ sub cache &#123;
 
 WebDyne uses the return value of the nominated cache routine to
 determine what UID (unique ID) to assign to the page. In the above
-example we returned \\undef, which signifies that the UID will remain
+example we returned \undef, which signifies that the UID will remain
 unchanged.
 
 You can start to get more advanced in your handling of cached pages by
@@ -2140,15 +2136,15 @@ sub results &#123;
 
 [Run](example/cache2.psp)
 
-::: important
-Take care when using user-supplied input to generate the page UID. There
-is no inbuilt code in WebDyne to limit the number of UID\'s associated
-with a page. Unless we check it, a malicious user could potentially DOS
-the server by supplying endless random \"months\" to the above page with
-a script, causing WebDyne to create a new file for each UID - perhaps
-eventually filling the disk partition that holds the cache directory.
-That is why we check the month is valid in the code above.
-:::
+!!! important
+
+    Take care when using user-supplied input to generate the page UID. There
+    is no inbuilt code in WebDyne to limit the number of UID\'s associated
+    with a page. Unless we check it, a malicious user could potentially DOS
+    the server by supplying endless random \"months\" to the above page with
+    a script, causing WebDyne to create a new file for each UID - perhaps
+    eventually filling the disk partition that holds the cache directory.
+    That is why we check the month is valid in the code above.
 
 # Error Handling
 
@@ -2179,10 +2175,9 @@ error occurred within in-line code, so all references in the backtrace
 are to internal WebDyne modules. However the code fragment clearly shows
 the line with the error, and the page line number where the error
 occurred (line 3) is given at the start of the message. The reference to
-\"(eval 268) line 1\" is a red herring - it is the 268th eval performed
-by this perl process, and the error occurred in line 1 of the text that
-the eval was passed - standard perl error text, but not really helpful
-here.
+"(eval 268) line 1" is a red herring - it is the 268th eval performed by
+this perl process, and the error occurred in line 1 of the text that the
+eval was passed - standard perl error text, but not really helpful here.
 
 If we have a look at another example:
 
@@ -2210,23 +2205,22 @@ Error Message 2
 ![](images/err2.png)
 
 The backtrace is somewhat more helpful. Looking through the backtrace we
-can see that the error occurred in the \"hello\" subroutine (invoked at
-line 3 of the page) on line 5 - In this case \"line 5\" means the 5th
-line down from the \_\_PERL\_\_ delimiter. The 32 digit hexadecimal
-number is the page unique ID - it is different for each page. WebDyne
-runs the code for each page in a package name space that includes the
-page\'s UID - in this way pages with identical subroutine names (e.g.
-two pages with a \"hello\" subroutine) can be accommodated with no
-collision.
+can see that the error occurred in the "hello" subroutine (invoked at
+line 3 of the page) on line 5 - In this case "line 5" means the 5th line
+down from the \_\_PERL\_\_ delimiter. The 32 digit hexadecimal number is
+the page unique ID - it is different for each page. WebDyne runs the
+code for each page in a package name space that includes the page's
+UID - in this way pages with identical subroutine names (e.g. two pages
+with a "hello" subroutine) can be accommodated with no collision.
 
 ## Exceptions
 
 Errors (exceptions) can be generated within a WebDyne page in two ways:
 
--   By calling die() as shown in example above.
+- By calling die() as shown in example above.
 
--   By returning an error message via the err() method, exported by
-    default.
+- By returning an error message via the err() method, exported by
+  default.
 
 Examples
 
@@ -2253,7 +2247,7 @@ Examples
 
 So far all the code examples have just assumed that any call to a
 WebDyne API method has been successful - no error checking is done.
-WebDyne always returns \"undef\" if an API method call fails - which
+WebDyne always returns "undef" if an API method call fails - which
 should be checked for after every call in a best practice scenario.
 
 <pre>
@@ -2316,81 +2310,63 @@ was triggered from.
 
 Reference of WebDyne tags and supported attributes
 
-\<perl\>
+\<perl\>  
+Run Perl code either in-line (between the \<perl\>..\</perl\>) tags, or
+non-inline via the method attribute
 
-:   Run Perl code either in-line (between the \<perl\>..\</perl\>) tags,
-    or non-inline via the method attribute
+method=\[Module::Name\]::method  
+*Optional*. Call an external perl subroutine in a pre-loaded module, or
+a subroutine in a \_\_PERL\_\_ block at then of the HTML: file
 
-    method=\[Module::Name\]::method
+param=scalar\|array\|hash  
+*Optional*. Parameters to be supplied to perl routine. Supply array and
+hash using &#064{1,2} and &#037{a=\>1, b=\>2} conventions respectively.
 
-    :   *Optional*. Call an external perl subroutine in a pre-loaded
-        module, or a subroutine in a \_\_PERL\_\_ block at then of the
-        HTML: file
+static=1  
+*Optional*. This Perl code to be run once only and the output cached for
+all subsequent requests.
 
-    param=scalar\|array\|hash
+\<block\>  
+Block of HTML code to be optionally rendered if desired by call to
+render_block Webdyne method:
 
-    :   *Optional*. Parameters to be supplied to perl routine. Supply
-        array and hash using \&#064{1,2} and &#037{a=\>1, b=\>2} conventions
-        respectively.
+name=identifier  
+*Mandatory*. The name for this block of HTML.
 
-    static=1
+display=1  
+*Optional.* Force display of this block even if not invoked by
+render_block WebDyne method. Useful for prototyping.
 
-    :   *Optional*. This Perl code to be run once only and the output
-        cached for all subsequent requests.
+static=1  
+*Optional*. This block rendered once only and the output cached for all
+subsequent requests
 
-\<block\>
+\<include\>  
+Include HTML or text from an external file
 
-:   Block of HTML code to be optionally rendered if desired by call to
-    render_block Webdyne method:
+file=filename  
+*Mandatory*. Name of file we want to include. Can be relative to current
+directory or absolute path.
 
-    name=identifier
+head=1  
+*Optional*. File is an HTML file and we want to include just the
+\<head\> section
 
-    :   *Mandatory*. The name for this block of HTML.
+body=1  
+*Optional*. File is an HTML file and we want to include just the
+\<body\> section.
 
-    display=1
+block=blockname  
+*Optional*. File is a .psp file and we want to include a \<block\>
+section from that file.
 
-    :   *Optional.* Force display of this block even if not invoked by
-        render_block WebDyne method. Useful for prototyping.
+\<dump\>  
+Display CGI paramters in dump format via CGI-\>Dump call. Useful for
+debugging. Only rendered if `$WEBDYNE_DUMP_FLAG` global set to 1 in
+WebDyne constants (see below)
 
-    static=1
-
-    :   *Optional*. This block rendered once only and the output cached
-        for all subsequent requests
-
-\<include\>
-
-:   Include HTML or text from an external file
-
-    file=filename
-
-    :   *Mandatory*. Name of file we want to include. Can be relative to
-        current directory or absolute path.
-
-    head=1
-
-    :   *Optional*. File is an HTML file and we want to include just the
-        \<head\> section
-
-    body=1
-
-    :   *Optional*. File is an HTML file and we want to include just the
-        \<body\> section.
-
-    block=blockname
-
-    :   *Optional*. File is a .psp file and we want to include a
-        \<block\> section from that file.
-
-\<dump\>
-
-:   Display CGI paramters in dump format via CGI-\>Dump call. Useful for
-    debugging. Only rendered if `$WEBDYNE_DUMP_FLAG` global set to 1 in
-    WebDyne constants (see below)
-
-    display=1
-
-    :   *Optional.* Force display even if `$WEBDYNE_DUMP_FLAG` global
-        not set
+display=1  
+*Optional.* Force display even if `$WEBDYNE_DUMP_FLAG` global not set
 
 ## WebDyne methods
 
@@ -2401,71 +2377,57 @@ the examples). All methods return undef on failure, and raise an error
 using the `err()` function. The following methods are available to any
 instance of the WebDyne object:
 
-CGI()
+CGI()  
+Returns an instance of the CGI.pm object for the current request.
 
-:   Returns an instance of the CGI.pm object for the current request.
+r(), request()  
+Returns an instance of the Apache request object.
 
-r(), request()
+render( \<key=\>value, key=\>value\>, .. )  
+Called to render the text or HTML between \<perl\>..\</perl\> tags.
+Optional key and value pairs will be substituted into the output as per
+the variable section. Returns a scalar ref of the resulting HTML.
 
-:   Returns an instance of the Apache request object.
+render_block( blockname, \<key=\>value, key=\>value, ..\>).  
+Called to render a block of text or HTML between \<block\>..\</block\>
+tags. Optional key and value pairs will be substituted into the output
+as per the variable section. Returns scalar ref of resulting HTML if
+called with from \<perl\>..\</perl\> section containing the block to be
+rendered, or true (\undef) if the block is not within the
+\<perl\>..\</perl\> section (e.g. further into the document, see the
+block section for an example).
 
-render( \<key=\>value, key=\>value\>, .. )
+redirect({ uri=\>uri \| file=\>filename \| html=\>\html_text })  
+Will redirect to URI or file nominated, or display only nominated text.
+Any rendering done to prior to this method is abandoned.
 
-:   Called to render the text or HTML between \<perl\>..\</perl\> tags.
-    Optional key and value pairs will be substituted into the output as
-    per the variable section. Returns a scalar ref of the resulting
-    HTML.
+cache_inode( \<seed\> )  
+Returns the page unique ID (UID). Called inode for legacy reasons, as
+that is what the UID used to be based on. If a seed value is supplied a
+new UID will be generated based on an MD5 of the seed. Seed only needs
+to be supplied if using advanced cache handlers.
 
-render_block( blockname, \<key=\>value, key=\>value, ..\>).
+cache_mtime( \<uid\> )  
+Returns the mtime (modification time) of the cache file associated with
+the optionally supplied UID. If no UID supplied the current one will be
+used. Can be used to make cache compile decisions by WebDyne::Cache code
+(e.g if page \> x minutes old, recompile).
 
-:   Called to render a block of text or HTML between
-    \<block\>..\</block\> tags. Optional key and value pairs will be
-    substituted into the output as per the variable section. Returns
-    scalar ref of resulting HTML if called with from \<perl\>..\</perl\>
-    section containing the block to be rendered, or true (\\undef) if
-    the block is not within the \<perl\>..\</perl\> section (e.g.
-    further into the document, see the block section for an example).
+cache_compile( )  
+Force recompilation of cache file. Can be used in cache code to force
+recompilation of a page, even if it is flagged static. Returns current
+value if no parameters supplied, or sets if parameter supplied.
 
-redirect({ uri=\>uri \| file=\>filename \| html=\>\\html_text })
+no_cache()  
+Send headers indicating that the page is not be cached by the browser or
+intermediate proxies. By default WebDyne pages automatically set the
+no-cache headers, although this behaviour can be modified by clearing
+the `$WEBDYNE_NO_CACHE` variable and using this function
 
-:   Will redirect to URI or file nominated, or display only nominated
-    text. Any rendering done to prior to this method is abandoned.
-
-cache_inode( \<seed\> )
-
-:   Returns the page unique ID (UID). Called inode for legacy reasons,
-    as that is what the UID used to be based on. If a seed value is
-    supplied a new UID will be generated based on an MD5 of the seed.
-    Seed only needs to be supplied if using advanced cache handlers.
-
-cache_mtime( \<uid\> )
-
-:   Returns the mtime (modification time) of the cache file associated
-    with the optionally supplied UID. If no UID supplied the current one
-    will be used. Can be used to make cache compile decisions by
-    WebDyne::Cache code (e.g if page \> x minutes old, recompile).
-
-cache_compile( )
-
-:   Force recompilation of cache file. Can be used in cache code to
-    force recompilation of a page, even if it is flagged static. Returns
-    current value if no parameters supplied, or sets if parameter
-    supplied.
-
-no_cache()
-
-:   Send headers indicating that the page is not be cached by the
-    browser or intermediate proxies. By default WebDyne pages
-    automatically set the no-cache headers, although this behaviour can
-    be modified by clearing the `$WEBDYNE_NO_CACHE` variable and using
-    this function
-
-meta()
-
-:   Return a hash ref containing the meta data for this page.
-    Alterations to meta data are persistent for this process, and carry
-    across Apache requests (although not across different Apache
-    processes)
+meta()  
+Return a hash ref containing the meta data for this page. Alterations to
+meta data are persistent for this process, and carry across Apache
+requests (although not across different Apache processes)
 
 ## WebDyne Constants
 
@@ -2504,11 +2466,11 @@ file is in Perl Data::Dumper format, and takes the format:
 The file is not present by default and should be created if you wish to
 change any of the WebDyne constants from their default values.
 
-::: important
-Always check the syntax of the `/etc/webdyne.pm` file after editing by
-running `perl -c -w /etc/webdyne.pm` to check that the file is readable
-by Perl.
-:::
+!!! important
+
+    Always check the syntax of the `/etc/webdyne.pm` file after editing by
+    running `perl -c -w /etc/webdyne.pm` to check that the file is readable
+    by Perl.
 
 ### Setting WebDyne constants in Apache
 
@@ -2523,24 +2485,24 @@ PerlSetVar directive:
     #
     PerlSetVar      WEBDYNE_SESSION_ID_COOKIE_NAME  'session_cookie'
 
-::: important
-WebDyne constants cannot be set on a per-location or per-directory
-basis - they are read from the top level of the config file and set
-globally.
+!!! important
 
-Some 1.x versions of mod_perl do not read PerlSetVar variables
-correctly. If you encounter this problem use a \<Perl\>..\</Perl\>
-section in the httpd.conf file, e.g.:
+    WebDyne constants cannot be set on a per-location or per-directory
+    basis - they are read from the top level of the config file and set
+    globally.
 
-    # Mod_perl 1.x
+    Some 1.x versions of mod_perl do not read PerlSetVar variables
+    correctly. If you encounter this problem use a \<Perl\>..\</Perl\>
+    section in the httpd.conf file, e.g.:
 
-    PerlHandler     WebDyne
-    <Perl>
-    $WebDyne::Constant::WEBDYNE_CACHE_DN='/data1/webdyne/cache';
-    $WebDyne::Constant::WEBDYNE_STORE_COMMENTS=1;
-    $WebDyne::Session::Constant::WEBDYNE_SESSION_ID_COOKIE_NAME='session_cookie';
-    </Perl>
-:::
+        # Mod_perl 1.x
+
+        PerlHandler     WebDyne
+        <Perl>
+        $WebDyne::Constant::WEBDYNE_CACHE_DN='/data1/webdyne/cache';
+        $WebDyne::Constant::WEBDYNE_STORE_COMMENTS=1;
+        $WebDyne::Session::Constant::WEBDYNE_SESSION_ID_COOKIE_NAME='session_cookie';
+        </Perl>
 
 ### Setting WebDyne constants in lighttpd/FastCGI
 
@@ -2566,178 +2528,143 @@ The following constants can be altered to change the behaviour of the
 WebDyne package. All these constants reside in the `WebDyne::Constant`
 package namespace.
 
-`$WEBDYNE_CACHE_DN`
+`$WEBDYNE_CACHE_DN`  
+The name of the directory that will hold partially compiled WebDyne
+cache files. Must exist and be writable by the Apache process
 
-:   The name of the directory that will hold partially compiled WebDyne
-    cache files. Must exist and be writable by the Apache process
+`$WEBDYNE_STARTUP_CACHE_FLUSH`  
+Remove all existing disk cache files at Apache startup. 1=yes (default),
+0=no. By default all disk cache files are removed at startup, and thus
+pages must be recompiled again the first time they are viewed. If you
+set this to 0 (no) then disk cache files will be saved between startups
+and pages will not need to be re-compiled if Apache is restarted.
 
-`$WEBDYNE_STARTUP_CACHE_FLUSH`
+`$WEBDYNE_CACHE_CHECK_FREQ`  
+Check the memory cache after this many request (per-process counter).
+default=256. After this many requests a housekeeping function will check
+compiled pages that are stored in memory and remove old ones according
+to the criteria below.
 
-:   Remove all existing disk cache files at Apache startup. 1=yes
-    (default), 0=no. By default all disk cache files are removed at
-    startup, and thus pages must be recompiled again the first time they
-    are viewed. If you set this to 0 (no) then disk cache files will be
-    saved between startups and pages will not need to be re-compiled if
-    Apache is restarted.
+`$WEBDYNE_CACHE_HIGH_WATER`  
+Remove compiled from pages from memory when we have more than this many.
+default=64
 
-`$WEBDYNE_CACHE_CHECK_FREQ`
+`$WEBDYNE_CACHE_LOW_WATER`  
+After reaching HIGH_WATER delete until we get down to this amount.
+default=32
 
-:   Check the memory cache after this many request (per-process
-    counter). default=256. After this many requests a housekeeping
-    function will check compiled pages that are stored in memory and
-    remove old ones according to the criteria below.
+`$WEBDYNE_CACHE_CLEAN_METHOD`  
+Clean algorithm. default=1, means least used cleaned first, 0 means
+oldest last view cleaned first
 
-`$WEBDYNE_CACHE_HIGH_WATER`
+`$WEBDYNE_EVAL_SAFE`  
+default=0 (no), If set to 1 means eval in a Safe.pm container.
 
-:   Remove compiled from pages from memory when we have more than this
-    many. default=64
+`$WEBDYNE_EVAL_SAFE_OPCODE_AR`  
+The opcode set to use in Safe.pm evals (see the Safe man page). Defaults
+to "\[':default'\]". Use \[&Opcode::full_opset()\] for the full opset.
+CAUTION Use of WebDyne with Safe.pm not comprehensively tested.
 
-`$WEBDYNE_CACHE_LOW_WATER`
+`$WEBDYNE_EVAL_USE_STRICT`  
+The string to use before each eval. Defaults to "use strict qw(vars);".
+Set to undef if you do not want strict.pm. In Safe mode this becomes a
+flag only - set undef for "no strict", and non-undef for "use strict"
+equivalence in a Safe mode (checked under Perl 5.8.6 only, results in
+earlier versions of Perl may vary).
 
-:   After reaching HIGH_WATER delete until we get down to this amount.
-    default=32
+`$WEBDYNE_STRICT_VARS`  
+Check if a var is declared in a render block (e.g \$ {foo}) but not
+supplied as a render parameter. If so will throw an error. Set to 0 to
+ignore. default=1
 
-`$WEBDYNE_CACHE_CLEAN_METHOD`
+`$WEBDYNE_DUMP_FLAG`  
+If 1, any instance of the special \<dump\> tag will print out results
+from CGI-\>dump(). Use when debugging forms. default=0
 
-:   Clean algorithm. default=1, means least used cleaned first, 0 means
-    oldest last view cleaned first
+`$WEBDYNE_DTD`  
+The DTD to place at the top of a rendered page. Defaults to: \<!DOCTYPE
+html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd"\>
 
-`$WEBDYNE_EVAL_SAFE`
+`$WEBDYNE_HTML_PARAM`  
+attributes for the \<html\> tag, e.g. { lang =\>'en-US' }. undef by
+default
 
-:   default=0 (no), If set to 1 means eval in a Safe.pm container.
+`$WEBDYNE_COMPILE_IGNORE_WHITESPACE`  
+Ignore source file whitespace as per HTML::TreeBuilder
+ignore_ignorable_whitespace function. Defaults to 1
 
-`$WEBDYNE_EVAL_SAFE_OPCODE_AR`
+`$WEBDYNE_COMPILE_NO_SPACE_COMPACTING`  
+Do not compact source file whitespace as per HTML::TreeBuilder
+no_space_compacting function. Defaults to 0
 
-:   The opcode set to use in Safe.pm evals (see the Safe man page).
-    Defaults to \"\[\':default\'\]\". Use \[&Opcode::full_opset()\] for
-    the full opset. CAUTION Use of WebDyne with Safe.pm not
-    comprehensively tested.
+`$WEBDYNE_STORE_COMMENTS`  
+By default comments are not rendered. Set to 1 to store and display
+comments from source files. Defaults to 0
 
-`$WEBDYNE_EVAL_USE_STRICT`
+`$WEBDYNE_NO_CACHE`.  
+WebDyne should send no-cache HTTP headers. Set to 0 to not send such
+headers. Defaults to 1
 
-:   The string to use before each eval. Defaults to \"use strict
-    qw(vars);\". Set to undef if you do not want strict.pm. In Safe mode
-    this becomes a flag only - set undef for \"no strict\", and
-    non-undef for \"use strict\" equivalence in a Safe mode (checked
-    under Perl 5.8.6 only, results in earlier versions of Perl may
-    vary).
+`$WEBDYNE_DELAYED_BLOCK_RENDER`  
+By default WebDyne will render blocks targeted by a render_block() call,
+even those that are outside the originating \<perl\>..\</perl\> section
+that made the call. Set to 0 to not render such blocks. Defaults to 1
 
-`$WEBDYNE_STRICT_VARS`
+`$WEBDYNE_WARNINGS_FATAL`  
+If a programs issues a warning via warn() this constant determines if it
+will be treated as a fatal error. Default is 0 (warnings not fatal). Set
+to 1 if you want any warn() to behave as if die() had been called..
 
-:   Check if a var is declared in a render block (e.g \$ {foo}) but not
-    supplied as a render parameter. If so will throw an error. Set to 0
-    to ignore. default=1
+`$WEBDYNE_CGI_DISABLE_UPLOADS`  
+Disable CGI.pm file uploads. Defaults to 1 (true - do not allow
+uploads).
 
-`$WEBDYNE_DUMP_FLAG`
+`$WEBDYNE_CGI_POST_MAX`  
+Maximum size of a POST request. Defaults to 512Kb
 
-:   If 1, any instance of the special \<dump\> tag will print out
-    results from CGI-\>dump(). Use when debugging forms. default=0
+`$WEBDYNE_ERROR_TEXT`  
+Display simplified errors in plain text rather than using HTML. Useful
+in interal WebDyne development only. By default this is 0 =\> the HTML
+error handler will be used.
 
-`$WEBDYNE_DTD`
+`$WEBDYNE_ERROR_SHOW`  
+Display the error message. Only applicable in the HTML error handler
 
-:   The DTD to place at the top of a rendered page. Defaults to:
-    \<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"
-    \"http://www.w3.org/TR/html4/loose.dtd\"\>
+`$WEBDYNE_ERROR_SOURCE_CONTEXT_SHOW`  
+Display a fragment of the .psp source file around where the error
+occurred to give some context of where the error happened. Set to 0 to
+not display context.
 
-`$WEBDYNE_HTML_PARAM`
+`$WEBDYNE_ERROR_SOURCE_CONTEXT_LINES_PRE`  
+Number of lines of the source file before the error occurred to display.
+Defaults to 4
 
-:   attributes for the \<html\> tag, e.g. { lang =\>\'en-US\' }. undef
-    by default
+`$WEBDYNE_ERROR_SOURCE_CONTEXT_LINES_POST`  
+Number of lines of the source file after the error occurred to display.
+Defaults to 4
 
-`$WEBDYNE_COMPILE_IGNORE_WHITESPACE`
+`$WEBDYNE_ERROR_SOURCE_CONTEXT_LINE_FRAGMENT_MAX`  
+Max line length to show. Defaults to 80 characters.
 
-:   Ignore source file whitespace as per HTML::TreeBuilder
-    ignore_ignorable_whitespace function. Defaults to 1
+`$WEBDYNE_ERROR_BACKTRACE_SHOW`  
+Show a backtrace of modules through which the error propagated. On by
+default, set to 0 to disable,
 
-`$WEBDYNE_COMPILE_NO_SPACE_COMPACTING`
+`$WEBDYNE_ERROR_BACKTRACE_SHORT`  
+Remove WebDyne internal modules from backtrace. Off by default, set to 1
+to enable.
 
-:   Do not compact source file whitespace as per HTML::TreeBuilder
-    no_space_compacting function. Defaults to 0
-
-`$WEBDYNE_STORE_COMMENTS`
-
-:   By default comments are not rendered. Set to 1 to store and display
-    comments from source files. Defaults to 0
-
-`$WEBDYNE_NO_CACHE`.
-
-:   WebDyne should send no-cache HTTP headers. Set to 0 to not send such
-    headers. Defaults to 1
-
-`$WEBDYNE_DELAYED_BLOCK_RENDER`
-
-:   By default WebDyne will render blocks targeted by a render_block()
-    call, even those that are outside the originating
-    \<perl\>..\</perl\> section that made the call. Set to 0 to not
-    render such blocks. Defaults to 1
-
-`$WEBDYNE_WARNINGS_FATAL`
-
-:   If a programs issues a warning via warn() this constant determines
-    if it will be treated as a fatal error. Default is 0 (warnings not
-    fatal). Set to 1 if you want any warn() to behave as if die() had
-    been called..
-
-`$WEBDYNE_CGI_DISABLE_UPLOADS`
-
-:   Disable CGI.pm file uploads. Defaults to 1 (true - do not allow
-    uploads).
-
-`$WEBDYNE_CGI_POST_MAX`
-
-:   Maximum size of a POST request. Defaults to 512Kb
-
-`$WEBDYNE_ERROR_TEXT`
-
-:   Display simplified errors in plain text rather than using HTML.
-    Useful in interal WebDyne development only. By default this is 0 =\>
-    the HTML error handler will be used.
-
-`$WEBDYNE_ERROR_SHOW`
-
-:   Display the error message. Only applicable in the HTML error handler
-
-`$WEBDYNE_ERROR_SOURCE_CONTEXT_SHOW`
-
-:   Display a fragment of the .psp source file around where the error
-    occurred to give some context of where the error happened. Set to 0
-    to not display context.
-
-`$WEBDYNE_ERROR_SOURCE_CONTEXT_LINES_PRE`
-
-:   Number of lines of the source file before the error occurred to
-    display. Defaults to 4
-
-`$WEBDYNE_ERROR_SOURCE_CONTEXT_LINES_POST`
-
-:   Number of lines of the source file after the error occurred to
-    display. Defaults to 4
-
-`$WEBDYNE_ERROR_SOURCE_CONTEXT_LINE_FRAGMENT_MAX`
-
-:   Max line length to show. Defaults to 80 characters.
-
-`$WEBDYNE_ERROR_BACKTRACE_SHOW`
-
-:   Show a backtrace of modules through which the error propagated. On
-    by default, set to 0 to disable,
-
-`$WEBDYNE_ERROR_BACKTRACE_SHORT`
-
-:   Remove WebDyne internal modules from backtrace. Off by default, set
-    to 1 to enable.
-
-`$WEBDYNE_AUTOLOAD_POLLUTE`
-
-:   When a method is called from a \<perl\> routine the WebDyne AUTOLOAD
-    method must search multiple modules for the method owner. Setting
-    this flag to 1 will pollute the WebDyne name space with the method
-    name so that AUTOLOAD is not called if that method is used again
-    (for the duration of the Perl process, not just that call to the
-    page). This is dangerous and can cause confusion if different
-    modules use the same name. In very strictly controlled
-    environments - and ebev then only in some cases - it can result is
-    faster throughput. Off by default, set to 1 to enable.
+`$WEBDYNE_AUTOLOAD_POLLUTE`  
+When a method is called from a \<perl\> routine the WebDyne AUTOLOAD
+method must search multiple modules for the method owner. Setting this
+flag to 1 will pollute the WebDyne name space with the method name so
+that AUTOLOAD is not called if that method is used again (for the
+duration of the Perl process, not just that call to the page). This is
+dangerous and can cause confusion if different modules use the same
+name. In very strictly controlled environments - and ebev then only in
+some cases - it can result is faster throughput. Off by default, set to
+1 to enable.
 
 Extension modules (e.g., WebDyne::Session) have their own constants -
 see each package for details.
@@ -2749,11 +2676,10 @@ WebDyne processes pages. Directives are set in either the Apache or
 lighttpd .conf files and can be set differently per location. At this
 stage only one directive applies to the core WebDyne module:
 
-`WebDyneHandler`
-
-:   The name of the handler that WebDyne should invoke instead of
-    handling the page internally. The only other handler available today
-    is WebDyne::Chain.
+`WebDyneHandler`  
+The name of the handler that WebDyne should invoke instead of handling
+the page internally. The only other handler available today is
+WebDyne::Chain.
 
 This directive exists primarily to allow lighttpd/FastCGI to invoke
 WebDyne::Chain as the primary handler. An example from the lighttpd.conf
@@ -2842,11 +2768,11 @@ using WebDyne and WebDyne::Chain directives as examples:
             )
     }   
 
-::: important
-As noted in the configuration file the socket file names must be unique
-for each location that you want different WebDyne directives/constants
-for.
-:::
+!!! important
+
+    As noted in the configuration file the socket file names must be unique
+    for each location that you want different WebDyne directives/constants
+    for.
 
 # Miscellaneous
 
@@ -2857,50 +2783,42 @@ location will vary depening on your distribution - most will default to
 `/usr/local/bin`, but may be installed elsewhere in some cases,
 especially if you have nominated a `PREFIX` option when using CPAN.
 
-`wdapacheinit`
+`wdapacheinit`  
+Runs the WebDyne initialization routines, which create needed
+directories, modify and create Apache .conf files etc.
 
-:   Runs the WebDyne initialization routines, which create needed
-    directories, modify and create Apache .conf files etc.
+`wdcompile`  
+Usage: `wdcompile filename.psp`. Will compile a .psp file and use
+Data::Dumper to display the WebDyne internal representation of the page
+tree structure. Useful as a troubleshooting tool to see how
+HTML::TreeBuilder has parsed your source file, and to show up any
+misplaced tags etc.
 
-`wdcompile`
+`wdrender`  
+Usage: `wdrender filename.psp`. Will attempt to render the source file
+to screen using WebDyne. Can only do basic tasks - any advanced use
+(such as calls to the Apache request object) will fail.
 
-:   Usage: `wdcompile filename.psp`. Will compile a .psp file and use
-    Data::Dumper to display the WebDyne internal representation of the
-    page tree structure. Useful as a troubleshooting tool to see how
-    HTML::TreeBuilder has parsed your source file, and to show up any
-    misplaced tags etc.
+`wddump`  
+Usage: `wddump filename`. Where filename is a compiled WebDyne source
+file (usually in /var/webdyne/cache). Will dump out the saved data
+structure of the compiled file.
 
-`wdrender`
-
-:   Usage: `wdrender filename.psp`. Will attempt to render the source
-    file to screen using WebDyne. Can only do basic tasks - any advanced
-    use (such as calls to the Apache request object) will fail.
-
-`wddump`
-
-:   Usage: `wddump filename`. Where filename is a compiled WebDyne
-    source file (usually in /var/webdyne/cache). Will dump out the saved
-    data structure of the compiled file.
-
-`wdfastcgi`
-
-:   Used to run WebDyne under FastCGI - not usually invoked
-    interactively
+`wdfastcgi`  
+Used to run WebDyne under FastCGI - not usually invoked interactively
 
 ## Other files referenced by WebDyne
 
-`/etc/webdyne.pm`
+`/etc/webdyne.pm`  
+Used for storage of local constants that override WebDyne defaults. See
+the [WebDyne::Constant](#webdyne_constants) section for details
 
-:   Used for storage of local constants that override WebDyne defaults.
-    See the [WebDyne::Constant](#webdyne_constants) section for details
-
-`/etc/perl5lib.pm`
-
-:   Contains a list of directories that WebDyne will look in for
-    libraries. Effectively extends Perl\'s `@INC` variable. If you
-    install CPAN or other Perl modules to a particular directory using
-    `perl Makefile.PL PREFIX=/opt/mylibs`, then add \'`/opt/mylibs`\' to
-    the `perl5lib.pm` file, WebDyne will find them.
+`/etc/perl5lib.pm`  
+Contains a list of directories that WebDyne will look in for libraries.
+Effectively extends Perl's `@INC` variable. If you install CPAN or other
+Perl modules to a particular directory using
+`perl Makefile.PL PREFIX=/opt/mylibs`, then add '`/opt/mylibs`' to the
+`perl5lib.pm` file, WebDyne will find them.
 
 # Extending WebDyne
 
@@ -2922,7 +2840,7 @@ into the request lifecycle.
 Whilst WebDyne::Chain does not modify content itself, it allows any of
 the modules below to intercept the request as if they had been loaded by
 the target page directly (i.e., loaded in the \_\_PERL\_\_ section of a
-page via the \"use\" or \"require\" functions).
+page via the "use" or "require" functions).
 
 Using WebDyne::Chain you can modify the behaviour of WebDyne pages based
 on their location. The WebDyne::Template module can be used in such
@@ -2953,10 +2871,9 @@ The above example would place all pages within the named template, and
 make session information to all pages via \$self-\>session_id(). A good
 start to a rudimentary CMS.
 
-WebDyneChain
-
-:   Directive. Supply a space separated string of WebDyne modules that
-    the request should be passed through.
+WebDyneChain  
+Directive. Supply a space separated string of WebDyne modules that the
+request should be passed through.
 
 ## WebDyne::Static
 
@@ -3008,7 +2925,7 @@ httpd.conf snippet:
     </Location>
 
 Note that any package used as the WebDyneCacheHandler target should be
-already loaded via \"PerlRequire\" or similar mechanism.
+already loaded via "PerlRequire" or similar mechanism.
 
 As an example of why this could be useful consider the [caching
 examples](#caching) above. Instead of flagging that an individual file
@@ -3020,17 +2937,15 @@ to a whole directory with no alteration to the individual pages.
 WebDyne::Session generates a unique session ID for each browser
 connection and stores it in a cookie. It has the following API:
 
-session_id()
+session_id()  
+Function. Returns the unique session id assigned to the browser. Call
+via \$self-\>session_id() from perl code.
 
-:   Function. Returns the unique session id assigned to the browser.
-    Call via \$self-\>session_id() from perl code.
-
-`$WEBDYNE_SESSION_ID_COOKIE_NAME`
-
-:   Constant. Holds the name of the cookie that will be used to assign
-    the session id in the users browser. Defaults to \"session\". Set as
-    per [WebDyne::Constants](#webdyne_constants) section. Resides in the
-    `WebDyne::Session::Constant` package namespace.
+`$WEBDYNE_SESSION_ID_COOKIE_NAME`  
+Constant. Holds the name of the cookie that will be used to assign the
+session id in the users browser. Defaults to "session". Set as per
+[WebDyne::Constants](#webdyne_constants) section. Resides in the
+`WebDyne::Session::Constant` package namespace.
 
 Example:
 
@@ -3073,62 +2988,51 @@ maintain simple state information for a session. It inherits from
 WebDyne::State, and it could be used to build other state storage
 modules (e.g. WebDyne::State::MySQL)
 
-login()
+login()  
+Function. Logs a user in, creating a state entry for them. Returns true
+if successful, undef if fails.
 
-:   Function. Logs a user in, creating a state entry for them. Returns
-    true if successful, undef if fails.
+user()  
+Function. Returns scalar ref containing the name of the logged user for
+this session, undef if fails
 
-user()
+logout()  
+Function. Logout the current user, deleting all state info.
 
-:   Function. Returns scalar ref containing the name of the logged user
-    for this session, undef if fails
+state_store( \<key=\>value, key=\>value \| hashref\> )  
+Function. Store a key and associated value into the state database.
+Returns true for success, undef for failure. You can optionally pass a
+hash ref to state_store, in which case it will replace the existing
+state hash.
 
-logout()
+state_fetch( \<key\> )  
+Function.Fetch a previously stored key, Returns scalar ref to key value
+if successful, undef for failure. If no key name is supplied a hash ref
+of the current state hash will be returned.
 
-:   Function. Logout the current user, deleting all state info.
+state_delete()  
+Function.Delete the state database for this session. Returns true for
+success, undef for failure. Actual deletion does not take place until
+cleanup() phase of Apache lifecycle.
 
-state_store( \<key=\>value, key=\>value \| hashref\> )
+filename( \<filename\> )  
+Function.Fetch or set the name of the file where the state information
+will be held (defaults to `$WEBDYNE_CACHE_DIR``/state.db`). Must be set
+before any state operations take place.
 
-:   Function. Store a key and associated value into the state database.
-    Returns true for success, undef for failure. You can optionally pass
-    a hash ref to state_store, in which case it will replace the
-    existing state hash.
+`$WEBDYNE_BERKELEYDB_STATE_FN`  
+Constant. Name of the file that will hold the state database. Can be
+just a file name or an absolute path name. Set as per
+[WebDyne::Constants](#webdyne_constants) section. Defined in the
+`WebDyne::State::BerkeleyDB::Constant` namespace. Defaults to `state.db`
 
-state_fetch( \<key\> )
-
-:   Function.Fetch a previously stored key, Returns scalar ref to key
-    value if successful, undef for failure. If no key name is supplied a
-    hash ref of the current state hash will be returned.
-
-state_delete()
-
-:   Function.Delete the state database for this session. Returns true
-    for success, undef for failure. Actual deletion does not take place
-    until cleanup() phase of Apache lifecycle.
-
-filename( \<filename\> )
-
-:   Function.Fetch or set the name of the file where the state
-    information will be held (defaults to
-    `$WEBDYNE_CACHE_DIR``/state.db`). Must be set before any state
-    operations take place.
-
-`$WEBDYNE_BERKELEYDB_STATE_FN`
-
-:   Constant. Name of the file that will hold the state database. Can be
-    just a file name or an absolute path name. Set as per
-    [WebDyne::Constants](#webdyne_constants) section. Defined in the
-    `WebDyne::State::BerkeleyDB::Constant` namespace. Defaults to
-    `state.db`
-
-`$WEBDYNE_BERKELEYDB_STATE_DN`
-
-:   Constant.Name of the directory where the state file will be located.
-    If an absolute filename (i.e. one that includes a directory name) is
-    given above then this variable is ignored. Set as per
-    [WebDyne::Constants](#webdyne_constants) section. Defined in the
-    `WebDyne::State::BerkeleyDB::Constant` namespace. Defaults to
-    `$WEBDYNE_CACHE_DN`
+`$WEBDYNE_BERKELEYDB_STATE_DN`  
+Constant.Name of the directory where the state file will be located. If
+an absolute filename (i.e. one that includes a directory name) is given
+above then this variable is ignored. Set as per
+[WebDyne::Constants](#webdyne_constants) section. Defined in the
+`WebDyne::State::BerkeleyDB::Constant` namespace. Defaults to
+`$WEBDYNE_CACHE_DN`
 
 Example:
 
@@ -3195,15 +3099,15 @@ sub state &#123;
 
 [Run](example/state1.psp)
 
-::: important
-State information is stored against the browser session ID, not against
-a user ID. The same user on two different machines will have two
-different state entries.
+!!! important
 
-WebDyne::State is meant for simplistic storage of state information - it
-is not meant for long term storage of user preferences or other data,
-and should not be used as a persistent database.
-:::
+    State information is stored against the browser session ID, not against
+    a user ID. The same user on two different machines will have two
+    different state entries.
+
+    WebDyne::State is meant for simplistic storage of state information - it
+    is not meant for long term storage of user preferences or other data,
+    and should not be used as a persistent database.
 
 WebDyne::State::BerkelyDB can also be used in conjunction with the
 [WebDyne::Chain](#webdyne_chain) module to make state information
@@ -3238,16 +3142,13 @@ viewed as standalone documents.
 
 The API:
 
-template ( filename )
+template ( filename )  
+Function. Set the file name of the template to be used. If no path is
+specified file name will be relative to the current request directory
 
-:   Function. Set the file name of the template to be used. If no path
-    is specified file name will be relative to the current request
-    directory
-
-WebDyneTemplate
-
-:   Directive. Can be used to supply the template file name in a Apache
-    or lighttpd/FastCGI configuration file.
+WebDyneTemplate  
+Directive. Can be used to supply the template file name in a Apache or
+lighttpd/FastCGI configuration file.
 
 Example:
 
@@ -3341,7 +3242,7 @@ use WebDyne::Template qw(template1.psp);
 
 In real life it is not desirable to put the template name into every
 content file (as was done in the above example), nor would we want to
-have to \"use WebDyne::Template\" in every content file.
+have to "use WebDyne::Template" in every content file.
 
 To overcome this WebDyne::Template can read the template file name using
 the Apache dir_config function, and assign a template on a per location
@@ -3356,15 +3257,15 @@ file:
 
     </Location>
 
-# GNU General Public License {#gpl}
+# GNU General Public License
 
-# Preamble {#gpl-1}
+# Preamble
 
 The licenses for most software are designed to take away your freedom to
 share and change it. By contrast, the GNU General Public License is
 intended to guarantee your freedom to share and change free software -
 to make sure the software is free for all its users. This General Public
-License applies to most of the Free Software Foundation\'s software and
+License applies to most of the Free Software Foundation's software and
 to any other program whose authors commit to using it. (Some other Free
 Software Foundation software is covered by the GNU Library General
 Public License instead.) You can apply it to your programs, too.
@@ -3393,35 +3294,35 @@ We protect your rights with two steps:
 2.  offer you this license which gives you legal permission to copy,
     distribute and/or modify the software.
 
-Also, for each author\'s protection and ours, we want to make certain
+Also, for each author's protection and ours, we want to make certain
 that everyone understands that there is no warranty for this free
 software. If the software is modified by someone else and passed on, we
 want its recipients to know that what they have is not the original, so
 that any problems introduced by others will not reflect on the original
-authors\' reputations.
+authors' reputations.
 
 Finally, any free program is threatened constantly by software patents.
 We wish to avoid the danger that redistributors of a free program will
 individually obtain patent licenses, in effect making the program
 proprietary. To prevent this, we have made it clear that any patent must
-be licensed for everyone\'s free use or not licensed at all.
+be licensed for everyone's free use or not licensed at all.
 
 The precise terms and conditions for copying, distribution and
 modification follow.
 
-# TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION {#gpl-2}
+# TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
-## Section 0 {#gpl-2-0}
+## Section 0
 
 This License applies to any program or other work which contains a
 notice placed by the copyright holder saying it may be distributed under
-the terms of this General Public License. The \"Program\", below, refers
-to any such program or work, and a "work based on the Program " means
+the terms of this General Public License. The "Program", below, refers
+to any such program or work, and a “work based on the Program ” means
 either the Program or any derivative work under copyright law: that is
 to say, a work containing the Program or a portion of it, either
 verbatim or with modifications and/or translated into another language.
 (Hereinafter, translation is included without limitation in the term
-"modification ".) Each licensee is addressed as "you".
+“modification ”.) Each licensee is addressed as “you”.
 
 Activities other than copying, distribution and modification are not
 covered by this License; they are outside its scope. The act of running
@@ -3430,19 +3331,19 @@ covered only if its contents constitute a work based on the Program
 (independent of having been made by running the Program). Whether that
 is true depends on what the Program does.
 
-## Section 1 {#gpl-2-1}
+## Section 1
 
-You may copy and distribute verbatim copies of the Program\'s source
-code as you receive it, in any medium, provided that you conspicuously
-and appropriately publish on each copy an appropriate copyright notice
-and disclaimer of warranty; keep intact all the notices that refer to
-this License and to the absence of any warranty; and give any other
+You may copy and distribute verbatim copies of the Program's source code
+as you receive it, in any medium, provided that you conspicuously and
+appropriately publish on each copy an appropriate copyright notice and
+disclaimer of warranty; keep intact all the notices that refer to this
+License and to the absence of any warranty; and give any other
 recipients of the Program a copy of this License along with the Program.
 
 You may charge a fee for the physical act of transferring a copy, and
 you may at your option offer warranty protection in exchange for a fee.
 
-## Section 2 {#gpl-2-2}
+## Section 2
 
 You may modify your copy or copies of the Program or any portion of it,
 thus forming a work based on the Program, and copy and distribute such
@@ -3465,15 +3366,15 @@ provided that you also meet all of these conditions:
     users may redistribute the program under these conditions, and
     telling the user how to view a copy of this License.
 
-    ::: note
-    ::: title
-    Exception:
-    :::
+    !!! note
 
-    If the Program itself is interactive but does not normally print
-    such an announcement, your work based on the Program is not required
-    to print an announcement.)
-    :::
+        ::: title
+        Exception:
+        :::
+
+        If the Program itself is interactive but does not normally print such an
+        announcement, your work based on the Program is not required to print an
+        announcement.)
 
 These requirements apply to the modified work as a whole. If
 identifiable sections of that work are not derived from the Program, and
@@ -3495,7 +3396,7 @@ with the Program (or with a work based on the Program) on a volume of a
 storage or distribution medium does not bring the other work under the
 scope of this License.
 
-## Section 3 {#gpl-2-3}
+## Section 3
 
 You may copy and distribute the Program (or a work based on it, under
 [Section 2 ](#gpl-2-2) in object code or executable form under the terms
@@ -3536,7 +3437,7 @@ the source code from the same place counts as distribution of the source
 code, even though third parties are not compelled to copy the source
 along with the object code.
 
-## Section 4 {#gpl-2-4}
+## Section 4
 
 You may not copy, modify, sublicense, or distribute the Program except
 as expressly provided under this License. Any attempt otherwise to copy,
@@ -3546,7 +3447,7 @@ who have received copies, or rights, from you under this License will
 not have their licenses terminated so long as such parties remain in
 full compliance.
 
-## Section 5 {#gpl-2-5}
+## Section 5
 
 You are not required to accept this License, since you have not signed
 it. However, nothing else grants you permission to modify or distribute
@@ -3557,16 +3458,16 @@ indicate your acceptance of this License to do so, and all its terms and
 conditions for copying, distributing or modifying the Program or works
 based on it.
 
-## Section 6 {#gpl-2-6}
+## Section 6
 
 Each time you redistribute the Program (or any work based on the
 Program), the recipient automatically receives a license from the
 original licensor to copy, distribute or modify the Program subject to
 these terms and conditions. You may not impose any further restrictions
-on the recipients\' exercise of the rights granted herein. You are not
+on the recipients' exercise of the rights granted herein. You are not
 responsible for enforcing compliance by third parties to this License.
 
-## Section 7 {#gpl-2-7}
+## Section 7
 
 If, as a consequence of a court judgment or allegation of patent
 infringement or for any other reason (not limited to patent issues),
@@ -3600,7 +3501,7 @@ choice.
 This section is intended to make thoroughly clear what is believed to be
 a consequence of the rest of this License.
 
-## Section 8 {#gpl-2-8}
+## Section 8
 
 If the distribution and/or use of the Program is restricted in certain
 countries either by patents or by copyrighted interfaces, the original
@@ -3610,7 +3511,7 @@ so that distribution is permitted only in or among countries not thus
 excluded. In such case, this License incorporates the limitation as if
 written in the body of this License.
 
-## Section 9 {#gpl-2-9}
+## Section 9
 
 The Free Software Foundation may publish revised and/or new versions of
 the General Public License from time to time. Such new versions will be
@@ -3618,14 +3519,14 @@ similar in spirit to the present version, but may differ in detail to
 address new problems or concerns.
 
 Each version is given a distinguishing version number. If the Program
-specifies a version number of this License which applies to it and \"any
-later version\", you have the option of following the terms and
+specifies a version number of this License which applies to it and "any
+later version", you have the option of following the terms and
 conditions either of that version or of any later version published by
 the Free Software Foundation. If the Program does not specify a version
 number of this License, you may choose any version ever published by the
 Free Software Foundation.
 
-## Section 10 {#gpl-2-10}
+## Section 10
 
 If you wish to incorporate parts of the Program into other free programs
 whose distribution conditions are different, write to the author to ask
@@ -3635,19 +3536,19 @@ exceptions for this. Our decision will be guided by the two goals of
 preserving the free status of all derivatives of our free software and
 of promoting the sharing and reuse of software generally.
 
-## NO WARRANTY Section 11 {#gpl-2-11}
+## NO WARRANTY Section 11
 
 BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR
 THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
 OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
-PROVIDE THE PROGRAM \"AS IS\" WITHOUT WARRANTY OF ANY KIND, EITHER
+PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE
 ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH
 YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL
 NECESSARY SERVICING, REPAIR OR CORRECTION.
 
-## Section 12 {#gpl-2-12}
+## Section 12
 
 IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
 WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR

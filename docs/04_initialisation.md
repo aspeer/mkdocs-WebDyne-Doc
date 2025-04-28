@@ -5,18 +5,10 @@ After installation Web Server configuration files must be updated so that the We
 Initialisation can be done via one of two methods:
 
 Manual Initialisation
-
-:   Web server configuration files can be hand-edited, and cache
-    directories manualy created.
+Web server configuration files can be hand-edited, and cache directories manualy created.
 
 Script Initialisation
-
-:   Scripts to automate the initialisation process for Apache and
-    Lighttpd have been written - they will attempt to locate and update
-    the Web Server config files (and create neccessary directories, set
-    permissions etc.) as required. The scripts will work in common
-    cases, but may have trouble on unusual distributions, or if a custom
-    version of Apache (or other Web Server) is being used
+Scripts to automate the initialisation process for Apache and Lighttpd have been written - they will attempt to locate and update the Web Server config files (and create neccessary directories, set permissions etc.) as required. The scripts will work in common cases, but may have trouble on unusual distributions, or if a custom version of Apache (or other Web Server) is being used
 
 Scripted installation is easiest if it works for your distribution - it will take care of all configuration file changes, directory permissions and ownership etc.
 
@@ -92,14 +84,13 @@ Allow from all
 Deny from none
 &lt;/Directory&gt;
 ```
+ !!! important
 
-
-::: important
+```
 Substitute directory paths in the above example for the
 relevant/correct/appropriate ones on your system.
-:::
-
-Create the cache directory and assign ownership and permission appropriate for your distribution (group name will vary by distribution - locate the correct one for your distribution)
+```
+ Create the cache directory and assign ownership and permission appropriate for your distribution (group name will vary by distribution - locate the correct one for your distribution)
 
 ```
 [root@localhost ~]# mkdir /opt/webdyne/cache
@@ -112,13 +103,13 @@ Create the cache directory and assign ownership and permission appropriate for y
 
 If using WebDyne with Lighttpd download and install the `WebDyne::Install::Lighttpd` module. Then run the `wdlighttpdinit` command to update the Lighttpd configuration files so that WebDyne pages will be correctly interpreted:
 
-::: important
+!!! important
+
+```
 WebDyne depends on the Lighttpd mod_fastcgi module (on RPM systems the
 package is sometimes called lighttpd-fastcgi). Please ensure the it is
 installed before running the initialisation script.
-:::
 
-```
 [root@localhost ~]# /opt/webdyne/bin/wdlighttpdinit
 
 [install] - Installation source directory '/opt/webdyne'.
@@ -266,7 +257,7 @@ sub greeting { return 0 }
 #
 sub greeting { return \0 }
 ```
- Perl code in WebDyne pages must always return a non-undef/non-0/non-empty string value (i.e. it must return something that evals as \"true\"). If the code returns a non-true value (e.g. 0, undef, \'\') then WebDyne assumes an error has occurred in the routine. If you actually want to run some Perl code, but not display anything, you should return a reference to undef, (`\undef)`, e.g.:
+ Perl code in WebDyne pages must always return a non-undef/non-0/non-empty string value (i.e. it must return something that evals as "true"). If the code returns a non-true value (e.g. 0, undef, '') then WebDyne assumes an error has occurred in the routine. If you actually want to run some Perl code, but not display anything, you should return a reference to undef, (`\undef)`, e.g.:
 
 ```
 sub log { &amp;dosomething; return \undef }
@@ -289,7 +280,7 @@ Hello World <span class="h-ab">&lt;</span><span class="h-webdyne_tag">perl</span
 
 
 
-If not already resident the module (in this case \"MyModule\") will be loaded by WebDyne, so it must be available somewhere in the `@INC` path. The example above cannot be run because there is no \"MyModule\" package on this system.
+If not already resident the module (in this case "MyModule") will be loaded by WebDyne, so it must be available somewhere in the `@INC` path. The example above cannot be run because there is no "MyModule" package on this system.
 
 ## Use of the \<perl\> tag for in-line code.
 
@@ -329,7 +320,7 @@ for (0..3) &#123;
 
 This is the most straight-forward use of Perl within a HTML document, but does not really make for easy reading - the Perl code and HTML are intermingled. It may be OK for quick scripts etc, but a page will quickly become hard to read if there is a lot of in-line Perl code interspersed between the HTML.
 
-in-line Perl can be useful if you want a \"quick\" computation, e.g. insertion of the current year:
+in-line Perl can be useful if you want a "quick" computation, e.g. insertion of the current year:
 
 <pre>
 <span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
@@ -448,9 +439,9 @@ sub hello &#123; return localtime() &#125;
 
 [Run](example/noninline1.psp)
 
-But this is not very interesting so far - the \"Hello World\" text is not displayed when the example is run !
+But this is not very interesting so far - the "Hello World" text is not displayed when the example is run !
 
-In order for text or HTML within a non-inline perl block to be displayed, it must be \"rendered\" into the output stream by the WebDyne engine. This is done by calling the render() method. Let\'s try that again:
+In order for text or HTML within a non-inline perl block to be displayed, it must be "rendered" into the output stream by the WebDyne engine. This is done by calling the render() method. Let's try that again:
 
 <pre>
 <span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
@@ -593,7 +584,7 @@ sub hello &#123;
 
 [Run](example/noninline4.psp)
 
-Lexical variables are not accessible outside of the \_\_PERL\_\_ section due to the way perl\'s eval() function works. The following example will fail:
+Lexical variables are not accessible outside of the \_\_PERL\_\_ section due to the way perl's eval() function works. The following example will fail:
 
 <pre>
 <span class="h-ab">&lt;</span><span class="h-tag">html</span><span class="h-ab">&gt;</span>
@@ -867,9 +858,9 @@ Favourite colour 2:
 
 [Run](example/var4.psp)
 
-## Integration with Lincoln Stein\'s CGI.pm module
+## Integration with Lincoln Stein's CGI.pm module
 
-WebDyne makes extensive use of Lincoln Stein\'s CGI.pm module. Almost any CGI.pm function that renders HTML tags can be called from within a WebDyne template. The manual page for CGI.pm contains the following synopsis example:
+WebDyne makes extensive use of Lincoln Stein's CGI.pm module. Almost any CGI.pm function that renders HTML tags can be called from within a WebDyne template. The manual page for CGI.pm contains the following synopsis example:
 
 ```
 use CGI qw/:standard/;
@@ -948,7 +939,7 @@ sub answers &#123;
 
 ## More on CGI.pm generated tags
 
-We can use CGI.pm tags such as \<popup_menu\>, instead of \<select\>\<option\>\...\</select\>. The following example:
+We can use CGI.pm tags such as \<popup_menu\>, instead of \<select\>\<option\>...\</select\>. The following example:
 
 ```
 &lt;popup_menu value="&amp;#037{red=&gt;Red, green=&gt;Green, blue=&gt;Blue}"/&gt;
@@ -1122,9 +1113,9 @@ sub hello2 &#123;
 
 [Run](example/cgi4.psp)
 
-## Quick Pages using CGI.pm\'s \<start_html\>\<end_html\> tags
+## Quick Pages using CGI.pm's \<start_html\>\<end_html\> tags
 
-For rapid development you can take advantage of CGI.pm\'s \<start_html\> and \<end_html\> tags. The following page generates compliant HTML (view the page source after loading it to see for yourself):
+For rapid development you can take advantage of CGI.pm's \<start_html\> and \<end_html\> tags. The following page generates compliant HTML (view the page source after loading it to see for yourself):
 
 <pre>
 <span class="h-ab">&lt;</span><span class="h-cgi_tag">start_html</span> <span class="h-attr">title</span>=<span class="h-attv">"Quick Page</span>"<span class="h-ab">&gt;</span>
