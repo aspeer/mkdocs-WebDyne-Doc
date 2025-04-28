@@ -1,7 +1,7 @@
 site_name: WebDyne Documentation
 
 theme:
-  name: slate
+  name: readthedocs
 
 site_url: https://aspeer.github.io/mkdocs-WebDyne-Doc/
 
