@@ -1,7 +1,7 @@
 site_name: WebDyne Documentation
 
 theme:
-  name: material
+  name: slate
 
 site_url: https://aspeer.github.io/mkdocs-WebDyne-Doc/
 
