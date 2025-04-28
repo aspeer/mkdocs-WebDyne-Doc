@@ -1,0 +1,8 @@
+site_name: WebDyne Documentation
+
+theme:
+  name: readthedocs
+
+plugins:
+  - awesome-pages
+  

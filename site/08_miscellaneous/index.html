@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Miscellaneous - WebDyne Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Miscellaneous";
+        var mkdocs_page_input_path = "08_miscellaneous.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> WebDyne Documentation
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../00_introduction/">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../01_legal_information_licensing_and_copyright/">Legal Information - Licensing and Copyright</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../02_credits/">Credits</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../03_installation/">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../04_initialisation/">Initialisation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../05_advanced_usage/">Advanced Usage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../06_error_handling/">Error Handling</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../07_webdyne_api/">WebDyne API</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Miscellaneous</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#command-line-utilities">Command Line Utilities</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#other-files-referenced-by-webdyne">Other files referenced by WebDyne</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../09_extending_webdyne/">Extending WebDyne</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../10_preamble/">Preamble</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../11_terms_and_conditions_for_copying_distribution_and_modification/">TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">WebDyne Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Miscellaneous</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="miscellaneous">Miscellaneous</h1>
+<h2 id="command-line-utilities">Command Line Utilities</h2>
+<p>Command line utilities are fairly basic at this stage. Installation location will vary depening on your distribution - most will default to <code>/usr/local/bin</code>, but may be installed elsewhere in some cases, especially if you have nominated a <code>PREFIX</code> option when using CPAN.</p>
+<p><code>wdapacheinit</code></p>
+<p>:   Runs the WebDyne initialization routines, which create needed
+    directories, modify and create Apache .conf files etc.</p>
+<p><code>wdcompile</code></p>
+<p>:   Usage: <code>wdcompile filename.psp</code>. Will compile a .psp file and use
+    Data::Dumper to display the WebDyne internal representation of the
+    page tree structure. Useful as a troubleshooting tool to see how
+    HTML::TreeBuilder has parsed your source file, and to show up any
+    misplaced tags etc.</p>
+<p><code>wdrender</code></p>
+<p>:   Usage: <code>wdrender filename.psp</code>. Will attempt to render the source
+    file to screen using WebDyne. Can only do basic tasks - any advanced
+    use (such as calls to the Apache request object) will fail.</p>
+<p><code>wddump</code></p>
+<p>:   Usage: <code>wddump filename</code>. Where filename is a compiled WebDyne
+    source file (usually in /var/webdyne/cache). Will dump out the saved
+    data structure of the compiled file.</p>
+<p><code>wdfastcgi</code></p>
+<p>:   Used to run WebDyne under FastCGI - not usually invoked
+    interactively</p>
+<h2 id="other-files-referenced-by-webdyne">Other files referenced by WebDyne</h2>
+<p><code>/etc/webdyne.pm</code></p>
+<p>:   Used for storage of local constants that override WebDyne defaults.
+    See the <a href="#webdyne_constants">WebDyne::Constant</a> section for details</p>
+<p><code>/etc/perl5lib.pm</code></p>
+<p>:   Contains a list of directories that WebDyne will look in for
+    libraries. Effectively extends Perl\'s <code>@INC</code> variable. If you
+    install CPAN or other Perl modules to a particular directory using
+    <code>perl Makefile.PL PREFIX=/opt/mylibs</code>, then add \'<code>/opt/mylibs</code>\' to
+    the <code>perl5lib.pm</code> file, WebDyne will find them.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../07_webdyne_api/" class="btn btn-neutral float-left" title="WebDyne API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../09_extending_webdyne/" class="btn btn-neutral float-right" title="Extending WebDyne">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../07_webdyne_api/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../09_extending_webdyne/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

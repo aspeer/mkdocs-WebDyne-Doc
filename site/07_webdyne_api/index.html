@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>WebDyne API - WebDyne Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "WebDyne API";
+        var mkdocs_page_input_path = "07_webdyne_api.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> WebDyne Documentation
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../00_introduction/">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../01_legal_information_licensing_and_copyright/">Legal Information - Licensing and Copyright</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../02_credits/">Credits</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../03_installation/">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../04_initialisation/">Initialisation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../05_advanced_usage/">Advanced Usage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../06_error_handling/">Error Handling</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">WebDyne API</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#webdyne-tags">WebDyne tags</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#webdyne-constants">WebDyne Constants</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#global-constants-file">Global constants file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#setting-webdyne-constants-in-apache">Setting WebDyne constants in Apache</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#setting-webdyne-constants-in-lighttpdfastcgi">Setting WebDyne constants in lighttpd/FastCGI</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#webdyne-directives">WebDyne Directives</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../08_miscellaneous/">Miscellaneous</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../09_extending_webdyne/">Extending WebDyne</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../10_preamble/">Preamble</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../11_terms_and_conditions_for_copying_distribution_and_modification/">TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">WebDyne Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">WebDyne API</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="webdyne-api">WebDyne API</h1>
+<h2 id="webdyne-tags">WebDyne tags</h2>
+<p>Reference of WebDyne tags and supported attributes</p>
+<p>\&lt;perl&gt;</p>
+<p>:   Run Perl code either in-line (between the \&lt;perl&gt;..\&lt;/perl&gt;) tags,
+    or non-inline via the method attribute</p>
+<pre><code>method=\[Module::Name\]::method
+
+:   *Optional*. Call an external perl subroutine in a pre-loaded
+    module, or a subroutine in a \_\_PERL\_\_ block at then of the
+    HTML: file
+
+param=scalar\|array\|hash
+
+:   *Optional*. Parameters to be supplied to perl routine. Supply
+    array and hash using \&amp;#064{1,2} and &amp;amp;#037{a=\&gt;1, b=\&gt;2} conventions
+    respectively.
+
+static=1
+
+:   *Optional*. This Perl code to be run once only and the output
+    cached for all subsequent requests.
+</code></pre>
+<p>\&lt;block&gt;</p>
+<p>:   Block of HTML code to be optionally rendered if desired by call to
+    render_block Webdyne method:</p>
+<pre><code>name=identifier
+
+:   *Mandatory*. The name for this block of HTML.
+
+display=1
+
+:   *Optional.* Force display of this block even if not invoked by
+    render_block WebDyne method. Useful for prototyping.
+
+static=1
+
+:   *Optional*. This block rendered once only and the output cached
+    for all subsequent requests
+</code></pre>
+<p>\&lt;include&gt;</p>
+<p>:   Include HTML or text from an external file</p>
+<pre><code>file=filename
+
+:   *Mandatory*. Name of file we want to include. Can be relative to
+    current directory or absolute path.
+
+head=1
+
+:   *Optional*. File is an HTML file and we want to include just the
+    \&lt;head\&gt; section
+
+body=1
+
+:   *Optional*. File is an HTML file and we want to include just the
+    \&lt;body\&gt; section.
+
+block=blockname
+
+:   *Optional*. File is a .psp file and we want to include a
+    \&lt;block\&gt; section from that file.
+</code></pre>
+<p>\&lt;dump&gt;</p>
+<p>:   Display CGI paramters in dump format via CGI-&gt;Dump call. Useful for
+    debugging. Only rendered if <code>$WEBDYNE_DUMP_FLAG</code> global set to 1 in
+    WebDyne constants (see below)</p>
+<pre><code>display=1
+
+:   *Optional.* Force display even if `$WEBDYNE_DUMP_FLAG` global
+    not set
+</code></pre>
+<p>## WebDyne methods</p>
+<p>When running Perl code within a WebDyne page the very first parameter passed to any routine (in-line or in a __PERL__ block) is an instance of the WebDyne page object (referred to as <code>$self</code> in most of the examples). All methods return undef on failure, and raise an error using the <code>err()</code> function. The following methods are available to any instance of the WebDyne object:</p>
+<p>CGI()</p>
+<p>:   Returns an instance of the CGI.pm object for the current request.</p>
+<p>r(), request()</p>
+<p>:   Returns an instance of the Apache request object.</p>
+<p>render( \&lt;key=&gt;value, key=&gt;value&gt;, .. )</p>
+<p>:   Called to render the text or HTML between \&lt;perl&gt;..\&lt;/perl&gt; tags.
+    Optional key and value pairs will be substituted into the output as
+    per the variable section. Returns a scalar ref of the resulting
+    HTML.</p>
+<p>render_block( blockname, \&lt;key=&gt;value, key=&gt;value, ..&gt;).</p>
+<p>:   Called to render a block of text or HTML between
+    \&lt;block&gt;..\&lt;/block&gt; tags. Optional key and value pairs will be
+    substituted into the output as per the variable section. Returns
+    scalar ref of resulting HTML if called with from \&lt;perl&gt;..\&lt;/perl&gt;
+    section containing the block to be rendered, or true (\undef) if
+    the block is not within the \&lt;perl&gt;..\&lt;/perl&gt; section (e.g.
+    further into the document, see the block section for an example).</p>
+<p>redirect({ uri=&gt;uri | file=&gt;filename | html=&gt;\html_text })</p>
+<p>:   Will redirect to URI or file nominated, or display only nominated
+    text. Any rendering done to prior to this method is abandoned.</p>
+<p>cache_inode( \&lt;seed&gt; )</p>
+<p>:   Returns the page unique ID (UID). Called inode for legacy reasons,
+    as that is what the UID used to be based on. If a seed value is
+    supplied a new UID will be generated based on an MD5 of the seed.
+    Seed only needs to be supplied if using advanced cache handlers.</p>
+<p>cache_mtime( \&lt;uid&gt; )</p>
+<p>:   Returns the mtime (modification time) of the cache file associated
+    with the optionally supplied UID. If no UID supplied the current one
+    will be used. Can be used to make cache compile decisions by
+    WebDyne::Cache code (e.g if page &gt; x minutes old, recompile).</p>
+<p>cache_compile( )</p>
+<p>:   Force recompilation of cache file. Can be used in cache code to
+    force recompilation of a page, even if it is flagged static. Returns
+    current value if no parameters supplied, or sets if parameter
+    supplied.</p>
+<p>no_cache()</p>
+<p>:   Send headers indicating that the page is not be cached by the
+    browser or intermediate proxies. By default WebDyne pages
+    automatically set the no-cache headers, although this behaviour can
+    be modified by clearing the <code>$WEBDYNE_NO_CACHE</code> variable and using
+    this function</p>
+<p>meta()</p>
+<p>:   Return a hash ref containing the meta data for this page.
+    Alterations to meta data are persistent for this process, and carry
+    across Apache requests (although not across different Apache
+    processes)</p>
+<h2 id="webdyne-constants">WebDyne Constants</h2>
+<p>Constants defined in the WebDyne::Constant package control various aspects of how WebDyne behaves. Constants can be modified globally by altering a system file (<code>/etc/webdyne.pm</code> under Linux distros), or by altering configuration parameters within the Apache or lighttpd/FastCGI web servers.</p>
+<h3 id="global-constants-file">Global constants file</h3>
+<p>WebDyne will look for a system constants file under <code>/etc/webdyne.pm</code> and set package variables according to values found in that file. The file is in Perl Data::Dumper format, and takes the format:</p>
+<pre><code># sample /etc/webdyne.pm file
+#
+$VAR1={
+        WebDyne::Constant =&amp;gt; {
+
+                WEBDYNE_CACHE_DN       =&amp;gt; '/data1/webdyne/cache',
+                WEBDYNE_STORE_COMMENTS =&amp;gt; 1,
+                #  ... more variables for WebDyne package
+
+       },
+
+       WebDyne::Session::Constant =&amp;gt; {
+
+                WEBDYNE_SESSION_ID_COOKIE_NAME =&amp;gt; 'session_cookie',
+                #  ... more variables for WebDyne::Session package
+
+       },
+
+};
+</code></pre>
+<p>The file is not present by default and should be created if you wish to change any of the WebDyne constants from their default values.</p>
+<p>::: important
+Always check the syntax of the <code>/etc/webdyne.pm</code> file after editing by
+running <code>perl -c -w /etc/webdyne.pm</code> to check that the file is readable
+by Perl.
+:::</p>
+<h3 id="setting-webdyne-constants-in-apache">Setting WebDyne constants in Apache</h3>
+<p>WebDyne constants can be set in an Apache httpd.conf file using the PerlSetVar directive:</p>
+<pre><code>PerlHandler     WebDyne
+PerlSetVar      WEBDYNE_CACHE_DN                '/data1/webdyne/cache'
+PerlSetVar      WEBDYNE_STORE_COMMENTS          1
+
+#  From WebDyne::Session package
+#
+PerlSetVar      WEBDYNE_SESSION_ID_COOKIE_NAME  'session_cookie'
+</code></pre>
+<p>::: important
+WebDyne constants cannot be set on a per-location or per-directory
+basis - they are read from the top level of the config file and set
+globally.</p>
+<p>Some 1.x versions of mod_perl do not read PerlSetVar variables correctly. If you encounter this problem use a \&lt;Perl&gt;..\&lt;/Perl&gt; section in the httpd.conf file, e.g.:</p>
+<pre><code># Mod_perl 1.x
+
+PerlHandler     WebDyne
+&amp;lt;Perl&amp;gt;
+$WebDyne::Constant::WEBDYNE_CACHE_DN='/data1/webdyne/cache';
+$WebDyne::Constant::WEBDYNE_STORE_COMMENTS=1;
+$WebDyne::Session::Constant::WEBDYNE_SESSION_ID_COOKIE_NAME='session_cookie';
+&amp;lt;/Perl&amp;gt;
+</code></pre>
+<p>:::</p>
+<h3 id="setting-webdyne-constants-in-lighttpdfastcgi">Setting WebDyne constants in lighttpd/FastCGI</h3>
+<p>WebDyne constants can be set in lighttpd/FastCGI using the bin-environment directive. Here is a sample lighttpd.conf file showing WebDyne constants:</p>
+<pre><code>fastcgi.server = ( &quot;.psp&quot; =&amp;gt;
+                   ( &quot;localhost&quot; =&amp;gt;
+                      (
+                        &quot;socket&quot; =&amp;gt; &quot;/tmp/psp-fastcgi.socket&quot;,
+                        &quot;bin-path&quot; =&amp;gt; &quot;/opt/webdyne/bin/wdfastcgi&quot;,
+                        &quot;bin-environment&quot;     =&amp;gt; (
+                          &quot;WEBDYNE_CACHE_DN   =&amp;gt; &quot;/data1/webdyne/cache&quot;
+                        )
+                     )
+                   )
+                 )
+</code></pre>
+<p>### Constants Reference</p>
+<p>The following constants can be altered to change the behaviour of the WebDyne package. All these constants reside in the <code>WebDyne::Constant</code> package namespace.</p>
+<p><code>$WEBDYNE_CACHE_DN</code></p>
+<p>:   The name of the directory that will hold partially compiled WebDyne
+    cache files. Must exist and be writable by the Apache process</p>
+<p><code>$WEBDYNE_STARTUP_CACHE_FLUSH</code></p>
+<p>:   Remove all existing disk cache files at Apache startup. 1=yes
+    (default), 0=no. By default all disk cache files are removed at
+    startup, and thus pages must be recompiled again the first time they
+    are viewed. If you set this to 0 (no) then disk cache files will be
+    saved between startups and pages will not need to be re-compiled if
+    Apache is restarted.</p>
+<p><code>$WEBDYNE_CACHE_CHECK_FREQ</code></p>
+<p>:   Check the memory cache after this many request (per-process
+    counter). default=256. After this many requests a housekeeping
+    function will check compiled pages that are stored in memory and
+    remove old ones according to the criteria below.</p>
+<p><code>$WEBDYNE_CACHE_HIGH_WATER</code></p>
+<p>:   Remove compiled from pages from memory when we have more than this
+    many. default=64</p>
+<p><code>$WEBDYNE_CACHE_LOW_WATER</code></p>
+<p>:   After reaching HIGH_WATER delete until we get down to this amount.
+    default=32</p>
+<p><code>$WEBDYNE_CACHE_CLEAN_METHOD</code></p>
+<p>:   Clean algorithm. default=1, means least used cleaned first, 0 means
+    oldest last view cleaned first</p>
+<p><code>$WEBDYNE_EVAL_SAFE</code></p>
+<p>:   default=0 (no), If set to 1 means eval in a Safe.pm container.</p>
+<p><code>$WEBDYNE_EVAL_SAFE_OPCODE_AR</code></p>
+<p>:   The opcode set to use in Safe.pm evals (see the Safe man page).
+    Defaults to \"[\':default\']\". Use [&amp;Opcode::full_opset()] for
+    the full opset. CAUTION Use of WebDyne with Safe.pm not
+    comprehensively tested.</p>
+<p><code>$WEBDYNE_EVAL_USE_STRICT</code></p>
+<p>:   The string to use before each eval. Defaults to \"use strict
+    qw(vars);\". Set to undef if you do not want strict.pm. In Safe mode
+    this becomes a flag only - set undef for \"no strict\", and
+    non-undef for \"use strict\" equivalence in a Safe mode (checked
+    under Perl 5.8.6 only, results in earlier versions of Perl may
+    vary).</p>
+<p><code>$WEBDYNE_STRICT_VARS</code></p>
+<p>:   Check if a var is declared in a render block (e.g \$ {foo}) but not
+    supplied as a render parameter. If so will throw an error. Set to 0
+    to ignore. default=1</p>
+<p><code>$WEBDYNE_DUMP_FLAG</code></p>
+<p>:   If 1, any instance of the special \&lt;dump&gt; tag will print out
+    results from CGI-&gt;dump(). Use when debugging forms. default=0</p>
+<p><code>$WEBDYNE_DTD</code></p>
+<p>:   The DTD to place at the top of a rendered page. Defaults to:
+    \&lt;!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"
+    \"http://www.w3.org/TR/html4/loose.dtd\"&gt;</p>
+<p><code>$WEBDYNE_HTML_PARAM</code></p>
+<p>:   attributes for the \&lt;html&gt; tag, e.g. { lang =&gt;\'en-US\' }. undef
+    by default</p>
+<p><code>$WEBDYNE_COMPILE_IGNORE_WHITESPACE</code></p>
+<p>:   Ignore source file whitespace as per HTML::TreeBuilder
+    ignore_ignorable_whitespace function. Defaults to 1</p>
+<p><code>$WEBDYNE_COMPILE_NO_SPACE_COMPACTING</code></p>
+<p>:   Do not compact source file whitespace as per HTML::TreeBuilder
+    no_space_compacting function. Defaults to 0</p>
+<p><code>$WEBDYNE_STORE_COMMENTS</code></p>
+<p>:   By default comments are not rendered. Set to 1 to store and display
+    comments from source files. Defaults to 0</p>
+<p><code>$WEBDYNE_NO_CACHE</code>.</p>
+<p>:   WebDyne should send no-cache HTTP headers. Set to 0 to not send such
+    headers. Defaults to 1</p>
+<p><code>$WEBDYNE_DELAYED_BLOCK_RENDER</code></p>
+<p>:   By default WebDyne will render blocks targeted by a render_block()
+    call, even those that are outside the originating
+    \&lt;perl&gt;..\&lt;/perl&gt; section that made the call. Set to 0 to not
+    render such blocks. Defaults to 1</p>
+<p><code>$WEBDYNE_WARNINGS_FATAL</code></p>
+<p>:   If a programs issues a warning via warn() this constant determines
+    if it will be treated as a fatal error. Default is 0 (warnings not
+    fatal). Set to 1 if you want any warn() to behave as if die() had
+    been called..</p>
+<p><code>$WEBDYNE_CGI_DISABLE_UPLOADS</code></p>
+<p>:   Disable CGI.pm file uploads. Defaults to 1 (true - do not allow
+    uploads).</p>
+<p><code>$WEBDYNE_CGI_POST_MAX</code></p>
+<p>:   Maximum size of a POST request. Defaults to 512Kb</p>
+<p><code>$WEBDYNE_ERROR_TEXT</code></p>
+<p>:   Display simplified errors in plain text rather than using HTML.
+    Useful in interal WebDyne development only. By default this is 0 =&gt;
+    the HTML error handler will be used.</p>
+<p><code>$WEBDYNE_ERROR_SHOW</code></p>
+<p>:   Display the error message. Only applicable in the HTML error handler</p>
+<p><code>$WEBDYNE_ERROR_SOURCE_CONTEXT_SHOW</code></p>
+<p>:   Display a fragment of the .psp source file around where the error
+    occurred to give some context of where the error happened. Set to 0
+    to not display context.</p>
+<p><code>$WEBDYNE_ERROR_SOURCE_CONTEXT_LINES_PRE</code></p>
+<p>:   Number of lines of the source file before the error occurred to
+    display. Defaults to 4</p>
+<p><code>$WEBDYNE_ERROR_SOURCE_CONTEXT_LINES_POST</code></p>
+<p>:   Number of lines of the source file after the error occurred to
+    display. Defaults to 4</p>
+<p><code>$WEBDYNE_ERROR_SOURCE_CONTEXT_LINE_FRAGMENT_MAX</code></p>
+<p>:   Max line length to show. Defaults to 80 characters.</p>
+<p><code>$WEBDYNE_ERROR_BACKTRACE_SHOW</code></p>
+<p>:   Show a backtrace of modules through which the error propagated. On
+    by default, set to 0 to disable,</p>
+<p><code>$WEBDYNE_ERROR_BACKTRACE_SHORT</code></p>
+<p>:   Remove WebDyne internal modules from backtrace. Off by default, set
+    to 1 to enable.</p>
+<p><code>$WEBDYNE_AUTOLOAD_POLLUTE</code></p>
+<p>:   When a method is called from a \&lt;perl&gt; routine the WebDyne AUTOLOAD
+    method must search multiple modules for the method owner. Setting
+    this flag to 1 will pollute the WebDyne name space with the method
+    name so that AUTOLOAD is not called if that method is used again
+    (for the duration of the Perl process, not just that call to the
+    page). This is dangerous and can cause confusion if different
+    modules use the same name. In very strictly controlled
+    environments - and ebev then only in some cases - it can result is
+    faster throughput. Off by default, set to 1 to enable.</p>
+<p>Extension modules (e.g., WebDyne::Session) have their own constants - see each package for details.</p>
+<h2 id="webdyne-directives">WebDyne Directives</h2>
+<p>A limited number of directives are are available which change the way WebDyne processes pages. Directives are set in either the Apache or lighttpd .conf files and can be set differently per location. At this stage only one directive applies to the core WebDyne module:</p>
+<p><code>WebDyneHandler</code></p>
+<p>:   The name of the handler that WebDyne should invoke instead of
+    handling the page internally. The only other handler available today
+    is WebDyne::Chain.</p>
+<p>This directive exists primarily to allow lighttpd/FastCGI to invoke WebDyne::Chain as the primary handler. An example from the lighttpd.conf file (see the WebDyne::Chain documentation for information on the <code>WebDyneChain</code> directive):</p>
+<pre><code>fastcgi.server = ( &quot;.psp&quot; =&amp;gt;
+                   ( &quot;localhost&quot; =&amp;gt;
+                      (
+                        &quot;socket&quot; =&amp;gt; &quot;/tmp/psp-fastcgi.socket&quot;,
+                        &quot;bin-path&quot; =&amp;gt; &quot;/opt/webdyne/bin/wdfastcgi&quot;,
+                        &quot;bin-environment&quot;     =&amp;gt; (
+                          #  Handle WebDyne requests via WebDyne::Chain, which in turn will
+                          #  pass all requests through WebDyne::Session so that a unique session 
+                          #  cookie is assigned to each user.
+                          &quot;WebDyneHandler&quot;    =&amp;gt; &quot;WebDyne::Chain&quot;,
+                          &quot;WebDyneChain&quot;      =&amp;gt; &quot;WebDyne::Session&quot;,
+                        )
+                     )
+                   )
+                 )
+</code></pre>
+<p>It can be used in Apache httpd.conf files, but is not very efficient:</p>
+<pre><code>#  This will work, but is not very efficient
+#
+&amp;lt;location /shop/&amp;gt;
+PerlHandler     WebDyne
+PerlSetVar      WebDyneHandler               'WebDyne::Chain'
+PerlSetVar      WebDyneChain                 'WebDyne::Session'
+&amp;lt;/location&amp;gt;
+
+
+#  This is the same, and is more efficient
+#
+&amp;lt;location /shop/&amp;gt;
+PerlHandler     WebDyne::Chain
+PerlSetVar      WebDyneChain                 'WebDyne::Session'
+&amp;lt;/location&amp;gt;
+</code></pre>
+<p>As with Apache you can do per-location/directory configuration of WebDyne, however the configuration is a little more complex. The example below shows how to set different directives on a per location basis, using WebDyne and WebDyne::Chain directives as examples:</p>
+<pre><code>$HTTP[&quot;url&quot;] =~&quot;^/proxcube/&quot; {
+
+        server.document-root = &quot;/opt/proxcube/lib/perl5/site_perl/5.8.6/ProxCube/HTML/html/&quot;,
+
+        fastcgi.server = (
+
+                &quot;.psp&quot; =&amp;gt; (
+                        &quot;localhost&quot; =&amp;gt; (
+                                &quot;socket&quot;      =&amp;gt; &quot;/tmp/psp-fastcgi-proxube.socket&quot;,
+                                &quot;bin-path&quot;    =&amp;gt; &quot;/opt/webdyne/bin/wdfastcgi&quot;,
+                                &quot;bin-environment&quot; =&amp;gt; (
+                                        &quot;WebDyneHandler&quot;  =&amp;gt; &quot;WebDyne::Chain&quot;,
+                                        &quot;WebDyneChain&quot;    =&amp;gt; &quot;ProxCube::HTML ProxCube::License&quot;
+                                        &quot;WebDyneTemplate&quot; =&amp;gt; &quot;/opt/proxcube/lib/perl5/site_perl/5...
+                                        &quot;WebDyneFilter&quot;   =&amp;gt; &quot;WebDyne::Template WebDyne::CGI&quot;,
+                                        &quot;MenuData&quot;        =&amp;gt; &quot;/opt/proxcube/lib/perl5/site_perl/5...
+                                        &quot;WebDyneLocation&quot; =&amp;gt; &quot;/proxcube/&quot;
+                                )
+                        )
+                )
+        )
+
+},
+
+
+$HTTP[&quot;url&quot;] =~&quot;^/example/&quot; {
+
+        server.document-root = &quot;/var/www/html/&quot;,
+
+        fastcgi.server = (
+
+                &quot;.psp&quot; =&amp;gt; (
+                        &quot;localhost&quot; =&amp;gt; (
+                                &quot;socket&quot;      =&amp;gt; &quot;/tmp/psp-fastcgi-example.socket&quot;,
+                                &quot;bin-path&quot;    =&amp;gt; &quot;/opt/webdyne/bin/wdfastcgi&quot;,
+                                &quot;bin-environment&quot; =&amp;gt; (
+                                        &quot;WebDyneLocation&quot; =&amp;gt; &quot;/example/&quot;
+                                )
+                        )
+                )
+        )
+}
+</code></pre>
+<p>::: important
+As noted in the configuration file the socket file names must be unique
+for each location that you want different WebDyne directives/constants
+for.
+:::</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../06_error_handling/" class="btn btn-neutral float-left" title="Error Handling"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../08_miscellaneous/" class="btn btn-neutral float-right" title="Miscellaneous">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../06_error_handling/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../08_miscellaneous/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
