@@ -585,13 +585,13 @@ section - but here are a few very simple examples as an overview.</p>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<p><a href="https://webdyne-doc-532ft.kinsta.app//introduction1.psp">Run</a></p>
+<p><a href="https://app.webdyne.org/example/introduction1.psp">Run</a></p>
 <p>This can be abbreviated with some shortcut tags such as <code>&lt;start_html&gt;</code>
 in WebDyne. This does exactly the same thing:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">&lt;</span><span class="nt">start_html</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;Server Time&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>The local server time is: <span class="cp">&lt;? localtime() ?&gt;</span>
 </span></code></pre></div>
-<p><a href="https://webdyne-doc-532ft.kinsta.app//introduction2.psp">Run</a></p>
+<p><a href="https://app.webdyne.org/example/introduction2.psp">Run</a></p>
 <p>Don't like the co-mingling code and HTML but still want things in one
 file ?</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">&lt;</span><span class="nt">start_html</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;Server Time&quot;</span><span class="p">&gt;</span>
@@ -602,7 +602,7 @@ file ?</p>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    print(scalar localtime);
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>}
 </span></code></pre></div>
-<p><a href="https://webdyne-doc-532ft.kinsta.app//introduction3.psp">Run</a></p>
+<p><a href="https://app.webdyne.org/example/introduction3.psp">Run</a></p>
 <p>Want further code and HTML separation ? You can import methods from any
 external Perl module. Example from a core module below, but could be any
 installed CPAN module or your own code:</p>
@@ -610,7 +610,7 @@ installed CPAN module or your own code:</p>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Server Time::HiRes time:
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">&lt;</span><span class="nt">perl</span> <span class="na">require</span><span class="o">=</span><span class="s">&quot;Time::HiRes&quot;</span> <span class="na">import</span><span class="o">=</span><span class="s">&quot;time&quot;</span><span class="p">&gt;</span>time()<span class="p">&lt;/</span><span class="nt">perl</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<p><a href="https://webdyne-doc-532ft.kinsta.app//introduction4.psp">Run</a></p>
+<p><a href="https://app.webdyne.org/example/introduction4.psp">Run</a></p>
 <p>Same concepts implemented in slightly different ways:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">&lt;</span><span class="nt">start_html</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;Server Time&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>The local server epoch time (hires) is: <span class="cp">&lt;? time() ?&gt;</span>
@@ -619,19 +619,19 @@ installed CPAN module or your own code:</p>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>use Time::HiRes qw(time);
 </span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>1;
 </span></code></pre></div>
-<p><a href="https://webdyne-doc-532ft.kinsta.app//introduction5.psp">Run</a></p>
+<p><a href="https://app.webdyne.org/example/introduction5.psp">Run</a></p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">&lt;</span><span class="nt">start_html</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;Server Time&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">&lt;</span><span class="nt">perl</span> <span class="na">require</span><span class="o">=</span><span class="s">&quot;Time::HiRes&quot;</span> <span class="na">import</span><span class="o">=</span><span class="s">&quot;time&quot;</span><span class="p">/&gt;</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>The local server time (hires) is: <span class="cp">&lt;? time() ?&gt;</span>
 </span></code></pre></div>
-<p><a href="https://webdyne-doc-532ft.kinsta.app//introduction6.psp">Run</a></p>
+<p><a href="https://app.webdyne.org/example/introduction6.psp">Run</a></p>
 <p>Using an editor that doesn't like custom tags ? Use of the &lt;div&gt; tag
 with a <code>data-*</code> attribute is legal HTML syntax and can be used to embed
 Perl:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">&lt;</span><span class="nt">start_html</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;Server Time&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>The local server time is: <span class="p">&lt;</span><span class="nt">div</span> <span class="na">data-webdyne-perl</span><span class="p">&gt;</span> localtime() <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<p><a href="https://webdyne-doc-532ft.kinsta.app//introduction7.psp">Run</a></p>
+<p><a href="https://app.webdyne.org/example/introduction7.psp">Run</a></p>
 
 
 
