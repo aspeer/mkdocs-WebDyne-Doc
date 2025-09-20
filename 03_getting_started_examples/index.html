@@ -693,7 +693,7 @@ can be implemented. First the most basic usage example:</p>
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/hello1.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/hello1.psp">Run</a></p>
 <p>So far not too exciting - after all we are mixing code and content. Lets
 try again:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
@@ -712,7 +712,7 @@ try again:</p>
 </span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
 </span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>sub hello { return localtime }
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/hello2.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/hello2.psp">Run</a></p>
 <p>Better - at least code and content are distinctly separated. Note that
 whatever the Perl code returns at the end of the routine is what is
 displayed. Although WebDyne will happily display returned strings or
@@ -776,7 +776,7 @@ in the <code>@INC</code> path.</p>
 </span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/hello3.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/hello3.psp">Run</a></p>
 <p>If not already resident the module (in this case "MyModule") will be
 loaded by WebDyne, so it must be available somewhere in the <code>@INC</code> path.
 The example above cannot be run because there is no "MyModule" package
@@ -811,7 +811,7 @@ Perl code that is enclosed by &lt;perl&gt;..&lt;/perl&gt; tags is called
 </span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/inline1.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/inline1.psp">Run</a></p>
 <p>This is the most straight-forward use of Perl within a HTML document,
 but does not really make for easy reading - the Perl code and HTML are
 intermingled. It may be OK for quick scripts etc, but a page will
@@ -831,7 +831,7 @@ insertion of the current year:</p>
 </span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/inline2.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/inline2.psp">Run</a></p>
 <p>Which can be pretty handy, but looks a bit cumbersome - the tags
 interfere with the flow of the text, making it harder to read. For this
 reason in-line perl can also be flagged in a WebDyne page using the
@@ -853,7 +853,7 @@ shortcuts !{! .. !}, or by the use of processing instructions (<strong>&lt;? ..
 </span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/inline3.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/inline3.psp">Run</a></p>
 <p>The !{! .. !} denotation can also be used in tag attributes (processing
 instructions, and &lt;perl&gt; tags cannot):</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
@@ -871,7 +871,7 @@ instructions, and &lt;perl&gt; tags cannot):</p>
 </span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/inline4.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/inline4.psp">Run</a></p>
 <h2 id="use-of-the-perl-tag-for-non-inline-code">Use of the &lt;perl&gt; tag for non-inline code.<a class="headerlink" href="#use-of-the-perl-tag-for-non-inline-code" title="Permanent link">&para;</a></h2>
 <p>Any code that is not co-mingled with the HTML of a document is
 <em>non-inline</em> code. It can be segmented from the content HTML using the
@@ -894,7 +894,7 @@ of non-inline code:</p>
 </span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>
 </span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>sub hello { return localtime }
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/hello2.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/hello2.psp">Run</a></p>
 <p>Note that the &lt;perl&gt; tag in the above example is explicitly closed and
 does not contain any content. However non-inline code can enclose HTML
 or text within the tags:</p>
@@ -916,7 +916,7 @@ or text within the tags:</p>
 </span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
 </span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>sub hello { return localtime() }
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/noninline1.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/noninline1.psp">Run</a></p>
 <p>But this is not very interesting so far - the "Hello World" text is not
 displayed when the example is run !</p>
 <p>In order for text or HTML within a non-inline perl block to be
@@ -946,7 +946,7 @@ again:</p>
 </span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>
 </span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/noninline2.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/noninline2.psp">Run</a></p>
 <p>And again, this time showing how to render the text block multiple
 times. Note that an array reference is returned by the Perl routine -
 this is fine, and is interpreted as an array of HTML text, which is
@@ -975,7 +975,7 @@ concatenated and send to the browser.</p>
 </span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>    return \@html;
 </span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/noninline3.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/noninline3.psp">Run</a></p>
 <h2 id="passing-parameters-to-subroutines">Passing parameters to subroutines<a class="headerlink" href="#passing-parameters-to-subroutines" title="Permanent link">&para;</a></h2>
 <p>The behaviour of a called __PERL__ subroutine can be modified by
 passing parameters which it can act on:</p>
@@ -1014,7 +1014,7 @@ passing parameters which it can act on:</p>
 </span><span id="__span-12-33"><a id="__codelineno-12-33" name="__codelineno-12-33" href="#__codelineno-12-33"></a>
 </span><span id="__span-12-34"><a id="__codelineno-12-34" name="__codelineno-12-34" href="#__codelineno-12-34"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/noninline7.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/noninline7.psp">Run</a></p>
 <h2 id="notes-about-__perl__-sections">Notes about __PERL__ sections<a class="headerlink" href="#notes-about-__perl__-sections" title="Permanent link">&para;</a></h2>
 <p>Code in __PERL__ sections has some particular properties.
 __PERL__ code is only executed once. Subroutines defined in a
@@ -1048,7 +1048,7 @@ will always be 1:</p>
 </span><span id="__span-13-24"><a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a>    return sprintf(&quot;value of i: $i, value of x in PID $$: %s&quot;, $x++)
 </span><span id="__span-13-25"><a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/noninline4.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/noninline4.psp">Run</a></p>
 <p>Lexical variables are not accessible outside of the __PERL__ section
 due to the way perl's eval() function works. The following example will
 fail:</p>
@@ -1065,7 +1065,7 @@ fail:</p>
 </span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>
 </span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>my $i=5;
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/noninline5.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/noninline5.psp">Run</a></p>
 <p>Package defined vars declared in a __PERL__ section do work, with
 caveats:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
@@ -1100,7 +1100,7 @@ caveats:</p>
 </span><span id="__span-15-30"><a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a>
 </span><span id="__span-15-31"><a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a>sub render_i { shift()-&gt;render(i=&gt;$i) }
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/noninline6.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/noninline6.psp">Run</a></p>
 <p>See the Variables/Substitution section for clean ways to insert variable
 contents into the page.</p>
 <h2 id="variables-substitution">Variables / Substitution<a class="headerlink" href="#variables-substitution" title="Permanent link">&para;</a></h2>
@@ -1128,7 +1128,7 @@ content of a rendered text block. A simple example:</p>
 </span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>    $self-&gt;render( time=&gt;$time );
 </span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/var1.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/var1.psp">Run</a></p>
 <p>Note the passing of the <code>time</code> value as a parameter to be substituted
 when the text is rendered.</p>
 <p>Combine this with multiple call to the render() routine to display
@@ -1180,7 +1180,7 @@ dynamic data:</p>
 </span><span id="__span-17-45"><a id="__codelineno-17-45" name="__codelineno-17-45" href="#__codelineno-17-45"></a>    return \undef
 </span><span id="__span-17-46"><a id="__codelineno-17-46" name="__codelineno-17-46" href="#__codelineno-17-46"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/var2.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/var2.psp">Run</a></p>
 <p>Variables can also be used to modify tag attributes:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
 </span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Hello World<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -1212,7 +1212,7 @@ dynamic data:</p>
 </span><span id="__span-18-28"><a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a>
 </span><span id="__span-18-29"><a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/var3.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/var3.psp">Run</a></p>
 <p>Other variable types are available also, including:</p>
 <ul>
 <li>
@@ -1302,7 +1302,7 @@ should provide an example of potential variable usage:</p>
 </span><span id="__span-19-65"><a id="__codelineno-19-65" name="__codelineno-19-65" href="#__codelineno-19-65"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span><span id="__span-19-66"><a id="__codelineno-19-66" name="__codelineno-19-66" href="#__codelineno-19-66"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/var4.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/var4.psp">Run</a></p>
 <h2 id="html-shortcut-tags">HTML Shortcut Tags<a class="headerlink" href="#html-shortcut-tags" title="Permanent link">&para;</a></h2>
 <p>Previous versions of WebDyne used Lincoln Stein's CGI.pm module to
 render tags, and supported CGI.pm shortcut tags such as &lt;start_html&gt;,
@@ -1379,7 +1379,7 @@ something like this:</p>
 </span><span id="__span-20-43"><a id="__codelineno-20-43" name="__codelineno-20-43" href="#__codelineno-20-43"></a>
 </span><span id="__span-20-44"><a id="__codelineno-20-44" name="__codelineno-20-44" href="#__codelineno-20-44"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/cgi1.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/cgi1.psp">Run</a></p>
 <h2 id="more-on-html-shortcut-tags-in-forms">More on HTML shortcut tags in forms<a class="headerlink" href="#more-on-html-shortcut-tags-in-forms" title="Permanent link">&para;</a></h2>
 <p>Tags such as &lt;popup_menu&gt;, instead of
 &lt;select&gt;&lt;option&gt;...&lt;/select&gt;. The following example:</p>
@@ -1424,7 +1424,7 @@ when we consider the next example:</p>
 </span><span id="__span-21-28"><a id="__codelineno-21-28" name="__codelineno-21-28" href="#__codelineno-21-28"></a>
 </span><span id="__span-21-29"><a id="__codelineno-21-29" name="__codelineno-21-29" href="#__codelineno-21-29"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/cgi5.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/cgi5.psp">Run</a></p>
 <p>That saved a significant amount of time populating a countries drop-down
 box.</p>
 <h2 id="access-to-cgi-query-form-and-keyword-parameters">Access to CGI query, form and keyword parameters<a class="headerlink" href="#access-to-cgi-query-form-and-keyword-parameters" title="Permanent link">&para;</a></h2>
@@ -1472,7 +1472,7 @@ calling the CGI() method:</p>
 </span><span id="__span-22-38"><a id="__codelineno-22-38" name="__codelineno-22-38" href="#__codelineno-22-38"></a>    $self-&gt;render( name=&gt;$name);
 </span><span id="__span-22-39"><a id="__codelineno-22-39" name="__codelineno-22-39" href="#__codelineno-22-39"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/cgi3.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/cgi3.psp">Run</a></p>
 <p>From there you can all any method supported by the CGI::Simple module -
 see the CGI::Simple manual page (<code>man CGI::Simple</code>) or review on CPAN:
 <a href="https://metacpan.org/pod/CGI::Simple">CGI::Simple</a></p>
@@ -1538,7 +1538,7 @@ defined Perl methods are called. For example:</p>
 </span><span id="__span-23-57"><a id="__codelineno-23-57" name="__codelineno-23-57" href="#__codelineno-23-57"></a>    $self-&gt;render( name=&gt;$name);
 </span><span id="__span-23-58"><a id="__codelineno-23-58" name="__codelineno-23-58" href="#__codelineno-23-58"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/cgi4.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/cgi4.psp">Run</a></p>
 <h2 id="quick-pages-using-shortcut-start_htmlend_html-tags">Quick pages using shortcut &lt;start_html&gt;&lt;end_html&gt; tags<a class="headerlink" href="#quick-pages-using-shortcut-start_htmlend_html-tags" title="Permanent link">&para;</a></h2>
 <p>For rapid development you can take advantage of CGI.pm's &lt;start_html&gt;
 and &lt;end_html&gt; tags. The following page generates compliant HTML (view
@@ -1547,7 +1547,7 @@ the page source after loading it to see for yourself):</p>
 </span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>The time is: !{! localtime() !}
 </span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="p">&lt;</span><span class="nt">end_html</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/cgi6.psp">Run</a></p>
+<p><a href="https://ghcr.io/aspeer/webdyne:latest/example/cgi6.psp">Run</a></p>
 <p>The &lt;start_html&gt; tag generates all the &lt;html&gt;, &lt;head&gt;, &lt;title&gt;
 tags etc needed for a valid HTML page plus an opening body tag. Just
 enter the body content, then finish with &lt;end_html&gt; to generate the
