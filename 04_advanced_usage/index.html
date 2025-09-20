@@ -690,7 +690,7 @@ output generated within Perl code. An example:</p>
 </span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>
 </span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/block1.psp">Run</a></p>
+<p><a href="https://webdyne-doc-532ft.kinsta.app/block1.psp">Run</a></p>
 <p>There can be more than one block with the same name - any block with the
 target name will be rendered:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
@@ -750,7 +750,7 @@ target name will be rendered:</p>
 </span><span id="__span-1-55"><a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a>    $self-&gt;render();
 </span><span id="__span-1-56"><a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/block2.psp">Run</a></p>
+<p><a href="https://webdyne-doc-532ft.kinsta.app/block2.psp">Run</a></p>
 <p>Like any other text or HTML between &lt;perl&gt; tags, blocks can take
 parameters to substitute into the text:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
@@ -799,7 +799,7 @@ parameters to substitute into the text:</p>
 </span><span id="__span-2-44"><a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a>    $self-&gt;render();
 </span><span id="__span-2-45"><a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/block3.psp">Run</a></p>
+<p><a href="https://webdyne-doc-532ft.kinsta.app/block3.psp">Run</a></p>
 <p>Blocks have a non-intuitive feature - they still display even if they
 are outside of the &lt;perl&gt; tags that made the call to render them. e.g.
 the following is OK:</p>
@@ -838,7 +838,7 @@ the following is OK:</p>
 </span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>
 </span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/block4.psp">Run</a></p>
+<p><a href="https://webdyne-doc-532ft.kinsta.app/block4.psp">Run</a></p>
 <p>You can mix the two styles:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Hello World<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -872,7 +872,7 @@ the following is OK:</p>
 </span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>
 </span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/block5.psp">Run</a></p>
+<p><a href="https://webdyne-doc-532ft.kinsta.app/block5.psp">Run</a></p>
 <h2 id="file-inclusion">File inclusion<a class="headerlink" href="#file-inclusion" title="Permanent link">&para;</a></h2>
 <p>You can include other file fragments at compile time using the include
 tag:</p>
@@ -887,7 +887,7 @@ tag:</p>
 </span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/include1.psp">Run</a></p>
+<p><a href="https://webdyne-doc-532ft.kinsta.app/include1.psp">Run</a></p>
 <p>If the file name is not an absolute path name is will be loaded relative
 to the directory of the parent file. For example if file "bar.psp"
 incorporates the tag&lt;include file="foo.psp"/&gt; it will be expected that
@@ -945,7 +945,7 @@ is loaded. An example:</p>
 </span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a>
 </span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/static1.psp">Run</a></p>
+<p><a href="https://webdyne-doc-532ft.kinsta.app/static1.psp">Run</a></p>
 <p>In fact the above page will render very quickly because it has no
 dynamic content at all once the &lt;perl&gt; content is flagged as static.
 The WebDyne engine will recognise this and store the page as a static
@@ -1003,7 +1003,7 @@ extension represents the static version of a page.</p>
 </span><span id="__span-7-45"><a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a>
 </span><span id="__span-7-46"><a id="__codelineno-7-46" name="__codelineno-7-46" href="#__codelineno-7-46"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/static2.psp">Run</a></p>
+<p><a href="https://webdyne-doc-532ft.kinsta.app/static2.psp">Run</a></p>
 <p>If you want the whole pages to be static, then flagging everything with
 the "static" attribute can be cumbersome. There is a special meta tag
 which flags the entire page as static:</p>
@@ -1064,7 +1064,7 @@ which flags the entire page as static:</p>
 </span><span id="__span-8-55"><a id="__codelineno-8-55" name="__codelineno-8-55" href="#__codelineno-8-55"></a>
 </span><span id="__span-8-56"><a id="__codelineno-8-56" name="__codelineno-8-56" href="#__codelineno-8-56"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/static3.psp">Run</a></p>
+<p><a href="https://webdyne-doc-532ft.kinsta.app/static3.psp">Run</a></p>
 <p>If you don't like the idea of setting the static flag in meta data, then
 "using" the special package "WebDyne::Static" will have exactly the same
 effect:</p>
@@ -1118,7 +1118,7 @@ effect:</p>
 </span><span id="__span-9-48"><a id="__codelineno-9-48" name="__codelineno-9-48" href="#__codelineno-9-48"></a>
 </span><span id="__span-9-49"><a id="__codelineno-9-49" name="__codelineno-9-49" href="#__codelineno-9-49"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/static3a.psp">Run</a></p>
+<p><a href="https://webdyne-doc-532ft.kinsta.app/static3a.psp">Run</a></p>
 <p>If the static tag seems trivial consider the example that displayed
 country codes:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
@@ -1151,7 +1151,7 @@ country codes:</p>
 </span><span id="__span-10-28"><a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a>
 </span><span id="__span-10-29"><a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/cgi5.psp">Run</a></p>
+<p><a href="https://webdyne-doc-532ft.kinsta.app/cgi5.psp">Run</a></p>
 <p>Every time the above example is viewed the Country Name list is
 generated dynamically via the Locale::Country module. This is a waste of
 resources because the list changes very infrequently. We can keep the
@@ -1189,7 +1189,7 @@ code neat but gain a lot of speed by adding the <code>static</code> tag attribut
 </span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a>
 </span><span id="__span-11-32"><a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/static4.psp">Run</a></p>
+<p><a href="https://webdyne-doc-532ft.kinsta.app/static4.psp">Run</a></p>
 <p>By simply adding the "static" attribute output on a sample machine
 increased from 55 Pages/sec to 280 Pages/sec ! Judicious use of the
 static tag in places with slow changing data can markedly increase
@@ -1273,7 +1273,7 @@ over a 20 second interval</p>
 </span><span id="__span-12-47"><a id="__codelineno-12-47" name="__codelineno-12-47" href="#__codelineno-12-47"></a>
 </span><span id="__span-12-48"><a id="__codelineno-12-48" name="__codelineno-12-48" href="#__codelineno-12-48"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/cache1.psp">Run</a></p>
+<p><a href="https://webdyne-doc-532ft.kinsta.app/cache1.psp">Run</a></p>
 <p>WebDyne uses the return value of the nominated cache routine to
 determine what UID (unique ID) to assign to the page. In the above
 example we returned \undef, which signifies that the UID will remain
@@ -1352,7 +1352,7 @@ based on the month selected, then cache the resulting output.</p>
 </span><span id="__span-13-63"><a id="__codelineno-13-63" name="__codelineno-13-63" href="#__codelineno-13-63"></a>
 </span><span id="__span-13-64"><a id="__codelineno-13-64" name="__codelineno-13-64" href="#__codelineno-13-64"></a>}
 </span></code></pre></div>
-<p><a href="https://app.webdyne.org/example/cache2.psp">Run</a></p>
+<p><a href="https://webdyne-doc-532ft.kinsta.app/cache2.psp">Run</a></p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Take care when using user-supplied input to generate the page UID. There
