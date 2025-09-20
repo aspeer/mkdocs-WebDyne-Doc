@@ -1,6 +1,7 @@
 # Project information
 site_name: WebDyne
-site_url: https://aspeer.github.io/WebDyne/
+#site_url: https://aspeer.github.io/WebDyne/
+site_url: https://aspeer.github.io/mkdocs-WebDyne-Doc/
 site_author: Andrew Speer
 site_description: >-
   Engine for creation of dynamic HTML pages with embedded Perl
@@ -8,7 +9,8 @@ site_description: >-
 
 # Repository
 repo_name: aspeer/WebDyne
-repo_url: https://github.com/aspeer/WebDyne
+#repo_url: https://github.com/aspeer/WebDyne
+repo_url: https://github.com/aspeer/mkdocs-WebDyne-Doc
 
 # Copyright
 copyright: Copyright &copy; 2025 Andrew Speer
