@@ -900,10 +900,12 @@ $WebDyne::Constant::WEBDYNE_STORE_COMMENTS=1;
 $WebDyne::Session::Constant::WEBDYNE_SESSION_ID_COOKIE_NAME=&#39;session_cookie&#39;;
 &lt;/Perl&gt;
 </code></pre></div>
-<p>The letsencrypt certbot utility will error out when trying to update any
-Apache config file with &lt;Perl&gt; sections. To avoid this you put the
-variables in a separate file and include them, e.g. in the apache.conf
-file</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The letsencrypt <code>certbot</code> utility will error out when trying to update
+any Apache config file with <code>&lt;Perl&gt;</code> sections. To avoid this you put the
+variables in a separate file and include them, e.g. in the <code>apache.conf</code>
+file:</p>
 <div class="language-text highlight"><pre><span></span><code># Some config setting defaults. See documentation for full range. 
 # Commented out # options represent defaults 
 #
@@ -925,6 +927,7 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
 #  $WebDyne::WEBDYNE_ERROR_SOURCE_CONTEXT_LINES_PRE=4;
 #  $WebDyne::WEBDYNE_ERROR_SOURCE_CONTEXT_LINES_POST=4;
 </code></pre></div>
+</div>
 <h3 id="constants-reference">Constants Reference<a class="headerlink" href="#constants-reference" title="Permanent link">&para;</a></h3>
 <p>The following constants can be altered to change the behaviour of the
 WebDyne package. All these constants reside in the <code>WebDyne::Constant</code>
