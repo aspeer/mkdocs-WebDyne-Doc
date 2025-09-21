@@ -49,7 +49,7 @@
         </info>
 
         <para><programlisting language="html"><xi:include href="example/introduction1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-        xlink:href="https://demo.webdyne.org/example/introduction1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        xlink:href="https://demo.webdyne.org/example/introduction1.psp" xlink:show="new" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example></para>
 
     <para>This can be abbreviated with some shortcut tags such as <markup>&lt;start_html&gt;</markup> in WebDyne. This does exactly the same thing:</para>
@@ -1250,7 +1250,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Intentional die()</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/err2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -1630,8 +1630,6 @@ $VAR1={
           <para>Always check the syntax of the <filename>/etc/webdyne.pm</filename> file after editing by running <command>perl -c -w /etc/webdyne.conf.pl</command> to check that the file is
           readable by Perl. Files with syntax errors will fail silently and the variables will revert to module defaults.</para>
         </important>
-
-        <para/>
       </section>
 
       <section>
@@ -1683,17 +1681,18 @@ $WebDyne::Session::Constant::WEBDYNE_SESSION_ID_COOKIE_NAME='session_cookie';
 
 </programlisting>
 
-        <para>The letsencrypt certbot utility will error out when trying to update any Apache config file with &lt;Perl&gt; sections. To avoid this you put the variables in a separate file and
-        include them, e.g. in the apache.conf file</para>
+        <warning>
+          <para>The letsencrypt <command>certbot</command> utility will error out when trying to update any Apache config file with <code>&lt;Perl&gt;</code> sections. To avoid this you put
+          the variables in a separate file and include them, e.g. in the <filename>apache.conf</filename> file:</para>
 
-        <para><programlisting># Some config setting defaults. See documentation for full range. 
+          <para><programlisting># Some config setting defaults. See documentation for full range. 
 # Commented out # options represent defaults 
 #
 PerlRequire conf.d/webdyne_constant.pl</programlisting></para>
 
-        <para>And then in the webdyne_constant.pl file:</para>
+          <para>And then in the webdyne_constant.pl file:</para>
 
-        <para><programlisting>use WebDyne;
+          <para><programlisting>use WebDyne;
 use WebDyne::Constant;
 
 #  Error display/extended display on/off. More granular options below. 
@@ -1708,6 +1707,7 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
 #  $WebDyne::WEBDYNE_ERROR_SOURCE_CONTEXT_LINES_PRE=4;
 #  $WebDyne::WEBDYNE_ERROR_SOURCE_CONTEXT_LINES_POST=4;
 </programlisting></para>
+        </warning>
       </section>
 
       <section>
