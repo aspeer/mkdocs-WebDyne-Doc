@@ -10,8 +10,8 @@ WORKDIR /app
 
 #  Build
 #
-COPY doc/example/*.psp .
 COPY docker/webdyne.conf.pl /etc
+COPY doc/example/*.psp .
 
 
 # Expose port 8080
