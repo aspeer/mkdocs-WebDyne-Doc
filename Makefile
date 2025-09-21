@@ -10,6 +10,9 @@ webdyne.md : webdyne.xml
 clean	: 
 	rm -f webdyne.psp webdyne.html $(DIR_EXAMPLE)/*.html
 
+gh-deploy :
+	mkdocs gh-deploy -f mkdocs.gh.yml
+
 install :: webdyne.pdf
 	cp -R * $(DIR_WEBDYNE_SITE_DOC)
 	cp webdyne.pdf $(DIR_WEBDYNE_DEV)/doc

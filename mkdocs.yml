@@ -88,6 +88,9 @@ plugins:
 #  - minify:
 #      minify_html: true
   - awesome-pages
+  - redirects:
+      redirect_maps:
+        index.md: 00_introduction.md 
 
 # Hooks
 #hooks:
