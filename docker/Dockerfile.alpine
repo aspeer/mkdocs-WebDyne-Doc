@@ -11,6 +11,7 @@ WORKDIR /app
 #  Build
 #
 COPY docker/webdyne.conf.pl /etc
+COPY docker/cpanfile .
 COPY doc/example/*.psp .
 
 
