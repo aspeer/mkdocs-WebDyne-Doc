@@ -42,7 +42,7 @@ You Entered:
 <br>
 <!-- CGI vars are also loaded into the %_ global var, so the above is the same as -->
 You Entered: 
-<perl> \$_{'name'} </perl>
+<perl> $_{'name'} </perl>
 
 
 <!-- Arrays -->

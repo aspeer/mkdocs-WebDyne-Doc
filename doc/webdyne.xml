@@ -622,7 +622,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>In-line code in tag attributes</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/inline4.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -640,7 +640,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Perl code example</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/hello2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -652,7 +652,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Perl code example</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/noninline1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -666,7 +666,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Perl code example</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/noninline2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -678,7 +678,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Perl code example</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/noninline3.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -695,7 +695,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Perl code example with parameters</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/noninline7.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -714,7 +714,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Perl code variable scope</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/noninline4.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -725,7 +725,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Perl code variable scope</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/noninline5.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -736,7 +736,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Perl code variable scope</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/noninline6.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -755,7 +755,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Variable usage</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/var1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -768,7 +768,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Variable usage</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/var2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -779,7 +779,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Variable usage</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/var3.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -815,7 +815,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Variable usage</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/var4.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -933,7 +933,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Perl CGI access</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/cgi4.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -951,7 +951,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Shortcut tags</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/cgi6.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -981,7 +981,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Blocks</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/block1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -992,7 +992,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Blocks</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/block2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -1003,7 +1003,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Blocks</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/block3.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -1014,7 +1014,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Blocks</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/block4.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -1025,7 +1025,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Blocks</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/block5.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -1042,7 +1042,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Include</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/include1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -1073,7 +1073,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Static</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/static1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -1091,7 +1091,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Static</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/static2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -1103,7 +1103,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Static</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/static3.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -1114,7 +1114,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Static</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/static3a.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -1125,7 +1125,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Static</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/cgi5.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -1137,7 +1137,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Static</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/static4.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -1175,7 +1175,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Caching</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/cache1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -1194,7 +1194,7 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Caching</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/cache2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -1224,14 +1224,14 @@ sub greeting { return \0 }</programlisting></para>
 
       <para><example>
           <info>
-            <title>in-line code in tag attributes</title>
+            <title>Error handling</title>
           </info>
 
           <para><programlisting language="html"><xi:include href="example/err1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
           xlink:href="https://demo.webdyne.org/example/err1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
         </example></para>
 
-      <para>If you run the above example an error message will be displayed:</para>
+      <para>If you run the above example an error message will be displayed</para>
 
       <screenshot>
         <mediaobject>
@@ -1322,22 +1322,23 @@ sub hello {
 
       <example>
         <info>
-          <title/>
+          <title>Error checking</title>
         </info>
 
-        <para><programlisting>#include "example/err3.html"</programlisting><link xlink:href="example/err3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        <para><programlisting language="html"><xi:include href="example/err3.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting> <link
+        xlink:href="https://demo.webdyne.org/example/err3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example>
 
       <para>You can use the err() function to check for errors in WebDyne Perl code associated with a page, e.g.:</para>
 
       <example>
         <info>
-          <title/>
+          <title>Error throw</title>
         </info>
 
-        <para><programlisting>#include "example/err4.html"</programlisting></para>
+        <para><programlisting language="html"><xi:include href="example/err4.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting></para>
 
-        <para><link xlink:href="example/err4.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        <para><link xlink:href="https://demo.webdyne.org/example/err4.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example>
 
       <para>Note that the backtrace in this example shows clearly where the error was triggered from.</para>
@@ -1365,10 +1366,29 @@ sub hello {
 
             <variablelist>
               <varlistentry>
-                <term>method=[Module::Name]::method</term>
+                <term>method|handler=method</term>
 
                 <listitem>
-                  <para><emphasis>Optional</emphasis>. Call an external perl subroutine in a pre-loaded module, or a subroutine in a __PERL__ block at then of the HTML: file</para>
+                  <para>Call an external Perl subroutine in from a module, or a subroutine in a __PERL__ block at the of the .psp file. If the handler is specified a module call (e.g.
+                  Digest::MD5::md5_hex()) then a require call will be load the module (Digest::MD5 in this example.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>package|require=[Module::Name] | [Path/Filename.pm]</term>
+
+                <listitem>
+                  <para>Load a Perl module or file needed to support a method call. E.g. &lt;perl require=Digest::MD5/&gt; to load the Digest::MD5 module. Anything with a [./\] character is
+                  treated as file patch to a Perl file (e.g. "/home/user/module.pm"), otherwise it is treated as module name ("Digest::MD5")</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>import=[function], &lt;function&gt;, &lt;function&gt; ..</term>
+
+                <listitem>
+                  <para>Import a single or multiple functions into the file namespace. Use "import=name" for a single function, or pass an array ref (import="@{name1, name2}" for multiple
+                  functions. E.g. &lt;perl require="Digest::SHA" import="@{qw(sha1 sha1_hex)}"/&gt;. Functions are then available anywhere in the file namespace.</para>
                 </listitem>
               </varlistentry>
 
@@ -1376,7 +1396,8 @@ sub hello {
                 <term>param=scalar|array|hash</term>
 
                 <listitem>
-                  <para><emphasis>Optional</emphasis>. Parameters to be supplied to perl routine. Supply array and hash using @{1,2} and %{a=&gt;1, b=&gt;2} conventions respectively.</para>
+                  <para>Parameters to be supplied to perl routine. Supply array and hash using "@{1,2}" and "%{a=&gt;1, b=&gt;2}" conventions respectively, e.g. &lt;perl method="sum2num"
+                  param="@{2,2}"/&gt; </para>
                 </listitem>
               </varlistentry>
 
@@ -1384,7 +1405,44 @@ sub hello {
                 <term>static=1</term>
 
                 <listitem>
-                  <para><emphasis>Optional</emphasis>. This Perl code to be run once only and the output cached for all subsequent requests.</para>
+                  <para>This Perl code to be run once only and the output cached for all subsequent requests.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>file=1</term>
+
+                <listitem>
+                  <para>Force package|require attribute to be treated as a file, even if it appears to "look like" a module name to the loader. Rarely needed, use case would be a Perl module
+                  in the current directory without an extension.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>hidden=1</term>
+
+                <listitem>
+                  <para>The output from the Perl module will be hidden.</para>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;json&gt;</term>
+
+          <listitem>
+            <para>Run Perl code similar to &lt;perl&gt; tag but expect code to return a HASH, ARRAY or SCALAR ref and encode into JSON, outputting in a &lt;script&gt; tag with
+            type="application/json". When supplied with an id attribute this data can be used by any Javascript function in the page. All attributes are the same as the &lt;perl&gt; tag with
+            the following extra attribute</para>
+
+            <variablelist>
+              <varlistentry>
+                <term>id=[name]</term>
+
+                <listitem>
+                  <para>ID this &lt;script&gt; tag will be given, e.g. &lt;script id="mydata" type="application/json"&gt;[{"foo":1}]&lt;/script&gt;</para>
                 </listitem>
               </varlistentry>
             </variablelist>
@@ -1399,10 +1457,10 @@ sub hello {
 
             <variablelist>
               <varlistentry>
-                <term>name=identifier</term>
+                <term>name|id=identifier</term>
 
                 <listitem>
-                  <para><emphasis>Mandatory</emphasis>. The name for this block of HTML.</para>
+                  <para>The name for this block of HTML. Referenced when rendering a particular block in perl code, e.g. return $self-&gt;render_block("foo");</para>
                 </listitem>
               </varlistentry>
 
@@ -1429,7 +1487,8 @@ sub hello {
           <term>&lt;include&gt;</term>
 
           <listitem>
-            <para>Include HTML or text from an external file</para>
+            <para>Include HTML or text from an external file. This includes pulling in the &lt;head&gt; or &lt;body&gt; section from another HTML or .psp file. If pulled in from a .psp file it
+            will compiled and interpreted in the context of the current page. </para>
 
             <variablelist>
               <varlistentry>
@@ -1471,12 +1530,12 @@ sub hello {
           <term>&lt;dump&gt;</term>
 
           <listitem>
-            <para>Display CGI paramters in dump format via CGI-&gt;Dump call. Useful for debugging. Only rendered if <varname>$WEBDYNE_DUMP_FLAG</varname> global set to 1 in WebDyne constants
-            (see below)</para>
+            <para>Display CGI parameters in dump format via CGI::Simple-&gt;Dump call. Useful for debugging. Only rendered if <varname>$WEBDYNE_DUMP_FLAG</varname> global set to 1 in WebDyne
+            constants of the display|force attribute specified (see below). Useful while troubleshooting or debugging pages.</para>
 
             <variablelist>
               <varlistentry>
-                <term>display=1</term>
+                <term>display|force=1</term>
 
                 <listitem>
                   <para><emphasis>Optional.</emphasis> Force display even if <varname>$WEBDYNE_DUMP_FLAG</varname> global not set</para>
@@ -1854,7 +1913,7 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
           </varlistentry>
 
           <varlistentry>
-            <term><varname>$WEBDYNE_NO_CACHE</varname>.</term>
+            <term><varname>$WEBDYNE_NO_CACHE</varname></term>
 
             <listitem>
               <para>WebDyne should send no-cache HTTP headers. Set to 0 to not send such headers. Defaults to 1</para>
@@ -1896,10 +1955,18 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
           </varlistentry>
 
           <varlistentry>
+            <term><varname>$WEBDYNE_JSON_CANONICAL</varname></term>
+
+            <listitem>
+              <para>Set is JSON encoding should be canonical, i.e. respect the order of supplied data (slightly slows down encoding). Defaults to 1 (true - preserve variable order)</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
             <term><varname>$WEBDYNE_ERROR_TEXT</varname></term>
 
             <listitem>
-              <para>Display simplified errors in plain text rather than using HTML. Useful in interal WebDyne development only. By default this is 0 =&gt; the HTML error handler will be
+              <para>Display simplified errors in plain text rather than using HTML. Useful in internal WebDyne development only. By default this is 0 =&gt; the HTML error handler will be
               used.</para>
             </listitem>
           </varlistentry>
@@ -2236,7 +2303,7 @@ PerlSetVar      WebDyneCacheHandler '&amp;MyModule::cache'
 
         <para><programlisting>#include "example/session1.html"</programlisting></para>
 
-        <para><link xlink:href="example/session1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        <para><link xlink:href="https://demo.webdyne.org/example/session1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example>
 
       <para>WebDyne::Session can also be used in conjunction with the <link linkend="webdyne_chain">WebDyne::Chain</link> module to make session information available to all pages within a
@@ -2302,7 +2369,7 @@ PerlSetVar      WEBDYNE_SESSION_ID_COOKIE_NAME    'gingernut'
 
         <para><programlisting>#include "example/template1.html"</programlisting></para>
 
-        <para><link xlink:href="example/template1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        <para><link xlink:href="https://demo.webdyne.org/example/template1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example>
 
       <para>The content, run to view resulting merge:</para>
@@ -2314,7 +2381,7 @@ PerlSetVar      WEBDYNE_SESSION_ID_COOKIE_NAME    'gingernut'
 
         <para><programlisting>#include "example/content1.html"</programlisting></para>
 
-        <para><link xlink:href="example/content1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        <para><link xlink:href="https://demo.webdyne.org/example/content1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example>
 
       <para>In real life it is not desirable to put the template name into every content file (as was done in the above example), nor would we want to have to "use WebDyne::Template" in every
