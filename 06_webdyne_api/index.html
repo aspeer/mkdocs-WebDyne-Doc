@@ -663,22 +663,67 @@
 <p>Run Perl code either in-line (between the &lt;perl&gt;..&lt;/perl&gt;) tags,
 or non-inline via the method attribute</p>
 <dl>
-<dt>method=[Module::Name]::method</dt>
+<dt>method|handler=method</dt>
 <dd>
-<p><em>Optional</em>. Call an external perl subroutine in a pre-loaded
-module, or a subroutine in a __PERL__ block at then of the
-HTML: file</p>
+<p>Call an external Perl subroutine in from a module, or a
+subroutine in a __PERL__ block at the of the .psp file. If
+the handler is specified a module call (e.g.
+Digest::MD5::md5_hex()) then a require call will be load the
+module (Digest::MD5 in this example.</p>
+</dd>
+<dt>package|require=[Module::Name] | [Path/Filename.pm]</dt>
+<dd>
+<p>Load a Perl module or file needed to support a method call. E.g.
+&lt;perl require=Digest::MD5/&gt; to load the Digest::MD5 module.
+Anything with a [./\] character is treated as file patch to a
+Perl file (e.g. "/home/user/module.pm"), otherwise it is treated
+as module name ("Digest::MD5")</p>
+</dd>
+<dt>import=[function], &lt;function&gt;, &lt;function&gt; ..</dt>
+<dd>
+<p>Import a single or multiple functions into the file namespace.
+Use "import=name" for a single function, or pass an array ref
+(import="@{name1, name2}" for multiple functions. E.g. &lt;perl
+require="Digest::SHA" import="@{qw(sha1 sha1_hex)}"/&gt;.
+Functions are then available anywhere in the file namespace.</p>
 </dd>
 <dt>param=scalar|array|hash</dt>
 <dd>
-<p><em>Optional</em>. Parameters to be supplied to perl routine. Supply
-array and hash using @{1,2} and %{a=&gt;1, b=&gt;2} conventions
-respectively.</p>
+<p>Parameters to be supplied to perl routine. Supply array and hash
+using "@{1,2}" and "%{a=&gt;1, b=&gt;2}" conventions respectively,
+e.g. &lt;perl method="sum2num" param="@{2,2}"/&gt;</p>
 </dd>
 <dt>static=1</dt>
 <dd>
-<p><em>Optional</em>. This Perl code to be run once only and the output
-cached for all subsequent requests.</p>
+<p>This Perl code to be run once only and the output cached for all
+subsequent requests.</p>
+</dd>
+<dt>file=1</dt>
+<dd>
+<p>Force package|require attribute to be treated as a file, even
+if it appears to "look like" a module name to the loader. Rarely
+needed, use case would be a Perl module in the current directory
+without an extension.</p>
+</dd>
+<dt>hidden=1</dt>
+<dd>
+<p>The output from the Perl module will be hidden.</p>
+</dd>
+</dl>
+</dd>
+<dt>&lt;json&gt;</dt>
+<dd>
+<p>Run Perl code similar to &lt;perl&gt; tag but expect code to return a
+HASH, ARRAY or SCALAR ref and encode into JSON, outputting in a
+&lt;script&gt; tag with type="application/json". When supplied with an
+id attribute this data can be used by any Javascript function in the
+page. All attributes are the same as the &lt;perl&gt; tag with the
+following extra attribute</p>
+<dl>
+<dt>id=[name]</dt>
+<dd>
+<p>ID this &lt;script&gt; tag will be given, e.g. &lt;script id="mydata"
+type="application/json"&gt;[{"foo":1}]&lt;/script&gt;</p>
 </dd>
 </dl>
 </dd>
@@ -687,9 +732,11 @@ cached for all subsequent requests.</p>
 <p>Block of HTML code to be optionally rendered if desired by call to
 render_block Webdyne method:</p>
 <dl>
-<dt>name=identifier</dt>
+<dt>name|id=identifier</dt>
 <dd>
-<p><em>Mandatory</em>. The name for this block of HTML.</p>
+<p>The name for this block of HTML. Referenced when rendering a
+particular block in perl code, e.g. return
+$self-&gt;render_block("foo");</p>
 </dd>
 <dt>display=1</dt>
 <dd>
@@ -705,7 +752,10 @@ for all subsequent requests</p>
 </dd>
 <dt>&lt;include&gt;</dt>
 <dd>
-<p>Include HTML or text from an external file</p>
+<p>Include HTML or text from an external file. This includes pulling in
+the &lt;head&gt; or &lt;body&gt; section from another HTML or .psp file. If
+pulled in from a .psp file it will compiled and interpreted in the
+context of the current page.</p>
 <dl>
 <dt>file=filename</dt>
 <dd>
@@ -731,11 +781,13 @@ current directory or absolute path.</p>
 </dd>
 <dt>&lt;dump&gt;</dt>
 <dd>
-<p>Display CGI paramters in dump format via CGI-&gt;Dump call. Useful for
-debugging. Only rendered if <code>$WEBDYNE_DUMP_FLAG</code> global set to 1 in
-WebDyne constants (see below)</p>
+<p>Display CGI parameters in dump format via CGI::Simple-&gt;Dump call.
+Useful for debugging. Only rendered if <code>$WEBDYNE_DUMP_FLAG</code> global
+set to 1 in WebDyne constants of the display|force attribute
+specified (see below). Useful while troubleshooting or debugging
+pages.</p>
 <dl>
-<dt>display=1</dt>
+<dt>display|force=1</dt>
 <dd>
 <p><em>Optional.</em> Force display even if <code>$WEBDYNE_DUMP_FLAG</code> global
 not set</p>
@@ -1025,7 +1077,7 @@ no_space_compacting function. Defaults to 0</p>
 <p>By default comments are not rendered. Set to 1 to store and display
 comments from source files. Defaults to 0</p>
 </dd>
-<dt><code>$WEBDYNE_NO_CACHE</code>.</dt>
+<dt><code>$WEBDYNE_NO_CACHE</code></dt>
 <dd>
 <p>WebDyne should send no-cache HTTP headers. Set to 0 to not send such
 headers. Defaults to 1</p>
@@ -1053,11 +1105,17 @@ uploads).</p>
 <dd>
 <p>Maximum size of a POST request. Defaults to 512Kb</p>
 </dd>
+<dt><code>$WEBDYNE_JSON_CANONICAL</code></dt>
+<dd>
+<p>Set is JSON encoding should be canonical, i.e. respect the order of
+supplied data (slightly slows down encoding). Defaults to 1 (true -
+preserve variable order)</p>
+</dd>
 <dt><code>$WEBDYNE_ERROR_TEXT</code></dt>
 <dd>
 <p>Display simplified errors in plain text rather than using HTML.
-Useful in interal WebDyne development only. By default this is 0 =&gt;
-the HTML error handler will be used.</p>
+Useful in internal WebDyne development only. By default this is 0
+=&gt; the HTML error handler will be used.</p>
 </dd>
 <dt><code>$WEBDYNE_ERROR_SHOW</code></dt>
 <dd>
