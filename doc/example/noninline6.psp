@@ -3,11 +3,11 @@
 <body>
 
 <!-- Does not work -->
-The value of $i is !{! \$::i !}
+The value of $i is !{! $::i !}
 <p>
 
 <!-- Ugly hack, does work though -->
-The value of $i is !{! \${__PACKAGE__.::i} !}
+The value of $i is !{! ${__PACKAGE__.::i} !}
 <p>
 
 <!-- Probably best to just do this though -->

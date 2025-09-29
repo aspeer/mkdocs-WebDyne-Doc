@@ -15,7 +15,7 @@ for (0..3) {
 #  Must return a positive value, but don't want anything
 #  else displayed, so use \undef
 #
-\undef;
+return \undef;
 
 </perl>
 

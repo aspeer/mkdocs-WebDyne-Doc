@@ -5,7 +5,7 @@
 
 <!-- Perl tag with call to external module method -->
 
-Hello World <perl method="MyModule::hello"/>
+Hello World <perl handler="Digest::MD5::md5_hex"/>
 
 </body>
 </html>

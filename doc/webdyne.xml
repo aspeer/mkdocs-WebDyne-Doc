@@ -684,6 +684,32 @@ sub greeting { return \0 }</programlisting></para>
           <para><programlisting language="html"><xi:include href="example/noninline3.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
           xlink:href="https://demo.webdyne.org/example/noninline3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
         </example></para>
+
+      <para>Same output using the $self-&gt;print() method:</para>
+
+      <example>
+        <info>
+          <title>Perl code example</title>
+        </info>
+
+        <para><programlisting language="html"><xi:include href="example/noninline3a.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+        xlink:href="https://demo.webdyne.org/example/noninline3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+      </example>
+    </section>
+
+    <section>
+      <info>
+        <title>Alternate ways to get output from Perl handlers</title>
+      </info>
+
+      <para>When calling a perl handler from a .psp file at some stage you will want your code to deliver output to the browser. Various examples have been given throughout this document, here
+      is a summary of various output options:</para>
+
+      <example>
+        <title>Variations on print options</title>
+
+        <para><programlisting><xi:include href="example/output1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting></para>
+      </example>
     </section>
 
     <section>
@@ -1397,7 +1423,7 @@ sub hello {
 
                 <listitem>
                   <para>Parameters to be supplied to perl routine. Supply array and hash using "@{1,2}" and "%{a=&gt;1, b=&gt;2}" conventions respectively, e.g. &lt;perl method="sum2num"
-                  param="@{2,2}"/&gt; </para>
+                  param="@{2,2}"/&gt;</para>
                 </listitem>
               </varlistentry>
 
@@ -1457,7 +1483,7 @@ sub hello {
 
             <variablelist>
               <varlistentry>
-                <term>name|id=identifier</term>
+                <term>name=identifier</term>
 
                 <listitem>
                   <para>The name for this block of HTML. Referenced when rendering a particular block in perl code, e.g. return $self-&gt;render_block("foo");</para>
@@ -1488,7 +1514,7 @@ sub hello {
 
           <listitem>
             <para>Include HTML or text from an external file. This includes pulling in the &lt;head&gt; or &lt;body&gt; section from another HTML or .psp file. If pulled in from a .psp file it
-            will compiled and interpreted in the context of the current page. </para>
+            will compiled and interpreted in the context of the current page.</para>
 
             <variablelist>
               <varlistentry>
