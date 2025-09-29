@@ -699,16 +699,17 @@ sub greeting { return \0 }</programlisting></para>
 
     <section>
       <info>
-        <title>Alternate ways to get output from Perl handlers</title>
+        <title>Alternate output methods from Perl handlers</title>
       </info>
 
       <para>When calling a perl handler from a .psp file at some stage you will want your code to deliver output to the browser. Various examples have been given throughout this document, here
       is a summary of various output options:</para>
 
       <example>
-        <title>Variations on print options</title>
+        <title>Variations on output options</title>
 
-        <para><programlisting><xi:include href="example/output1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting></para>
+        <para><programlisting><xi:include href="example/output1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+        xlink:href="https://demo.webdyne.org/example/output1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example>
     </section>
 

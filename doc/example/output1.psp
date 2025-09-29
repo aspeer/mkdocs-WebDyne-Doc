@@ -1,19 +1,20 @@
 <start_html>
 <pre>
-<perl handler="handler1"/>
-<perl handler="handler2"/>
-<perl handler="handler3"/>
-<perl handler="handler4"/>
-<perl handler="handler5" chomp/>
-<perl handler="handler6"/>
-<perl handler="handler7"/>
+<perl handler="handler1" />
+<perl handler="handler2" />
+<perl handler="handler3" />
+<perl handler="handler4" />
+<perl handler="handler5" />
+<perl handler="handler6" chomp />
+<perl handler="handler7" />
+<perl handler="handler8" />
 __PERL__
 
 #  Different ways of sending output to the browser
 #
 sub handler1 {
 
-    #  Simplest - just returm a scalar variable
+    #  Simplest - just return a scalar variable
     #
     my $text='Hello World 1';
     return $text;
@@ -31,9 +32,27 @@ sub handler2 {
 
 sub handler3 {
 
-    #  You can print something also using the print statement
+    #  Returning an array ref is OK
     #
-    my $text='Hello World 3';
+    my @text=('Hello', 'World', 3);
+    
+    
+    #  This won't work
+    #
+    #return @text
+
+    
+    #  Returning an array ref is OK - note it won't auto insert spaces though !
+    #
+    return \@text
+    
+}
+
+sub handler4 {
+
+    #  Print something also using the print statement
+    #
+    my $text='Hello World 4';
     print $text;
     print "\n";
     
@@ -43,11 +62,12 @@ sub handler3 {
     
 }
 
-sub handler4 {
 
-    #  You can print arrays
+sub handler5 {
+
+    #  Print arrays
     #
-    my @text=('Hello ', 'World ', 4);
+    my @text=('Hello ', 'World ', 5);
     print @text;
     
     
@@ -68,7 +88,7 @@ sub handler4 {
     
 }
 
-sub handler5 {
+sub handler6 {
 
     #  You can print using a webdyne method handler
     #
@@ -77,8 +97,8 @@ sub handler5 {
     
     #  Text we want to print
     #
-    my $text="Hello World 5\n";
-    my @text=('Hello ', 'World ', 5, "\n");
+    my $text="Hello World 6\n";
+    my @text=('Hello ', 'World ', 6, "\n");
     
     
     #  These all work
@@ -91,7 +111,7 @@ sub handler5 {
     
 }
 
-sub handler6 {
+sub handler7 {
 
     #  You can print using a webdyne method handler
     #
@@ -100,8 +120,8 @@ sub handler6 {
     
     #  Text we want to print
     #
-    my $text="Hello World 6";
-    my @text=('Hello ', 'World ', 6);
+    my $text="Hello World 7";
+    my @text=('Hello ', 'World ', 7);
     
     
     #  Turn on autonew line to print "\n" at end of every call
@@ -127,13 +147,13 @@ sub handler6 {
     
 }
 
-sub handler7 {
+sub handler8 {
 
     #  The say() method is supported also
     #
     use feature 'say';
     my $self=shift();
-    my $text='Hello World 7';
+    my $text='Hello World 8';
     
     
     #  These will print, but won't send newline - say() won't send \n to TIEHANDLE

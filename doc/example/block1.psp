@@ -7,7 +7,7 @@
 
 <form>
 2 + 2 = <textfield name="sum">
-<submit>
+<p><submit>
 </form>
 
 <p>

@@ -4,14 +4,16 @@
 <h1>A Simple Example</h1>
 <start_form>
 <p>
-What's your name ? <textfield name="name">
+What's your name ?
+<p><textfield name="name">
 <p>
-What's the combination ? <checkbox_group 
+What's the combination ? 
+<p><checkbox_group 
 	name="words" values="@{qw(eenie meenie minie moe)}" defaults="@{qw(eenie minie)}">
 <p>
-What's your favourite color ? <popup_menu 
-	name="color" values="@{qw(red green blue chartreuse)}">
-<submit>
+What's your favourite color ? 
+<p><popup_menu name="color" values="@{qw(red green blue chartreuse)}">
+<p><submit>
 <end_form>
 <hr>
 
