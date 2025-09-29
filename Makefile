@@ -1,18 +1,26 @@
 .PHONY : all
 
-all	: webdyne.md
+SRC_DIR := doc
+DOC_DIR := docs
+TMP_DIR := doc/build
+SCRIPTS_DIR := scripts
 
-webdyne.md : webdyne.xml
+all	: $(SRC_DIR)/webdyne.md gh-deploy
+
+webdyne.md0 : webdyne.xml0
 	xmllint --xinclude --noent webdyne.xml -o webdyne-db5-expanded.xml	
 	pandoc -f docbook -t markdown -o webdyne.md webdyne-db5-expanded.xml
 	perl -pi -e 's/\\</</g' $@
 
-clean	: 
-	rm -f webdyne.psp webdyne.html $(DIR_EXAMPLE)/*.html
+$(SRC_DIR)/webdyne.md : $(SRC_DIR)/webdyne.xml
+	mkdir -p $(TMP_DIR)
+	xmllint --xinclude --noent $< -o $(TMP_DIR)/$(notdir $<)
+	pandoc -f docbook -t markdown-smart --lua-filter=$(SCRIPTS_DIR)/admonition-advanced.lua --extract-media=$(DOC_DIR)/images -o $(TMP_DIR)/$(notdir $@) $(TMP_DIR)/$(notdir $<)
+	perl -pi -e 's/\\</</g' $(TMP_DIR)/$(notdir $@)
+	perl -pi -e 's{\Q./docs/images\E}{images}g' $(TMP_DIR)/$(notdir $@)
+	rm -f $(DOC_DIR)/*.md
+	perl $(SCRIPTS_DIR)/mdsplit.pl $(TMP_DIR)/$(notdir $@) $(DOC_DIR)
 
 gh-deploy :
 	mkdocs gh-deploy -f mkdocs.gh.yml
 
-install :: webdyne.pdf
-	cp -R * $(DIR_WEBDYNE_SITE_DOC)
-	cp webdyne.pdf $(DIR_WEBDYNE_DEV)/doc
