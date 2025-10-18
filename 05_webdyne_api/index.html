@@ -12,13 +12,13 @@
         <meta name="author" content="Andrew Speer">
       
       
-        <link rel="canonical" href="https://aspeer.github.io/mkdocs-WebDyne-Doc/06_webdyne_api/">
+        <link rel="canonical" href="https://aspeer.github.io/mkdocs-WebDyne-Doc/05_webdyne_api/">
       
       
-        <link rel="prev" href="../05_error_handling/">
+        <link rel="prev" href="../04_error_handling/">
       
       
-        <link rel="next" href="../07_miscellaneous/">
+        <link rel="next" href="../06_miscellaneous/">
       
       
       <link rel="icon" href="../assets/favicon.png">
@@ -311,12 +311,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../01_installation/" class="md-nav__link">
+      <a href="../01_installation_and_quickstart/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Installation
+    Installation and Quickstart
     
   </span>
   
@@ -333,12 +333,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../02_initialisation/" class="md-nav__link">
+      <a href="../02_basic_usage_examples/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Initialisation
+    Basic Usage
     
   </span>
   
@@ -355,29 +355,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../03_getting_started_examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Getting Started
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../04_advanced_usage/" class="md-nav__link">
+      <a href="../03_advanced_usage/" class="md-nav__link">
         
   
   
@@ -399,7 +377,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../05_error_handling/" class="md-nav__link">
+      <a href="../04_error_handling/" class="md-nav__link">
         
   
   
@@ -489,7 +467,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#webdyne-constants" class="md-nav__link">
+  <a href="#webdyne_constants" class="md-nav__link">
     <span class="md-ellipsis">
       WebDyne Constants
     </span>
@@ -554,7 +532,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../07_miscellaneous/" class="md-nav__link">
+      <a href="../06_miscellaneous/" class="md-nav__link">
         
   
   
@@ -576,7 +554,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../08_extending_webdyne/" class="md-nav__link">
+      <a href="../07_extending_webdyne/" class="md-nav__link">
         
   
   
@@ -598,12 +576,34 @@
   
   
     <li class="md-nav__item">
-      <a href="../09_credits/" class="md-nav__link">
+      <a href="../08_credits/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Credits
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_miscellaneous/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Miscellaneous
     
   </span>
   
@@ -734,19 +734,19 @@ render_block Webdyne method:</p>
 <dl>
 <dt>name=identifier</dt>
 <dd>
-<p>The name for this block of HTML. Referenced when rendering a
-particular block in perl code, e.g. return
+<p><em>Mandatory.</em> The name for this block of HTML. Referenced when
+rendering a particular block in perl code, e.g. return
 $self-&gt;render_block("foo");</p>
 </dd>
 <dt>display=1</dt>
 <dd>
-<p><em>Optional.</em> Force display of this block even if not invoked by
-render_block WebDyne method. Useful for prototyping.</p>
+<p>Force display of this block even if not invoked by render_block
+WebDyne method. Useful for prototyping.</p>
 </dd>
 <dt>static=1</dt>
 <dd>
-<p><em>Optional</em>. This block rendered once only and the output cached
-for all subsequent requests</p>
+<p>This block rendered once only and the output cached for all
+subsequent requests</p>
 </dd>
 </dl>
 </dd>
@@ -764,18 +764,23 @@ current directory or absolute path.</p>
 </dd>
 <dt>head=1</dt>
 <dd>
-<p><em>Optional</em>. File is an HTML file and we want to include just the
+<p>File is an HTML or <code>.psp</code> file and we want to include just the
 &lt;head&gt; section</p>
 </dd>
 <dt>body=1</dt>
 <dd>
-<p><em>Optional</em>. File is an HTML file and we want to include just the
+<p>File is an HTML or <code>.psp</code> file and we want to include just the
 &lt;body&gt; section.</p>
 </dd>
 <dt>block=blockname</dt>
 <dd>
-<p><em>Optional</em>. File is a .psp file and we want to include a
-&lt;block&gt; section from that file.</p>
+<p>File is a <code>.psp</code> file and we want to include a &lt;block&gt; section
+from that file.</p>
+</dd>
+<dt>nocache</dt>
+<dd>
+<p>Don't cache the results of the include, bring them in off disk
+each time. Will incur performance penalty</p>
 </dd>
 </dl>
 </dd>
@@ -791,6 +796,26 @@ pages.</p>
 <dd>
 <p><em>Optional.</em> Force display even if <code>$WEBDYNE_DUMP_FLAG</code> global
 not set</p>
+</dd>
+<dt>all</dt>
+<dd>
+<p>Display all diagnostic blocks</p>
+</dd>
+<dt>cgi</dt>
+<dd>
+<p>Display CGI parameters and query strings</p>
+</dd>
+<dt>env</dt>
+<dd>
+<p>Display environment variables</p>
+</dd>
+<dt>constant</dt>
+<dd>
+<p>Display Webdyne constants</p>
+</dd>
+<dt>version</dt>
+<dd>
+<p>Display version strings</p>
 </dd>
 </dl>
 </dd>
@@ -813,6 +838,16 @@ request.</p>
 <p>Returns an instance of the Apache request object, or a mock object
 with similar functionality when running under PSGI or FCGI</p>
 </dd>
+<dt>html_tiny()</dt>
+<dd>
+<p>Returns an instance of the HTML::Tiny object, can be used for
+creating programmatic HTML output</p>
+</dd>
+<dt>include()</dt>
+<dd>
+<p>Returns HTML derived from a file, using the same parameters as the
+&lt;include&gt; tag</p>
+</dd>
 <dt>render( &lt;key=&gt;value, key=&gt;value&gt;, .. )</dt>
 <dd>
 <p>Called to render the text or HTML between &lt;perl&gt;..&lt;/perl&gt; tags.
@@ -830,10 +865,16 @@ section containing the block to be rendered, or true (\undef) if
 the block is not within the &lt;perl&gt;..&lt;/perl&gt; section (e.g.
 further into the document, see the block section for an example).</p>
 </dd>
-<dt>redirect({ uri=&gt;uri | file=&gt;filename | html=&gt;\html_text })</dt>
+<dt>render_reset()</dt>
+<dd>
+<p>Erase anything previously set to render - it will not be sent to the
+browser.</p>
+</dd>
+<dt>redirect( uri=&gt;uri | file=&gt;filename | html=&gt;\html_text )</dt>
 <dd>
 <p>Will redirect to URI or file nominated, or display only nominated
-text. Any rendering done to prior to this method is abandoned.</p>
+text. Any rendering done to prior to this method is abandoned. If
+supplying HTML text to be rendered supply as a SCALAR reference.</p>
 </dd>
 <dt>cache_inode( &lt;seed&gt; )</dt>
 <dd>
@@ -849,12 +890,27 @@ with the optionally supplied UID. If no UID supplied the current one
 will be used. Can be used to make cache compile decisions by
 WebDyne::Cache code (e.g if page &gt; x minutes old, recompile).</p>
 </dd>
-<dt>cache_compile( )</dt>
+<dt>source_mtime()</dt>
+<dd>
+<p>Returns the mtime (modification time) of the source .psp file
+currently being rendered.</p>
+</dd>
+<dt>cache_compile()</dt>
 <dd>
 <p>Force recompilation of cache file. Can be used in cache code to
 force recompilation of a page, even if it is flagged static. Returns
 current value if no parameters supplied, or sets if parameter
 supplied.</p>
+</dd>
+<dt>filename()</dt>
+<dd>
+<p>Return the full filename (including path) of the file being
+rendered. Will only return the core (main) filename - any included
+files, templates etc. are not reported.</p>
+</dd>
+<dt>cwd()</dt>
+<dd>
+<p>Return the current working directory WebDyne is operating in.</p>
 </dd>
 <dt>no_cache()</dt>
 <dd>
@@ -871,8 +927,21 @@ Alterations to meta data are persistent for this process, and carry
 across Apache requests (although not across different Apache
 processes)</p>
 </dd>
+<dt>print(), printf(), say()</dt>
+<dd>
+<p>Render the output of the print(), printf() or say() routines into
+the current HTML stream. The print() and printf() methods emulate
+their Perl functions in not appending a new line into the output,
+where as say() does.</p>
+</dd>
+<dt>render_time()</dt>
+<dd>
+<p>Return the elapsed time since the WebDyne hander started rendering
+this page. Obviously only meaningful if called at the end of a page,
+just before final output to browser.</p>
+</dd>
 </dl>
-<h2 id="webdyne-constants">WebDyne Constants<a class="headerlink" href="#webdyne-constants" title="Permanent link">&para;</a></h2>
+<h2 id="webdyne_constants">WebDyne Constants<a class="headerlink" href="#webdyne_constants" title="Permanent link">&para;</a></h2>
 <p>Constants defined in the WebDyne::Constant package control various
 aspects of how WebDyne behaves. Constants can be modified globally by
 altering a global configuration file (<code>/etc/webdyne.conf.pl</code> under Linux
@@ -907,8 +976,8 @@ $VAR1={
 change any of the WebDyne constants from their default values.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Always check the syntax of the <code>/etc/webdyne.pm</code> file after editing by
-running <code>perl -c -w /etc/webdyne.conf.pl</code> to check that the file is
+<p>Always check the syntax of the <code>/etc/webdyne.conf.pl</code> file after editing
+by running <code>perl -c -w /etc/webdyne.conf.pl</code> to check that the file is
 readable by Perl. Files with syntax errors will fail silently and the
 variables will revert to module defaults.</p>
 </div>
@@ -930,7 +999,7 @@ basis - they are read from the top level of the config file and set
 globally.</p>
 <p>Some 1.x versions of mod_perl do not read PerlSetVar variables
 correctly. If you encounter this problem use a &lt;Perl&gt;..&lt;/Perl&gt;
-section in the httpd.conf file, e.g.:</p>
+section in the <code>httpd.conf</code> file, e.g.:</p>
 <div class="language-text highlight"><pre><span></span><code># Mod_perl 1.x
 
 PerlHandler     WebDyne
@@ -942,7 +1011,7 @@ $WebDyne::Session::Constant::WEBDYNE_SESSION_ID_COOKIE_NAME=&#39;session_cookie&
 </code></pre></div>
 </div>
 <p>Where you need to set variables without simple string content you can
-use a &lt;Perl&gt;..&lt;/Perl&gt; section in the httpd.conf file, e.g.:</p>
+use a &lt;Perl&gt;..&lt;/Perl&gt; section in the <code>httpd.conf</code> file, e.g.:</p>
 <div class="language-text highlight"><pre><span></span><code># Setting more complex variables
 
 PerlHandler     WebDyne
@@ -1062,6 +1131,13 @@ results from CGI-&gt;dump(). Use when debugging forms. default=0</p>
 <dd>
 <p>attributes for the &lt;html&gt; tag, default is { lang =&gt;'en' }</p>
 </dd>
+<dt><code>$WEBDYNE_HEAD_INSERT</code></dt>
+<dd>
+<p>Any HTML you want inserted before the closing &lt;/head&gt; tag, e.g.
+stylesheet or script includes to be added to every <code>.psp</code> page. Must
+be valid HTML &lt;head&gt; directives, not interpreted or compiled by
+WebDyne, incorporated as-is</p>
+</dd>
 <dt><code>$WEBDYNE_COMPILE_IGNORE_WHITESPACE</code></dt>
 <dd>
 <p>Ignore source file whitespace as per HTML::TreeBuilder
@@ -1123,7 +1199,7 @@ Useful in internal WebDyne development only. By default this is 0
 </dd>
 <dt><code>$WEBDYNE_ERROR_SOURCE_CONTEXT_SHOW</code></dt>
 <dd>
-<p>Display a fragment of the .psp source file around where the error
+<p>Display a fragment of the <code>.psp</code> source file around where the error
 occurred to give some context of where the error happened. Set to 0
 to not display context.</p>
 </dd>
@@ -1227,7 +1303,7 @@ PerlSetVar      WebDyneChain                 &#39;WebDyne::Session&#39;
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../05_error_handling/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Error Handling">
+          <a href="../04_error_handling/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Error Handling">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1244,7 +1320,7 @@ PerlSetVar      WebDyneChain                 &#39;WebDyne::Session&#39;
         
         
           
-          <a href="../07_miscellaneous/" class="md-footer__link md-footer__link--next" aria-label="Next: Miscellaneous">
+          <a href="../06_miscellaneous/" class="md-footer__link md-footer__link--next" aria-label="Next: Miscellaneous">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next

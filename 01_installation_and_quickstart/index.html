@@ -12,13 +12,13 @@
         <meta name="author" content="Andrew Speer">
       
       
-        <link rel="canonical" href="https://aspeer.github.io/mkdocs-WebDyne-Doc/08_extending_webdyne/">
+        <link rel="canonical" href="https://aspeer.github.io/mkdocs-WebDyne-Doc/01_installation_and_quickstart/">
       
       
-        <link rel="prev" href="../07_miscellaneous/">
+        <link rel="prev" href="../00_introduction/">
       
       
-        <link rel="next" href="../09_credits/">
+        <link rel="next" href="../02_basic_usage_examples/">
       
       
       <link rel="icon" href="../assets/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Extending WebDyne - WebDyne</title>
+        <title>Installation and Quickstart - WebDyne</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#extending-webdyne" class="md-skip">
+        <a href="#installation-and-quickstart" class="md-skip">
           Skip to content
         </a>
       
@@ -119,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Extending WebDyne
+              Installation and Quickstart
             
           </span>
         </div>
@@ -308,160 +308,6 @@
       
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../01_installation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Installation
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../02_initialisation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Initialisation
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../03_getting_started_examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Getting Started
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../04_advanced_usage/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Advanced Usage
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../05_error_handling/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Error Handling
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../06_webdyne_api/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    WebDyne API
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../07_miscellaneous/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Miscellaneous
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
     
   
   
@@ -479,7 +325,7 @@
   
   
   <span class="md-ellipsis">
-    Extending WebDyne
+    Installation and Quickstart
     
   </span>
   
@@ -492,7 +338,7 @@
   
   
   <span class="md-ellipsis">
-    Extending WebDyne
+    Installation and Quickstart
     
   </span>
   
@@ -515,47 +361,86 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#webdynechain" class="md-nav__link">
+  <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
-      WebDyne::Chain
+      Prerequisites
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#webdynestatic" class="md-nav__link">
+  <a href="#installing-via-cpan-or-cpanminus" class="md-nav__link">
     <span class="md-ellipsis">
-      WebDyne::Static
+      Installing via CPAN or CPANMinus
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#webdynecache" class="md-nav__link">
+  <a href="#quickstart" class="md-nav__link">
     <span class="md-ellipsis">
-      WebDyne::Cache
+      Quickstart
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#webdynesession" class="md-nav__link">
+  <a href="#apache-mod_perl" class="md-nav__link">
     <span class="md-ellipsis">
-      WebDyne::Session
+      Apache mod_perl
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Apache mod_perl">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-configuration-of-apache" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manual configuration of Apache
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psgi" class="md-nav__link">
+    <span class="md-ellipsis">
+      PSGI
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#webdynetemplate" class="md-nav__link">
+  <a href="#docker" class="md-nav__link">
     <span class="md-ellipsis">
-      WebDyne::Template
+      Docker
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deploying-webdyne-apps-with-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploying WebDyne apps with Docker
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -574,12 +459,166 @@
   
   
     <li class="md-nav__item">
-      <a href="../09_credits/" class="md-nav__link">
+      <a href="../02_basic_usage_examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basic Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_advanced_usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_error_handling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Handling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_webdyne_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    WebDyne API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_miscellaneous/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Miscellaneous
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_extending_webdyne/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Extending WebDyne
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08_credits/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Credits
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_miscellaneous/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Miscellaneous
     
   </span>
   
@@ -630,190 +669,307 @@
   
 
 
-<h1 id="extending-webdyne">Extending WebDyne<a class="headerlink" href="#extending-webdyne" title="Permanent link">&para;</a></h1>
-<p>WebDyne can be extended by the installation and use of supplementary
-Perl packages. There are several standard packages that come with the
-Webdyne distribution, or you can build your own using one of the
-standard packages as a template.</p>
-<p>The following gives an overview of the standard packages included in the
-distribution, or downloadable as extensions from CPAN.</p>
-<h2 id="webdynechain">WebDyne::Chain<a class="headerlink" href="#webdynechain" title="Permanent link">&para;</a></h2>
-<p>WebDyne::Chain is a module that will cascade a WebDyne request through
-one or more modules before delivery to the WebDyne engine. Most modules
-that extend WebDyne rely on WebDyne::Chain to get themselves inserted
-into the request lifecycle.</p>
-<p>Whilst WebDyne::Chain does not modify content itself, it allows any of
-the modules below to intercept the request as if they had been loaded by
-the target page directly (i.e., loaded in the __PERL__ section of a
-page via the "use" or "require" functions).</p>
-<p>Using WebDyne::Chain you can modify the behaviour of WebDyne pages based
-on their location. The WebDyne::Template module can be used in such
-scenario to wrap all pages in a location with a particular template.
-Another would be to make all pages in a particular location static
-without loading the WebDyne::Static module in each page:</p>
-<div class="language-text highlight"><pre><span></span><code>&lt;Location /static&gt;
-
-#  All pages in this location will be generated once only.
-PerlHandler     WebDyne::Chain
-PerlSetVar      WebDyneChain    &#39;WebDyne::Static&#39;
-
-&lt;/Location&gt;
+<h1 id="installation-and-quickstart">Installation and Quickstart<a class="headerlink" href="#installation-and-quickstart" title="Permanent link">&para;</a></h1>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<p>WebDyne will install and run on any modern Linux system that has a
+recent version of Perl installed and is capable of installing Perl
+module via CPAN. Installation via Docker is also supported.</p>
+<p>When installing WebDyne there are two components which are required
+before you can begin serving .psp files:</p>
+<ul>
+<li>
+<p>The core WebDyne Perl modules</p>
+</li>
+<li>
+<p>A web server configured to use WebDyne</p>
+</li>
+</ul>
+<p>WebDyne will work with Apache mod_perl or PSGI compatible web servers
+(such as Plack, Starman etc.).</p>
+<p>Docker containers with pre-built versions of WebDyne are also available.</p>
+<h2 id="installing-via-cpan-or-cpanminus">Installing via CPAN or CPANMinus<a class="headerlink" href="#installing-via-cpan-or-cpanminus" title="Permanent link">&para;</a></h2>
+<p>Install from the Perl CPAN library using <code>cpan</code> or <code>cpanm</code> utilities.
+Installs dependencies if required (also from CPAN).</p>
+<p>Destination of the installed files is dependent on the local CPAN
+configuration, however in most cases it will be to the Perl site library
+location. WebDyne supports installation to an alternate location using
+the PREFIX option in CPAN. Binaries are usually installed to <code>/usr/bin</code>
+or <code>/usr/local/bin</code> by CPAN, but may vary by distribution/local
+configuration.</p>
+<p>Assuming your CPAN environment is setup correctly you can run the
+command:</p>
+<p><code>perl -MCPAN -e "install WebDyne"</code></p>
+<p>Or (with <code>cpanminus</code> if installed)</p>
+<p><code>cpanm WebDyne</code></p>
+<p>This will install the base WebDyne modules, which includes the Apache
+config utility and PSGI version. Note that Apache or PSGI servers and
+dependencies such as Plack or Starman are <strong>not</strong> installed by default
+and need to be installed separately - see the relevant section.</p>
+<p>Once installed you will need to configure your web server to use WebDyne
+to serve files with the <code>.psp</code> extension if using Apache - see section
+below.</p>
+<h2 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">&para;</a></h2>
+<p>If using PSGI you can start a quick web server with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#  Render a file to STDOUT to see the HTML</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">#</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$<span class="w"> </span>wdrender<span class="w"> </span>app.psp
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1">#  Install Plack</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1">#</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>$<span class="w"> </span>cpanm<span class="w"> </span>Plack
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">#  Check all working</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">#</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>--test
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1">#  Start serving only a single PSP file</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1">#</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>app.psp
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1"># Start serving any file in the current directory, using app.psp as the default</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1">#</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>.
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="c1"># Start but listen on non-default port, only on localhost</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="c1">#</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>--port<span class="o">=</span><span class="m">5001</span><span class="w"> </span>--host<span class="o">=</span><span class="m">127</span>.0.0.1
+</span></code></pre></div>
+<p>Connect your browser to the host and you should see the WebDyne output</p>
+<h2 id="apache-mod_perl">Apache mod_perl<a class="headerlink" href="#apache-mod_perl" title="Permanent link">&para;</a></h2>
+<p>If using Apache with mod_perl you can initialise WebDyne using the
+<code>wdapacheinit</code> command. This will attempt to auto-discover where the
+Apache binary and configuration files are, then add a suitable
+<code>webdyne.conf</code> file to the apache configuration. Apache will need to be
+restarted for the new configuration file to take effect. This will need
+to be done as a the root user.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># wdapacheinit </span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="o">[</span>install<span class="o">]</span><span class="w"> </span>-<span class="w"> </span>Installation<span class="w"> </span><span class="nb">source</span><span class="w"> </span>directory<span class="w"> </span><span class="s1">&#39;/usr&#39;</span>.
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="o">[</span>install<span class="o">]</span><span class="w"> </span>-<span class="w"> </span>Creating<span class="w"> </span>cache<span class="w"> </span>directory<span class="w"> </span><span class="s1">&#39;/var/cache/webdyne&#39;</span>.
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="o">[</span>install<span class="o">]</span><span class="w"> </span>-<span class="w"> </span>Writing<span class="w"> </span>Apache<span class="w"> </span>config<span class="w"> </span>file<span class="w"> </span><span class="s1">&#39;/etc/httpd/conf.d/webdyne.conf&#39;</span>.
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="o">[</span>install<span class="o">]</span><span class="w"> </span>-<span class="w"> </span>Writing<span class="w"> </span>Webdyne<span class="w"> </span>config<span class="w"> </span>file<span class="w"> </span><span class="s1">&#39;/etc/httpd/conf.d/webdyne_conf.pl&#39;</span>.
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="o">[</span>install<span class="o">]</span><span class="w"> </span>-<span class="w"> </span>Apache<span class="w"> </span>uses<span class="w"> </span>conf.d<span class="w"> </span>directory<span class="w"> </span>-<span class="w"> </span>not<span class="w"> </span>changing<span class="w"> </span>httpd.conf<span class="w"> </span>file.
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="o">[</span>install<span class="o">]</span><span class="w"> </span>-<span class="w"> </span>Granting<span class="w"> </span>Apache<span class="w"> </span><span class="o">(</span>apache.apache<span class="o">)</span><span class="w"> </span>ownership<span class="w"> </span>of<span class="w"> </span>cache<span class="w"> </span>directory<span class="w"> </span><span class="s1">&#39;/var/cache/webdyne&#39;</span>.
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="o">[</span>install<span class="o">]</span><span class="w"> </span>-<span class="w"> </span>Install<span class="w"> </span>completed.
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># systemctl restart httpd</span>
+</span></code></pre></div>
+<p>By default WebDyne will create a cache directory in <code>/var/cache/webdyne</code>
+on Linux systems when a default CPAN install is done (no PREFIX
+specified). If a PREFIX is specified the cache directory will be created
+as <code>$PREFIX/cache</code>. Use the <code>wdapacheinit</code> <code>--cache</code> command-line option
+to specify an alternate location.</p>
+<p>Once <code>wdapacheinit</code> has been run the Apache server should be reloaded or
+restarted. Use a method appropriate for your Linux distribution.</p>
+<div class="language-text highlight"><pre><span></span><code>[root@localhost ~]# systemctl httpd restart
+Stopping httpd:                                            [  OK  ]
+Starting httpd:                                            [  OK  ]
 </code></pre></div>
-<p>Multiple modules can be chained at once:</p>
-<div class="language-text highlight"><pre><span></span><code>&lt;Location /&gt;
+<h3 id="manual-configuration-of-apache">Manual configuration of Apache<a class="headerlink" href="#manual-configuration-of-apache" title="Permanent link">&para;</a></h3>
+<p>If the <code>wdapacheinit</code> command does not work as expected on your system
+then the Apache config files can be modified manually.</p>
+<p>Include the following section in the Apache httpd.conf file (or create a
+webdyne.conf file if you distribution supports conf.d style
+configuration files). These following config files are written with
+Apache 2.4 syntax - adjust path and syntax as required:</p>
+<div class="language-text highlight"><pre><span></span><code>#  Need mod_perl, load up if not already done
+#
+&lt;IfModule !mod_perl.c&gt;
+LoadModule perl_module &quot;/etc/httpd/modules/mod_perl.so&quot;
+&lt;/IfModule&gt;
 
-#  We want templating and session cookies for all pages on our site.
-PerlHandler     WebDyne::Chain
-PerlSetVar      WebDyneChain    &#39;WebDyne::Session WebDyne::Template&#39;
-PerlSetVar      WebDyneTemplate &#39;/path/to/template.psp&#39;
+#  Uncomment and update if using a local::lib location for Perl modules
+#
+#PerlSwitches -I/opt/perl -I/opt/otherperl
 
-&lt;/Location&gt;
+#  Preload the WebDyne and WebDyne::Compile module
+#
+PerlModule    WebDyne WebDyne::Compile
+
+#  Associate psp files with WebDyne
+#
+AddHandler    modperl    .psp
+PerlHandler   WebDyne
+
+#  Set a directory for storage of cache files. Make sure this exists already is writable by the 
+#  Apache daemon process.
+#
+PerlSetVar    WEBDYNE_CACHE_DN    &#39;/opt/webdyne/cache&#39;
+
+#  Allow Apache to access the cache directory if it needs to serve pre-compiled pages from there.
+#
+&lt;Directory &quot;/opt/webdyne/cache&quot;&gt;
+Require all granted
+&lt;/Directory&gt;
+
+# Put variables in a separate file - best
+#
+PerlRequire conf.d/webdyne_constant.pl
+
+#  Or use &lt;Perl&gt; sections - but warning, certbot doesn&#39;t like this syntax in http conf files
+#
+&lt;Perl&gt;
+
+#  Error display/extended display on/off. Set to 1 to enable, 0 to disable
+#
+$WebDyne::WEBDYNE_ERROR_SHOW=1;
+$WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
+&lt;/Perl&gt;
 </code></pre></div>
-<p>The above example would place all pages within the named template, and
-make session information to all pages via $self-&gt;session_id(). A good
-start to a rudimentary CMS.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Substitute directory paths in the above example for the
+relevant/correct/appropriate ones on your system.</p>
+</div>
+<p>Create the cache directory and assign ownership and permission
+appropriate for your distribution (group name will vary by
+distribution - locate the correct one for your distribution)</p>
+<div class="language-text highlight"><pre><span></span><code>[root@localhost ~]# mkdir /opt/webdyne/cache
+[root@localhost ~]# chgrp apache /opt/webdyne/cache
+[root@localhost ~]# chmod 770 /opt/webdyne/cache
+</code></pre></div>
+<p>Restart Apache and check for any errors.</p>
+<h2 id="psgi">PSGI<a class="headerlink" href="#psgi" title="Permanent link">&para;</a></h2>
+<p>Ensure that Plack is installed on your system via CPAN:</p>
+<div class="language-text highlight"><pre><span></span><code># Via CPAN
+perl -MCPAN -e &#39;install Plack&#39;
+
+# Modern systems
+#
+cpan Plack
+
+# Or better via CPANM
+cpanm Plack
+</code></pre></div>
+<p>You can start a basic WebDyne server by running the webdyne.psgi command
+with the --test parameter</p>
+<div class="language-text highlight"><pre><span></span><code>webdyne.psgi --test
+</code></pre></div>
+<p>This will start a PSGI web server on your machine listening to port 5000
+(or port 5001 on a Mac). Open a connection to <a href="http://127.0.0.1:5000/">http://127.0.0.1:5000/</a> or
+the IP address of your server in your web browser to view the test page
+and validate the WebDyne is working correctly:</p>
+<p>Once verified as working correctly you can serve WebDyne content from a
+particular directory - or from a single file - using the syntax:</p>
+<div class="language-text highlight"><pre><span></span><code>#  To serve up all files in a directory:
+#
+$ webdyne.psgi &lt;directory&gt;
+
+#  E.g serve files in /var/www/html. By default WebDyne will serve app.psp if no filename
+#  is specified
+#
+$ webdyne.psgi /var/www/html
+
+#  Allow static files such as css, jpg files etc. to be served also
+#
+$ webdyne.psgi --static /var/www/html/app.psp
+
+#  Or just a single app.psp file. Only this file will be served regardless of URL
+#
+$ webdyne.psgi /var/www/html/time.psp
+</code></pre></div>
+<p>The above starts a single-threaded web server using Plack. To start the
+more performant Starman server (assuming installed):</p>
+<div class="language-text highlight"><pre><span></span><code>#  Start Starman instance. Substitute port + document root and location of webdyne.psgi
+#  as appropriate for your system.
+#
+$ DOCUMENT_ROOT=/var/www/html starman --port 5001 /usr/local/bin/webdyne.psgi
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starman does not support options such as --test and --static. If you
+want to server static files from starman you should do so using best
+practice via a traditional web server front end.</p>
+</div>
+<p>Numerous options can be set from the command line via environment
+variables, including Webdyne configuration. See relevant section for all
+WebDyne configuration options but assuming in a local file
+webdyne.conf.pl:</p>
+<div class="language-text highlight"><pre><span></span><code>#  Start instance webdyne.psgi using local config file
+#
+$ WEBDYNE_CONF=./webdyne.conf.pl webdyne.psgi --port=5012 .
+</code></pre></div>
+<h2 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h2>
+<p>Docker containers are available from the Github Container Registry.
+Install the default Docker container (based on Debian) via:</p>
+<div class="language-text highlight"><pre><span></span><code>#  Default debian version
+#
+$ docker pull ghcr.io/aspeer/webdyne:latest
+
+#  Or Alpine/Fedora/Perl versions
+#
+# docker pull ghcr.io/aspeer/webdyne-alpine:latest
+# docker pull ghcr.io/aspeer/webdyne-fedora:latest
+# docker pull ghcr.io/aspeer/webdyne-perl:latest
+</code></pre></div>
+<p>Start the docker container with the command:</p>
+<div class="language-text highlight"><pre><span></span><code>$ docker run -e PORT=5002 -p 5002:5002 --name=webdyne webdyne
+</code></pre></div>
+<p>This will start WebDyne running on port 5002 on the host. Connecting to
+that location should show the server <em>localtime</em> test page</p>
+<p>To mount a local page and serve it through the docker container use the
+command:</p>
+<div class="language-text highlight"><pre><span></span><code>docker run --mount &lt;local_dir&gt;:/app:ro -e PORT=5011 -e DOCUMENT_ROOT=/app -p 5011:5011 --name=webdyne webdyne
+</code></pre></div>
+<p>This will tell docker to mount the local directory into the docker
+container. If there is a default file named app.psp in the location it
+will be displayed. if there is a <code>cpanfile</code> in the mount directory any
+modules will be installed into the docker container automatically.</p>
+<h3 id="deploying-webdyne-apps-with-docker">Deploying WebDyne apps with Docker<a class="headerlink" href="#deploying-webdyne-apps-with-docker" title="Permanent link">&para;</a></h3>
+<p>The WebDyne container can be used as the basis for new docker images
+containing your application files. Consider the following directory
+structure (available from Github as
+<a href="https://github.com/aspeer/psp-WebDyne-Fortune">aspeer/psp-WebDyne-Fortune</a>:</p>
+<div class="language-text highlight"><pre><span></span><code>psp-WebDyne-Fortune/
+├── app.pm
+├── app.psp
+├── cpanfile
+├── Dockerfile
+└── webdyne.conf.pl
+</code></pre></div>
+<p>Where:</p>
 <dl>
-<dt>WebDyneChain</dt>
+<dt>app.psp</dt>
 <dd>
-<p>Directive. Supply a space separated string of WebDyne modules that
-the request should be passed through.</p>
+<p>The main and default psp file</p>
+</dd>
+<dt>app.pm</dt>
+<dd>
+<p>Perl code used in the psp file</p>
+</dd>
+<dt>cpanfile</dt>
+<dd>
+<p>A list of Perl modules to be installed in the docker container by
+cpanm</p>
+</dd>
+<dt>Dockerfile</dt>
+<dd>
+<p>The docker build file</p>
+</dd>
+<dt>webdyne.conf.pl</dt>
+<dd>
+<p>Any variables to be set for the WebDyne environment</p>
 </dd>
 </dl>
-<h2 id="webdynestatic">WebDyne::Static<a class="headerlink" href="#webdynestatic" title="Permanent link">&para;</a></h2>
-<p>Loading WebDyne::Static into a __PERL__ block flags to WebDyne that
-the entire page should be rendered once at compile time, then the static
-HTML resulting from that compile will be handed out on subsequent
-requests. Any active element or code in the page will only be run once.
-There are no API methods associated with this module</p>
-<p>See the <a href="#static_sections">Static Sections</a> reference for more
-information on how to use this module within an individual page.</p>
-<p>WebDyne::Static can also be used in conjunction with the
-<a href="#webdyne_chain">WebDyne::Chain</a> module to flag all files in a directory
-or location as static. An example httpd.conf snippet:</p>
-<div class="language-text highlight"><pre><span></span><code>&lt;Location /static/&gt;
-
-PerlHandler     WebDyne::Chain
-PerlSetVar      WebDyneChain    &#39;WebDyne::Static&#39;
-
-&lt;/Location&gt;
+<p>Constitute all the files needed to stand up a WebDyne based application
+in a Docker container. The contents of the Dockerfile are minimal:</p>
+<div class="language-text highlight"><pre><span></span><code>FROM webdyne:latest
+WORKDIR /app
+# Debian packages needed for this app
+RUN apt-get update &amp;&amp; apt-get -y install fortunes
+COPY app.* .
+COPY cpanfile .
+COPY webdyne.conf.pl /etc
 </code></pre></div>
-<h2 id="webdynecache">WebDyne::Cache<a class="headerlink" href="#webdynecache" title="Permanent link">&para;</a></h2>
-<p>Loading WebDyne::Cache into a __PERL__ block flags to WebDyne that
-the page wants the engine to call a designated routine every time it is
-run. The called routine can generate a new UID (Unique ID) for the page,
-or force it to be recompiled. There are no API methods associated with
-this module.</p>
-<p>See the <a href="#caching">Caching</a> section above for more information on how to
-use this module with an individual page.</p>
-<p>WebDyne::Cache can also be used in conjunction with the
-<a href="#webdyne_chain">WebDyne::Chain</a> module to flag all files in a
-particular location are subject to a cache handling routine. An example
-httpd.conf snippet:</p>
-<div class="language-text highlight"><pre><span></span><code>&lt;Location /cache/&gt;
-
-#  Run all requests through the MyModule::cache function to see if a page should
-#  be recompiled before sending it out
-#
-PerlHandler     WebDyne::Chain
-PerlSetVar      WebDyneChain    &#39;WebDyne::Cache&#39;
-PerlSetVar      WebDyneCacheHandler &#39;&amp;MyModule::cache&#39;
-
-&lt;/Location&gt;
+<p>Build the Docker container:</p>
+<div class="language-text highlight"><pre><span></span><code>docker build  -t webdyne-app-fortune -f ./Dockerfile .
 </code></pre></div>
-<p>Note that any package used as the WebDyneCacheHandler target should be
-already loaded via "PerlRequire" or similar mechanism.</p>
-<p>As an example of why this could be useful consider the <a href="#caching">caching
-examples</a> above. Instead of flagging that an individual file
-should only be re-compiled every x seconds, that policy could be applied
-to a whole directory with no alteration to the individual pages.</p>
-<h2 id="webdynesession">WebDyne::Session<a class="headerlink" href="#webdynesession" title="Permanent link">&para;</a></h2>
-<p>WebDyne::Session generates a unique session ID for each browser
-connection and stores it in a cookie. It has the following API:</p>
-<dl>
-<dt>session_id()</dt>
-<dd>
-<p>Function. Returns the unique session id assigned to the browser.
-Call via $self-&gt;session_id() from perl code.</p>
-</dd>
-<dt><code>$WEBDYNE_SESSION_ID_COOKIE_NAME</code></dt>
-<dd>
-<p>Constant. Holds the name of the cookie that will be used to assign
-the session id in the users browser. Defaults to "session". Set as
-per <a href="#webdyne_constants">WebDyne::Constants</a> section. Resides in the
-<code>WebDyne::Session::Constant</code> package namespace.</p>
-</dd>
-</dl>
-<p>Example:</p>
-<div class="language-text highlight"><pre><span></span><code>#include &quot;example/session1.html&quot;
+<p>And run it:</p>
+<div class="language-text highlight"><pre><span></span><code>docker run -e PORT=5010 -p 5010:5010 --name=webdyne-app-fortune webdyne-app-fortune
 </code></pre></div>
-<p><a href="https://demo.webdyne.org/session1.psp">Run</a></p>
-<p>WebDyne::Session can also be used in conjunction with the
-<a href="#webdyne_chain">WebDyne::Chain</a> module to make session information
-available to all pages within a location. An example httpd.conf snippet:</p>
-<div class="language-text highlight"><pre><span></span><code>&lt;Location /&gt;
-
-# We want session cookies for our whole site
-#
-PerlHandler     WebDyne::Chain
-PerlSetVar      WebDyneChain    &#39;WebDyne::Session&#39;
-
-#  Change cookie name from &quot;session&quot; to &quot;gingernut&quot; for something different
-#
-PerlSetVar      WEBDYNE_SESSION_ID_COOKIE_NAME    &#39;gingernut&#39;
-
-&lt;/Location&gt;
-</code></pre></div>
-<h2 id="webdynetemplate">WebDyne::Template<a class="headerlink" href="#webdynetemplate" title="Permanent link">&para;</a></h2>
-<p>One of the more powerful WebDyne extensions. WebDyne::Template can be
-used to build CMS (Content Management Systems). It will extract the
-&lt;head&gt; and &lt;body&gt; sections from an existing HTML or WebDyne page and
-insert them into the corresponding head and body blocks of a template
-file.</p>
-<p>The merging is done once at compile time - there are no repeated search
-and replace operations each time the file is loaded, or server side
-includes, so the resulting pages are quite fast.</p>
-<p>Both the template and content files should be complete - there is no
-need to write the content without a &lt;head&gt; section, or leave out
-&lt;html&gt; tags. As a result both the content and template files can be
-viewed as standalone documents.</p>
-<p>The API:</p>
-<dl>
-<dt>template ( filename )</dt>
-<dd>
-<p>Function. Set the file name of the template to be used. If no path
-is specified file name will be relative to the current request
-directory</p>
-</dd>
-<dt>WebDyneTemplate</dt>
-<dd>
-<p>Directive. Can be used to supply the template file name in a Apache
-or lighttpd/FastCGI configuration file.</p>
-</dd>
-</dl>
-<p>Example:</p>
-<p>The template:</p>
-<div class="language-text highlight"><pre><span></span><code>#include &quot;example/template1.html&quot;
-</code></pre></div>
-<p><a href="https://demo.webdyne.org/template1.psp">Run</a></p>
-<p>The content, run to view resulting merge:</p>
-<div class="language-text highlight"><pre><span></span><code>#include &quot;example/content1.html&quot;
-</code></pre></div>
-<p><a href="https://demo.webdyne.org/content1.psp">Run</a></p>
-<p>In real life it is not desirable to put the template name into every
-content file (as was done in the above example), nor would we want to
-have to "use WebDyne::Template" in every content file.</p>
-<p>To overcome this WebDyne::Template can read the template file name using
-the Apache dir_config function, and assign a template on a per location
-basis using the WebDyneTemplate directive. Here is a sample httpd.conf
-file:</p>
-<div class="language-text highlight"><pre><span></span><code>&lt;Location /&gt;
-
-PerlHandler     WebDyne::Chain
-PerlSetVar      WebDyneChain    &#39;WebDyne::Template&#39;
-PerlSetVar      WebDyneTemplate &#39;/path/to/template.psp&#39;
-
-&lt;/Location&gt;
-</code></pre></div>
+<p>Your application should now be available:</p>
+<p><img alt="" src="../images/webdyne-app-fortune1.png" /></p>
 
 
 
@@ -843,7 +999,7 @@ PerlSetVar      WebDyneTemplate &#39;/path/to/template.psp&#39;
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../07_miscellaneous/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Miscellaneous">
+          <a href="../00_introduction/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Introduction">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -853,20 +1009,20 @@ PerlSetVar      WebDyneTemplate &#39;/path/to/template.psp&#39;
                 Previous
               </span>
               <div class="md-ellipsis">
-                Miscellaneous
+                Introduction
               </div>
             </div>
           </a>
         
         
           
-          <a href="../09_credits/" class="md-footer__link md-footer__link--next" aria-label="Next: Credits">
+          <a href="../02_basic_usage_examples/" class="md-footer__link md-footer__link--next" aria-label="Next: Basic Usage">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Credits
+                Basic Usage
               </div>
             </div>
             <div class="md-footer__button md-icon">

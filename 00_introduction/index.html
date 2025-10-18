@@ -16,7 +16,7 @@
       
       
       
-        <link rel="next" href="../01_installation/">
+        <link rel="next" href="../01_installation_and_quickstart/">
       
       
       <link rel="icon" href="../assets/favicon.png">
@@ -319,12 +319,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../01_installation/" class="md-nav__link">
+      <a href="../01_installation_and_quickstart/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Installation
+    Installation and Quickstart
     
   </span>
   
@@ -341,12 +341,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../02_initialisation/" class="md-nav__link">
+      <a href="../02_basic_usage_examples/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Initialisation
+    Basic Usage
     
   </span>
   
@@ -363,29 +363,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../03_getting_started_examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Getting Started
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../04_advanced_usage/" class="md-nav__link">
+      <a href="../03_advanced_usage/" class="md-nav__link">
         
   
   
@@ -407,7 +385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../05_error_handling/" class="md-nav__link">
+      <a href="../04_error_handling/" class="md-nav__link">
         
   
   
@@ -429,7 +407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../06_webdyne_api/" class="md-nav__link">
+      <a href="../05_webdyne_api/" class="md-nav__link">
         
   
   
@@ -451,7 +429,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../07_miscellaneous/" class="md-nav__link">
+      <a href="../06_miscellaneous/" class="md-nav__link">
         
   
   
@@ -473,7 +451,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../08_extending_webdyne/" class="md-nav__link">
+      <a href="../07_extending_webdyne/" class="md-nav__link">
         
   
   
@@ -495,12 +473,34 @@
   
   
     <li class="md-nav__item">
-      <a href="../09_credits/" class="md-nav__link">
+      <a href="../08_credits/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Credits
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_miscellaneous/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Miscellaneous
     
   </span>
   
@@ -586,8 +586,9 @@ section - but here are a few very simple examples as an overview.</p>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/introduction1.psp">Run</a></p>
-<p>This can be abbreviated with some shortcut tags such as <code>&lt;start_html&gt;</code>
-in WebDyne. This does exactly the same thing:</p>
+<p>This can be abbreviated with some WebDyne shortcut tags such as
+<code>&lt;start_html&gt;</code>. This does exactly the same thing and still renders
+compliant HTML to the browser:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">&lt;</span><span class="nt">start_html</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;Server Time&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>The local server time is: <span class="cp">&lt;? localtime() ?&gt;</span>
 </span></code></pre></div>
@@ -632,6 +633,58 @@ Perl:</p>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>The local server time is: <span class="p">&lt;</span><span class="nt">div</span> <span class="na">data-webdyne-perl</span><span class="p">&gt;</span> localtime() <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/introduction7.psp">Run</a></p>
+<p>Don't like &lt;div&gt; style syntax ? Put the code in a &lt;script&gt; block -
+it will be interpreted on the server, not the client:</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">&lt;</span><span class="nt">start_html</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;Server Time&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Server local time is: 
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;application/perl&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nx">print</span><span class="w"> </span><span class="nx">scalar</span><span class="w"> </span><span class="nx">localtime</span><span class="p">()</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<p><a href="https://demo.webdyne.org/introduction7.psp">Run</a></p>
+<p>Template blocks and variable replacement is supported also:</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">&lt;</span><span class="nt">start_html</span><span class="p">&gt;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="cm">&lt;!-- Call perl code to render server time --&gt;</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="p">&lt;</span><span class="nt">perl</span> <span class="na">handler</span><span class="o">=</span><span class="s">&quot;server_time&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="cm">&lt;!-- Template Block it will be rendered into --&gt;</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">&lt;</span><span class="nt">block</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;server_time&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>Loop ${i}: The local server time is: ${time}
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="p">&lt;/</span><span class="nt">block</span><span class="p">&gt;</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="p">&lt;/</span><span class="nt">perl</span><span class="p">&gt;</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>__PERL__
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>sub server_time {
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>    #  Get self ref
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>    #
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>    my $self=shift();
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>    #  Get local time
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>    #
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>    my $time=scalar localtime();
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>
+</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>    #  Loop 4 times
+</span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a>    #
+</span><span id="__span-8-28"><a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>    foreach my $i (1..4) {
+</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a>
+</span><span id="__span-8-30"><a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a>        #  Render template block
+</span><span id="__span-8-31"><a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a>        #
+</span><span id="__span-8-32"><a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a>        $self-&gt;render_block(&#39;server_time&#39;, i=&gt;$i, time=&gt;$time)
+</span><span id="__span-8-33"><a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a>
+</span><span id="__span-8-34"><a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a>    }
+</span><span id="__span-8-35"><a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a>
+</span><span id="__span-8-36"><a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a>    #  Return section
+</span><span id="__span-8-37"><a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a>    #
+</span><span id="__span-8-38"><a id="__codelineno-8-38" name="__codelineno-8-38" href="#__codelineno-8-38"></a>    return $self-&gt;render()
+</span><span id="__span-8-39"><a id="__codelineno-8-39" name="__codelineno-8-39" href="#__codelineno-8-39"></a>
+</span><span id="__span-8-40"><a id="__codelineno-8-40" name="__codelineno-8-40" href="#__codelineno-8-40"></a>}
+</span></code></pre></div>
+<p><a href="https://demo.webdyne.org/introduction9.psp">Run</a></p>
 
 
 
@@ -662,13 +715,13 @@ Perl:</p>
         
         
           
-          <a href="../01_installation/" class="md-footer__link md-footer__link--next" aria-label="Next: Installation">
+          <a href="../01_installation_and_quickstart/" class="md-footer__link md-footer__link--next" aria-label="Next: Installation and Quickstart">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Installation
+                Installation and Quickstart
               </div>
             </div>
             <div class="md-footer__button md-icon">
