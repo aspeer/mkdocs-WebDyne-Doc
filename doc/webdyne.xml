@@ -52,7 +52,8 @@
         xlink:href="https://demo.webdyne.org/example/introduction1.psp" xlink:show="new" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example></para>
 
-    <para>This can be abbreviated with some shortcut tags such as <markup>&lt;start_html&gt;</markup> in WebDyne. This does exactly the same thing:</para>
+    <para>This can be abbreviated with some WebDyne shortcut tags such as <markup>&lt;start_html&gt;</markup>. This does exactly the same thing and still renders compliant HTML to the
+    browser:</para>
 
     <para><example>
         <info>
@@ -117,11 +118,33 @@
         <para><programlisting language="html"><xi:include href="example/introduction7.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
         xlink:href="https://demo.webdyne.org/example/introduction7.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example></para>
+
+    <para>Don't like <tag>&lt;div&gt;</tag> style syntax ? Put the code in a <tag>&lt;script&gt;</tag> block - it will be interpreted on the server, not the client:</para>
+
+    <para><example>
+        <info>
+          <title>Basic Example</title>
+        </info>
+
+        <para><programlisting language="html"><xi:include href="example/introduction8.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+        xlink:href="https://demo.webdyne.org/example/introduction7.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+      </example></para>
+
+    <para>Template blocks and variable replacement is supported also:</para>
+
+    <example>
+      <info>
+        <title>Template Example</title>
+      </info>
+
+      <para><programlisting language="html"><xi:include href="example/introduction9.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+      xlink:href="https://demo.webdyne.org/example/introduction9.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+    </example>
   </section>
 
   <section>
     <info>
-      <title>Installation</title>
+      <title>Installation and Quickstart</title>
     </info>
 
     <section>
@@ -148,7 +171,7 @@
     </section>
 
     <section>
-      <title>CPAN and CPANM</title>
+      <title>Installing via CPAN or CPANMinus</title>
 
       <para>Install from the Perl CPAN library using <command>cpan</command> or <command>cpanm</command> utilities. Installs dependencies if required (also from CPAN).</para>
 
@@ -165,19 +188,47 @@
       <para><command>cpanm WebDyne</command></para>
 
       <para>This will install the base WebDyne modules, which includes the Apache config utility and PSGI version. Note that Apache or PSGI servers and dependencies such as Plack or Starman
-      are not installed by default and need to be installed separately - see the relevant section</para>
+      are <emphasis role="bold">not</emphasis> installed by default and need to be installed separately - see the relevant section.</para>
 
-      <para>Once installed you will need to configure your web server to use WebDyne to serve files with the <filename>.psp</filename> extension</para>
+      <para>Once installed you will need to configure your web server to use WebDyne to serve files with the <filename>.psp</filename> extension if using Apache - see section below.</para>
+    </section>
+
+    <section>
+      <title>Quickstart</title>
+
+      <para>If using PSGI you can start a quick web server with:<screen language="bash">#  Render a file to STDOUT to see the HTML
+#
+$ <command>wdrender app.psp</command>
+
+#  Install Plack
+#
+$ <command>cpanm Plack</command>
+
+#  Check all working
+#
+$ <command>webdyne.psgi --test</command>
+
+#  Start serving only a single PSP file
+#
+$ <command>webdyne.psgi app.psp</command>
+
+# Start serving any file in the current directory, using app.psp as the default
+#
+$ <command>webdyne.psgi .</command>
+
+# Start but listen on non-default port, only on localhost
+#
+$ <command>webdyne.psgi --port=5001 --host=127.0.0.1</command></screen>Connect your browser to the host and you should see the WebDyne output</para>
     </section>
 
     <section>
       <title>Apache mod_perl</title>
 
-      <para>If using Apache with mod_perl you can initialise WebDyne using the <command>wdapacheinit</command> command. This will attempt to autodiscover where the Apache binary and
-      configuration files are, then add a suitable <filename>webdyne.conf</filename> file to the apache config. Apache will need to be restarted for the new config file to take effect. This
-      will need to be done as a the root user.</para>
+      <para>If using Apache with mod_perl you can initialise WebDyne using the <command>wdapacheinit</command> command. This will attempt to auto-discover where the Apache binary and
+      configuration files are, then add a suitable <filename>webdyne.conf</filename> file to the apache configuration. Apache will need to be restarted for the new configuration file to take
+      effect. This will need to be done as a the root user.</para>
 
-      <para><screen>[root@localhost ~]# wdapacheinit 
+      <para><screen language="bash">[root@localhost ~]# <command>wdapacheinit</command> 
 
 [install] - Installation source directory '/usr'.
 [install] - Creating cache directory '/var/cache/webdyne'.
@@ -188,236 +239,31 @@
 [install] - Granting Apache (apache.apache) ownership of cache directory '/var/cache/webdyne'.
 [install] - Install completed.
 
-[root@localhost ~]# systemctl restart httpd</screen></para>
-    </section>
-
-    <section>
-      <title>PSGI</title>
-
-      <para>Ensure that <productname>Plack</productname> is installed on your system via CPAN:</para>
-
-      <screen># Via CPAN
-<command>perl -MCPAN -e 'install Plack'</command>
-
-# Or via CPANM
-<command>cpanm Plack</command></screen>
-
-      <para>You can start a basic WebDyne server by running the webdyne.psgi command with the --test parameter</para>
-
-      <para><screen><command>webdyne.psgi --test</command></screen></para>
-
-      <para>This will start a PSGI web server on your machine listening to port 5000 (or port 5001 on a Mac). Open a connection to http://127.0.0.1:5000/ or thFROM webdyne:latest WORKDIR /app
-      # Debian packages needed for this app RUN apt-get update &amp;&amp; apt-get -y install fortunes COPY app.* . COPY cpanfile . COPY webdyne.conf.pl /etce IP address of your server in your
-      web browser to view the test page and validate the WebDyne is working correctly</para>
-
-      <para><screenshot>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/screenshot1.png" scale="30"/>
-            </imageobject>
-          </mediaobject>
-        </screenshot></para>
-
-      <para>Once verified as working correctly you can serve WebDyne content from a particular directory - or from a single file - using the syntax:</para>
-
-      <screen>#  To serve up all files in a directory:
-#
-<command>webdyne.psgi &lt;directory&gt;</command>
-
-#  E.g serve files in /var/www/html. By default WebDyne will server app.psp if no filename
-#  is specified
-<command>webdyne.psgi /var/www/html</command>
-
-#  Or just a single app.psp file. Only this file will be served regardless of URL
-#
-<command>webdyne /var/www/html/time.psp</command></screen>
-    </section>
-
-    <section>
-      <title>Docker</title>
-
-      <para>Docker containers are available from the Github Container Registry. Install the default Docker container (based on Debian) via:</para>
-
-      <screen>docker pull ghcr.io/aspeer/webdyne:latest</screen>
-
-      <para>Start the docker container with the command:</para>
-
-      <screen>docker run -e PORT=5002 -p 5002:5002 --name=webdyne webdyne</screen>
-
-      <para>This will start WebDyne running on port 5002 on the host. Connecting to that location should show the server <emphasis>localtime</emphasis> test page</para>
-
-      <para>To mount a local page and serve it through the docker container use the command:</para>
-
-      <screen>docker run --mount &lt;local_dir&gt;:/app:ro -e PORT=5011 -e DOCUMENT_ROOT=/app -p 5011:5011 --name=webdyne webdyne</screen>
-
-      <para>This will tell docker to mount the local directory into the docker container. If there is a default file named app.psp in the location it will be displayed</para>
-
-      <para>The WebDyne container can be used as the basis for new docker images containing your application files. Consider the following directory structure:</para>
-
-      <screen>psp-WebDyne-Fortune/
-├── app.pm
-├── app.psp
-├── cpanfile
-├── Dockerfile
-└── webdyne.conf.pl
-
-</screen>
-
-      <para>Where:</para>
-
-      <variablelist>
-        <varlistentry>
-          <term>app.psp</term>
-
-          <listitem>
-            <para>The main and default psp file</para>
-          </listitem>
-        </varlistentry>
-
-        <varlistentry>
-          <term>app.pm</term>
-
-          <listitem>
-            <para>Perl code used in the psp file</para>
-          </listitem>
-        </varlistentry>
-
-        <varlistentry>
-          <term>cpanfile</term>
-
-          <listitem>
-            <para>A list of Perl modules to be installed in the docker container by cpanm</para>
-          </listitem>
-        </varlistentry>
-
-        <varlistentry>
-          <term>Dockerfile</term>
-
-          <listitem>
-            <para>The docker build file</para>
-          </listitem>
-        </varlistentry>
-
-        <varlistentry>
-          <term>webdyne.conf.pl</term>
-
-          <listitem>
-            <para>Any variables to be set for the WebDyne environment</para>
-          </listitem>
-        </varlistentry>
-      </variablelist>
-
-      <para>Constitute all the files needed to stand up a WebDyne based application in a Docker container. The contents of the Dockerfile are minimal:</para>
-
-      <screen>FROM webdyne:latest
-WORKDIR /app
-# Debian packages needed for this app
-RUN apt-get update &amp;&amp; apt-get -y install fortunes
-COPY app.* .
-COPY cpanfile .
-COPY webdyne.conf.pl /etc</screen>
-
-      <para>Build the Docker container:</para>
-
-      <screen>docker build  -t webdyne-app-fortune -f ./Dockerfile .</screen>
-
-      <para>And run it:</para>
-
-      <screen>docker run -e PORT=5010 -p 5010:5010 --name=webdyne-app-fortune webdyne-app-fortune</screen>
-
-      <para/>
-    </section>
-
-    <section>
-      <info>
-        <title>Compatibility</title>
-      </info>
-
-      <para>WebDyne should install on any modern Linux distribution. Older versions of WebDyne were tested with Windows Apache/IIS and FastCGI but have not been tested against recent
-      versions.</para>
-    </section>
-  </section>
-
-  <section>
-    <info>
-      <title>Initialisation</title>
-    </info>
-
-    <para>After installation Web Server configuration files must be updated so that the WebDyne software will be used to generate output when a <filename>.psp</filename> file is invoked.
-    WebDyne comes bundled with an installer for Apache (<command>wdapacheinit</command>) as describe above.</para>
-
-    <para>Initialisation can be done via one of two methods:</para>
-
-    <variablelist>
-      <varlistentry>
-        <term>Manual Initialisation</term>
-
-        <listitem>
-          <para>Web server configuration files can be hand-edited, and cache directories manualy created.</para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term>Script Initialisation</term>
-
-        <listitem>
-          <para>Scripts to automate the initialisation process for Apache and Lighttpd have been written - they will attempt to locate and update the Web Server config files (and create
-          neccessary directories, set permissions etc.) as required. The scripts will work in common cases, but may have trouble on unusual distributions, or if a custom version of Apache (or
-          other Web Server) is being used</para>
-        </listitem>
-      </varlistentry>
-    </variablelist>
-
-    <para>Scripted installation is easiest if it works for your distribution - it will take care of all configuration file changes, directory permissions and ownership etc.</para>
-
-    <section>
-      <info>
-        <title>Running <command>wdapacheinit</command> to initialise the software for use with Apache/mod_perl</title>
-      </info>
-
-      <para>Once the WebDyne software in installed it must be initialized. The <command>wdapacheinit</command> command must be run to update the Apache configuration files so that WebDyne
-      pages will be correctly interpreted:</para>
-
-      <para><screen>
-[root@localhost ~]# <command>/opt/webdyne/bin/wdapacheinit</command>
-
-[install] - Installation source directory '/opt/webdyne'.
-[install] - Using existing cache directory '/opt/webdyne/cache'.
-[install] - Updating perl5lib config.
-[install] - Writing Apache config file '/etc/httpd/conf.d/webdyne.conf'.
-[install] - Granting Apache write access to cache directory.
-[install] - Install completed.
-
-</screen></para>
+[root@localhost ~]# s<command>ystemctl restart httpd</command></screen></para>
 
       <para>By default WebDyne will create a cache directory in <filename>/var/cache/webdyne</filename> on Linux systems when a default CPAN install is done (no PREFIX specified). If a PREFIX
-      is specified the cache directory will be created as <filename>PREFIX/cache</filename>. Use the <option>--cache</option> command-line option to specify an alternate location.</para>
+      is specified the cache directory will be created as <filename>$PREFIX/cache</filename>. Use the <command>wdapacheinit</command> <option>--cache</option> command-line option to specify an
+      alternate location.</para>
 
-      <para>Once <command>wdapacheinit</command> has been run the Apache server should be reloaded or restarted. Use a method appropriate for your Linux distribution. <screen>
-[root@localhost ~]# <command>service httpd restart</command>
+      <para>Once <command>wdapacheinit</command> has been run the Apache server should be reloaded or restarted. Use a method appropriate for your Linux distribution.</para>
+
+      <screen>
+[root@localhost ~]# <command>systemctl httpd restart</command>
 Stopping httpd:                                            [  OK  ]
 Starting httpd:                                            [  OK  ]
-</screen></para>
+</screen>
 
-      <para>WebDyne should be now ready for use.</para>
+      <section>
+        <info>
+          <title>Manual configuration of Apache</title>
+        </info>
 
-      <para>If the Apache service does not restart, examine the error log (usually <filename>/var/log/httpd/error.log</filename>) for details.</para>
+        <para>If the <command>wdapacheinit</command> command does not work as expected on your system then the Apache config files can be modified manually.</para>
 
-      <para>The script will look for Apache components (binary, configuration directories etc.) using common defaults. In the event that the script gives an error indicating that it cannot
-      find a binary, directory or library you may need to specify the location manually. Run the script with the <option>--help</option> option to determine the appropriate syntax.</para>
-    </section>
+        <para>Include the following section in the Apache httpd.conf file (or create a webdyne.conf file if you distribution supports conf.d style configuration files). These following config
+        files are written with Apache 2.4 syntax - adjust path and syntax as required:</para>
 
-    <section>
-      <info>
-        <title>Manual configuration of Apache</title>
-      </info>
-
-      <para>If the <command>wdapacheinit</command> command does not work as expected on your system the Apache config files can be modified manually.</para>
-
-      <para>Include the following section in the Apache httpd.conf file (or create a webdyne.conf file if you distribution supports conf.d style configuration files). These config files are
-      written with Apache 2.4 syntax:</para>
-
-      <para><screen>#  Need mod_perl, load up if not already done
+        <para><screen>#  Need mod_perl, load up if not already done
 #
 &lt;IfModule !mod_perl.c&gt;
 LoadModule perl_module "/etc/httpd/modules/mod_perl.so"
@@ -455,8 +301,7 @@ PerlRequire conf.d/webdyne_constant.pl
 #
 &lt;Perl&gt;
 
-#  Error display/extended display on/off. More granular options below. 
-#  Set to 1 to enable, 0 to disable
+#  Error display/extended display on/off. Set to 1 to enable, 0 to disable
 #
 $WebDyne::WEBDYNE_ERROR_SHOW=1;
 $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
@@ -464,33 +309,221 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
 
 </screen></para>
 
-      <important>
-        <para>Substitute directory paths in the above example for the relevant/correct/appropriate ones on your system.</para>
-      </important>
+        <important>
+          <para>Substitute directory paths in the above example for the relevant/correct/appropriate ones on your system.</para>
+        </important>
 
-      <para>Create the cache directory and assign ownership and permission appropriate for your distribution (group name will vary by distribution - locate the correct one for your
-      distribution)</para>
+        <para>Create the cache directory and assign ownership and permission appropriate for your distribution (group name will vary by distribution - locate the correct one for your
+        distribution)</para>
 
-      <screen>
+        <screen>
 [root@localhost ~]# <command>mkdir /opt/webdyne/cache
 </command>[root@localhost ~]# <command>chgrp apache /opt/webdyne/cache
 </command>[root@localhost ~]# <command>chmod 770 /opt/webdyne/cache
 </command></screen>
 
-      <para>Restart Apache and check for any errors.</para>
+        <para>Restart Apache and check for any errors.</para>
+      </section>
+    </section>
+
+    <section>
+      <title>PSGI</title>
+
+      <para>Ensure that <productname>Plack</productname> is installed on your system via CPAN:</para>
+
+      <screen># Via CPAN
+<command>perl -MCPAN -e 'install Plack'</command>
+
+# Modern systems
+#
+<command>cpan Plack</command>
+
+# Or better via CPANM
+<command>cpanm Plack</command></screen>
+
+      <para>You can start a basic WebDyne server by running the webdyne.psgi command with the --test parameter</para>
+
+      <para><screen><command>webdyne.psgi --test</command></screen></para>
+
+      <para>This will start a PSGI web server on your machine listening to port 5000 (or port 5001 on a Mac). Open a connection to http://127.0.0.1:5000/ or the IP address of your server in
+      your web browser to view the test page and validate the WebDyne is working correctly:</para>
+
+      <para><screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/webdyne_psgi1.png" scale="30"/>
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+
+      <para>Once verified as working correctly you can serve WebDyne content from a particular directory - or from a single file - using the syntax:</para>
+
+      <screen>#  To serve up all files in a directory:
+#
+<command>$ webdyne.psgi &lt;directory&gt;</command>
+
+#  E.g serve files in /var/www/html. By default WebDyne will serve app.psp if no filename
+#  is specified
+#
+<command>$ webdyne.psgi /var/www/html</command>
+
+#  Allow static files such as css, jpg files etc. to be served also
+#
+<command>$ webdyne.psgi --static /var/www/html/app.psp
+</command>
+#  Or just a single app.psp file. Only this file will be served regardless of URL
+#
+<command>$ webdyne.psgi /var/www/html/time.psp</command></screen>
+
+      <para>The above starts a single-threaded web server using Plack. To start the more performant Starman server (assuming installed):</para>
+
+      <screen>#  Start Starman instance. Substitute port + document root and location of webdyne.psgi
+#  as appropriate for your system.
+#
+$ <command>DOCUMENT_ROOT=/var/www/html starman --port 5001 /usr/local/bin/webdyne.psgi</command></screen>
+
+      <note>
+        <para>Starman does not support options such as --test and --static. If you want to server static files from starman you should do so using best practice via a traditional web server
+        front end.</para>
+      </note>
+
+      <para>Numerous options can be set from the command line via environment variables, including Webdyne configuration. See relevant section for all WebDyne configuration options but
+      assuming in a local file webdyne.conf.pl:</para>
+
+      <screen>#  Start instance webdyne.psgi using local config file
+#
+$ <command>WEBDYNE_CONF=./webdyne.conf.pl webdyne.psgi --port=5012 .</command></screen>
+    </section>
+
+    <section>
+      <title>Docker</title>
+
+      <para>Docker containers are available from the Github Container Registry. Install the default Docker container (based on Debian) via:</para>
+
+      <screen>#  Default debian version
+#
+$ <command>docker pull ghcr.io/aspeer/webdyne:latest</command>
+
+#  Or Alpine/Fedora/Perl versions
+#
+# docker pull ghcr.io/aspeer/webdyne-alpine:latest
+# docker pull ghcr.io/aspeer/webdyne-fedora:latest
+# docker pull ghcr.io/aspeer/webdyne-perl:latest
+</screen>
+
+      <para>Start the docker container with the command:</para>
+
+      <screen>$ docker run -e PORT=5002 -p 5002:5002 --name=webdyne webdyne</screen>
+
+      <para>This will start WebDyne running on port 5002 on the host. Connecting to that location should show the server <emphasis>localtime</emphasis> test page</para>
+
+      <para>To mount a local page and serve it through the docker container use the command:</para>
+
+      <screen>docker run --mount &lt;local_dir&gt;:/app:ro -e PORT=5011 -e DOCUMENT_ROOT=/app -p 5011:5011 --name=webdyne webdyne</screen>
+
+      <para>This will tell docker to mount the local directory into the docker container. If there is a default file named app.psp in the location it will be displayed. if there is a
+      <filename>cpanfile</filename> in the mount directory any modules will be installed into the docker container automatically.</para>
+
+      <section>
+        <title>Deploying WebDyne apps with Docker</title>
+
+        <para>The WebDyne container can be used as the basis for new docker images containing your application files. Consider the following directory structure (available from Github as <link
+        xlink:href="https://github.com/aspeer/psp-WebDyne-Fortune" xmlns:xlink="http://www.w3.org/1999/xlink">aspeer/psp-WebDyne-Fortune</link>:</para>
+
+        <screen>psp-WebDyne-Fortune/
+├── app.pm
+├── app.psp
+├── cpanfile
+├── Dockerfile
+└── webdyne.conf.pl
+
+</screen>
+
+        <para>Where:</para>
+
+        <variablelist>
+          <varlistentry>
+            <term>app.psp</term>
+
+            <listitem>
+              <para>The main and default psp file</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>app.pm</term>
+
+            <listitem>
+              <para>Perl code used in the psp file</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>cpanfile</term>
+
+            <listitem>
+              <para>A list of Perl modules to be installed in the docker container by cpanm</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>Dockerfile</term>
+
+            <listitem>
+              <para>The docker build file</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>webdyne.conf.pl</term>
+
+            <listitem>
+              <para>Any variables to be set for the WebDyne environment</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+
+        <para>Constitute all the files needed to stand up a WebDyne based application in a Docker container. The contents of the Dockerfile are minimal:</para>
+
+        <screen>FROM webdyne:latest
+WORKDIR /app
+# Debian packages needed for this app
+RUN apt-get update &amp;&amp; apt-get -y install fortunes
+COPY app.* .
+COPY cpanfile .
+COPY webdyne.conf.pl /etc</screen>
+
+        <para>Build the Docker container:</para>
+
+        <screen>docker build  -t webdyne-app-fortune -f ./Dockerfile .</screen>
+
+        <para>And run it:</para>
+
+        <screen>docker run -e PORT=5010 -p 5010:5010 --name=webdyne-app-fortune webdyne-app-fortune</screen>
+
+        <para>Your application should now be available:</para>
+
+        <screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/webdyne-app-fortune1.png" scale="30"/>
+            </imageobject>
+          </mediaobject>
+        </screenshot>
+      </section>
     </section>
   </section>
 
   <section xml:id="examples">
     <info>
-      <title>Getting Started</title>
+      <title>Basic Usage</title>
     </info>
 
     <para>Assuming the installation has completed with no errors you are now ready to start creating WebDyne pages and applications.</para>
 
     <section>
       <info>
-        <title>Basics - integrating Perl into HTML</title>
+        <title>Integrating Perl into HTML</title>
       </info>
 
       <para>Some code fragments to give a very high-level overview of how WebDyne can be implemented. First the most basic usage example:</para>
@@ -571,211 +604,210 @@ sub greeting { return \0 }</programlisting></para>
           xlink:href="https://demo.webdyne.org/example/hello3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
         </example></para>
 
-      <para>If not already resident the module (in this case "MyModule") will be loaded by WebDyne, so it must be available somewhere in the <filename>@INC</filename> path. The example above
-      cannot be run because there is no "MyModule" package on this system.</para>
-    </section>
+      <para>If not already resident the module (in this case "Digest::MD5") will be loaded by WebDyne, so it must be available somewhere in the <filename>@INC</filename> path.</para>
 
-    <section>
-      <info>
-        <title>Use of the &lt;perl&gt; tag for in-line code.</title>
-      </info>
-
-      <para>The above examples show several variations of the <tag>&lt;perl&gt;</tag> tag in use. Perl code that is enclosed by <tag>&lt;perl&gt;..&lt;/perl&gt;</tag> tags is called
-      <emphasis>in-line</emphasis> code:</para>
-
-      <para><example>
-          <info>
-            <title>Basic Example</title>
-          </info>
-
-          <para><programlisting language="html"><xi:include href="example/inline1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/inline1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
-
-      <para>This is the most straight-forward use of Perl within a HTML document, but does not really make for easy reading - the Perl code and HTML are intermingled. It may be OK for quick
-      scripts etc, but a page will quickly become hard to read if there is a lot of in-line Perl code interspersed between the HTML.</para>
-
-      <para>in-line Perl can be useful if you want a "quick" computation, e.g. insertion of the current year:</para>
-
-      <para><example>
-          <info>
-            <title>Basic Example</title>
-          </info>
-
-          <para><programlisting language="html"><xi:include href="example/inline2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/inline2.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
-
-      <para>Which can be pretty handy, but looks a bit cumbersome - the tags interfere with the flow of the text, making it harder to read. For this reason in-line perl can also be flagged in
-      a WebDyne page using the shortcuts <tag>!{! .. !}</tag>, or by the use of processing instructions (<emphasis role="bold"><tag>&lt;? .. ?&gt;</tag></emphasis>) e.g.:</para>
-
-      <para><example>
-          <info>
-            <title>Basic Example</title>
-          </info>
-
-          <para><programlisting language="html"><xi:include href="example/inline3.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/inline3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
-
-      <para>The <tag>!{! .. !}</tag> denotation can also be used in tag attributes (processing instructions, and <tag>&lt;perl&gt;</tag> tags cannot):</para>
-
-      <para><example>
-          <info>
-            <title>In-line code in tag attributes</title>
-          </info>
-
-          <para><programlisting language="html"><xi:include href="example/inline4.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/inline4.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
-    </section>
-
-    <section>
-      <info>
-        <title>Use of the &lt;perl&gt; tag for non-inline code.</title>
-      </info>
-
-      <para>Any code that is not co-mingled with the HTML of a document is <emphasis>non-inline</emphasis> code. It can be segmented from the content HTML using the <token>__PERL__</token>
-      delimiter, or by being kept in a completely different package and referenced as an external Perl subroutine call. An example of non-inline code:</para>
-
-      <para><example>
-          <info>
-            <title>Perl code example</title>
-          </info>
-
-          <para><programlisting language="html"><xi:include href="example/hello2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/hello2.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
-
-      <para>Note that the <tag>&lt;perl&gt;</tag> tag in the above example is explicitly closed and does not contain any content. However non-inline code can enclose HTML or text within the
-      tags:</para>
-
-      <para><example>
-          <info>
-            <title>Perl code example</title>
-          </info>
-
-          <para><programlisting language="html"><xi:include href="example/noninline1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/noninline1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
-
-      <para>But this is not very interesting so far - the "Hello World" text is not displayed when the example is run !</para>
-
-      <para>In order for text or HTML within a non-inline perl block to be displayed, it must be "rendered" into the output stream by the WebDyne engine. This is done by calling the
-      <methodname>render()</methodname> method. Let's try that again:</para>
-
-      <para><example>
-          <info>
-            <title>Perl code example</title>
-          </info>
-
-          <para><programlisting language="html"><xi:include href="example/noninline2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/noninline2.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
-
-      <para>And again, this time showing how to render the text block multiple times. Note that an array reference is returned by the Perl routine - this is fine, and is interpreted as an
-      array of HTML text, which is concatenated and send to the browser.</para>
-
-      <para><example>
-          <info>
-            <title>Perl code example</title>
-          </info>
-
-          <para><programlisting language="html"><xi:include href="example/noninline3.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/noninline3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
-
-      <para>Same output using the $self-&gt;print() method:</para>
-
-      <example>
+      <section>
         <info>
-          <title>Perl code example</title>
+          <title>Use of the &lt;perl&gt; tag for in-line code.</title>
         </info>
 
-        <para><programlisting language="html"><xi:include href="example/noninline3a.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-        xlink:href="https://demo.webdyne.org/example/noninline3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-      </example>
+        <para>The above examples show several variations of the <tag>&lt;perl&gt;</tag> tag in use. Perl code that is enclosed by <tag>&lt;perl&gt;..&lt;/perl&gt;</tag> tags is called
+        <emphasis>in-line</emphasis> code:</para>
+
+        <para><example>
+            <info>
+              <title>Basic Example</title>
+            </info>
+
+            <para><programlisting language="html"><xi:include href="example/inline1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/inline1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
+
+        <para>This is the most straight-forward use of Perl within a HTML document, but does not really make for easy reading - the Perl code and HTML are intermingled. It may be OK for quick
+        scripts etc, but a page will quickly become hard to read if there is a lot of in-line Perl code interspersed between the HTML.</para>
+
+        <para>in-line Perl can be useful if you want a "quick" computation, e.g. insertion of the current year:</para>
+
+        <para><example>
+            <info>
+              <title>Basic Example</title>
+            </info>
+
+            <para><programlisting language="html"><xi:include href="example/inline2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/inline2.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
+
+        <para>Which can be pretty handy, but looks a bit cumbersome - the tags interfere with the flow of the text, making it harder to read. For this reason in-line perl can also be flagged
+        in a WebDyne page using the shortcuts <tag>!{! .. !}</tag>, or by the use of processing instructions (<emphasis role="bold"><tag>&lt;? .. ?&gt;</tag></emphasis>) e.g.:</para>
+
+        <para><example>
+            <info>
+              <title>Basic Example</title>
+            </info>
+
+            <para><programlisting language="html"><xi:include href="example/inline3.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/inline3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
+
+        <para>The <tag>!{! .. !}</tag> denotation can also be used in tag attributes (processing instructions, and <tag>&lt;perl&gt;</tag> tags cannot):</para>
+
+        <para><example>
+            <info>
+              <title>In-line code in tag attributes</title>
+            </info>
+
+            <para><programlisting language="html"><xi:include href="example/inline4.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/inline4.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
+      </section>
+
+      <section>
+        <info>
+          <title>Use of the &lt;perl&gt; tag for non-inline code.</title>
+        </info>
+
+        <para>Any code that is not co-mingled with the HTML of a document is <emphasis>non-inline</emphasis> code. It can be segmented from the content HTML using the <token>__PERL__</token>
+        delimiter, or by being kept in a completely different package and referenced as an external Perl subroutine call. An example of non-inline code:</para>
+
+        <para><example>
+            <info>
+              <title>Perl code example</title>
+            </info>
+
+            <para><programlisting language="html"><xi:include href="example/hello2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/hello2.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
+
+        <para>Note that the <tag>&lt;perl&gt;</tag> tag in the above example is explicitly closed and does not contain any content. However non-inline code can enclose HTML or text within the
+        tags:</para>
+
+        <para><example>
+            <info>
+              <title>Perl code example</title>
+            </info>
+
+            <para><programlisting language="html"><xi:include href="example/noninline1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/noninline1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
+
+        <para>But this is not very interesting so far - the "Hello World" text is not displayed when the example is run !</para>
+
+        <para>In order for text or HTML within a non-inline perl block to be displayed, it must be "rendered" into the output stream by the WebDyne engine. This is done by calling the
+        <methodname>render()</methodname> method. Let's try that again:</para>
+
+        <para><example>
+            <info>
+              <title>Perl code example</title>
+            </info>
+
+            <para><programlisting language="html"><xi:include href="example/noninline2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/noninline2.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
+
+        <para>And again, this time showing how to render the text block multiple times. Note that an array reference is returned by the Perl routine - this is fine, and is interpreted as an
+        array of HTML text, which is concatenated and send to the browser.</para>
+
+        <para><example>
+            <info>
+              <title>Perl code example</title>
+            </info>
+
+            <para><programlisting language="html"><xi:include href="example/noninline3.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/noninline3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
+
+        <para>Same output using the $self-&gt;print() method:</para>
+
+        <example>
+          <info>
+            <title>Perl code example</title>
+          </info>
+
+          <para><programlisting language="html"><xi:include href="example/noninline3a.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+          xlink:href="https://demo.webdyne.org/example/noninline3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        </example>
+      </section>
+
+      <section>
+        <info>
+          <title>Alternate output methods from Perl handlers</title>
+        </info>
+
+        <para>When calling a perl handler from a .psp file at some stage you will want your code to deliver output to the browser. Various examples have been given throughout this document,
+        here is a summary of various output options:</para>
+
+        <example>
+          <title>Variations on output options</title>
+
+          <para><programlisting language="html"><xi:include href="example/output1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+          xlink:href="https://demo.webdyne.org/example/output1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        </example>
+      </section>
+
+      <section>
+        <info>
+          <title>Passing parameters to subroutines</title>
+        </info>
+
+        <para>The behaviour of a called <token>__PERL__</token> subroutine can be modified by passing parameters which it can act on:</para>
+
+        <para><example>
+            <info>
+              <title>Perl code example with parameters</title>
+            </info>
+
+            <para><programlisting language="html"><xi:include href="example/noninline7.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/noninline7.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
+      </section>
+
+      <section>
+        <info>
+          <title>Notes about <token>__PERL__</token> sections</title>
+        </info>
+
+        <para>Code in <token>__PERL__</token> sections has some particular properties.<token> __PERL__</token> code is only executed once. Subroutines defined in a<token> __PERL__</token>
+        section can be called as many times as you want, but the code outside of subroutines is only executed the first time a page is loaded. No matter how many times it is run, in the
+        following code <varname>$i</varname> will always be 1:</para>
+
+        <para><example>
+            <info>
+              <title>Perl code variable scope</title>
+            </info>
+
+            <para><programlisting language="html"><xi:include href="example/noninline4.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/noninline4.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
+
+        <para>Lexical variables are not accessible outside of the <token>__PERL__</token> section due to the way perl's eval() function works. The following example will fail:</para>
+
+        <para><example>
+            <info>
+              <title>Perl code variable scope</title>
+            </info>
+
+            <para><programlisting language="html"><xi:include href="example/noninline5.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/noninline5.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
+
+        <para>Package defined vars declared in a <token>__PERL__</token> section do work, with caveats:</para>
+
+        <para><example>
+            <info>
+              <title>Perl code variable scope</title>
+            </info>
+
+            <para><programlisting language="html"><xi:include href="example/noninline6.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/noninline6.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
+
+        <para>See the Variables/Substitution section for clean ways to insert variable contents into the page.</para>
+      </section>
     </section>
 
     <section>
       <info>
-        <title>Alternate output methods from Perl handlers</title>
-      </info>
-
-      <para>When calling a perl handler from a .psp file at some stage you will want your code to deliver output to the browser. Various examples have been given throughout this document, here
-      is a summary of various output options:</para>
-
-      <example>
-        <title>Variations on output options</title>
-
-        <para><programlisting><xi:include href="example/output1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-        xlink:href="https://demo.webdyne.org/example/output1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-      </example>
-    </section>
-
-    <section>
-      <info>
-        <title>Passing parameters to subroutines</title>
-      </info>
-
-      <para>The behaviour of a called <token>__PERL__</token> subroutine can be modified by passing parameters which it can act on:</para>
-
-      <para><example>
-          <info>
-            <title>Perl code example with parameters</title>
-          </info>
-
-          <para><programlisting language="html"><xi:include href="example/noninline7.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/noninline7.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
-    </section>
-
-    <section>
-      <info>
-        <title>Notes about <token>__PERL__</token> sections</title>
-      </info>
-
-      <para>Code in <token>__PERL__</token> sections has some particular properties.<token> __PERL__</token> code is only executed once. Subroutines defined in a<token> __PERL__</token>
-      section can be called as many times as you want, but the code outside of subroutines is only executed the first time a page is loaded. No matter how many times it is run, in the
-      following code <varname>$i</varname> will always be 1:</para>
-
-      <para><example>
-          <info>
-            <title>Perl code variable scope</title>
-          </info>
-
-          <para><programlisting language="html"><xi:include href="example/noninline4.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/noninline4.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
-
-      <para>Lexical variables are not accessible outside of the <token>__PERL__</token> section due to the way perl's eval() function works. The following example will fail:</para>
-
-      <para><example>
-          <info>
-            <title>Perl code variable scope</title>
-          </info>
-
-          <para><programlisting language="html"><xi:include href="example/noninline5.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/noninline5.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
-
-      <para>Package defined vars declared in a <token>__PERL__</token> section do work, with caveats:</para>
-
-      <para><example>
-          <info>
-            <title>Perl code variable scope</title>
-          </info>
-
-          <para><programlisting language="html"><xi:include href="example/noninline6.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/noninline6.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
-
-      <para>See the Variables/Substitution section for clean ways to insert variable contents into the page.</para>
-    </section>
-
-    <section>
-      <info>
-        <title>Variables / Substitution</title>
+        <title>Variables</title>
       </info>
 
       <para>WebDyne starts to get more useful when variables are used to modify the content of a rendered text block. A simple example:</para>
@@ -852,19 +884,115 @@ sub greeting { return \0 }</programlisting></para>
 
     <section>
       <info>
-        <title>HTML Shortcut Tags</title>
+        <title>Shortcut Tags</title>
       </info>
 
       <para>Previous versions of WebDyne used Lincoln Stein's CGI.pm module to render tags, and supported CGI.pm shortcut tags such as &lt;start_html&gt;, &lt;popup_menu&gt; etc. Modern
-      versions of WebDyne do not use CGI.pm in any modules, having ported tag generation to HTML::Tiny. Support for shortcut tags is preserved though Almost any legacy CGI.pm function that
-      rendered HTML tags can be called from within a WebDyne template. The manual page for CGI.pm contains the following synopsis example:</para>
+      versions of WebDyne do not use CGI.pm in any modules, having ported tag generation to HTML::Tiny. Support for shortcut tags is preserved though - they provide a quick and easy way to
+      generate simple web pages.</para>
 
-      <example>
+      <section>
         <info>
-          <title>CGI.pm Example</title>
+          <title>Quick pages using shortcut <tag>&lt;start_html&gt;</tag>, <tag>&lt;end_html&gt;</tag> tags</title>
         </info>
 
-        <para><programlisting>use CGI qw/:standard/;
+        <para>For rapid development you can take advantage of the <tag>&lt;start_html&gt;</tag> and <tag>&lt;end_html&gt;</tag> tags. The following page generates compliant HTML (view the page
+        source after loading it to see for yourself):</para>
+
+        <para><example>
+            <info>
+              <title>Shortcut tags</title>
+            </info>
+
+            <para><programlisting language="html"><xi:include href="example/cgi6.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/cgi6.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
+
+        <para>The <tag>&lt;start_html&gt;</tag> tag generates all the <tag>&lt;html&gt;</tag>, <tag>&lt;head&gt;</tag>, <tag>&lt;title&gt;</tag> tags etc needed for a valid HTML page plus an
+        opening body tag. Just enter the body content, then optionally finish with <tag>&lt;end_html&gt;</tag> to generate the closing <tag>&lt;body&gt;</tag> and <tag>&lt;html&gt;</tag> tags
+        (optional because the page is automatically closed if these are omitted). See the tag reference section but here is an example using several of the properties available in the
+        <tag>&lt;start_html&gt;</tag> tag including loading multiple scripts and stylesheets:</para>
+
+        <example>
+          <info>
+            <title>Shortcut tags</title>
+          </info>
+
+          <para><programlisting language="html"><xi:include href="example/start_html1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+          xlink:href="https://demo.webdyne.org/example/start_html1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        </example>
+
+        <caution>
+          <para>If make sure any attributes using the <parameter>@{..}</parameter> or <parameter>%{..}</parameter> convention are on one line - the parser will not interpret them correctly if
+          spanning multiple lines.</para>
+        </caution>
+
+        <para>If using the <tag>&lt;start_html&gt;</tag> shortcut tag you can optionally insert default stylesheets and/or <tag>&lt;head&gt;</tag> sections from the Webdyne configuration file.
+        E.g if in your <filename>webdyne.conf.pl</filename> file you have the following:</para>
+
+        <screen>$_={
+    'WebDyne::Constant' =&gt; {
+
+        #  Inserted as &lt;meta&gt; into &lt;head&gt; section
+        #
+        WEBDYNE_META =&gt; {
+            #  These all rendered as &lt;meta name="$key" content="$value"&gt;
+            viewport =&gt; 'width=device-width, initial-scale=1.0',
+            author =&gt; 'Bob Foobar',
+            #  This one rendered as &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+            'http-equiv=X-UA-Compatible' =&gt; 'IE=edge',
+            'http-equiv=refresh' =&gt; '5; url=https://www.example.com'
+        }
+
+        #  This is inserted inside the &lt;html&gt; starting tag, works for &lt;start_html&gt; or straight &lt;html&gt;
+        #
+        WEBDYNE_HTML_PARAM =&gt; {
+            lang =&gt; 'de'
+        }
+
+        #  This is inserted before the &lt;/head&gt; closing tag, works for &lt;start_html&gt; or straight &lt;html&gt;
+        #
+        WEBDYNE_HEAD_INSERT =&gt; &lt;&lt; 'END'
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"&gt;
+&lt;style&gt;
+:root { --pico-font-size: 85% } 
+body { padding-top: 10px; padding-left: 10px;
+&lt;/style&gt;
+END
+    
+    }
+}</screen>
+
+        <para>Then any <filename>.psp</filename> file with a <tag>&lt;start_html&gt;</tag> tag will have the following content:</para>
+
+        <screen>&lt;!DOCTYPE html&gt;&lt;html lang="de"&gt;
+&lt;head&gt;
+&lt;title&gt;Untitled Document&lt;/title&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+&lt;meta name="author" content="Bob Foobar"&gt;
+&lt;meta http-equiv="refresh" content="5; url=https://www.example.com"&gt;
+&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"&gt;
+&lt;style&gt;
+    :root { --pico-font-size: 85% } 
+&lt;/style&gt;
+&lt;/head&gt;
+</screen>
+      </section>
+
+      <section>
+        <title>HTML Forms using &lt;popup_menu&gt;,&lt;checkbox_group&gt; and other tags</title>
+
+        <para>The CGI.pm module presented several shortcut tags for generating HTML forms. These tags have been recreated in WebDyne and act in a similar way.</para>
+
+        <para>The manual page for CGI.pm contains the following synopsis example:</para>
+
+        <example>
+          <info>
+            <title>CGI.pm Example</title>
+          </info>
+
+          <para><programlisting>use CGI qw/:standard/;
    print header,
          start_html('A Simple Example'),
          h1('A Simple Example'),
@@ -884,35 +1012,41 @@ sub greeting { return \0 }</programlisting></para>
     if (param()) {
         print "Your name is",em(param('name')),p,
               "The keywords are: ",em(join(", ",param('words'))),p,</programlisting></para>
-      </example>
+        </example>
 
-      <para>If the example was ported to a WebDyne compatible page it might look something like this:</para>
+        <para>If the example was ported to a WebDyne compatible page it might look something like this:</para>
 
-      <para><example>
-          <info>
-            <title>in-line code in tag attributes</title>
-          </info>
+        <para><example>
+            <info>
+              <title>CGI Example</title>
+            </info>
 
-          <para><programlisting language="html"><xi:include href="example/cgi1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/cgi1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
-    </section>
+            <para><programlisting language="html"><xi:include href="example/cgi1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/cgi1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
 
-    <section>
-      <info>
-        <title>More on HTML shortcut tags in forms</title>
-      </info>
+        <note>
+          <para>When using the WebDyne form tags, state (previous form values) are preserved after the Submit button is presented. This makes building single page application simple as there
+          is no need to implement logic to adjust options in a traditional HTML form to reflect the user's choice.</para>
+        </note>
+      </section>
 
-      <para>Tags such as &lt;popup_menu&gt;, instead of &lt;select&gt;&lt;option&gt;...&lt;/select&gt;. The following example:</para>
+      <section>
+        <info>
+          <title>More on HTML shortcut tags in forms</title>
+        </info>
 
-      <screen>
+        <para>Tags such as <tag>&lt;popup_menu&gt;</tag> output traditional HTML form tags such as <tag>&lt;select&gt;&lt;option&gt;...&lt;/select&gt;</tag>, but they have the advantage of
+        allowing Perl data types as attributes. Take the following example:</para>
+
+        <screen>
 &lt;popup_menu value="%{red=&gt;Red, green=&gt;Green, blue=&gt;Blue}"/&gt;
 
 </screen>
 
-      <para>is arguably easier to read than:</para>
+        <para>it is arguably easier to read than:</para>
 
-      <screen>
+        <screen>
 &lt;select name="values" tabindex="1"&gt;
 &lt;option value="green"&gt;Green&lt;/option&gt;
 &lt;option value="blue"&gt;Blue&lt;/option&gt;
@@ -921,73 +1055,50 @@ sub greeting { return \0 }</programlisting></para>
 
 </screen>
 
-      <para>So there is some readability benefit, however the real advantage shows when we consider the next example:</para>
+        <para>So there is some readability benefit, however the real advantage shows when we consider the next example:<example>
+            <info>
+              <title>Dynamic tag attributes</title>
+            </info>
 
-      <para><example>
-          <info>
-            <title>in-line code in tag attributes</title>
-          </info>
+            <para><programlisting language="html"><xi:include href="example/cgi5.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/cgi5.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
 
-          <para><programlisting language="html"><xi:include href="example/cgi5.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/cgi5.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
+        <para>All values for the menu item were pre-populated from one WebDyne variable - which saves a significant amount of time populating a "countries" style drop-down box.</para>
+      </section>
 
-      <para>That saved a significant amount of time populating a countries drop-down box.</para>
-    </section>
+      <section>
+        <info>
+          <title>Access to HTML form responses and query strings</title>
+        </info>
 
-    <section>
-      <info>
-        <title>Access to CGI query, form and keyword parameters</title>
-      </info>
+        <para>Once a form is submitted you will want to act on responses. There are several ways to do this - you can access a CGI::Simple object instance in any WebDyne template by calling
+        the CGI() method to obtain form responses:</para>
 
-      <para>As mentioned above WebDyne has ported away from the CGI.pm module, but still provides form functionality via the CGI::Simple Perl module. You can access a CGI::Simple object
-      instance in any WebDyne template by calling the CGI() method:</para>
+        <para><example>
+            <info>
+              <title>Access to CGI object</title>
+            </info>
 
-      <para><example>
-          <info>
-            <title>in-line code in tag attributes</title>
-          </info>
+            <para><programlisting language="html"><xi:include href="example/cgi3.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/cgi3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
 
-          <para><programlisting language="html"><xi:include href="example/cgi3.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/cgi3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
+        <para>From there you can all any method supported by the CGI::Simple module - see the CGI::Simple manual page (<command>man CGI::Simple</command>) or review on CPAN: <link
+        xlink:href="https://metacpan.org/pod/CGI::Simple" xmlns:xlink="http://www.w3.org/1999/xlink">CGI::Simple</link></para>
 
-      <para>From there you can all any method supported by the CGI::Simple module - see the CGI::Simple manual page (<command>man CGI::Simple</command>) or review on CPAN: <link
-      xlink:href="https://metacpan.org/pod/CGI::Simple" xmlns:xlink="http://www.w3.org/1999/xlink">CGI::Simple</link></para>
+        <para>Since one of the most common code tasks is to access query parameters, WebDyne stores them in the special <varname>%_</varname> global variable before any user defined Perl
+        methods are called. For example:</para>
 
-      <para>Since one of the most common code tasks is to access query parameters, WebDyne stores them in the special <varname>%_</varname> global variable before any user defined Perl methods
-      are called. For example:</para>
+        <para><example>
+            <info>
+              <title>Perl CGI access</title>
+            </info>
 
-      <para><example>
-          <info>
-            <title>Perl CGI access</title>
-          </info>
-
-          <para><programlisting language="html"><xi:include href="example/cgi4.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/cgi4.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
-    </section>
-
-    <section>
-      <info>
-        <title>Quick pages using shortcut &lt;start_html&gt;&lt;end_html&gt; tags</title>
-      </info>
-
-      <para>For rapid development you can take advantage of CGI.pm's &lt;start_html&gt; and &lt;end_html&gt; tags. The following page generates compliant HTML (view the page source after
-      loading it to see for yourself):</para>
-
-      <para><example>
-          <info>
-            <title>Shortcut tags</title>
-          </info>
-
-          <para><programlisting language="html"><xi:include href="example/cgi6.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-          xlink:href="https://demo.webdyne.org/example/cgi6.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-        </example></para>
-
-      <para>The &lt;start_html&gt; tag generates all the &lt;html&gt;, &lt;head&gt;, &lt;title&gt; tags etc needed for a valid HTML page plus an opening body tag. Just enter the body content,
-      then finish with &lt;end_html&gt; to generate the closing &lt;body&gt; and &lt;html&gt; tags. These tags do not use the CGI.pm module but you can reference the CGI.pm manual page for
-      more information.</para>
+            <para><programlisting language="html"><xi:include href="example/cgi4.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/cgi4.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
+      </section>
     </section>
   </section>
 
@@ -1026,7 +1137,7 @@ sub greeting { return \0 }</programlisting></para>
           xlink:href="https://demo.webdyne.org/example/block2.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
         </example></para>
 
-      <para>Like any other text or HTML between &lt;perl&gt; tags, blocks can take parameters to substitute into the text:</para>
+      <para>Like any other text or HTML between <tag>&lt;perl&gt;</tag> tags, blocks can take parameters to substitute into the text:</para>
 
       <para><example>
           <info>
@@ -1037,7 +1148,8 @@ sub greeting { return \0 }</programlisting></para>
           xlink:href="https://demo.webdyne.org/example/block3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
         </example></para>
 
-      <para>Blocks have a non-intuitive feature - they still display even if they are outside of the &lt;perl&gt; tags that made the call to render them. e.g. the following is OK:</para>
+      <para>Blocks have a non-intuitive feature - they still display even if they are outside of the <tag>&lt;perl&gt;</tag> tags that made the call to render them. e.g. the following is
+      OK:</para>
 
       <para><example>
           <info>
@@ -1058,6 +1170,17 @@ sub greeting { return \0 }</programlisting></para>
           <para><programlisting language="html"><xi:include href="example/block5.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
           xlink:href="https://demo.webdyne.org/example/block5.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
         </example></para>
+
+      <para>You can use the &lt;block&gt; tag display attribute to hide or show a block, or use a CGI parameter to determine visibility (e.g for a status update or warning):</para>
+
+      <example>
+        <info>
+          <title>Blocks</title>
+        </info>
+
+        <para><programlisting language="html"><xi:include href="example/block_toggle1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+        xlink:href="https://demo.webdyne.org/example/block_toggle1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+      </example>
     </section>
 
     <section>
@@ -1076,17 +1199,64 @@ sub greeting { return \0 }</programlisting></para>
           xlink:href="https://demo.webdyne.org/example/include1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
         </example></para>
 
-      <para>If the file name is not an absolute path name is will be loaded relative to the directory of the parent file. For example if file "bar.psp" incorporates the tag&lt;include
-      file="foo.psp"/&gt; it will be expected that "foo.psp" is in the same directory as "bar.psp".</para>
+      <para>If the file name is not an absolute path name is will be loaded relative to the directory of the parent file. For example if file "bar.psp" incorporates the tag <tag>&lt;include
+      file="foo.psp"&gt;</tag> it will be expected that "<filename>foo.psp</filename>" is in the same directory as "<filename>bar.psp</filename>".</para>
 
       <para><important>
           <para>The include tag pulls in the target file at compile time. Changes to the included file after the WebDyne page is run the first time (resulting in compilation) are not reflected
-          in subsequent output. Thus the include tag should not be seen as a shortcut to a pseudo Content Management System. For example &lt;include file="latest_news.txt"/&gt; will probably
-          not behave in the way you expect. The first time you run it the latest news is displayed. However updating the "latest_news.txt" file will not result in changes to the output (it
-          will be stale).</para>
+          in subsequent output unless the <parameter>nocache</parameter> attribute is set. Thus the include tag should not be seen as a shortcut to a pseudo Content Management System. For
+          example <tag>&lt;include file="latest_news.txt"&gt;</tag> will probably not behave in the way you expect. The first time you run it the latest news is displayed. However updating the
+          "latest_news.txt" file will not result in changes to the output (it will be stale).</para>
 
-          <para>There are betters ways to build a CMS with WebDyne - use the include tag sparingly !</para>
+          <para>If you do use the <parameter>nocache</parameter> attribute the included page will be loaded and parsed every time, significantly slowing down page display. There are betters
+          ways to build a CMS with WebDyne - use the include tag sparingly !</para>
         </important></para>
+
+      <para>You can include just the head or body section of a HTML or PSP file by using the head or body attributes. Here is the reference file (file to be included). It does not have to be a
+      .psp file - a standard HTML file can be supplied :</para>
+
+      <example>
+        <info>
+          <title>Include</title>
+        </info>
+
+        <para><programlisting language="html"><xi:include href="example/include2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+        xlink:href="https://demo.webdyne.org/example/include2.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+      </example>
+
+      <para>And here is the generating file (the file that includes sections from the reference file).</para>
+
+      <example>
+        <info>
+          <title>Include</title>
+        </info>
+
+        <para><programlisting language="html"><xi:include href="example/include3.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+        xlink:href="https://demo.webdyne.org/example/include3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+      </example>
+
+      <para>You can also include block sections from <filename>.psp</filename> files. If this is the reference file (the file to be included) containing two blocks. This is a renderable
+      <filename>.psp</filename> file in it's own right. The blocks use the <parameter>display</parameter> attribute to demonstrate that they will produce output, but it's not required:</para>
+
+      <example>
+        <info>
+          <title>Include</title>
+        </info>
+
+        <para><programlisting language="html"><xi:include href="example/include4.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+        xlink:href="https://demo.webdyne.org/example/include4.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+      </example>
+
+      <para>And here is the file that brings in the blocks from the reference file and incorporates them into the output:</para>
+
+      <para><example>
+          <info>
+            <title>Include</title>
+          </info>
+
+          <para><programlisting language="html"><xi:include href="example/include5.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+          xlink:href="https://demo.webdyne.org/example/include5.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        </example></para>
     </section>
 
     <section>
@@ -1171,13 +1341,13 @@ sub greeting { return \0 }</programlisting></para>
           xlink:href="https://demo.webdyne.org/example/static4.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
         </example></para>
 
-      <para>By simply adding the "static" attribute output on a sample machine increased from 55 Pages/sec to 280 Pages/sec ! Judicious use of the static tag in places with slow changing data
-      can markedly increase efficiency of the WebDyne engine.</para>
+      <para>By simply adding the "static" attribute output on a sample machine resulted in a 4x speedup in page loads. Judicious use of the static tag in places with slow changing data can
+      markedly increase efficiency of the WebDyne engine.</para>
     </section>
 
     <section>
       <info>
-        <title xml:id="caching">Caching</title>
+        <title xml:id="caching_section">Caching</title>
       </info>
 
       <para>WebDyne has the ability to cache the compiled version of a dynamic page according to specs you set via the API. When coupled with pages/blocks that are flagged as static this
@@ -1234,6 +1404,56 @@ sub greeting { return \0 }</programlisting></para>
           eventually filling the disk partition that holds the cache directory. That is why we check the month is valid in the code above.</para>
         </important></para>
     </section>
+
+    <section>
+      <title>JSON</title>
+
+      <para>WebDyne has a &lt;json&gt; tag that can be used to present JSON data objects to Javascript libraries in an output page. Here is a very simple example:</para>
+
+      <para><example>
+          <info>
+            <title>JSON Chart</title>
+          </info>
+
+          <para><programlisting language="html"><xi:include href="example/chart1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+          xlink:href="https://demo.webdyne.org/example/chart1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        </example>If you run it and review the source HTML you will see the JSON data rendered into the page as <tag>&lt;script&gt;&lt;/script&gt;</tag> block of type application/json with an
+      id of "chartData". Any data returned by the perl routine nominated by the json tag is presented as JSON within that tag block, and available to Javascript libraries within the page. JSON
+      data is kept in canononical order by default, which can be adjusted with the WEBDYNE_JSON_CANONICAL variable if not desired/needed for a very small speed-up.</para>
+    </section>
+
+    <section>
+      <title>Dump</title>
+
+      <para>The <tag>&lt;dump&gt;</tag> tag is a informational element which can be included in a page for diagnostic or debugging purposes. It will show various variable and state values for
+      the page. By default if a <tag>&lt;dump&gt;</tag> flag is embedded in a page diagnostic information is not shown unless the <parameter>force</parameter> attribute is specified or the
+      <constant>$WEBDYNE_DUMP_FLAG</constant> is set, the latter allowing the <tag>&lt;dump&gt;</tag> tag to be embedded into all pages on a site but not activated unless debugging enabled.
+      </para>
+
+      <para>Various diagnostic elements can be displayed - see the &lt;dump&gt; tag section for information on what they are. In this example all components are enabled and display is
+      forced:</para>
+
+      <example>
+        <info>
+          <title>Dump example</title>
+        </info>
+
+        <para><programlisting language="html"><xi:include href="example/dump1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+        xlink:href="https://demo.webdyne.org/example/dump1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+      </example>
+
+      <para>Dump display/hide can be controlled by form parameters or run URI query strings. In the example below ticking the checkbox or simply appending "?dump_enable=1" to the URL will
+      display the dump information:</para>
+
+      <example>
+        <info>
+          <title>Dump example</title>
+        </info>
+
+        <para><programlisting language="html"><xi:include href="example/dump2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+        xlink:href="https://demo.webdyne.org/example/dump2.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+      </example>
+    </section>
   </section>
 
   <section>
@@ -1268,10 +1488,8 @@ sub greeting { return \0 }</programlisting></para>
         </mediaobject>
       </screenshot>
 
-      <para>In this example the backtrace is not particularly useful because the error occurred within in-line code, so all references in the backtrace are to internal WebDyne modules. However
-      the code fragment clearly shows the line with the error, and the page line number where the error occurred (line 3) is given at the start of the message. The reference to "(eval 268)
-      line 1" is a red herring - it is the 268th eval performed by this perl process, and the error occurred in line 1 of the text that the eval was passed - standard perl error text, but not
-      really helpful here.</para>
+      <para>In this example the backtrace is within in-line code, so all references in the backtrace are to internal WebDyne modules. The code fragment will show the line with the
+      error.</para>
 
       <para>If we have a look at another example:</para>
 
@@ -1294,10 +1512,9 @@ sub greeting { return \0 }</programlisting></para>
         </mediaobject>
       </screenshot>
 
-      <para>The backtrace is somewhat more helpful. Looking through the backtrace we can see that the error occurred in the "hello" subroutine (invoked at line 3 of the page) on line 5 - In
-      this case "line 5" means the 5th line down from the __PERL__ delimiter. The 32 digit hexadecimal number is the page unique ID - it is different for each page. WebDyne runs the code for
-      each page in a package name space that includes the page's UID - in this way pages with identical subroutine names (e.g. two pages with a "hello" subroutine) can be accommodated with no
-      collision.</para>
+      <para>We can see that the error occurred in the "hello" subroutine (invoked at line 2 of the page) within the perl block on line 9. The 32 digit hexadecimal number is the page unique ID
+      - it is different for each page. WebDyne runs the code for each page in a package name space that includes the page's UID - in this way pages with identical subroutine names (e.g. two
+      pages with a "hello" subroutine) can be accommodated with no collision.</para>
     </section>
 
     <section>
@@ -1487,7 +1704,8 @@ sub hello {
                 <term>name=identifier</term>
 
                 <listitem>
-                  <para>The name for this block of HTML. Referenced when rendering a particular block in perl code, e.g. return $self-&gt;render_block("foo");</para>
+                  <para><emphasis>Mandatory.</emphasis> The name for this block of HTML. Referenced when rendering a particular block in perl code, e.g. return
+                  $self-&gt;render_block("foo");</para>
                 </listitem>
               </varlistentry>
 
@@ -1495,7 +1713,7 @@ sub hello {
                 <term>display=1</term>
 
                 <listitem>
-                  <para><emphasis>Optional.</emphasis> Force display of this block even if not invoked by render_block WebDyne method. Useful for prototyping.</para>
+                  <para> Force display of this block even if not invoked by render_block WebDyne method. Useful for prototyping.</para>
                 </listitem>
               </varlistentry>
 
@@ -1503,7 +1721,7 @@ sub hello {
                 <term>static=1</term>
 
                 <listitem>
-                  <para><emphasis>Optional</emphasis>. This block rendered once only and the output cached for all subsequent requests</para>
+                  <para>This block rendered once only and the output cached for all subsequent requests</para>
                 </listitem>
               </varlistentry>
             </variablelist>
@@ -1530,7 +1748,7 @@ sub hello {
                 <term>head=1</term>
 
                 <listitem>
-                  <para><emphasis>Optional</emphasis>. File is an HTML file and we want to include just the &lt;head&gt; section</para>
+                  <para>File is an HTML or <filename>.psp</filename> file and we want to include just the <tag>&lt;head&gt;</tag> section</para>
                 </listitem>
               </varlistentry>
 
@@ -1538,7 +1756,7 @@ sub hello {
                 <term>body=1</term>
 
                 <listitem>
-                  <para><emphasis>Optional</emphasis>. File is an HTML file and we want to include just the &lt;body&gt; section.</para>
+                  <para>File is an HTML or <filename>.psp</filename> file and we want to include just the <tag>&lt;body&gt;</tag> section.</para>
                 </listitem>
               </varlistentry>
 
@@ -1546,7 +1764,15 @@ sub hello {
                 <term>block=blockname</term>
 
                 <listitem>
-                  <para><emphasis>Optional</emphasis>. File is a .psp file and we want to include a &lt;block&gt; section from that file.</para>
+                  <para>File is a <filename>.psp</filename> file and we want to include a <tag>&lt;block&gt;</tag> section from that file.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>nocache</term>
+
+                <listitem>
+                  <para>Don't cache the results of the include, bring them in off disk each time. Will incur performance penalty</para>
                 </listitem>
               </varlistentry>
             </variablelist>
@@ -1566,6 +1792,46 @@ sub hello {
 
                 <listitem>
                   <para><emphasis>Optional.</emphasis> Force display even if <varname>$WEBDYNE_DUMP_FLAG</varname> global not set</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>all</term>
+
+                <listitem>
+                  <para>Display all diagnostic blocks</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>cgi</term>
+
+                <listitem>
+                  <para>Display CGI parameters and query strings</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>env</term>
+
+                <listitem>
+                  <para>Display environment variables</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>constant</term>
+
+                <listitem>
+                  <para>Display Webdyne constants</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>version</term>
+
+                <listitem>
+                  <para>Display version strings</para>
                 </listitem>
               </varlistentry>
             </variablelist>
@@ -1601,11 +1867,27 @@ sub hello {
         </varlistentry>
 
         <varlistentry>
+          <term><methodname>html_tiny()</methodname></term>
+
+          <listitem>
+            <para>Returns an instance of the HTML::Tiny object, can be used for creating programmatic HTML output</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term><methodname>include()</methodname></term>
+
+          <listitem>
+            <para>Returns HTML derived from a file, using the same parameters as the <tag>&lt;include&gt;</tag> tag</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
           <term><methodname>render( <replaceable>key=&gt;value, key=&gt;value</replaceable>, .. )</methodname></term>
 
           <listitem>
-            <para>Called to render the text or HTML between &lt;perl&gt;..&lt;/perl&gt; tags. Optional key and value pairs will be substituted into the output as per the variable section.
-            Returns a scalar ref of the resulting HTML.</para>
+            <para>Called to render the text or HTML between <tag>&lt;perl&gt;..&lt;/perl&gt;</tag> tags. Optional key and value pairs will be substituted into the output as per the variable
+            section. Returns a scalar ref of the resulting HTML.</para>
           </listitem>
         </varlistentry>
 
@@ -1620,10 +1902,19 @@ sub hello {
         </varlistentry>
 
         <varlistentry>
-          <term><methodname>redirect({ uri=&gt;uri | file=&gt;filename | html=&gt;\html_text })</methodname></term>
+          <term><methodname>render_reset()</methodname></term>
 
           <listitem>
-            <para>Will redirect to URI or file nominated, or display only nominated text. Any rendering done to prior to this method is abandoned.</para>
+            <para>Erase anything previously set to render - it will not be sent to the browser.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term><methodname>redirect( uri=&gt;uri | file=&gt;filename | html=&gt;\html_text )</methodname></term>
+
+          <listitem>
+            <para>Will redirect to URI or file nominated, or display only nominated text. Any rendering done to prior to this method is abandoned. If supplying HTML text to be rendered supply
+            as a SCALAR reference.</para>
           </listitem>
         </varlistentry>
 
@@ -1646,11 +1937,35 @@ sub hello {
         </varlistentry>
 
         <varlistentry>
-          <term><methodname>cache_compile( )</methodname></term>
+          <term><methodname>source_mtime()</methodname></term>
+
+          <listitem>
+            <para>Returns the mtime (modification time) of the source .psp file currently being rendered.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term><methodname>cache_compile()</methodname></term>
 
           <listitem>
             <para>Force recompilation of cache file. Can be used in cache code to force recompilation of a page, even if it is flagged static. Returns current value if no parameters supplied,
             or sets if parameter supplied.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term><methodname>filename()</methodname></term>
+
+          <listitem>
+            <para>Return the full filename (including path) of the file being rendered. Will only return the core (main) filename - any included files, templates etc. are not reported.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term><methodname>cwd()</methodname></term>
+
+          <listitem>
+            <para>Return the current working directory WebDyne is operating in.</para>
           </listitem>
         </varlistentry>
 
@@ -1671,10 +1986,29 @@ sub hello {
             different Apache processes)</para>
           </listitem>
         </varlistentry>
+
+        <varlistentry>
+          <term><methodname>print(), printf(), say()</methodname></term>
+
+          <listitem>
+            <para>Render the output of the <methodname>print()</methodname>, <methodname>printf()</methodname> or <methodname>say()</methodname> routines into the current HTML stream. The
+            <methodname>print()</methodname> and <methodname>printf()</methodname> methods emulate their Perl functions in not appending a new line into the output, where as
+            <methodname>say()</methodname> does.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term><methodname>render_time()</methodname></term>
+
+          <listitem>
+            <para>Return the elapsed time since the WebDyne hander started rendering this page. Obviously only meaningful if called at the end of a page, just before final output to
+            browser.</para>
+          </listitem>
+        </varlistentry>
       </variablelist>
     </section>
 
-    <section>
+    <section xml:id="webdyne_constants">
       <info>
         <title>WebDyne Constants</title>
       </info>
@@ -1684,7 +2018,7 @@ sub hello {
 
       <section>
         <info>
-          <title xml:id="webdyne_constants">Global constants file</title>
+          <title>Global constants file</title>
         </info>
 
         <para>WebDyne will look for a system constants file under <filename>/etc/webdyne.conf.pl</filename> and set package variables according to values found in that file. The file is in
@@ -1713,8 +2047,8 @@ $VAR1={
         <para>The file is not present by default and should be created if you wish to change any of the WebDyne constants from their default values.</para>
 
         <important>
-          <para>Always check the syntax of the <filename>/etc/webdyne.pm</filename> file after editing by running <command>perl -c -w /etc/webdyne.conf.pl</command> to check that the file is
-          readable by Perl. Files with syntax errors will fail silently and the variables will revert to module defaults.</para>
+          <para>Always check the syntax of the <filename>/etc/webdyne.conf.pl</filename> file after editing by running <command>perl -c -w /etc/webdyne.conf.pl</command> to check that the file
+          is readable by Perl. Files with syntax errors will fail silently and the variables will revert to module defaults.</para>
         </important>
       </section>
 
@@ -1739,8 +2073,8 @@ PerlSetVar      WEBDYNE_SESSION_ID_COOKIE_NAME  'session_cookie'
         <para><important>
             <para>WebDyne constants cannot be set on a per-location or per-directory basis - they are read from the top level of the config file and set globally.</para>
 
-            <para>Some 1.x versions of mod_perl do not read PerlSetVar variables correctly. If you encounter this problem use a &lt;Perl&gt;..&lt;/Perl&gt; section in the httpd.conf file,
-            e.g.:</para>
+            <para>Some 1.x versions of mod_perl do not read PerlSetVar variables correctly. If you encounter this problem use a <tag>&lt;Perl&gt;..&lt;/Perl&gt;</tag> section in the
+            <filename>httpd.conf</filename> file, e.g.:</para>
 
             <programlisting># Mod_perl 1.x
 
@@ -1754,7 +2088,8 @@ $WebDyne::Session::Constant::WEBDYNE_SESSION_ID_COOKIE_NAME='session_cookie';
 </programlisting>
           </important></para>
 
-        <para>Where you need to set variables without simple string content you can use a &lt;Perl&gt;..&lt;/Perl&gt; section in the httpd.conf file, e.g.:</para>
+        <para>Where you need to set variables without simple string content you can use a <tag>&lt;Perl&gt;..&lt;/Perl&gt;</tag> section in the <filename>httpd.conf</filename> file,
+        e.g.:</para>
 
         <programlisting># Setting more complex variables
 
@@ -1916,6 +2251,15 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
           </varlistentry>
 
           <varlistentry>
+            <term><varname>$WEBDYNE_HEAD_INSERT</varname></term>
+
+            <listitem>
+              <para>Any HTML you want inserted before the closing <tag>&lt;/head&gt;</tag> tag, e.g. stylesheet or script includes to be added to every <filename>.psp</filename> page. Must be
+              valid HTML &lt;head&gt; directives, not interpreted or compiled by WebDyne, incorporated as-is</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
             <term><varname>$WEBDYNE_COMPILE_IGNORE_WHITESPACE</varname></term>
 
             <listitem>
@@ -1951,8 +2295,8 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
             <term><varname>$WEBDYNE_DELAYED_BLOCK_RENDER</varname></term>
 
             <listitem>
-              <para>By default WebDyne will render blocks targeted by a render_block() call, even those that are outside the originating &lt;perl&gt;..&lt;/perl&gt; section that made the call.
-              Set to 0 to not render such blocks. Defaults to 1</para>
+              <para>By default WebDyne will render blocks targeted by a render_block() call, even those that are outside the originating <tag>&lt;perl&gt;..&lt;/perl&gt;</tag> section that
+              made the call. Set to 0 to not render such blocks. Defaults to 1</para>
             </listitem>
           </varlistentry>
 
@@ -2010,7 +2354,8 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
             <term><varname>$WEBDYNE_ERROR_SOURCE_CONTEXT_SHOW</varname></term>
 
             <listitem>
-              <para>Display a fragment of the .psp source file around where the error occurred to give some context of where the error happened. Set to 0 to not display context.</para>
+              <para>Display a fragment of the <filename>.psp</filename> source file around where the error occurred to give some context of where the error happened. Set to 0 to not display
+              context.</para>
             </listitem>
           </varlistentry>
 
@@ -2058,10 +2403,10 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
             <term><varname>$WEBDYNE_AUTOLOAD_POLLUTE</varname></term>
 
             <listitem>
-              <para>When a method is called from a &lt;perl&gt; routine the WebDyne AUTOLOAD method must search multiple modules for the method owner. Setting this flag to 1 will pollute the
-              WebDyne name space with the method name so that AUTOLOAD is not called if that method is used again (for the duration of the Perl process, not just that call to the page). This
-              is dangerous and can cause confusion if different modules use the same name. In very strictly controlled environments - and even then only in some cases - it can result is faster
-              throughput. Off by default, set to 1 to enable.</para>
+              <para>When a method is called from a <tag>&lt;perl&gt;</tag> routine the WebDyne <methodname>AUTOLOAD</methodname> method must search multiple modules for the method owner.
+              Setting this flag to 1 will pollute the WebDyne name space with the method name so that <methodname>AUTOLOAD</methodname> is not called if that method is used again (for the
+              duration of the Perl process, not just that call to the page). This is dangerous and can cause confusion if different modules use the same name. In very strictly controlled
+              environments - and even then only in some cases - it can result is faster throughput. Off by default, set to 1 to enable.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2158,6 +2503,14 @@ PerlSetVar      WebDyneChain                 'WebDyne::Session'
           <listitem>
             <para>Usage: <command>wddump filename</command>. Where filename is a compiled WebDyne source file (usually in /var/webdyne/cache). Will dump out the saved data structure of the
             compiled file.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term><command>wddebug</command></term>
+
+          <listitem>
+            <para>Usage: <command>wddebug --status|--enable|--disable</command>. Enable/disable debugging in the WebDyne code.</para>
           </listitem>
         </varlistentry>
 
@@ -2272,7 +2625,7 @@ PerlSetVar      WebDyneChain    'WebDyne::Static'
       <para>Loading WebDyne::Cache into a __PERL__ block flags to WebDyne that the page wants the engine to call a designated routine every time it is run. The called routine can generate a
       new UID (Unique ID) for the page, or force it to be recompiled. There are no API methods associated with this module.</para>
 
-      <para>See the <link linkend="caching">Caching</link> section above for more information on how to use this module with an individual page.</para>
+      <para>See the <link linkend="caching_section">Caching</link> section above for more information on how to use this module with an individual page.</para>
 
       <para>WebDyne::Cache can also be used in conjunction with the <link linkend="webdyne_chain">WebDyne::Chain</link> module to flag all files in a particular location are subject to a cache
       handling routine. An example httpd.conf snippet:</para>
@@ -2291,8 +2644,8 @@ PerlSetVar      WebDyneCacheHandler '&amp;MyModule::cache'
 
       <para>Note that any package used as the WebDyneCacheHandler target should be already loaded via "PerlRequire" or similar mechanism.</para>
 
-      <para>As an example of why this could be useful consider the <link linkend="caching">caching examples</link> above. Instead of flagging that an individual file should only be re-compiled
-      every x seconds, that policy could be applied to a whole directory with no alteration to the individual pages.</para>
+      <para>As an example of why this could be useful consider the <link linkend="caching_section">caching examples</link> above. Instead of flagging that an individual file should only be
+      re-compiled every x seconds, that policy could be applied to a whole directory with no alteration to the individual pages.</para>
     </section>
 
     <section>
@@ -2325,10 +2678,10 @@ PerlSetVar      WebDyneCacheHandler '&amp;MyModule::cache'
 
       <example>
         <info>
-          <title/>
+          <title>WebDyne Session module</title>
         </info>
 
-        <para><programlisting>#include "example/session1.html"</programlisting></para>
+        <para><programlisting><xi:include href="example/session1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting></para>
 
         <para><link xlink:href="https://demo.webdyne.org/example/session1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example>
@@ -2362,8 +2715,8 @@ PerlSetVar      WEBDYNE_SESSION_ID_COOKIE_NAME    'gingernut'
       <para>The merging is done once at compile time - there are no repeated search and replace operations each time the file is loaded, or server side includes, so the resulting pages are
       quite fast.</para>
 
-      <para>Both the template and content files should be complete - there is no need to write the content without a &lt;head&gt; section, or leave out &lt;html&gt; tags. As a result both the
-      content and template files can be viewed as standalone documents.</para>
+      <para>Both the template and content files should be complete - there is no need to write the content without a <tag>&lt;head&gt;</tag> section, or leave out <tag>&lt;html&gt;</tag> tags.
+      As a result both the content and template files can be viewed as standalone documents.</para>
 
       <para>The API:</para>
 
@@ -2391,10 +2744,10 @@ PerlSetVar      WEBDYNE_SESSION_ID_COOKIE_NAME    'gingernut'
 
       <example>
         <info>
-          <title/>
+          <title>Template example</title>
         </info>
 
-        <para><programlisting>#include "example/template1.html"</programlisting></para>
+        <para><programlisting language="html"><xi:include href="example/template1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting></para>
 
         <para><link xlink:href="https://demo.webdyne.org/example/template1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example>
@@ -2403,10 +2756,10 @@ PerlSetVar      WEBDYNE_SESSION_ID_COOKIE_NAME    'gingernut'
 
       <example>
         <info>
-          <title/>
+          <title>Template content</title>
         </info>
 
-        <para><programlisting>#include "example/content1.html"</programlisting></para>
+        <para><programlisting><xi:include href="example/content1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting></para>
 
         <para><link xlink:href="https://demo.webdyne.org/example/content1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example>
@@ -2415,7 +2768,7 @@ PerlSetVar      WEBDYNE_SESSION_ID_COOKIE_NAME    'gingernut'
       content file.</para>
 
       <para>To overcome this WebDyne::Template can read the template file name using the Apache dir_config function, and assign a template on a per location basis using the WebDyneTemplate
-      directive. Here is a sample httpd.conf file:</para>
+      directive. Here is a sample <filename>httpd.conf</filename> file:</para>
 
       <para><programlisting>&lt;Location /&gt;
 
@@ -2440,10 +2793,92 @@ PerlSetVar      WebDyneTemplate '/path/to/template.psp'
 
   <section>
     <info>
+      <title>Miscellaneous</title>
+    </info>
+
+    <para>Things to note or information not otherwise contained elsewhere </para>
+
+    <variablelist>
+      <varlistentry>
+        <term>How to check syntax on a PSP file</term>
+
+        <listitem>
+          <para>To check the syntax of a PSP file, specifically any Perl code in the __PERL__ section make sure you have a #!perl shebang after the __PERL__ delimiter as here:</para>
+
+          <programlisting language="html">&lt;start_html&gt;
+Hello World &lt;? server_time() ?&gt;
+__PERL__
+#!perl
+
+sub server_time {
+    my 2==1; #Error here
+}</programlisting>
+
+          <para>Then run the command <command>perl -x -c -w &lt;filename.psp&gt;</command>. This will check the file for syntax error and report back:</para>
+
+          <screen>$ perl -c -w -x check.psp 
+syntax error at check.psp line 4, near "my 2"
+check.psp had compilation errors.</screen>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>How to pass $self ref if using processing instructions</term>
+
+        <listitem>
+          <para>If you use the processing instruction form of calling a perl method it will not pass the WebDyne object ref through to your perl code. You can pass it by supplying @_ as a
+          param, or just shift() and your parameters:</para>
+
+          <programlisting language="html">&lt;start_html&gt;
+Hello World &lt;? server_time(@_) ?&gt;
+Hello World &lt;? server_time(shift(), 'UTC' ?&gt;
+Hello World &lt;perl handler="server_time" param="UTC"/&gt;
+__PERL__
+
+sub server_time {
+    #  Now we can get self ref
+    my ($self, $timezone)=@_;
+    #  Do something and return
+}</programlisting>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Use of hash characters for comments in .psp files</term>
+
+        <listitem>
+          <para>Any # characters at the very start of a PSP file before a &lt;html&gt; or &lt;start_html&gt; tag are treated as comments and discarded - they will not be stored or displayed
+          (they are <emphasis role="bold">not</emphasis> translated into HTML comments). This allows easy to read comments at the start of .psp files. Any # characters after the first valid
+          tag are not treated specially - they will be rendered as normal HTML: </para>
+
+          <programlisting language="html">#  This is my server time display file
+#  
+#  VERSION=1.23
+#
+&lt;start_html&gt;
+Server local time is: &lt;? localtime ?&gt;</programlisting>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>The &lt;checkbox&gt; tag will always set a hidden form field</term>
+
+        <listitem>
+          <para>The <tag>&lt;checkbox&gt;</tag> tag is unusual in that it adds a hidden field (with the same name as the checkbox) to the HTML page to retain state. Thus if you are examining
+          the checkbox parameter from CGI via <varname>$_{'checkbox_name'}</varname> or <code>$self-&gt;CGI-&gt;param('checkbox_name')</code> you may get an array rather than a single value.
+          The value of the checkbox (boolean, checked or unchecked, i.e. 1 or 0) will always be the first value returned. So the code <code>if ($_{'checkbox_name'}) { .. do_something }</code>
+          will work as expected - but just be careful if using in an array context. </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </section>
+
+  <section>
+    <info>
       <title>Legal Information - Licensing and Copyright</title>
     </info>
 
-    <para>WebDyne is Copyright © Andrew Speer 2006-2025. Webdyne is free software; you can redistribute it and/or modify it under the same terms as Perl itself.</para>
+    <para>WebDyne is Copyright © Andrew Speer 2006-2025. WebDyne is free software; you can redistribute it and/or modify it under the same terms as Perl itself.</para>
 
     <para>WebDyne is written in Perl and uses modules from <link xlink:href="http://www.cpan.org" xmlns:xlink="http://www.w3.org/1999/xlink">CPAN</link> (the Comprehensive Perl Archive
     Network). CPAN modules are Copyright © the owner/author, and are available in source form by downloading from CPAN directly. All CPAN modules used are covered by the <link

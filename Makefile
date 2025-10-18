@@ -23,9 +23,13 @@ webdyne.md0 : webdyne.xml0
 $(SRC_DIR)/webdyne.md : $(SRC_DIR)/webdyne.xml
 	mkdir -p $(TMP_DIR)
 	xmllint --xinclude --noent $< -o $(TMP_DIR)/$(notdir $<)
-	pandoc -f docbook -t markdown-smart --lua-filter=$(SCRIPTS_DIR)/admonition-advanced.lua --extract-media=$(DOC_DIR)/images -o $(TMP_DIR)/$(notdir $@) $(TMP_DIR)/$(notdir $<)
+	xsltproc $(SCRIPTS_DIR)/promote-title-ids.xsl $(TMP_DIR)/$(notdir $<) | sponge $(TMP_DIR)/$(notdir $<)
+	#pandoc -f docbook -t markdown-smart --lua-filter=$(SCRIPTS_DIR)/admonition-advanced.lua --lua-filter=$(SCRIPTS_DIR)/fix-images.lua --extract-media=$(DOC_DIR)/images -o $(TMP_DIR)/$(notdir $@) $(TMP_DIR)/$(notdir $<)
+	pandoc -f docbook -t markdown-smart --lua-filter=$(SCRIPTS_DIR)/admonition-advanced.lua --resource-path=$(SRC_DIR) --extract-media=$(DOC_DIR) -o $(TMP_DIR)/$(notdir $@) $(TMP_DIR)/$(notdir $<)
 	perl -pi -e 's/\\</</g' $(TMP_DIR)/$(notdir $@)
-	perl -pi -e 's{\Q./docs/images\E}{images}g' $(TMP_DIR)/$(notdir $@)
+	# Fix image placeholders from pandoc
+	#perl -pi -e 's/\[\]\{.*original-image-src="([^"]+)"[^\}]*\}/![](\1)/s' $(TMP_DIR)/$(notdir $@)
+	perl -pi -e 's{\Qdocs/images\E}{images}g' $(TMP_DIR)/$(notdir $@)
 	rm -f $(DOC_DIR)/*.md
 	perl $(SCRIPTS_DIR)/mdsplit.pl $(TMP_DIR)/$(notdir $@) $(DOC_DIR)
 

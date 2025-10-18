@@ -30,16 +30,22 @@ sub main {
     my %section;    # Hash to hold slugified title of each section index
     my $in_code_block=0;  # Flag
     #my @line;       # Temp array of all lines
+    
+    
+    #  Keep track of anchors
+    #
+    my %anchor;
 
     
     #  Start reading in markdown file
     #
+    my $title;
     while (my $line=<$fh>) {
 
         #  Don't chomp - need to keep CR's
         #chomp $line;
         
-
+        
         #  Skip unless we have something and are in first section, i.e. skip leading blanks
         #
         unless ($line) { next unless $ix };
@@ -57,7 +63,8 @@ sub main {
         if (!$in_code_block && $line=~/^#\s+/) {
             print "section: $line";
             $ix++ if keys %section;
-            my $title=$line;
+            #my $title=$line;
+            $title=$line;
             chomp $title;
             die if $title=~/^#\s*$/;
             $title =~ s/^#+\s*//;                   # Remove leading '#' and whitespace
@@ -66,12 +73,24 @@ sub main {
             $title = lc($title); 
             $title = sprintf('%0.2d_%s.md', $ix, $title);
             $section{$ix}=$title;
-        
+            
+            
         }
         else {
             #  Debugging
             #print "in_code_block: $in_code_block: $line\n";
         }
+
+
+        #  Look for anchors
+        #
+        if (!$in_code_block && $line=~/\{#(.*?)\}/) {
+            #my $anchor=$1;
+            print "$line, hit $1\n";
+            $anchor{$1}=$title;
+        }
+    
+
         
         #  Store the current line away against the current section index
         #
@@ -79,6 +98,8 @@ sub main {
 
     }
 
+    #use Data::Dumper;
+    #die Dumper(\%anchor);
 
     #  All done on parsing
     #
@@ -95,11 +116,29 @@ sub main {
         my $fn=File::Spec->catfile($dn, $fn);
         my $fh=IO::File->new($fn, O_WRONLY|O_TRUNC|O_CREAT) || 
             die ("unable to write to fn $fn, $!");
+            
+        #  Update anchors
+        #
+        while (my($anchor, $title_fn)=each %anchor) {
+            #$md[$ix]=~s/\[(.*?)\]\(\#\Q${anchor}\E\)/\[$1\]\(${title_fn}#${anchor}\)/gs;
+            my $escaped_anchor = quotemeta($anchor);
+            $md[$ix] =~ s{
+              \[([^\]]+)\]            # match link text
+              \(
+                \#${escaped_anchor}   # match anchor
+              \)
+            }{
+              "[$1](${title_fn}#$anchor)"
+            }gsx;
+        }
         print $fh $md[$ix];
         $fh->close();
         print "wrote: $fn\n"
         
     }
+    
+    #use Data::Dumper;
+    #die Dumper(\%anchor);
     
     
     #  All done
