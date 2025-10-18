@@ -4,7 +4,7 @@
 
 <canvas id="myChart"></canvas>
 
-<json handler="chart_data", id="chartData">
+<json handler="chart_data" id="chartData">
 
 <script>
   // Parse JSON from the script tag
