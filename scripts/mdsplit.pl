@@ -86,7 +86,7 @@ sub main {
         #
         if (!$in_code_block && $line=~/\{#(.*?)\}/) {
             #my $anchor=$1;
-            print "$line, hit $1\n";
+            #print "$line, hit $1\n";
             $anchor{$1}=$title;
         }
     
@@ -98,8 +98,6 @@ sub main {
 
     }
 
-    #use Data::Dumper;
-    #die Dumper(\%anchor);
 
     #  All done on parsing
     #

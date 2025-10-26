@@ -763,6 +763,24 @@ sub greeting { return \0 }</programlisting></para>
 
       <section>
         <info>
+          <title>Parameter inheritance</title>
+        </info>
+
+        <para>In-line code can inherit parameters passed from a perl handler/method. In-line code gets two parameters supplied - the first (<varname>$_[0)</varname>) is the self reference
+        (e.g. <varname>$self</varname>), the second (<varname>$_[1]</varname>) is any inherited parameters as a hash reference. This can be useful for quick "in-line" formatting, e.g:</para>
+
+        <para><example>
+            <info>
+              <title>Perl code example with parameter inheritance </title>
+            </info>
+
+            <para><programlisting language="html"><xi:include href="example/inherit1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+            xlink:href="https://demo.webdyne.org/example/inherit1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+          </example></para>
+      </section>
+
+      <section>
+        <info>
           <title>Notes about <token>__PERL__</token> sections</title>
         </info>
 
@@ -1423,12 +1441,53 @@ END
     </section>
 
     <section>
+      <info>
+        <title>API Tags</title>
+      </info>
+
+      <para>WebDyne has the ability to make available a basic REST API facility using the &lt;api&gt; tag in conjunction with the Router::Simple CPAN module. Documents that utilise the
+      &lt;api&gt; tag are somewhat unique in that: </para>
+
+      <itemizedlist>
+        <listitem>
+          <para>There is no need for any other tags in the document besides the &lt;api&gt; tag. All other tags are ignored - in fact they are discarded.</para>
+        </listitem>
+
+        <listitem>
+          <para>Any .psp file file an &lt;api&gt; tag will only emit JSON data with a content type of "application/json"</para>
+        </listitem>
+
+        <listitem>
+          <para>The REST api path must correspond .psp file at some path level, e.g. if your path is /api/user/42 you must have a file called either "api.psp" or "api/user.psp" in your
+          path.</para>
+        </listitem>
+
+        <listitem>
+          <para>A .psp file can contain multiple &lt;api&gt; tags corresponding to different Router::Simple routes</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>Here is a very simple example. Note the format of the URL in the Run hyperlink.:</para>
+
+      <example>
+        <info>
+          <title>API Example</title>
+        </info>
+
+        <para><programlisting language="html"><xi:include href="example/api.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+        xlink:href="https://demo.webdyne.org/example/api/uppercase/bob/42" xmlns:xlink="http://www.w3.org/1999/xlink">Run uppercase API example</link></para>
+
+        <para><link xlink:href="https://demo.webdyne.org/example/api/doublecase/bob/42" xmlns:xlink="http://www.w3.org/1999/xlink">Run doublecase API example</link></para>
+      </example>
+    </section>
+
+    <section>
       <title>Dump</title>
 
       <para>The <tag>&lt;dump&gt;</tag> tag is a informational element which can be included in a page for diagnostic or debugging purposes. It will show various variable and state values for
       the page. By default if a <tag>&lt;dump&gt;</tag> flag is embedded in a page diagnostic information is not shown unless the <parameter>force</parameter> attribute is specified or the
-      <constant>$WEBDYNE_DUMP_FLAG</constant> is set, the latter allowing the <tag>&lt;dump&gt;</tag> tag to be embedded into all pages on a site but not activated unless debugging enabled.
-      </para>
+      <constant>$WEBDYNE_DUMP_FLAG</constant> is set, the latter allowing the <tag>&lt;dump&gt;</tag> tag to be embedded into all pages on a site but not activated unless debugging
+      enabled.</para>
 
       <para>Various diagnostic elements can be displayed - see the &lt;dump&gt; tag section for information on what they are. In this example all components are enabled and display is
       forced:</para>
@@ -1713,7 +1772,7 @@ sub hello {
                 <term>display=1</term>
 
                 <listitem>
-                  <para> Force display of this block even if not invoked by render_block WebDyne method. Useful for prototyping.</para>
+                  <para>Force display of this block even if not invoked by render_block WebDyne method. Useful for prototyping.</para>
                 </listitem>
               </varlistentry>
 
@@ -2521,6 +2580,14 @@ PerlSetVar      WebDyneChain                 'WebDyne::Session'
             <para>Used to run WebDyne as a PSGI process- usually invoked by Plack via plackup or starman, but can be run directly for development purposes.</para>
           </listitem>
         </varlistentry>
+
+        <varlistentry>
+          <term>wdlint</term>
+
+          <listitem>
+            <para>Run perl -c -w over code in __PERL__ sections on any .psp file to check for syntax errors.</para>
+          </listitem>
+        </varlistentry>
       </variablelist>
     </section>
 
@@ -2796,7 +2863,7 @@ PerlSetVar      WebDyneTemplate '/path/to/template.psp'
       <title>Miscellaneous</title>
     </info>
 
-    <para>Things to note or information not otherwise contained elsewhere </para>
+    <para>Things to note or information not otherwise contained elsewhere</para>
 
     <variablelist>
       <varlistentry>
@@ -2849,7 +2916,7 @@ sub server_time {
         <listitem>
           <para>Any # characters at the very start of a PSP file before a &lt;html&gt; or &lt;start_html&gt; tag are treated as comments and discarded - they will not be stored or displayed
           (they are <emphasis role="bold">not</emphasis> translated into HTML comments). This allows easy to read comments at the start of .psp files. Any # characters after the first valid
-          tag are not treated specially - they will be rendered as normal HTML: </para>
+          tag are not treated specially - they will be rendered as normal HTML:</para>
 
           <programlisting language="html">#  This is my server time display file
 #  
@@ -2867,7 +2934,7 @@ Server local time is: &lt;? localtime ?&gt;</programlisting>
           <para>The <tag>&lt;checkbox&gt;</tag> tag is unusual in that it adds a hidden field (with the same name as the checkbox) to the HTML page to retain state. Thus if you are examining
           the checkbox parameter from CGI via <varname>$_{'checkbox_name'}</varname> or <code>$self-&gt;CGI-&gt;param('checkbox_name')</code> you may get an array rather than a single value.
           The value of the checkbox (boolean, checked or unchecked, i.e. 1 or 0) will always be the first value returned. So the code <code>if ($_{'checkbox_name'}) { .. do_something }</code>
-          will work as expected - but just be careful if using in an array context. </para>
+          will work as expected - but just be careful if using in an array context.</para>
         </listitem>
       </varlistentry>
     </variablelist>
