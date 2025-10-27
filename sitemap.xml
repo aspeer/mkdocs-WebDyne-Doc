@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://aspeer.github.io/mkdocs-WebDyne-Doc/00_introduction/</loc>
+         <loc>https://webdyne.org/00_introduction/</loc>
          <lastmod>2025-10-27</lastmod>
     </url>
     <url>
-         <loc>https://aspeer.github.io/mkdocs-WebDyne-Doc/01_installation_and_quickstart/</loc>
+         <loc>https://webdyne.org/01_installation_and_quickstart/</loc>
          <lastmod>2025-10-27</lastmod>
     </url>
     <url>
-         <loc>https://aspeer.github.io/mkdocs-WebDyne-Doc/02_basic_usage_examples/</loc>
+         <loc>https://webdyne.org/02_basic_usage_examples/</loc>
          <lastmod>2025-10-27</lastmod>
     </url>
     <url>
-         <loc>https://aspeer.github.io/mkdocs-WebDyne-Doc/03_advanced_usage/</loc>
+         <loc>https://webdyne.org/03_advanced_usage/</loc>
          <lastmod>2025-10-27</lastmod>
     </url>
     <url>
-         <loc>https://aspeer.github.io/mkdocs-WebDyne-Doc/04_error_handling/</loc>
+         <loc>https://webdyne.org/04_error_handling/</loc>
          <lastmod>2025-10-27</lastmod>
     </url>
     <url>
-         <loc>https://aspeer.github.io/mkdocs-WebDyne-Doc/05_webdyne_api/</loc>
+         <loc>https://webdyne.org/05_webdyne_api/</loc>
          <lastmod>2025-10-27</lastmod>
     </url>
     <url>
-         <loc>https://aspeer.github.io/mkdocs-WebDyne-Doc/06_miscellaneous/</loc>
+         <loc>https://webdyne.org/06_miscellaneous/</loc>
          <lastmod>2025-10-27</lastmod>
     </url>
     <url>
-         <loc>https://aspeer.github.io/mkdocs-WebDyne-Doc/07_extending_webdyne/</loc>
+         <loc>https://webdyne.org/07_extending_webdyne/</loc>
          <lastmod>2025-10-27</lastmod>
     </url>
     <url>
-         <loc>https://aspeer.github.io/mkdocs-WebDyne-Doc/08_credits/</loc>
+         <loc>https://webdyne.org/08_credits/</loc>
          <lastmod>2025-10-27</lastmod>
     </url>
     <url>
-         <loc>https://aspeer.github.io/mkdocs-WebDyne-Doc/09_miscellaneous/</loc>
+         <loc>https://webdyne.org/09_miscellaneous/</loc>
          <lastmod>2025-10-27</lastmod>
     </url>
     <url>
-         <loc>https://aspeer.github.io/mkdocs-WebDyne-Doc/10_legal_information_licensing_and_copyright/</loc>
+         <loc>https://webdyne.org/10_legal_information_licensing_and_copyright/</loc>
          <lastmod>2025-10-27</lastmod>
     </url>
 </urlset>
