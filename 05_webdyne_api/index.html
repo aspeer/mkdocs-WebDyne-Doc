@@ -714,11 +714,11 @@ without an extension.</p>
 <dt>&lt;json&gt;</dt>
 <dd>
 <p>Run Perl code similar to &lt;perl&gt; tag but expect code to return a
-HASH, ARRAY or SCALAR ref and encode into JSON, outputting in a
-&lt;script&gt; tag with type="application/json". When supplied with an
-id attribute this data can be used by any Javascript function in the
-page. All attributes are the same as the &lt;perl&gt; tag with the
-following extra attribute</p>
+HASH or ARRAY ref and encode into JSON, outputting in a &lt;script&gt;
+tag with type="application/json". When supplied with an id attribute
+this data can be used by any Javascript function in the page. All
+attributes are the same as the &lt;perl&gt; tag with the following extra
+attribute</p>
 <dl>
 <dt>id=[name]</dt>
 <dd>
@@ -781,6 +781,40 @@ from that file.</p>
 <dd>
 <p>Don't cache the results of the include, bring them in off disk
 each time. Will incur performance penalty</p>
+</dd>
+</dl>
+</dd>
+<dt>&lt;api&gt;</dt>
+<dd>
+<p>Respond to a JSON request made from a client.</p>
+<dl>
+<dt>pattern=string</dt>
+<dd>
+<p><em>Mandatory</em>. Name of <code>Route::Simple</code> pattern we want to serve,
+e.g. /api/{user}/:id</p>
+</dd>
+<dt>destination | dest | data=hash ref</dt>
+<dd>
+<p>Hash we want to supply to perl routine if match made. See
+<code>Route::Simple</code></p>
+</dd>
+<dt>option=hash ref</dt>
+<dd>
+<p>Match options, GET, PUT etc. <code>Route::Simple</code></p>
+</dd>
+</dl>
+</dd>
+<dt>&lt;htmx&gt;</dt>
+<dd>
+<p>Serve HTML snippets. Takes exactly the same parameters as the
+&lt;perl&gt; tag with one addition</p>
+<dl>
+<dt>display=boolean</dt>
+<dd>
+<p><em>Optional</em>. If evaluates to true then this &lt;htmx&gt; snippet
+fires. Only tag can respond per page. Use this attribute in
+conjunction with dynamic evaluation (e.g. display="!{!
+$_{name} eq 'Bob' !}")</p>
 </dd>
 </dl>
 </dd>
@@ -870,7 +904,7 @@ further into the document, see the block section for an example).</p>
 <p>Erase anything previously set to render - it will not be sent to the
 browser.</p>
 </dd>
-<dt>redirect( uri=&gt;uri | file=&gt;filename | html=&gt;\html_text )</dt>
+<dt>redirect( uri=&gt;uri | file=&gt;filename | html=&gt;\html_text | json=&gt;\json_text | text=&gt;\plain_text)</dt>
 <dd>
 <p>Will redirect to URI or file nominated, or display only nominated
 text. Any rendering done to prior to this method is abandoned. If

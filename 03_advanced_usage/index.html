@@ -459,6 +459,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#htmx" class="md-nav__link">
+    <span class="md-ellipsis">
+      HTMX
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HTMX">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-perl-within-htmx-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Perl within &lt;htmx> tags
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-multiple-htmx-tags-in-one-psp-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using multiple &lt;htmx> tags in one .psp file
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#dump" class="md-nav__link">
     <span class="md-ellipsis">
       Dump
@@ -1532,20 +1565,20 @@ that:</p>
 </li>
 <li>
 <p>Any .psp file file an &lt;api&gt; tag will only emit JSON data with a
-    content type of "application/json"</p>
+    content type of "<code>application/json</code>"</p>
 </li>
 <li>
 <p>The REST api path must correspond .psp file at some path level, e.g.
-    if your path is /api/user/42 you must have a file called either
-    "api.psp" or "api/user.psp" in your path.</p>
+    if your path is <code>/api/user/42</code> you must have a file called either
+    "<code>api.psp</code>" or "<code>api/user.psp</code>" in your path.</p>
 </li>
 <li>
 <p>A .psp file can contain multiple &lt;api&gt; tags corresponding to
-    different Router::Simple routes</p>
+    different <code>Router::Simple</code> routes</p>
 </li>
 </ul>
 <p>Here is a very simple example. Note the format of the URL in the Run
-hyperlink.:</p>
+hyperlink:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="p">&lt;</span><span class="nt">api</span> <span class="na">handler</span><span class="o">=</span><span class="s">uppercase</span> <span class="na">pattern</span><span class="o">=</span><span class="s">&quot;/api/uppercase/{user}/:id&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="p">&lt;</span><span class="nt">api</span> <span class="na">handler</span><span class="o">=</span><span class="s">doublecase</span> <span class="na">pattern</span><span class="o">=</span><span class="s">&quot;/api/doublecase/{user}/:id&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>__PERL__
@@ -1577,6 +1610,162 @@ hyperlink.:</p>
 example</a></p>
 <p><a href="https://demo.webdyne.org/api/doublecase/bob/42">Run doublecase API
 example</a></p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>The &lt;api&gt; tag is still somewhat experimental. Use with caution</p>
+</div>
+<h2 id="htmx">HTMX<a class="headerlink" href="#htmx" title="Permanent link">&para;</a></h2>
+<p>WebDyne has support for &lt;htmx&gt; tags to supply fragmented HTML to pages
+using the <a href="https://htmx.org">HTMX Javascript Library</a>. WebDyne can
+support just supplying HTML snippet to pages in response to htmx calls.
+HTMX and WebDyne are complementary libraries which can be combined
+together to support dynamic pages with in-place updates from WebDybe
+Perl backends. Here is a simple HTML file (<code>htmx_demo1.psp</code>)
+incorporating HTMX calls to a backend file called <code>htmx_time1.psp</code>. Here
+is the display file, <code>htmx_demo1.psp</code></p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">&lt;</span><span class="nt">start_html</span> <span class="na">script</span><span class="o">=</span><span class="s">&quot;https://unpkg.com/htmx.org@1.9.10&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Current time<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Click the button below to load time data from the server<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="cm">&lt;!-- HTMX Trigger Button --&gt;</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="p">&lt;</span><span class="nt">button</span> 
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>  <span class="na">hx-get</span><span class="o">=</span><span class="s">&quot;htmx_time1.psp&quot;</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>  <span class="na">hx-target</span><span class="o">=</span><span class="s">&quot;#time-container&quot;</span>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>  <span class="na">hx-swap</span><span class="o">=</span><span class="s">&quot;innerHTML&quot;</span>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="p">&gt;</span>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>Get Time
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a><span class="cm">&lt;!-- Where the fetched HTML fragment will go --&gt;</span>
+</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;time-container&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>  <span class="p">&lt;</span><span class="nt">em</span><span class="p">&gt;</span>Time data not loaded yet.<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;</span>
+</span><span id="__span-21-18"><a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<p><a href="https://demo.webdyne.org/htmx_demo1.psp">Run</a></p>
+<p>And the backend file which generates the HTMX data for the above page
+(<code>htmx_time1.psp</code>):</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="p">&lt;</span><span class="nt">start_html</span><span class="p">&gt;</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="p">&lt;</span><span class="nt">htmx</span><span class="p">&gt;</span>Server local time: <span class="cp">&lt;? localtime() ?&gt;</span> <span class="p">&lt;/</span><span class="nt">htmx</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<p><a href="https://demo.webdyne.org/htmx_time1.psp">Run</a></p>
+<p>Note the &lt;htmx&gt; tags. You can run the above htmx resource file and it
+will render correctly as a full HTML page - however if WebDyne detects a
+'hx-request' HTTP header it will only send the fragment back.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Only one &lt;htmx&gt; section from a file will ever be rendered. You can
+have multiple &lt;htmx&gt; sections in a .psp file however only one can be
+rendered at any time. You can use the display attribute with dynamic
+matching (see later) do render different &lt;htmx&gt; sections in a .psp
+file, or you can keep them all in different files (e.g. one &lt;htmx&gt;
+section per .psp file</p>
+</div>
+<h3 id="using-perl-within-htmx-tags">Using Perl within &lt;htmx&gt; tags<a class="headerlink" href="#using-perl-within-htmx-tags" title="Permanent link">&para;</a></h3>
+<p>&lt;htmx&gt; tags can be called with the same attributes as &lt;perl&gt; tags,
+including nominating a handler to generate data. See the following
+example:</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">&lt;</span><span class="nt">start_html</span> <span class="na">script</span><span class="o">=</span><span class="s">&quot;https://unpkg.com/htmx.org@1.9.10&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Current time<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Click the button below to load time data from the server<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="cm">&lt;!-- HTMX Trigger Button --&gt;</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="p">&lt;</span><span class="nt">button</span> 
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>  <span class="na">hx-get</span><span class="o">=</span><span class="s">&quot;htmx_time2.psp&quot;</span>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>  <span class="na">hx-target</span><span class="o">=</span><span class="s">&quot;#time-container&quot;</span>
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>  <span class="na">hx-swap</span><span class="o">=</span><span class="s">&quot;innerHTML&quot;</span>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="p">&gt;</span>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>Get Time
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="cm">&lt;!-- Where the fetched HTML fragment will go --&gt;</span>
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;time-container&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a>  <span class="p">&lt;</span><span class="nt">em</span><span class="p">&gt;</span>Time data not loaded yet.<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;</span>
+</span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<p><a href="https://demo.webdyne.org/htmx_demo2.psp">Run</a></p>
+<p>And the backend file which generates the HTMX data for the above page:</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="p">&lt;</span><span class="nt">start_html</span><span class="p">&gt;</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="p">&lt;</span><span class="nt">htmx</span> <span class="na">handler</span><span class="o">=</span><span class="s">&quot;server_time&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>Server local time: ${server_time}
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="p">&lt;/</span><span class="nt">htmx</span><span class="p">&gt;</span>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>__PERL__
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>sub server_time {
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>    my $self=shift();
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>    my $time=scalar localtime;
+</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>    for (1..3) {
+</span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a>        $self-&gt;print( $self-&gt;render( server_time=&gt; $time ));
+</span><span id="__span-24-14"><a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a>    }
+</span><span id="__span-24-15"><a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a>    return \undef;
+</span><span id="__span-24-16"><a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a>}
+</span></code></pre></div>
+<p><a href="https://demo.webdyne.org/htmx_time2.psp">Run</a></p>
+<h3 id="using-multiple-htmx-tags-in-one-psp-file">Using multiple &lt;htmx&gt; tags in one .psp file<a class="headerlink" href="#using-multiple-htmx-tags-in-one-psp-file" title="Permanent link">&para;</a></h3>
+<p>As is mentioned above only one &lt;htmx&gt; fragment can be returned by a
+.psp page at a time - but you can use techniques to select which tag
+should be rendered. The &lt;htmx&gt; tag supports the display attribute. If
+this attribute exists and is a "true" value then the &lt;htmx&gt; fragment
+will be returned. At first this doesn't seem very useful - but when
+combined with dynamic evaluation via either page query parameters or
+<code>!{! .. !}</code> evaluation it becomes more compelling. Take the following
+two button example:</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="p">&lt;</span><span class="nt">start_html</span> <span class="na">script</span><span class="o">=</span><span class="s">&quot;https://unpkg.com/htmx.org@1.9.10&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>HTMX Demo<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>Click the button below to load time data from the server.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="cm">&lt;!-- HTMX Trigger Button for Local Time --&gt;</span>
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="p">&lt;</span><span class="nt">button</span> 
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>  <span class="na">style</span><span class="o">=</span><span class="s">&quot;width:180px&quot;</span>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>  <span class="na">hx-get</span><span class="o">=</span><span class="s">&quot;/htmx_time3.psp&quot;</span>
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>  <span class="na">hx-target</span><span class="o">=</span><span class="s">&quot;#time-container&quot;</span>
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>  <span class="na">hx-swap</span><span class="o">=</span><span class="s">&quot;innerHTML&quot;</span>
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>  <span class="na">hx-vals</span><span class="o">=</span><span class="s">&quot;js:{ time_local: 1 }&quot;</span>
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="p">&gt;</span>
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>Get Local Time
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span><span id="__span-25-16"><a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>
+</span><span id="__span-25-17"><a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-25-18"><a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a>
+</span><span id="__span-25-19"><a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a><span class="cm">&lt;!-- HTMX Trigger Button for UTC Time --&gt;</span>
+</span><span id="__span-25-20"><a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a><span class="p">&lt;</span><span class="nt">button</span> 
+</span><span id="__span-25-21"><a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a>  <span class="na">style</span><span class="o">=</span><span class="s">&quot;width:180px&quot;</span>
+</span><span id="__span-25-22"><a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a>  <span class="na">hx-get</span><span class="o">=</span><span class="s">&quot;/htmx_time3.psp&quot;</span>
+</span><span id="__span-25-23"><a id="__codelineno-25-23" name="__codelineno-25-23" href="#__codelineno-25-23"></a>  <span class="na">hx-target</span><span class="o">=</span><span class="s">&quot;#time-container&quot;</span>
+</span><span id="__span-25-24"><a id="__codelineno-25-24" name="__codelineno-25-24" href="#__codelineno-25-24"></a>  <span class="na">hx-swap</span><span class="o">=</span><span class="s">&quot;innerHTML&quot;</span>
+</span><span id="__span-25-25"><a id="__codelineno-25-25" name="__codelineno-25-25" href="#__codelineno-25-25"></a>  <span class="na">hx-vals</span><span class="o">=</span><span class="s">&quot;js:{ time_utc: 1 }&quot;</span>
+</span><span id="__span-25-26"><a id="__codelineno-25-26" name="__codelineno-25-26" href="#__codelineno-25-26"></a><span class="p">&gt;</span>
+</span><span id="__span-25-27"><a id="__codelineno-25-27" name="__codelineno-25-27" href="#__codelineno-25-27"></a>Get UTC Time
+</span><span id="__span-25-28"><a id="__codelineno-25-28" name="__codelineno-25-28" href="#__codelineno-25-28"></a><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span><span id="__span-25-29"><a id="__codelineno-25-29" name="__codelineno-25-29" href="#__codelineno-25-29"></a>
+</span><span id="__span-25-30"><a id="__codelineno-25-30" name="__codelineno-25-30" href="#__codelineno-25-30"></a><span class="cm">&lt;!-- Where the fetched HTML fragment will go --&gt;</span>
+</span><span id="__span-25-31"><a id="__codelineno-25-31" name="__codelineno-25-31" href="#__codelineno-25-31"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-25-32"><a id="__codelineno-25-32" name="__codelineno-25-32" href="#__codelineno-25-32"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;time-container&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-25-33"><a id="__codelineno-25-33" name="__codelineno-25-33" href="#__codelineno-25-33"></a>  <span class="p">&lt;</span><span class="nt">em</span><span class="p">&gt;</span>Time data not loaded yet.<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;</span>
+</span><span id="__span-25-34"><a id="__codelineno-25-34" name="__codelineno-25-34" href="#__codelineno-25-34"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<p><a href="https://demo.webdyne.org/htmx_demo3.psp">Run</a></p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="p">&lt;</span><span class="nt">htmx</span> <span class="na">display</span><span class="o">=</span><span class="s">&quot;+{time_local}&quot;</span><span class="p">&gt;</span> Time Local: <span class="cp">&lt;? localtime() ?&gt;</span><span class="p">&lt;/</span><span class="nt">htmx</span><span class="p">&gt;</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="p">&lt;</span><span class="nt">htmx</span> <span class="na">display</span><span class="o">=</span><span class="s">&quot;+{time_utc}&quot;</span><span class="p">&gt;</span> Time UTC: <span class="cp">&lt;? gmtime() ?&gt;</span><span class="p">&lt;/</span><span class="nt">htmx</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<p><a href="https://demo.webdyne.org/htmx_time3.psp">Run</a></p>
+<p>Normally you would expect to have the hx-get attribute for each button
+go to a different .psp page. But in this instance they refer to the same
+page. So how do we discriminate ? The key is in the supply of the
+hx-vals attribute, which allows us to send query strings to the htmx
+resource page. We can then use them to select which &lt;htmx&gt; block is
+returned.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note the use of <code>js:{ &lt;json&gt; }</code> notation in the &lt;htmx&gt; <code>hx-vals</code>
+attribute. It allows for easier supply of JSON data without needed to
+manipulate/escape double-quotes in raw JSON data. You'll also note there
+is no &lt;start_html&gt; tag. It's not necessary for &lt;htmx&gt; pages.</p>
+</div>
 <h2 id="dump">Dump<a class="headerlink" href="#dump" title="Permanent link">&para;</a></h2>
 <p>The &lt;dump&gt; tag is a informational element which can be included in a
 page for diagnostic or debugging purposes. It will show various variable
@@ -1588,29 +1777,29 @@ not activated unless debugging enabled.</p>
 <p>Various diagnostic elements can be displayed - see the &lt;dump&gt; tag
 section for information on what they are. In this example all components
 are enabled and display is forced:</p>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">&lt;</span><span class="nt">start_html</span><span class="p">&gt;</span>
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
-</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
-</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>Your Name: <span class="p">&lt;</span><span class="nt">textfield</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
-</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="p">&lt;</span><span class="nt">submit</span><span class="p">&gt;</span>
-</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
-</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="p">&lt;</span><span class="nt">dump</span> <span class="na">all</span> <span class="na">force</span><span class="p">&gt;</span>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="p">&lt;</span><span class="nt">start_html</span><span class="p">&gt;</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>Your Name: <span class="p">&lt;</span><span class="nt">textfield</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="p">&lt;</span><span class="nt">submit</span><span class="p">&gt;</span>
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a><span class="p">&lt;</span><span class="nt">dump</span> <span class="na">all</span> <span class="na">force</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/dump1.psp">Run</a></p>
 <p>Dump display/hide can be controlled by form parameters or run URI query
 strings. In the example below ticking the checkbox or simply appending
 "?dump_enable=1" to the URL will display the dump information:</p>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="p">&lt;</span><span class="nt">start_html</span><span class="p">&gt;</span>
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
-</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
-</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>Your Name: <span class="p">&lt;</span><span class="nt">textfield</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
-</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>Show Dump: <span class="p">&lt;</span><span class="nt">checkbox</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;dump_enable&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
-</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="p">&lt;</span><span class="nt">submit</span><span class="p">&gt;</span>
-</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
-</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="p">&lt;</span><span class="nt">dump</span> <span class="na">all</span> <span class="na">force</span><span class="o">=</span><span class="s">&quot;!{! $_{&#39;dump_enable&#39;} !}&quot;</span><span class="p">&gt;</span>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="p">&lt;</span><span class="nt">start_html</span><span class="p">&gt;</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>Your Name: <span class="p">&lt;</span><span class="nt">textfield</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>Show Dump: <span class="p">&lt;</span><span class="nt">checkbox</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;dump_enable&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a><span class="p">&lt;</span><span class="nt">submit</span><span class="p">&gt;</span>
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a><span class="p">&lt;</span><span class="nt">dump</span> <span class="na">all</span> <span class="na">force</span><span class="o">=</span><span class="s">&quot;!{! $_{&#39;dump_enable&#39;} !}&quot;</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/dump2.psp">Run</a></p>
 
