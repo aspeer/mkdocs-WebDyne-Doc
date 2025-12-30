@@ -1,0 +1,4 @@
+<start_html title="Home">
+My Home Content: <? localtime ?>
+__PERL__
+use WebDyne::Template qw(template1.psp);

@@ -13,6 +13,7 @@ WORKDIR /app
 COPY docker/webdyne.conf.pl /etc
 COPY docker/cpanfile .
 COPY doc/example/*.psp .
+COPY doc/example/*.css .
 
 
 # Expose port 8080

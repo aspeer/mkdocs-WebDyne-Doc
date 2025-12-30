@@ -19,7 +19,7 @@ copyright: Copyright &copy; 2025 Andrew Speer
 # Configuration
 theme:
   name: material
-#  custom_dir: material/overrides
+  custom_dir: overrides
   features:
     - announce.dismiss
     ##- content.action.edit

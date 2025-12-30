@@ -196,13 +196,23 @@
     <section>
       <title>Quickstart</title>
 
-      <para>If using PSGI you can start a quick web server with:<screen language="bash">#  Render a file to STDOUT to see the HTML
+      <para>If using PSGI you can start a quick web server by creating a simple app.psp file:</para>
+
+      <programlisting>#  Save this as app.psp
+#
+&lt;start_html&gt;
+My first WebDyne page. Server time: &lt;? localtime ?&gt;</programlisting>
+
+      <para>Then test install:</para>
+
+      <para><screen language="bash">#  Render the file to STDOUT to see the HTML and check basic installation
 #
 $ <command>wdrender app.psp</command>
 
-#  Install Plack
+#  Install Plack and some Plack Middleware
 #
 $ <command>cpanm Plack</command>
+$ <command>cpanm Plack::Middleware::ForceEnv</command>
 
 #  Check all working
 #
@@ -332,16 +342,21 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
       <para>Ensure that <productname>Plack</productname> is installed on your system via CPAN:</para>
 
       <screen># Via CPAN
+#
 <command>perl -MCPAN -e 'install Plack'</command>
+<command>perl -MCPAN -e 'install Plack::Middleware::ForceEnv'</command>
 
 # Modern systems
 #
 <command>cpan Plack</command>
-
+<command>cpan Plack::Middleware::ForceEnv
+</command>
 # Or better via CPANM
-<command>cpanm Plack</command></screen>
+#
+<command>cpanm Plack
+cpanm Plack::Middleware::ForceEnv</command></screen>
 
-      <para>You can start a basic WebDyne server by running the webdyne.psgi command with the --test parameter</para>
+      <para>You can then start a basic WebDyne server by running the webdyne.psgi command with the --test parameter</para>
 
       <para><screen><command>webdyne.psgi --test</command></screen></para>
 
@@ -363,14 +378,10 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
 <command>$ webdyne.psgi &lt;directory&gt;</command>
 
 #  E.g serve files in /var/www/html. By default WebDyne will serve app.psp if no filename
-#  is specified
+#  is specified. If app.psp does not exist a file index will be displayed.
 #
 <command>$ webdyne.psgi /var/www/html</command>
 
-#  Allow static files such as css, jpg files etc. to be served also
-#
-<command>$ webdyne.psgi --static /var/www/html/app.psp
-</command>
 #  Or just a single app.psp file. Only this file will be served regardless of URL
 #
 <command>$ webdyne.psgi /var/www/html/time.psp</command></screen>
@@ -383,8 +394,9 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
 $ <command>DOCUMENT_ROOT=/var/www/html starman --port 5001 /usr/local/bin/webdyne.psgi</command></screen>
 
       <note>
-        <para>Starman does not support options such as --test and --static. If you want to server static files from starman you should do so using best practice via a traditional web server
-        front end.</para>
+        <para>Plack (via webdyne.psgi) and Starman versions of WebDyne serve basic static files such as css, js, jpg etc. If you want more control over non .psp file you should us best
+        practices for service such files via a traditional web server front end. Also note the Starman instance of WebDyne does not support the --test option or indexing - it assumes you are
+        running in a production environment and have checked everything with the Plack implementation of webdyne.psgi first.</para>
       </note>
 
       <para>Numerous options can be set from the command line via environment variables, including Webdyne configuration. See relevant section for all WebDyne configuration options but
@@ -567,30 +579,11 @@ sub greeting { my $var="Hello World"; return $var }
 sub greeting { my $var="Hello World"; return \$var }
 
 
-# This will cause an error
-#
-sub greeting { return undef }
-
-
 # If you don't want to display anything return \undef,
 #
 sub greeting { return \undef }
 
-
-# This will fail also
-#
-sub greeting { return 0 }
-
-
-#  If you want "0" to be displayed ..
-#
-sub greeting { return \0 }</programlisting></para>
-
-      <para>Perl code in WebDyne pages must always return a non-undef/non-0/non-empty string value (i.e. it must return something that evals as "true"). If the code returns a non-true value
-      (e.g. 0, undef, '') then WebDyne assumes an error has occurred in the routine. If you actually want to run some Perl code, but not display anything, you should return a reference to
-      undef, (<command>\undef)</command>, e.g.:</para>
-
-      <para><programlisting>sub log { &amp;dosomething; return \undef }</programlisting></para>
+</programlisting></para>
 
       <para>Up until now all the Perl code has been contained within the WebDyne file. The following example shows an instance where the code is contained in a separate Perl module, which
       should be available somewhere in the <filename>@INC</filename> path.</para>
@@ -771,7 +764,7 @@ sub greeting { return \0 }</programlisting></para>
 
         <para><example>
             <info>
-              <title>Perl code example with parameter inheritance </title>
+              <title>Perl code example with parameter inheritance</title>
             </info>
 
             <para><programlisting language="html"><xi:include href="example/inherit1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
@@ -1446,7 +1439,7 @@ END
       </info>
 
       <para>WebDyne has the ability to make available a basic REST API facility using the <tag>&lt;api&gt;</tag> tag in conjunction with the Router::Simple CPAN module. Documents that utilise
-      the <tag>&lt;api&gt;</tag> tag are somewhat unique in that: </para>
+      the <tag>&lt;api&gt;</tag> tag are somewhat unique in that:</para>
 
       <itemizedlist>
         <listitem>
@@ -2134,7 +2127,7 @@ sub hello {
         </varlistentry>
 
         <varlistentry>
-          <term><methodname>cache_inode( <replaceable>seed</replaceable> )</methodname></term>
+          <term><methodname>inode( <replaceable>seed</replaceable> )</methodname></term>
 
           <listitem>
             <para>Returns the page unique ID (UID). Called inode for legacy reasons, as that is what the UID used to be based on. If a seed value is supplied a new UID will be generated based
@@ -2956,7 +2949,7 @@ PerlSetVar      WEBDYNE_SESSION_ID_COOKIE_NAME    'gingernut'
           <term>WebDyneTemplate</term>
 
           <listitem>
-            <para>Directive. Can be used to supply the template file name in a Apache or lighttpd/FastCGI configuration file.</para>
+            <para>Directive. Can be used to supply the template file name in a Apache Dir_Config section, or a the WEBDYNE_DIR_CONFIG section of a webdyne.conf.pl file for PSGI</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -2982,9 +2975,9 @@ PerlSetVar      WEBDYNE_SESSION_ID_COOKIE_NAME    'gingernut'
           <title>Template content</title>
         </info>
 
-        <para><programlisting><xi:include href="example/content1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting></para>
+        <para><programlisting><xi:include href="example/template_content1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting></para>
 
-        <para><link xlink:href="https://demo.webdyne.org/example/content1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        <para><link xlink:href="https://demo.webdyne.org/example/template_content1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example>
 
       <para>In real life it is not desirable to put the template name into every content file (as was done in the above example), nor would we want to have to "use WebDyne::Template" in every
@@ -3002,6 +2995,20 @@ PerlSetVar      WebDyneTemplate '/path/to/template.psp'
 &lt;/Location&gt;
 
 </programlisting></para>
+
+      <para>Alternatively in a PSGI environment you can create a .webdyne.conf.pl file in the directory with the template directives as follows:</para>
+
+      <programlisting>$_={
+    'WebDyne::Constant' =&gt; {
+        WEBDYNE_DIR_CONFIG =&gt; {
+            '' =&gt; {
+                'WebDyneHandler'    =&gt; 'WebDyne::Chain',
+                'WebDyneChain'      =&gt; 'WebDyne::Template',
+                'WebDyneTemplate'   =&gt; 'template.psp'
+            },
+        },
+    }
+}</programlisting>
     </section>
   </section>
 

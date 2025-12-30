@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article version="5.2" xmlns="http://docbook.org/ns/docbook">
+  <info>
+    <title/>
+
+    <author>
+      <personname><firstname/><surname/></personname>
+
+      <affiliation>
+        <orgname/>
+      </affiliation>
+    </author>
+
+    <pubdate/>
+  </info>
+
+  <section>
+    <info>
+      <title>Installation</title>
+    </info>
+
+    <section>
+      <title>Prerequisites</title>
+
+      <para>WebDyne will install and run on any modern Linux system that has a recent version of Perl installed and is capable of installing Perl module via CPAN. Installation via Docker is
+      also supported.</para>
+
+      <para>When installing WebDyne there are two components which are required before you can begin serving .psp files:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>The core WebDyne Perl modules</para>
+        </listitem>
+
+        <listitem>
+          <para>A web server configured to use WebDyne</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>WebDyne will work with Apache mod_perl or PSGI compatible web servers (such as Plack, Starman etc.).</para>
+
+      <para>Docker containers with pre-built versions of WebDyne are also available.</para>
+    </section>
+
+    <section>
+      <title>Installing via CPAN or CPANMinus</title>
+
+      <para>Install from the Perl CPAN library using <command>cpan</command> or <command>cpanm</command> utilities. Installs dependencies if required (also from CPAN).</para>
+
+      <para>Destination of the installed files is dependent on the local CPAN configuration, however in most cases it will be to the Perl site library location. WebDyne supports installation
+      to an alternate location using the PREFIX option in CPAN. Binaries are usually installed to <filename>/usr/bin</filename> or <filename>/usr/local/bin</filename> by CPAN, but may vary by
+      distribution/local configuration.</para>
+
+      <para>Assuming your CPAN environment is setup correctly you can run the command:</para>
+
+      <para><command>perl -MCPAN -e "install WebDyne"</command></para>
+
+      <para>Or (with <command>cpanminus</command> if installed)</para>
+
+      <para><command>cpanm WebDyne</command></para>
+
+      <para>This will install the base WebDyne modules, which includes the Apache config utility and PSGI version. Note that Apache or PSGI servers and dependencies such as Plack or Starman
+      are <emphasis role="bold">not</emphasis> installed by default and need to be installed separately - see the relevant section.</para>
+
+      <para>Once installed you will need to configure your web server to use WebDyne to serve files with the <filename>.psp</filename> extension if using Apache - see section below.</para>
+    </section>
+
+    <section>
+      <title>Quickstart</title>
+
+      <para>If using PSGI you can start a quick web server with:<screen>#  Render a file to STDOUT to see the HTML
+#
+$ <command>wdrender app.psp</command>
+
+#  Install Plack
+#
+cpanm Plack
+
+#  Check all working
+#
+$ <command>webdyne.psgi --test</command>
+
+#  Start serving only a single PSP file
+#
+$ <command>webdyne.psgi app.psp</command>
+
+# Start serving any file in the current directory, using app.psp as the default
+#
+$ <command>webdyne.psgi .</command>
+
+# Start but listen on non-default port, only on localhost
+#
+$ <command>webdyne.psgi --port=5001 --host=127.0.0.1</command></screen>Connect your browser to the host and you should see the WebDyne output</para>
+    </section>
+
+    <section>
+      <title>Apache mod_perl</title>
+
+      <para>If using Apache with mod_perl you can initialise WebDyne using the <command>wdapacheinit</command> command. This will attempt to auto-discover where the Apache binary and
+      configuration files are, then add a suitable <filename>webdyne.conf</filename> file to the apache configuration. Apache will need to be restarted for the new configuration file to take
+      effect. This will need to be done as a the root user.</para>
+
+      <para><screen>[root@localhost ~]# <command>wdapacheinit</command> 
+
+[install] - Installation source directory '/usr'.
+[install] - Creating cache directory '/var/cache/webdyne'.
+
+[install] - Writing Apache config file '/etc/httpd/conf.d/webdyne.conf'.
+[install] - Writing Webdyne config file '/etc/httpd/conf.d/webdyne_conf.pl'.
+[install] - Apache uses conf.d directory - not changing httpd.conf file.
+[install] - Granting Apache (apache.apache) ownership of cache directory '/var/cache/webdyne'.
+[install] - Install completed.
+
+[root@localhost ~]# s<command>ystemctl restart httpd</command></screen></para>
+
+      <para>By default WebDyne will create a cache directory in <filename>/var/cache/webdyne</filename> on Linux systems when a default CPAN install is done (no PREFIX specified). If a PREFIX
+      is specified the cache directory will be created as <filename>$PREFIX/cache</filename>. Use the <command>wdapacheinit</command> <option>--cache</option> command-line option to specify an
+      alternate location.</para>
+
+      <para>Once <command>wdapacheinit</command> has been run the Apache server should be reloaded or restarted. Use a method appropriate for your Linux distribution.</para>
+
+      <screen>
+[root@localhost ~]# <command>systemctl httpd restart</command>
+Stopping httpd:                                            [  OK  ]
+Starting httpd:                                            [  OK  ]
+</screen>
+
+      <section>
+        <info>
+          <title>Manual configuration of Apache</title>
+        </info>
+
+        <para>If the <command>wdapacheinit</command> command does not work as expected on your system then the Apache config files can be modified manually.</para>
+
+        <para>Include the following section in the Apache httpd.conf file (or create a webdyne.conf file if you distribution supports conf.d style configuration files). These following config
+        files are written with Apache 2.4 syntax - adjust path and syntax as required:</para>
+
+        <para><screen>#  Need mod_perl, load up if not already done
+#
+&lt;IfModule !mod_perl.c&gt;
+LoadModule perl_module "/etc/httpd/modules/mod_perl.so"
+&lt;/IfModule&gt;
+
+#  Uncomment and update if using a local::lib location for Perl modules
+#
+#PerlSwitches -I/opt/perl -I/opt/otherperl
+
+#  Preload the WebDyne and WebDyne::Compile module
+#
+PerlModule    WebDyne WebDyne::Compile
+
+#  Associate psp files with WebDyne
+#
+AddHandler    modperl    .psp
+PerlHandler   WebDyne
+
+#  Set a directory for storage of cache files. Make sure this exists already is writable by the 
+#  Apache daemon process.
+#
+PerlSetVar    WEBDYNE_CACHE_DN    '/opt/webdyne/cache'
+
+#  Allow Apache to access the cache directory if it needs to serve pre-compiled pages from there.
+#
+&lt;Directory "/opt/webdyne/cache"&gt;
+Require all granted
+&lt;/Directory&gt;
+
+# Put variables in a separate file - best
+#
+PerlRequire conf.d/webdyne_constant.pl
+
+#  Or use &lt;Perl&gt; sections - but warning, certbot doesn't like this syntax in http conf files
+#
+&lt;Perl&gt;
+
+#  Error display/extended display on/off. Set to 1 to enable, 0 to disable
+#
+$WebDyne::WEBDYNE_ERROR_SHOW=1;
+$WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
+&lt;/Perl&gt;
+
+</screen></para>
+
+        <important>
+          <para>Substitute directory paths in the above example for the relevant/correct/appropriate ones on your system.</para>
+        </important>
+
+        <para>Create the cache directory and assign ownership and permission appropriate for your distribution (group name will vary by distribution - locate the correct one for your
+        distribution)</para>
+
+        <screen>
+[root@localhost ~]# <command>mkdir /opt/webdyne/cache
+</command>[root@localhost ~]# <command>chgrp apache /opt/webdyne/cache
+</command>[root@localhost ~]# <command>chmod 770 /opt/webdyne/cache
+</command></screen>
+
+        <para>Restart Apache and check for any errors.</para>
+      </section>
+    </section>
+
+    <section>
+      <title>PSGI</title>
+
+      <para>Ensure that <productname>Plack</productname> is installed on your system via CPAN:</para>
+
+      <screen># Via CPAN
+<command>perl -MCPAN -e 'install Plack'</command>
+<command>perl -MCPAN -e 'install Plack::Middleware::ForceEnv'</command>
+
+
+# Modern systems
+#
+<command>cpan Plack</command>
+<command>cpan Plack::Middleware::ForceEnv
+</command>
+# Or better via CPANM
+<command>cpanm Plack
+cpanm Plack::Middleware::ForceEnv</command></screen>
+
+      <para>You can start a basic WebDyne server by running the webdyne.psgi command with the --test parameter</para>
+
+      <para><screen><command>webdyne.psgi --test</command></screen></para>
+
+      <para>This will start a PSGI web server on your machine listening to port 5000 (or port 5001 on a Mac). Open a connection to http://127.0.0.1:5000/ or the IP address of your server in
+      your web browser to view the test page and validate the WebDyne is working correctly:</para>
+
+      <para><screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/webdyne_psgi1.png" scale="30"/>
+            </imageobject>
+          </mediaobject>
+        </screenshot></para>
+
+      <para>Once verified as working correctly you can serve WebDyne content from a particular directory - or from a single file - using the syntax:</para>
+
+      <screen>#  To serve up all files in a directory:
+#
+<command>$ webdyne.psgi &lt;directory&gt;</command>
+
+#  E.g serve files in /var/www/html. By default WebDyne will serve app.psp if no filename
+#  is specified
+#
+<command>$ webdyne.psgi /var/www/html</command>
+
+#  Or just a single app.psp file. Only this file will be served regardless of URL
+#
+<command>$ webdyne.psgi /var/www/html/time.psp</command></screen>
+
+      <para>The above starts a single-threaded web server using Plack. To start the more performant Starman server (assuming installed):</para>
+
+      <screen>#  Start Starman instance. Substitute port + document root and location of webdyne.psgi
+#  as appropriate for your system.
+#
+$ <command>DOCUMENT_ROOT=/var/www/html starman --port 5001 /usr/local/bin/webdyne.psgi</command></screen>
+
+      <para>Numerous options can be set from the command line via environment variables, including Webdyne configuration. See relevant section for all WebDyne configuration options but
+      assuming in a local file webdyne.conf.pl:</para>
+
+      <screen>#  Start instance webdyne.psgi using local config file
+#
+$ <command>WEBDYNE_CONF=./webdyne.conf.pl webdyne.psgi --port=5012 .</command></screen>
+    </section>
+
+    <section>
+      <title>Docker</title>
+
+      <para>Docker containers are available from the Github Container Registry. Install the default Docker container (based on Debian) via:</para>
+
+      <screen>#  Default debian version
+#
+$ <command>docker pull ghcr.io/aspeer/webdyne:latest</command>
+
+#  Or Alpine/Fedora/Perl versions
+#
+# docker pull ghcr.io/aspeer/webdyne-alpine:latest
+# docker pull ghcr.io/aspeer/webdyne-fedora:latest
+# docker pull ghcr.io/aspeer/webdyne-perl:latest
+</screen>
+
+      <para>Start the docker container with the command:</para>
+
+      <screen>$ docker run -e PORT=5002 -p 5002:5002 --name=webdyne webdyne</screen>
+
+      <para>This will start WebDyne running on port 5002 on the host. Connecting to that location should show the server <emphasis>localtime</emphasis> test page</para>
+
+      <para>To mount a local page and serve it through the docker container use the command:</para>
+
+      <screen>docker run --mount &lt;local_dir&gt;:/app:ro -e PORT=5011 -e DOCUMENT_ROOT=/app -p 5011:5011 --name=webdyne webdyne</screen>
+
+      <para>This will tell docker to mount the local directory into the docker container. If there is a default file named app.psp in the location it will be displayed. if there is a
+      <filename>cpanfile</filename> in the mount directory any modules will be installed into the docker container automatically.</para>
+
+      <section>
+        <title>Deploying WebDyne apps with Docker</title>
+
+        <para>The WebDyne container can be used as the basis for new docker images containing your application files. Consider the following directory structure (available from Github as <link
+        xlink:href="https://github.com/aspeer/psp-WebDyne-Fortune" xmlns:xlink="http://www.w3.org/1999/xlink">aspeer/psp-WebDyne-Fortune</link>:</para>
+
+        <screen>psp-WebDyne-Fortune/
+├── app.pm
+├── app.psp
+├── cpanfile
+├── Dockerfile
+└── webdyne.conf.pl
+
+</screen>
+
+        <para>Where:</para>
+
+        <variablelist>
+          <varlistentry>
+            <term>app.psp</term>
+
+            <listitem>
+              <para>The main and default psp file</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>app.pm</term>
+
+            <listitem>
+              <para>Perl code used in the psp file</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>cpanfile</term>
+
+            <listitem>
+              <para>A list of Perl modules to be installed in the docker container by cpanm</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>Dockerfile</term>
+
+            <listitem>
+              <para>The docker build file</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>webdyne.conf.pl</term>
+
+            <listitem>
+              <para>Any variables to be set for the WebDyne environment</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+
+        <para>Constitute all the files needed to stand up a WebDyne based application in a Docker container. The contents of the Dockerfile are minimal:</para>
+
+        <screen>FROM webdyne:latest
+WORKDIR /app
+# Debian packages needed for this app
+RUN apt-get update &amp;&amp; apt-get -y install fortunes
+COPY app.* .
+COPY cpanfile .
+COPY webdyne.conf.pl /etc</screen>
+
+        <para>Build the Docker container:</para>
+
+        <screen>docker build  -t webdyne-app-fortune -f ./Dockerfile .</screen>
+
+        <para>And run it:</para>
+
+        <screen>docker run -e PORT=5010 -p 5010:5010 --name=webdyne-app-fortune webdyne-app-fortune</screen>
+
+        <para>Your application should now be available:</para>
+
+        <screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/webdyne-app-fortune1.png" scale="30"/>
+            </imageobject>
+          </mediaobject>
+        </screenshot>
+      </section>
+    </section>
+  </section>
+</article>
