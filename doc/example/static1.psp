@@ -8,7 +8,7 @@ Hello World
 
 <!-- Note the static attribute -->
 
-<perl method="mtime" static="1">
+<perl handler="mtime" static="1">
 <em>Last Modified: </em>${mtime}
 </perl>
 

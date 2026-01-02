@@ -20,7 +20,7 @@ What's your favourite color ?
 
 <!-- This section only rendered when form submitted -->
 
-<perl method="answers">
+<perl handler="answers">
 <p>
 Your name is: <em>+{name}</em>
 <p>

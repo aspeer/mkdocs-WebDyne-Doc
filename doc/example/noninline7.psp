@@ -4,14 +4,14 @@
 
 <!-- The "Hello World" text will be rendered with the param name -->
 
-<perl method="hello" param="Alice"/>
+<perl handler="hello" param="Alice"/>
 <p>
-<perl method="hello" param="Bob"/>
+<perl handler="hello" param="Bob"/>
 <p>
 
 <!-- We can pass an array or hashref also - see variables section for more info on this syntax -->
 
-<perl method="hello_again" param="%{ firstname=>'Alice', lastname=>'Smith' }"/>
+<perl handler="hello_again" param="%{ firstname=>'Alice', lastname=>'Smith' }"/>
 
 </body>
 </html>

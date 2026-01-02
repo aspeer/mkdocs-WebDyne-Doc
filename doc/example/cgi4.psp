@@ -22,7 +22,7 @@ Hello +{name}, pleased to meet you.
 <!-- Traditional, using the CGI::Simple param() call in the hello1 sub -->
 
 <p>
-<perl method="hello1">
+<perl handler="hello1">
 Hello ${name}, pleased to meet you.
 </perl>
 
@@ -30,7 +30,7 @@ Hello ${name}, pleased to meet you.
 <!-- Quicker method using %_ global var in the hello2 sub -->
 
 <p>
-<perl method="hello2">
+<perl handler="hello2">
 Hello ${name}, pleased to meet you.
 </perl>
 

@@ -4,7 +4,7 @@
 
 <!-- Multiple variables can be supplied at once as render parameters -->
 
-<perl method="hello0">
+<perl handler="hello0">
 <p>
 Hello World ${time}, loop iteration ${i}.
 </perl>
@@ -12,7 +12,7 @@ Hello World ${time}, loop iteration ${i}.
 <br>
 <br>
 
-<perl method="hello1">
+<perl handler="hello1">
 <p>
 Hello World ${time}, loop iteration ${i}.
 </perl>

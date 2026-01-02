@@ -1,5 +1,5 @@
 <start_html>
-<perl method="inherit">
+<perl handler="inherit">
 <pre>
 Time - Unix epoch format: ${time}
 Time - local time format: <? strftime('%X', localtime($_[1]->{'time'})) ?>

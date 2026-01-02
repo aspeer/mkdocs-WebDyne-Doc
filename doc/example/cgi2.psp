@@ -3,7 +3,7 @@
 <body>
 <p>
 
-Hello World <perl method="hello"/>
+Hello World <perl handler="hello"/>
 
 __PERL__
 

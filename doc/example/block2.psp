@@ -8,7 +8,7 @@ Enter your name:
 <p><submit>
 </form>
 
-<perl method="hello">
+<perl handler="hello">
 
 
 <!-- The following block is only rendered if we get a name - see the perl 

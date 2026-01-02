@@ -2,7 +2,7 @@
 <head><title>Hello World</title></head>
 
 <body>
-<perl method="hello">
+<perl handler="hello">
 
 <!-- This block is rendered -->
 <block name="hello">

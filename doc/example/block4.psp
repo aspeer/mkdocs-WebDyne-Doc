@@ -4,7 +4,7 @@
 <body>
 
 <!-- Perl block with no content -->
-<perl method="hello">
+<perl handler="hello">
 </perl>
 
 <p>

@@ -5,7 +5,7 @@
 
 <!-- The perl method will be called, and this time the "Hello World" will be displayed-->
 
-<perl method="hello">
+<perl handler="hello">
 Hello World 
 </perl>
 

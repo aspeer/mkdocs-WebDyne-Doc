@@ -13,7 +13,7 @@
     </author>
 
     <copyright>
-      <year>2006-2025</year>
+      <year>2026</year>
 
       <holder role="mailto:andrew.speer@isolutions.com.au">Andrew Speer</holder>
     </copyright>
@@ -222,7 +222,8 @@ $ <command>webdyne.psgi --test</command>
 #
 $ <command>webdyne.psgi app.psp</command>
 
-# Start serving any file in the current directory, using app.psp as the default
+# Start serving any file in the current directory. If app.psp exists it will be served by
+# default, otherwise an index page will be presented
 #
 $ <command>webdyne.psgi .</command>
 
@@ -433,7 +434,7 @@ $ <command>docker pull ghcr.io/aspeer/webdyne:latest</command>
 
       <screen>docker run --mount &lt;local_dir&gt;:/app:ro -e PORT=5011 -e DOCUMENT_ROOT=/app -p 5011:5011 --name=webdyne webdyne</screen>
 
-      <para>This will tell docker to mount the local directory into the docker container. If there is a default file named app.psp in the location it will be displayed. if there is a
+      <para>This will tell docker to mount the local directory into the docker container. If there is a default file named app.psp in the location it will be displayed. If there is a
       <filename>cpanfile</filename> in the mount directory any modules will be installed into the docker container automatically.</para>
 
       <section>
@@ -540,25 +541,28 @@ COPY webdyne.conf.pl /etc</screen>
 
       <para>Some code fragments to give a very high-level overview of how WebDyne can be implemented. First the most basic usage example:</para>
 
-      <example>
-        <info>
-          <title>Basic Example</title>
-        </info>
+      <para><example>
+          <info>
+            <title>Basic Example</title>
+          </info>
 
-        <para><programlisting language="html"><xi:include href="example/hello1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+          <para><programlisting language="html"><xi:include href="example/hello1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 </programlisting><link xlink:href="https://demo.webdyne.org/example/hello1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-      </example>
+        </example></para>
 
-      <para>So far not too exciting - after all we are mixing code and content. Lets try again:</para>
+      <para>So far not too exciting - after all we are mixing code and content. Lets try again - the &lt;perl&gt; tag can tag a "handler" attribute which references (calls) a perl subroutine -
+      in this case embedded in the .psp file under the __PERL__ token.</para>
 
-      <example>
-        <info>
-          <title>Basic Example</title>
-        </info>
+      <para><example>
+          <info>
+            <title>Basic Example</title>
+          </info>
 
-        <para><programlisting language="html"><xi:include href="example/hello2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
-        xlink:href="https://demo.webdyne.org/example/hello2.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-      </example>
+          <para><programlisting language="html"><xi:include href="example/hello2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+          xlink:href="https://demo.webdyne.org/example/hello2.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        </example><note>
+          <para>In this case the &lt;perl&gt; tag is implicitly closed (contains no content) as it is assumed all content will be returned by the handler (i.e. the "hello" routine).</para>
+        </note></para>
 
       <para>Better - at least code and content are distinctly separated. Note that whatever the Perl code returns at the end of the routine is what is displayed. Although WebDyne will happily
       display returned strings or scalars, it is more efficient to return a scalar reference, e.g.:</para>
@@ -597,7 +601,17 @@ sub greeting { return \undef }
           xlink:href="https://demo.webdyne.org/example/hello3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
         </example></para>
 
-      <para>If not already resident the module (in this case "Digest::MD5") will be loaded by WebDyne, so it must be available somewhere in the <filename>@INC</filename> path.</para>
+      <para>If not already resident the module (in this case "Digest::MD5") will be loaded by WebDyne, so it must be available somewhere in the <filename>@INC</filename> path. Alternate
+      syntaxes are supported - these work in the same way:</para>
+
+      <para><example>
+          <info>
+            <title>Basic Example</title>
+          </info>
+
+          <para><programlisting language="html"><xi:include href="example/hello3a.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+          xlink:href="https://demo.webdyne.org/example/hello3a.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        </example></para>
 
       <section>
         <info>
@@ -619,7 +633,8 @@ sub greeting { return \undef }
         <para>This is the most straight-forward use of Perl within a HTML document, but does not really make for easy reading - the Perl code and HTML are intermingled. It may be OK for quick
         scripts etc, but a page will quickly become hard to read if there is a lot of in-line Perl code interspersed between the HTML.</para>
 
-        <para>in-line Perl can be useful if you want a "quick" computation, e.g. insertion of the current year:</para>
+        <para>in-line Perl can be useful if you want a "quick" computation, e.g. insertion of the current year. Note the ability to require external modules via the require attribute, and
+        import functions via the import attribute</para>
 
         <para><example>
             <info>
@@ -719,6 +734,75 @@ sub greeting { return \undef }
           <para><programlisting language="html"><xi:include href="example/noninline3a.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
           xlink:href="https://demo.webdyne.org/example/noninline3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
         </example>
+
+        <para>Note that there is a syntactic shortcut available if you have a single handler - just call the subroutine "handler" and it will be invoked by default:</para>
+
+        <example>
+          <info>
+            <title>Perl code example</title>
+          </info>
+
+          <para><programlisting language="html"><xi:include href="example/noninline_handler1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+          xlink:href="https://demo.webdyne.org/example/noninline_handler1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        </example>
+      </section>
+
+      <section>
+        <info>
+          <title>Requiring external modules and importing methods</title>
+        </info>
+
+        <para>As noted above inline perl code can import external modules (including any Perl core modules, any module installed via CPAN and/or any module in the normal Perl @INC path or any
+        filesystem file). Syntax is as follows:</para>
+
+        <programlisting language="perl">#  Require single module and import single method
+#
+&lt;perl require="Digest::MD5" import="md5_hex"/&gt;
+
+#  Require single module and import multiple methods
+#
+&lt;perl require="Digest::MD5" import="md5_hex md5_base64"/&gt;
+
+#  Alternate syntax using array attribute - see later section
+#
+&lt;perl require="Digest::MD5" import="@{qw(md5_hex md5_base64)}"/&gt;
+
+#  You can also require a file. No import is availanle
+#
+&lt;perl require="mymodule.pm"&gt;
+
+</programlisting>
+
+        <warning>
+          <para>The import functionality is very basic - it only maps to the function in the module, it does not call the actual module import() facility. If the module you are importing does
+          something sophisticated in its import() function (such as auto-creating methods) this will not work. Note also nothing is imported by default, even if automatically exported by a
+          module.</para>
+        </warning>
+
+        <para>So a very basic demo of the above would look as follows:</para>
+
+        <example>
+          <info>
+            <title>Perl code example</title>
+          </info>
+
+          <para><programlisting language="html"><xi:include href="example/require1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+          xlink:href="https://demo.webdyne.org/example/require1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        </example>
+
+        <para>If your module usage and import requirements are more sophisticated they should be put in a __PERL__ section as "normal" code. Anything used or imported will be available to any
+        code within the page:</para>
+
+        <example>
+          <info>
+            <title>Perl code example</title>
+          </info>
+
+          <para><programlisting language="html"><xi:include href="example/require2.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
+          xlink:href="https://demo.webdyne.org/example/require2.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        </example>
+
+        <para> </para>
       </section>
 
       <section>

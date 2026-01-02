@@ -8,7 +8,7 @@ Enter your name: <textfield name="name">
 <submit>
 </form>
 
-<perl method="hello">
+<perl handler="hello">
 
 
 <!-- This block will be rendered multiple times, the output changing depending

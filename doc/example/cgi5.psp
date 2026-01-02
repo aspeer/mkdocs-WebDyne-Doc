@@ -8,7 +8,7 @@
 <form>
 
 Your Country ?
-<perl method="countries">
+<perl handler="countries">
 <popup_menu values="${countries_ar}" default="Australia">
 </perl>
 

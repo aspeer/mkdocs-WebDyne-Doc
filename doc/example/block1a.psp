@@ -11,7 +11,7 @@
 </form>
 
 <p>
-<perl method="check">
+<perl handler="check">
 
 
 <!-- Each block below is only rendered if specifically requested by the Perl code -->

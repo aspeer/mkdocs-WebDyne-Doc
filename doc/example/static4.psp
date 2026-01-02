@@ -8,7 +8,7 @@
 <form>
 
 Your Country ?
-<perl method="countries" static="1">
+<perl handler="countries" static="1">
 
 <!-- Note the addition of the static attribute -->
 

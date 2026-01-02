@@ -1,5 +1,5 @@
 <start_html title="Error">
-<perl method="hello">
+<perl handler="hello">
 
 Hello World ${foo}
 

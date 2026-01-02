@@ -1,6 +1,6 @@
 <start_html title="State">
 
-<perl method="state">
+<perl handler="state">
 
 <block name="login">
 You are logged in as user "${user}"

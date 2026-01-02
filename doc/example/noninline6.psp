@@ -15,7 +15,7 @@ The value of $i is !{! &get_i() !}
 <p>
 
 <!-- Or this - see variable substitution section  -->
-<perl method="render_i">
+<perl handler="render_i">
 The value of $i is ${i}
 </perl>
 

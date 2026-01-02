@@ -5,7 +5,7 @@
 
 <!-- The var ${time} will be substituted for the correspondingly named render parameter -->
 
-<perl method="hello">
+<perl handler="hello">
 Hello World ${time}
 </perl>
 

@@ -7,14 +7,14 @@ Hello World
 
 <!-- A normal dynamic section - code is run each time page is loaded -->
 
-<perl method="localtime">
+<perl handler="localtime">
 Current time: ${time} 
 </perl>
 <hr>
 
 <!-- Note the static attribute - code is run only once at compile time -->
 
-<perl method="mtime" static="1">
+<perl handler="mtime" static="1">
 <em>Last Modified: </em>${mtime}
 </perl>
 

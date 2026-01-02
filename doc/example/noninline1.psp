@@ -5,7 +5,7 @@
 
 <!-- The perl method will be called, but "Hello World" will not be displayed ! -->
 
-<perl method="hello">
+<perl handler="hello">
 Hello World 
 </perl>
 

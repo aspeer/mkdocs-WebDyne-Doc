@@ -15,7 +15,7 @@ Hello World
 <!-- A normal dynamic section, but because of the meta tag it will be frozen 
 	at compile time -->
 
-<perl method="localtime">
+<perl handler="localtime">
 Current time: ${time} 
 </perl>
 
@@ -23,7 +23,7 @@ Current time: ${time}
 	as static - it could be removed safely. -->
 
 <p>
-<perl method="mtime" static="1">
+<perl handler="mtime" static="1">
 <em>Last Modified: </em>${mtime}
 </perl>
 

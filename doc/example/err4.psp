@@ -2,7 +2,7 @@
 <form>
 <submit name="Error" value="Click here for error !">
 </form>
-<perl method="foo"/><end_html>
+<perl handler="foo"/><end_html>
 
 __PERL__
 
