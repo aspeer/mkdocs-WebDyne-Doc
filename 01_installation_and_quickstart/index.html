@@ -737,13 +737,14 @@ My first WebDyne page. Server time: &lt;? localtime ?&gt;
 </span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="c1">#</span>
 </span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>app.psp
 </span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1"># Start serving any file in the current directory, using app.psp as the default</span>
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1">#</span>
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>.
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="c1"># Start but listen on non-default port, only on localhost</span>
-</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="c1">#</span>
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>--port<span class="o">=</span><span class="m">5001</span><span class="w"> </span>--host<span class="o">=</span><span class="m">127</span>.0.0.1
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1"># Start serving any file in the current directory. If app.psp exists it will be served by</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1"># default, otherwise an index page will be presented</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="c1">#</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>.
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="c1"># Start but listen on non-default port, only on localhost</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="c1">#</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>--port<span class="o">=</span><span class="m">5001</span><span class="w"> </span>--host<span class="o">=</span><span class="m">127</span>.0.0.1
 </span></code></pre></div>
 <p>Connect your browser to the host and you should see the WebDyne output</p>
 <h2 id="apache-mod_perl">Apache mod_perl<a class="headerlink" href="#apache-mod_perl" title="Permanent link">&para;</a></h2>
@@ -930,7 +931,7 @@ command:</p>
 </code></pre></div>
 <p>This will tell docker to mount the local directory into the docker
 container. If there is a default file named app.psp in the location it
-will be displayed. if there is a <code>cpanfile</code> in the mount directory any
+will be displayed. If there is a <code>cpanfile</code> in the mount directory any
 modules will be installed into the docker container automatically.</p>
 <h3 id="deploying-webdyne-apps-with-docker">Deploying WebDyne apps with Docker<a class="headerlink" href="#deploying-webdyne-apps-with-docker" title="Permanent link">&para;</a></h3>
 <p>The WebDyne container can be used as the basis for new docker images
