@@ -824,11 +824,11 @@ Alternate syntaxes are supported - these work in the same way:</p>
 </span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
 </span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="cm">&lt;!-- Perl tag with call to external module method --&gt;</span>
 </span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>Hello World <span class="p">&lt;</span><span class="nt">perl</span> <span class="na">require</span><span class="o">=</span><span class="s">&quot;Digest::MD5&quot;</span> <span class="na">handler</span><span class="o">=</span><span class="s">&quot;md5_hex&quot;</span><span class="p">/&gt;</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="p">&lt;</span><span class="nt">perl</span> <span class="na">require</span><span class="o">=</span><span class="s">&quot;Digest::MD5&quot;</span> <span class="na">import</span><span class="o">=</span><span class="s">&quot;md5_hex&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="cm">&lt;!-- Alternate syntax --&gt;</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>printf (&quot;MD5_HEX: %s&quot;, md5_hex());
 </span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>Hello World <span class="p">&lt;</span><span class="nt">perl</span> <span class="na">require</span><span class="o">=</span><span class="s">&quot;Digest::MD5&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;md5_hex&quot;</span><span class="p">/&gt;</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="p">&lt;/</span><span class="nt">perl</span><span class="p">&gt;</span>
 </span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
 </span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="p">&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span>
 </span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
