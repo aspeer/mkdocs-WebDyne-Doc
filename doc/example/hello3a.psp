@@ -6,11 +6,11 @@
 
 <!-- Perl tag with call to external module method -->
 
-Hello World <perl require="Digest::MD5" handler="md5_hex"/>
+<perl require="Digest::MD5" import="md5_hex">
 
-<!-- Alternate syntax -->
+printf ("MD5_HEX: %s", md5_hex());
 
-Hello World <perl require="Digest::MD5" method="md5_hex"/>
+</perl>
 
 </pre>
 </body>
