@@ -664,20 +664,21 @@
 <dt>&lt;perl&gt;</dt>
 <dd>
 <p>Run Perl code either in-line (between the &lt;perl&gt;..&lt;/perl&gt;) tags,
-or non-inline via the method attribute</p>
+or non-inline via the method attribute. Tags are shown with primary
+name first, then any supported aliases.</p>
 <dl>
-<dt>method|handler=method</dt>
+<dt>handler|method=subroutine</dt>
 <dd>
 <p>Call an external Perl subroutine in from a module, or a
-subroutine in a __PERL__ block at the of the .psp file. If
-the handler is specified a module call (e.g.
+subroutine in the __PERL__ block at the end of the .psp
+file. If the handler is specified a module call (e.g.
 Digest::MD5::md5_hex()) then a require call will be load the
-module (Digest::MD5 in this example.</p>
+module (Digest::MD5 in this example).</p>
 </dd>
-<dt>package|require=[Module::Name] | [Path/Filename.pm]</dt>
+<dt>require|package=[Module::Name] | [Path/Filename.pm]</dt>
 <dd>
 <p>Load a Perl module or file needed to support a method call. E.g.
-&lt;perl require=Digest::MD5/&gt; to load the Digest::MD5 module.
+&lt;perl require="Digest::MD5"/&gt; to load the Digest::MD5 module.
 Anything with a [./\] character is treated as file patch to a
 Perl file (e.g. "/home/user/module.pm"), otherwise it is treated
 as module name ("Digest::MD5")</p>
@@ -686,20 +687,30 @@ as module name ("Digest::MD5")</p>
 <dd>
 <p>Import a single or multiple functions into the file namespace.
 Use "import=name" for a single function, or pass an array ref
-(import="@{name1, name2}" for multiple functions. E.g. &lt;perl
-require="Digest::SHA" import="@{qw(sha1 sha1_hex)}"/&gt;.
+(import="@{'name1', 'name2'}" for multiple functions. E.g.
+&lt;perl require="Digest::SHA" import="@{qw(sha1 sha1_hex)}"/&gt;.
 Functions are then available anywhere in the file namespace.</p>
 </dd>
-<dt>param=scalar|array|hash</dt>
+<dt>param=scalar|hash</dt>
 <dd>
-<p>Parameters to be supplied to perl routine. Supply array and hash
-using "@{1,2}" and "%{a=&gt;1, b=&gt;2}" conventions respectively,
-e.g. &lt;perl method="sum2num" param="@{2,2}"/&gt;</p>
+<p>Parameters to be supplied to perl routine. Supply a hash
+reference using the "%{a=&gt;1, b=&gt;2}" convention e.g. &lt;perl
+method="showname" param="%{name =&gt;'Bob'}"/&gt; or as a simple
+scalar, e.g. &lt;perl method="showname", param=&gt;"Bob"/&gt;</p>
 </dd>
 <dt>static=1</dt>
 <dd>
 <p>This Perl code to be run once only and the output cached for all
 subsequent requests.</p>
+</dd>
+<dt>run=1</dt>
+<dd>
+<p>If the run attribute is supplied it is evaluated for a true
+value. If a true value exists the code is run, if not the code
+is skipped. If the run attribute does not exist at all the code
+is run by default. Useful for conditional running of code when a
+form has been submitted, e.g. &lt;perl handler="showname"
+run="+{name}"&gt; .. &lt;/perl&gt;</p>
 </dd>
 <dt>file=1</dt>
 <dd>
@@ -710,18 +721,28 @@ without an extension.</p>
 </dd>
 <dt>hidden=1</dt>
 <dd>
-<p>The output from the Perl module will be hidden.</p>
+<p>The output from the Perl module will be hidden and no rendered
+to the page.</p>
+</dd>
+<dt>chomp=1</dt>
+<dd>
+<p>Any new lines at the end of the output will be truncated.</p>
+</dd>
+<dt>autonewline=1</dt>
+<dd>
+<p>A newline character ("\n") will be inserted between each print
+statement in the perl block or code.</p>
 </dd>
 </dl>
 </dd>
 <dt>&lt;json&gt;</dt>
 <dd>
-<p>Run Perl code similar to &lt;perl&gt; tag but expect code to return a
-HASH or ARRAY ref and encode into JSON, outputting in a &lt;script&gt;
-tag with type="application/json". When supplied with an id attribute
-this data can be used by any Javascript function in the page. All
-attributes are the same as the &lt;perl&gt; tag with the following extra
-attribute</p>
+<p>Run Perl code similar to &lt;perl&gt; tag but expects code to return a
+HASH, ARRAY ref or plain scalar, which is encoded into JSON,
+outputting in a &lt;script&gt; tag with type="application/json". When
+supplied with an id attribute this data can be used by any
+Javascript function in the page. Takes the same parameters as the
+&lt;perl&gt; tag and specific attributes:</p>
 <dl>
 <dt>id=[name]</dt>
 <dd>
@@ -744,7 +765,11 @@ $self-&gt;render_block("foo");</p>
 <dt>display=1</dt>
 <dd>
 <p>Force display of this block even if not invoked by render_block
-WebDyne method. Useful for prototyping.</p>
+WebDyne method. Useful for prototyping or conditional display.
+Any true value will force display, so this can be coupled with a
+form parameter to only show a block when a form has been
+submitted, e.g. &lt;block name="showname" display="+{name}"&gt; ..
+&lt;/block&gt;</p>
 </dd>
 <dt>static=1</dt>
 <dd>
@@ -780,7 +805,13 @@ current directory or absolute path.</p>
 <p>File is a <code>.psp</code> file and we want to include a &lt;block&gt; section
 from that file.</p>
 </dd>
-<dt>nocache</dt>
+<dt>wrap=tag</dt>
+<dd>
+<p>Wrap the text from the included file in the nominated tag. Do
+not use &lt;&gt; symbols, just the plain tag name, e.g.
+&lt;include="/etc/protocol" wrap="pre"/&gt;</p>
+</dd>
+<dt>nocache=1</dt>
 <dd>
 <p>Don't cache the results of the include, bring them in off disk
 each time. Will incur performance penalty</p>
@@ -789,7 +820,8 @@ each time. Will incur performance penalty</p>
 </dd>
 <dt>&lt;api&gt;</dt>
 <dd>
-<p>Respond to a JSON request made from a client.</p>
+<p>Respond to a JSON request made from a client. Takes the same
+parameters as the &lt;perl&gt; tag and specific attributes:</p>
 <dl>
 <dt>pattern=string</dt>
 <dd>
@@ -809,15 +841,16 @@ e.g. /api/{user}/:id</p>
 </dd>
 <dt>&lt;htmx&gt;</dt>
 <dd>
-<p>Serve HTML snippets. Takes exactly the same parameters as the
-&lt;perl&gt; tag with one addition</p>
+<p>Serve HTML snippets. Takes the same parameters as the &lt;perl&gt; tag
+and specific attributes:</p>
 <dl>
-<dt>display=boolean</dt>
+<dt>display=1</dt>
 <dd>
-<p><em>Optional</em>. If evaluates to true then this &lt;htmx&gt; snippet
-fires. Only tag can respond per page. Use this attribute in
-conjunction with dynamic evaluation (e.g. display="!{!
-$_{name} eq 'Bob' !}")</p>
+<p>If evaluates to true then this &lt;htmx&gt; snippet fires. You can
+have multiple htmx tag sections in a page, but only one can fire
+at a time. Use this attribute in conjunction with dynamic
+evaluation (e.g. display="!{! $_{name} eq 'Bob' !}") to
+selectively fire a &lt;htmx&gt; section.</p>
 </dd>
 </dl>
 </dd>
