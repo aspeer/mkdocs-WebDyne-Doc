@@ -900,7 +900,7 @@ instance of the WebDyne object:</p>
 <dl>
 <dt>CGI()</dt>
 <dd>
-<p>Returns an instance of the CGI::Simple object for the current
+<p>Returns an instance of a CGI::Simple type object for the current
 request.</p>
 </dd>
 <dt>r(), request()</dt>
@@ -925,7 +925,7 @@ Optional key and value pairs will be substituted into the output as
 per the variable section. Returns a scalar ref of the resulting
 HTML.</p>
 </dd>
-<dt>render_block( blockname, &lt;key=&gt;value, key=&gt;value, ..&gt;).</dt>
+<dt>render_block( blockname, &lt;key=&gt;value, key=&gt;valufge, ..&gt;).</dt>
 <dd>
 <p>Called to render a block of text or HTML between
 &lt;block&gt;..&lt;/block&gt; tags. Optional key and value pairs will be
@@ -950,8 +950,10 @@ supplying HTML text to be rendered supply as a SCALAR reference.</p>
 <dd>
 <p>Returns the page unique ID (UID). Called inode for legacy reasons,
 as that is what the UID used to be based on. If a seed value is
-supplied a new UID will be generated based on an MD5 of the seed.
-Seed only needs to be supplied if using advanced cache handlers.</p>
+supplied a new UID will be generated based on an MD5 of the seed
+combined with other information (such as $r-&gt;location) to generate
+a unique UUID. Seed only needs to be supplied if using advanced
+cache handlers.</p>
 </dd>
 <dt>cache_mtime( &lt;uid&gt; )</dt>
 <dd>
@@ -1001,8 +1003,14 @@ processes)</p>
 <dd>
 <p>Render the output of the print(), printf() or say() routines into
 the current HTML stream. The print() and printf() methods emulate
-their Perl functions in not appending a new line into the output,
-where as say() does.</p>
+their Perl functions in not appending a new line into the output
+(unless autonewline() is set), where as say() does.</p>
+</dd>
+<dt>autonewline()</dt>
+<dd>
+<p>Get or set the autonewline flag. If set will add a new line
+automatically when using print() or $self-&gt;print(), essentially
+emulating say().</p>
 </dd>
 <dt>render_time()</dt>
 <dd>
