@@ -2182,7 +2182,7 @@ sub hello {
           <term><methodname>CGI()</methodname></term>
 
           <listitem>
-            <para>Returns an instance of the CGI::Simple object for the current request.</para>
+            <para>Returns an instance of a CGI::Simple type object for the current request.</para>
           </listitem>
         </varlistentry>
 
@@ -2220,7 +2220,7 @@ sub hello {
         </varlistentry>
 
         <varlistentry>
-          <term><methodname>render_block( blockname, <replaceable>key=&gt;value, key=&gt;value, ..</replaceable>).</methodname></term>
+          <term><methodname>render_block( blockname, <replaceable>key=&gt;value, key=&gt;valufge, ..</replaceable>).</methodname></term>
 
           <listitem>
             <para>Called to render a block of text or HTML between &lt;block&gt;..&lt;/block&gt; tags. Optional key and value pairs will be substituted into the output as per the variable
@@ -2251,7 +2251,7 @@ sub hello {
 
           <listitem>
             <para>Returns the page unique ID (UID). Called inode for legacy reasons, as that is what the UID used to be based on. If a seed value is supplied a new UID will be generated based
-            on an MD5 of the seed. Seed only needs to be supplied if using advanced cache handlers.</para>
+            on an MD5 of the seed combined with other information (such as $r-&gt;location) to generate a unique UUID. Seed only needs to be supplied if using advanced cache handlers.</para>
           </listitem>
         </varlistentry>
 
@@ -2320,8 +2320,16 @@ sub hello {
 
           <listitem>
             <para>Render the output of the <methodname>print()</methodname>, <methodname>printf()</methodname> or <methodname>say()</methodname> routines into the current HTML stream. The
-            <methodname>print()</methodname> and <methodname>printf()</methodname> methods emulate their Perl functions in not appending a new line into the output, where as
-            <methodname>say()</methodname> does.</para>
+            <methodname>print()</methodname> and <methodname>printf()</methodname> methods emulate their Perl functions in not appending a new line into the output (unless autonewline() is
+            set), where as <methodname>say()</methodname> does.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>autonewline()</term>
+
+          <listitem>
+            <para>Get or set the autonewline flag. If set will add a new line automatically when using print() or $self-&gt;print(), essentially emulating say(). </para>
           </listitem>
         </varlistentry>
 
