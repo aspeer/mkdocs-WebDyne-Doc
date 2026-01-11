@@ -1,2 +1,4 @@
+#  This file is named include2.psp and used in the next example
+#
 <start_html title="Include Head Title">
-Include Body
+Body from include2.psp file

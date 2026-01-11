@@ -8,11 +8,11 @@
 
 <p>
 <!-- Short Way -->
-Mod Perl Version: *{MOD_PERL}
+Request Method: *{REQUEST_METHOD}
 <br>
 <!-- Same as Perl code -->
-Mod Perl Version: 
-<perl> \$ENV{'MOD_PERL'} </perl>
+Request Method: 
+<perl> $ENV{'REQUEST_METHOD'} </perl>
 
 
 <!-- Apache request record methods. Only methods that return a scalar result are usable -->
@@ -23,7 +23,7 @@ Request Protocol: ^{protocol}
 <br>
 <!-- Same as Perl code -->
 Request Protocol: 
-<perl> my $self=shift(); my $r=$self->r(); \$r->protocol() </perl>
+<perl> my $self=shift(); my $r=$self->r(); return $r->protocol() </perl>
 
 
 <!-- CGI params -->
@@ -39,14 +39,14 @@ You Entered: +{name}
 <br>
 <!-- Same as Perl code -->
 You Entered: 
-<perl> my $self=shift(); my $cgi_or=$self->CGI(); \$cgi_or->param('name') </perl>
+<perl> my $self=shift(); my $cgi_or=$self->CGI(); return $cgi_or->param('name') </perl>
 <br>
 <!-- CGI vars are also loaded into the %_ global var, so the above is the same as -->
 You Entered: 
 <perl> $_{'name'} </perl>
 
 
-<!-- Arrays -->
+<!-- Array Syntax -->
 
 <form>
 <p>
@@ -54,7 +54,7 @@ Favourite colour 1:
 <p><popup_menu name="popup_menu" values="@{qw(red green blue)}">
 
 
-<!-- Hashes -->
+<!-- Hashe Syntax -->
 
 <p>
 Favourite colour 2:

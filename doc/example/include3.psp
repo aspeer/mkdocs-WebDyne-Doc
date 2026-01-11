@@ -4,4 +4,4 @@
 </head>
 <body>
 <include body file="./include2.psp">
-
+Body from include3.psp file

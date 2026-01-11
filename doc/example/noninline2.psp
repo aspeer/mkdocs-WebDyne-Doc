@@ -17,6 +17,6 @@ __PERL__
 sub hello {
 	
 	my $self=shift();
-	$self->render();
+	return $self->render();
 
 }

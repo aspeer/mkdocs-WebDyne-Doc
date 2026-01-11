@@ -15,7 +15,7 @@
 
 <script>
   new Typed('#typed', {
-    strings: ["Lorem", "Ipsum", "!{! localtime !}"],
+    strings: ["Lorem", "Ipsum", "Dictum"],
     typeSpeed: 50,
     backSpeed: 25,
     loop: true

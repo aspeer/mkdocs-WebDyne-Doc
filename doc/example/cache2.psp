@@ -16,7 +16,6 @@ This page generated: !{! localtime() !}
 
 __PERL__
 
-use WebDyne::Static;
 use WebDyne::Cache (\&cache);
 
 my %results=(
@@ -38,7 +37,13 @@ sub cache {
 		$uid=$month if defined $results{$month}
 
 	}
-	return \$uid;
+	
+	
+	#  Update
+	#
+	if ($uid) {
+        $self->inode($uid);
+    }
 
 }
 

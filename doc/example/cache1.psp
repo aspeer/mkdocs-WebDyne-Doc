@@ -2,13 +2,13 @@
 <head>
 <title>Caching</title>
 <!-- Set static and cache meta parameters -->
-<meta name="WebDyne" content="cache=&cache;static=1">
+<meta name="WebDyne" content="cache=&cache">
 </head>
 
 <body>
 <p>
 
-This page will update once every 10 seconds.
+This page will only update the time once every 10 seconds. Click refresh to test.
 
 <p>
 
@@ -22,7 +22,6 @@ __PERL__
 
 #  The following would work in place of the meta tags
 #
-#use WebDyne::Static;
 #use WebDyne::Cache (\&cache);
 
 

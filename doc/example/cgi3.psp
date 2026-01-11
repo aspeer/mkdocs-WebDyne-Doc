@@ -14,7 +14,7 @@ Enter your name:
 
 <!-- And print out name if we have it -->
 
-<perl handler="hello">
+<perl handler="hello" run="+{name}">
 Hello ${name}, pleased to meet you.
 </perl>
 
