@@ -528,7 +528,29 @@
   
   
     <li class="md-nav__item">
-      <a href="../08_credits/" class="md-nav__link">
+      <a href="../08_troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_credits/" class="md-nav__link">
         
   
   
@@ -550,7 +572,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../09_miscellaneous/" class="md-nav__link">
+      <a href="../10_miscellaneous/" class="md-nav__link">
         
   
   
@@ -572,7 +594,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../10_legal_information_licensing_and_copyright/" class="md-nav__link">
+      <a href="../11_legal_information_licensing_and_copyright/" class="md-nav__link">
         
   
   
@@ -641,7 +663,10 @@ data structure of the compiled file.</p>
 <dt><code>wddebug</code></dt>
 <dd>
 <p>Usage: <code>wddebug --status|--enable|--disable</code>. Enable/disable
-debugging in the WebDyne code.</p>
+debugging in the WebDyne code. This uses some pretty ugly methods to
+enable debugging in already installed modules by editing the code
+on-disk to re-enable debug calls - do not use in a production
+environment !</p>
 </dd>
 <dt><code>webdyne.psgi</code></dt>
 <dd>
@@ -649,7 +674,7 @@ debugging in the WebDyne code.</p>
 plackup or starman, but can be run directly for development
 purposes.</p>
 </dd>
-<dt>wdlint</dt>
+<dt><code>wdlint</code></dt>
 <dd>
 <p>Run perl -c -w over code in __PERL__ sections on any .psp file
 to check for syntax errors.</p>
@@ -657,7 +682,7 @@ to check for syntax errors.</p>
 </dl>
 <h2 id="other-files-referenced-by-webdyne">Other files referenced by WebDyne<a class="headerlink" href="#other-files-referenced-by-webdyne" title="Permanent link">&para;</a></h2>
 <dl>
-<dt><code>/etc/webdyne.conf.pl</code></dt>
+<dt><code>/etc/webdyne.conf.pl, ~/.webdyne.conf.pl, $DOCUMENT_ROOT/.webdyne.conf.pl, $DOCUMENT_ROOT/webdyne.conf.pl</code></dt>
 <dd>
 <p>Used for storage of local constants that override WebDyne defaults.
 See the 

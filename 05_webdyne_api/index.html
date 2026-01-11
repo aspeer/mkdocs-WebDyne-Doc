@@ -506,6 +506,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Variables
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -579,7 +588,29 @@
   
   
     <li class="md-nav__item">
-      <a href="../08_credits/" class="md-nav__link">
+      <a href="../08_troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_credits/" class="md-nav__link">
         
   
   
@@ -601,7 +632,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../09_miscellaneous/" class="md-nav__link">
+      <a href="../10_miscellaneous/" class="md-nav__link">
         
   
   
@@ -623,7 +654,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../10_legal_information_licensing_and_copyright/" class="md-nav__link">
+      <a href="../11_legal_information_licensing_and_copyright/" class="md-nav__link">
         
   
   
@@ -1231,11 +1262,6 @@ no_space_compacting function. Defaults to 0</p>
 <p>By default comments are not rendered. Set to 1 to store and display
 comments from source files. Defaults to 0</p>
 </dd>
-<dt><code>$WEBDYNE_NO_CACHE</code></dt>
-<dd>
-<p>WebDyne should send no-cache HTTP headers. Set to 0 to not send such
-headers. Defaults to 1</p>
-</dd>
 <dt><code>$WEBDYNE_DELAYED_BLOCK_RENDER</code></dt>
 <dd>
 <p>By default WebDyne will render blocks targeted by a render_block()
@@ -1318,8 +1344,79 @@ environments - and even then only in some cases - it can result is
 faster throughput. Off by default, set to 1 to enable.</p>
 </dd>
 </dl>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Configuration items can be overridden by setting of environment
+variables of the same name with the desired value.</p>
+</div>
 <p>Extension modules (e.g., WebDyne::Session) have their own constants -
 see each package for details.</p>
+<h3 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
+<p>All WebDyne configuration items can be overridden by setting an
+environment variable of the same same when starting the PSGI version, or
+via an Apache SetEnv directive, e.g:</p>
+<div class="language-text highlight"><pre><span></span><code>#  Start webdyne plack instance with extended error display for this run.
+#
+$ WEBDYNE_ERROR_SHOW_EXTENDED=1 plackup `which webdyne.psgi`
+</code></pre></div>
+<p>In addition to the configuration overrides the following environment
+variables are available:</p>
+<dl>
+<dt>WEBDYNE_CONF</dt>
+<dd>
+<p>Location of the WebDyne configuration file to load. Loading an
+alternate configuration file will bypass loading of any other
+configuration files (e.g. /etc/webdyne.conf.pl). They are not
+additive - only configuration directives in the nominated by this
+environment variable will be processed. e.g.</p>
+<div class="language-text highlight"><pre><span></span><code>#  Start webdyne with an alternate config file
+#
+WEBDYNE_CONF=./myconf.pl webdyne.psgi
+</code></pre></div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Your config file must be valid Perl syntax and in the format expected.
+Always check it with <code>perl -c -w myconf.pl</code> to ensure it is correct.</p>
+</div>
+</dd>
+<dt>DOCUMENT_ROOT</dt>
+<dd>
+<p>Plack and Starman instances only - the starting home directory or
+file name (if file rather than directory) for the PSGI server to
+use. Defaults to the current working directory if none specified.</p>
+</dd>
+<dt>DOCUMENT_DEFAULT</dt>
+<dd>
+<p>Plack and Starman instances only - the default files to look for in
+a directory if none given via browser URL. Defaults to "app.psp".</p>
+</dd>
+<dt>WEBDYNE_DEBUG</dt>
+<dd>
+<p>When debugging enabled in modules only (see Troubleshooting). Set to
+1 to enable all debugging (extremely verbose), or set to
+module/subroutine name to filter down to that area. e.g.</p>
+<div class="language-text highlight"><pre><span></span><code>#  Debug the internal perl routine in WebDyne
+#
+$ WEBDYNE_DEBUG=perl perl -Ilib bin/wdrender time.psp
+[23:28:24.699358 WebDyne (perl)] WebDyne=HASH(0x561d4a271a28) rendering perl tag in block ARRAY(0x561d4aaace20), attr $VAR1 = {
+  &#39;inline&#39; =&gt; 1,
+  &#39;perl&#39; =&gt; &#39; localtime() &#39;
+};
+
+[23:28:24.699490 WebDyne (perl)] found inline perl code $VAR1 = \&#39; localtime() &#39;;
+, param $VAR2 = undef;
+
+&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;&lt;title&gt;Untitled Document&lt;/title&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta content=&quot;width=device-width, initial-scale=1.0&quot; name=&quot;viewport&quot;&gt;&lt;link href=&quot;https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css&quot; rel=&quot;stylesheet&quot;&gt;&lt;link href=&quot;/style.css&quot; rel=&quot;stylesheet&quot;&gt;&lt;/head&gt;
+&lt;body&gt;&lt;h1&gt;Example File&lt;/h1&gt;&lt;p&gt; The current server time is: Sun Jan 11 23:28:24 2026&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+</code></pre></div>
+</dd>
+<dt>WEBDYNE_DEBUG_FILTER</dt>
+<dd>
+<p>When debugging enabled only output debug information that matches
+the regex given by this environment variable. Useful to further
+filter down to areas of interest.</p>
+</dd>
+</dl>
 <h2 id="webdyne-directives">WebDyne Directives<a class="headerlink" href="#webdyne-directives" title="Permanent link">&para;</a></h2>
 <p>A limited number of directives are are available which change the way
 WebDyne processes pages. Directives are set in either the Apache .conf

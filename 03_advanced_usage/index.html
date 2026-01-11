@@ -606,7 +606,29 @@
   
   
     <li class="md-nav__item">
-      <a href="../08_credits/" class="md-nav__link">
+      <a href="../08_troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_credits/" class="md-nav__link">
         
   
   
@@ -628,7 +650,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../09_miscellaneous/" class="md-nav__link">
+      <a href="../10_miscellaneous/" class="md-nav__link">
         
   
   
@@ -650,7 +672,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../10_legal_information_licensing_and_copyright/" class="md-nav__link">
+      <a href="../11_legal_information_licensing_and_copyright/" class="md-nav__link">
         
   
   
@@ -990,21 +1012,23 @@ included file after the WebDyne page is run the first time (resulting in
 compilation) are not reflected in subsequent output unless the <code>nocache</code>
 attribute is set. Thus the include tag should not be seen as a shortcut
 to a pseudo Content Management System. For example &lt;include
-file="latest_news.txt"&gt; will probably not behave in the way you expect.
-The first time you run it the latest news is displayed. However updating
-the "latest_news.txt" file will not result in changes to the output (it
-will be stale).</p>
+file="latest_news.txt"&gt; may not behave in the way you expect. The first
+time you run it the latest news is displayed. However updating the
+"latest_news.txt" file will not result in changes to the output (it will
+be stale).</p>
 <p>If you do use the <code>nocache</code> attribute the included page will be loaded
 and parsed every time, significantly slowing down page display. There
 are betters ways to build a CMS with WebDyne - use the include tag
 sparingly !</p>
 </div>
-<p>You can include just the head or body section of a HTML or PSP file by
+<p>You can include just the head or body section of a HTML or .psp file by
 using the head or body attributes. Here is the reference file (file to
 be included). It does not have to be a .psp file - a standard HTML file
 can be supplied :</p>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">&lt;</span><span class="nt">start_html</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;Include Head Title&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Include Body
+<div class="language-html highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>#  This file is named include2.psp and used in the next example
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>#
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">&lt;</span><span class="nt">start_html</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;Include Head Title&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Body from include2.psp file
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/include2.psp">Run</a></p>
 <p>And here is the generating file (the file that includes sections from
@@ -1015,6 +1039,7 @@ the reference file).</p>
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
 </span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
 </span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="p">&lt;</span><span class="nt">include</span> <span class="na">body</span> <span class="na">file</span><span class="o">=</span><span class="s">&quot;./include2.psp&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>Body from include3.psp file
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/include3.psp">Run</a></p>
 <p>You can also include block sections from <code>.psp</code> files. If this is the
@@ -1049,9 +1074,9 @@ and incorporates them into the output:</p>
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/include5.psp">Run</a></p>
 <h2 id="static_sections">Static Sections<a class="headerlink" href="#static_sections" title="Permanent link">&para;</a></h2>
-<p>Sometimes you want to generate dynamic output in a page once only (e.g.
-a last modified date, a sidebar menu etc.) Using WebDyne this can be
-done with Perl or CGI code flagged with the "static" attribute. Any
+<p>Sometimes it is desirable to generate dynamic output in a page once only
+(e.g. a last modified date, a sidebar menu etc.) Using WebDyne this can
+be done with Perl or CGI code flagged with the "static" attribute. Any
 dynamic tag so flagged will be rendered at compile time, and the
 resulting output will become part of the compiled page - it will not
 change on subsequent page views, or have to be re-run each time the page
@@ -1093,8 +1118,8 @@ is loaded. An example:</p>
 dynamic content at all once the &lt;perl&gt; content is flagged as static.
 The WebDyne engine will recognise this and store the page as a static
 HTML file in its cache. Whenever it is called WebDyne will use the
-Apache lookup_file() function to return the page as if it was just
-serving up static content.</p>
+Apache lookup_file() or equivalent Plack function to return the page as
+if it was just serving up static content.</p>
 <p>You can check this by looking at the content of the WebDyne cache
 directory (usually /var/webdyne/cache). Any file with a ".html"
 extension represents the static version of a page.</p>
@@ -1342,10 +1367,10 @@ according to specs you set via the API. When coupled with pages/blocks
 that are flagged as static this presents some powerful possibilities.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Caching will only work if <code>$WEBDYNE_CACHE_DN</code> is defined and set to a
-directory that the web server has write access to. If caching does not
-work check that $<code>WEBDYNE_CACHE_DN</code> is defined and permissions set
-correctly for your web server.</p>
+<p>Caching will only work effectively if <code>$WEBDYNE_CACHE_DN</code> is defined and
+set to a directory that the web server has write access to. If caching
+does not work check that $<code>WEBDYNE_CACHE_DN</code> is defined and permissions
+set correctly for your web server.</p>
 </div>
 <p>There are many potential examples, but consider this one: you have a
 page that generates output by making a complex query to a database,
@@ -1376,7 +1401,7 @@ over a 20 second interval</p>
 </span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
 </span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
 </span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>
-</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>This page will update once every 10 seconds.
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>This page will only update the time once every 10 seconds. Click refresh to test.
 </span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>
 </span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
 </span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>
@@ -1416,18 +1441,14 @@ over a 20 second interval</p>
 </span><span id="__span-17-48"><a id="__codelineno-17-48" name="__codelineno-17-48" href="#__codelineno-17-48"></a>}
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/cache1.psp">Run</a></p>
-<p>WebDyne uses the return value of the nominated cache routine to
-determine what UID (unique ID) to assign to the page. In the above
-example we returned \undef, which signifies that the UID will remain
-unchanged.</p>
 <p>You can start to get more advanced in your handling of cached pages by
-returning a different UID based on some arbitrary criteria. To extend
+manipulating the page UUID based on some arbitrary criteria. To extend
 our example above: say we have a page that generated sales figures for a
 given month. The SQL code to do this takes a long time, and we do not
 want to hit the database every time someone loads up the page. However
 we cannot just cache the output, as it will vary depending on the month
-the user chooses. We can tell the cache code to generate a different UID
-based on the month selected, then cache the resulting output.</p>
+the user chooses. We can tell the cache code to generate a different
+UUID based on the month selected, then cache the resulting output.</p>
 <p>The following example simulates such a scenario:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="cm">&lt;!-- Start to cheat by using start/end_html tags to save space --&gt;</span>
 </span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
@@ -1469,30 +1490,36 @@ based on the month selected, then cache the resulting output.</p>
 </span><span id="__span-18-38"><a id="__codelineno-18-38" name="__codelineno-18-38" href="#__codelineno-18-38"></a>        $uid=$month if defined $results{$month}
 </span><span id="__span-18-39"><a id="__codelineno-18-39" name="__codelineno-18-39" href="#__codelineno-18-39"></a>
 </span><span id="__span-18-40"><a id="__codelineno-18-40" name="__codelineno-18-40" href="#__codelineno-18-40"></a>    }
-</span><span id="__span-18-41"><a id="__codelineno-18-41" name="__codelineno-18-41" href="#__codelineno-18-41"></a>    return \$uid;
+</span><span id="__span-18-41"><a id="__codelineno-18-41" name="__codelineno-18-41" href="#__codelineno-18-41"></a>
 </span><span id="__span-18-42"><a id="__codelineno-18-42" name="__codelineno-18-42" href="#__codelineno-18-42"></a>
-</span><span id="__span-18-43"><a id="__codelineno-18-43" name="__codelineno-18-43" href="#__codelineno-18-43"></a>}
-</span><span id="__span-18-44"><a id="__codelineno-18-44" name="__codelineno-18-44" href="#__codelineno-18-44"></a>
-</span><span id="__span-18-45"><a id="__codelineno-18-45" name="__codelineno-18-45" href="#__codelineno-18-45"></a>
-</span><span id="__span-18-46"><a id="__codelineno-18-46" name="__codelineno-18-46" href="#__codelineno-18-46"></a>sub results {
-</span><span id="__span-18-47"><a id="__codelineno-18-47" name="__codelineno-18-47" href="#__codelineno-18-47"></a>
-</span><span id="__span-18-48"><a id="__codelineno-18-48" name="__codelineno-18-48" href="#__codelineno-18-48"></a>    my $self=shift();
-</span><span id="__span-18-49"><a id="__codelineno-18-49" name="__codelineno-18-49" href="#__codelineno-18-49"></a>    if (my $month=$_{&#39;month&#39;}) {
+</span><span id="__span-18-43"><a id="__codelineno-18-43" name="__codelineno-18-43" href="#__codelineno-18-43"></a>    #  Update
+</span><span id="__span-18-44"><a id="__codelineno-18-44" name="__codelineno-18-44" href="#__codelineno-18-44"></a>    #
+</span><span id="__span-18-45"><a id="__codelineno-18-45" name="__codelineno-18-45" href="#__codelineno-18-45"></a>    if ($uid) {
+</span><span id="__span-18-46"><a id="__codelineno-18-46" name="__codelineno-18-46" href="#__codelineno-18-46"></a>        $self-&gt;inode($uid);
+</span><span id="__span-18-47"><a id="__codelineno-18-47" name="__codelineno-18-47" href="#__codelineno-18-47"></a>    }
+</span><span id="__span-18-48"><a id="__codelineno-18-48" name="__codelineno-18-48" href="#__codelineno-18-48"></a>
+</span><span id="__span-18-49"><a id="__codelineno-18-49" name="__codelineno-18-49" href="#__codelineno-18-49"></a>}
 </span><span id="__span-18-50"><a id="__codelineno-18-50" name="__codelineno-18-50" href="#__codelineno-18-50"></a>
-</span><span id="__span-18-51"><a id="__codelineno-18-51" name="__codelineno-18-51" href="#__codelineno-18-51"></a>        #  Could be a really long complex SQL query ...
-</span><span id="__span-18-52"><a id="__codelineno-18-52" name="__codelineno-18-52" href="#__codelineno-18-52"></a>        #
-</span><span id="__span-18-53"><a id="__codelineno-18-53" name="__codelineno-18-53" href="#__codelineno-18-53"></a>        my $results=$results{$month};
-</span><span id="__span-18-54"><a id="__codelineno-18-54" name="__codelineno-18-54" href="#__codelineno-18-54"></a>
-</span><span id="__span-18-55"><a id="__codelineno-18-55" name="__codelineno-18-55" href="#__codelineno-18-55"></a>
-</span><span id="__span-18-56"><a id="__codelineno-18-56" name="__codelineno-18-56" href="#__codelineno-18-56"></a>        #  And display
-</span><span id="__span-18-57"><a id="__codelineno-18-57" name="__codelineno-18-57" href="#__codelineno-18-57"></a>        #
-</span><span id="__span-18-58"><a id="__codelineno-18-58" name="__codelineno-18-58" href="#__codelineno-18-58"></a>        return $self-&gt;render(results =&gt; $results);
-</span><span id="__span-18-59"><a id="__codelineno-18-59" name="__codelineno-18-59" href="#__codelineno-18-59"></a>    }
-</span><span id="__span-18-60"><a id="__codelineno-18-60" name="__codelineno-18-60" href="#__codelineno-18-60"></a>    else {
-</span><span id="__span-18-61"><a id="__codelineno-18-61" name="__codelineno-18-61" href="#__codelineno-18-61"></a>        return \undef;
-</span><span id="__span-18-62"><a id="__codelineno-18-62" name="__codelineno-18-62" href="#__codelineno-18-62"></a>    }
-</span><span id="__span-18-63"><a id="__codelineno-18-63" name="__codelineno-18-63" href="#__codelineno-18-63"></a>
-</span><span id="__span-18-64"><a id="__codelineno-18-64" name="__codelineno-18-64" href="#__codelineno-18-64"></a>}
+</span><span id="__span-18-51"><a id="__codelineno-18-51" name="__codelineno-18-51" href="#__codelineno-18-51"></a>
+</span><span id="__span-18-52"><a id="__codelineno-18-52" name="__codelineno-18-52" href="#__codelineno-18-52"></a>sub results {
+</span><span id="__span-18-53"><a id="__codelineno-18-53" name="__codelineno-18-53" href="#__codelineno-18-53"></a>
+</span><span id="__span-18-54"><a id="__codelineno-18-54" name="__codelineno-18-54" href="#__codelineno-18-54"></a>    my $self=shift();
+</span><span id="__span-18-55"><a id="__codelineno-18-55" name="__codelineno-18-55" href="#__codelineno-18-55"></a>    if (my $month=$_{&#39;month&#39;}) {
+</span><span id="__span-18-56"><a id="__codelineno-18-56" name="__codelineno-18-56" href="#__codelineno-18-56"></a>
+</span><span id="__span-18-57"><a id="__codelineno-18-57" name="__codelineno-18-57" href="#__codelineno-18-57"></a>        #  Could be a really long complex SQL query ...
+</span><span id="__span-18-58"><a id="__codelineno-18-58" name="__codelineno-18-58" href="#__codelineno-18-58"></a>        #
+</span><span id="__span-18-59"><a id="__codelineno-18-59" name="__codelineno-18-59" href="#__codelineno-18-59"></a>        my $results=$results{$month};
+</span><span id="__span-18-60"><a id="__codelineno-18-60" name="__codelineno-18-60" href="#__codelineno-18-60"></a>
+</span><span id="__span-18-61"><a id="__codelineno-18-61" name="__codelineno-18-61" href="#__codelineno-18-61"></a>
+</span><span id="__span-18-62"><a id="__codelineno-18-62" name="__codelineno-18-62" href="#__codelineno-18-62"></a>        #  And display
+</span><span id="__span-18-63"><a id="__codelineno-18-63" name="__codelineno-18-63" href="#__codelineno-18-63"></a>        #
+</span><span id="__span-18-64"><a id="__codelineno-18-64" name="__codelineno-18-64" href="#__codelineno-18-64"></a>        return $self-&gt;render(results =&gt; $results);
+</span><span id="__span-18-65"><a id="__codelineno-18-65" name="__codelineno-18-65" href="#__codelineno-18-65"></a>    }
+</span><span id="__span-18-66"><a id="__codelineno-18-66" name="__codelineno-18-66" href="#__codelineno-18-66"></a>    else {
+</span><span id="__span-18-67"><a id="__codelineno-18-67" name="__codelineno-18-67" href="#__codelineno-18-67"></a>        return \undef;
+</span><span id="__span-18-68"><a id="__codelineno-18-68" name="__codelineno-18-68" href="#__codelineno-18-68"></a>    }
+</span><span id="__span-18-69"><a id="__codelineno-18-69" name="__codelineno-18-69" href="#__codelineno-18-69"></a>
+</span><span id="__span-18-70"><a id="__codelineno-18-70" name="__codelineno-18-70" href="#__codelineno-18-70"></a>}
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/cache2.psp">Run</a></p>
 <div class="admonition important">
@@ -1622,8 +1649,8 @@ example</a></p>
 using the <a href="https://htmx.org">HTMX Javascript Library</a>. WebDyne can
 support just supplying HTML snippet to pages in response to htmx calls.
 HTMX and WebDyne are complementary libraries which can be combined
-together to support dynamic pages with in-place updates from WebDybe
-Perl backends. Here is a simple HTML file (<code>htmx_demo1.psp</code>)
+together to support dynamic pages with in-place updates from a WebDyne
+Perl backend. Here is a simple HTML file (<code>htmx_demo1.psp</code>)
 incorporating HTMX calls to a backend file called <code>htmx_time1.psp</code>. Here
 is the display file, <code>htmx_demo1.psp</code></p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">&lt;</span><span class="nt">start_html</span> <span class="na">script</span><span class="o">=</span><span class="s">&quot;https://unpkg.com/htmx.org@1.9.10&quot;</span><span class="p">&gt;</span>

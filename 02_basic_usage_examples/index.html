@@ -648,7 +648,29 @@
   
   
     <li class="md-nav__item">
-      <a href="../08_credits/" class="md-nav__link">
+      <a href="../08_troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_credits/" class="md-nav__link">
         
   
   
@@ -670,7 +692,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../09_miscellaneous/" class="md-nav__link">
+      <a href="../10_miscellaneous/" class="md-nav__link">
         
   
   
@@ -692,7 +714,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../10_legal_information_licensing_and_copyright/" class="md-nav__link">
+      <a href="../11_legal_information_licensing_and_copyright/" class="md-nav__link">
         
   
   
@@ -837,7 +859,7 @@ Alternate syntaxes are supported - these work in the same way:</p>
 <p><a href="https://demo.webdyne.org/hello3a.psp">Run</a></p>
 <h3 id="use-of-the-perl-tag-for-in-line-code">Use of the &lt;perl&gt; tag for in-line code.<a class="headerlink" href="#use-of-the-perl-tag-for-in-line-code" title="Permanent link">&para;</a></h3>
 <p>The above examples show several variations of the &lt;perl&gt; tag in use.
-Perl code that is enclosed by &lt;perl&gt;..&lt;/perl&gt; tags is called
+Perl code that is enclosed by &lt;perl&gt;..&lt;/perl&gt; tags is designated as
 <em>in-line</em> code:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Hello World<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -1011,7 +1033,7 @@ again:</p>
 </span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>sub hello {
 </span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>
 </span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>    my $self=shift();
-</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>    $self-&gt;render();
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>    return $self-&gt;render();
 </span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>
 </span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>}
 </span></code></pre></div>
@@ -1118,7 +1140,7 @@ follows:</p>
 </span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="c1">#</span>
 </span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="o">&lt;</span><span class="n">perl</span><span class="w"> </span><span class="k">require</span><span class="o">=</span><span class="s">&quot;Digest::MD5&quot;</span><span class="w"> </span><span class="nb">import</span><span class="o">=</span><span class="s">&quot;@{qw(md5_hex md5_base64)}&quot;</span><span class="o">/&gt;</span>
 </span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>
-</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="c1">#  You can also require a file. No import is availanle</span>
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="c1">#  You can also require a file. No import is available in this usage</span>
 </span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="c1">#</span>
 </span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="o">&lt;</span><span class="n">perl</span><span class="w"> </span><span class="k">require</span><span class="o">=</span><span class="s">&quot;mymodule.pm&quot;</span><span class="o">&gt;</span>
 </span></code></pre></div>
@@ -1415,10 +1437,10 @@ passing parameters which it can act on:</p>
 <p><a href="https://demo.webdyne.org/noninline7.psp">Run</a></p>
 <h3 id="parameter-inheritance">Parameter inheritance<a class="headerlink" href="#parameter-inheritance" title="Permanent link">&para;</a></h3>
 <p>In-line code can inherit parameters passed from a perl handler/method.
-In-line code gets two parameters supplied - the first (<code>$_[0)</code>) is the
+In-line code gets two parameters supplied - the first (<code>$_[0])</code>) is the
 self reference (e.g. <code>$self</code>), the second (<code>$_[1]</code>) is any inherited
-parameters as a hash reference. This can be useful for quick "in-line"
-formatting, e.g:</p>
+parameters, passed as a hash reference. This can be useful for quick
+"in-line" formatting, e.g:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="p">&lt;</span><span class="nt">start_html</span><span class="p">&gt;</span>
 </span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="p">&lt;</span><span class="nt">perl</span> <span class="na">handler</span><span class="o">=</span><span class="s">&quot;inherit&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;</span>
@@ -1666,11 +1688,11 @@ should provide an example of potential variable usage:</p>
 </span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>
 </span><span id="__span-27-9"><a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
 </span><span id="__span-27-10"><a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a><span class="cm">&lt;!-- Short Way --&gt;</span>
-</span><span id="__span-27-11"><a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a>Mod Perl Version: *{MOD_PERL}
+</span><span id="__span-27-11"><a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a>Request Method: *{REQUEST_METHOD}
 </span><span id="__span-27-12"><a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a><span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
 </span><span id="__span-27-13"><a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a><span class="cm">&lt;!-- Same as Perl code --&gt;</span>
-</span><span id="__span-27-14"><a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a>Mod Perl Version: 
-</span><span id="__span-27-15"><a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a><span class="p">&lt;</span><span class="nt">perl</span><span class="p">&gt;</span> \$ENV{&#39;MOD_PERL&#39;} <span class="p">&lt;/</span><span class="nt">perl</span><span class="p">&gt;</span>
+</span><span id="__span-27-14"><a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a>Request Method:: 
+</span><span id="__span-27-15"><a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a><span class="p">&lt;</span><span class="nt">perl</span><span class="p">&gt;</span> $ENV{&#39;REQUEST_METHOD&#39;} <span class="p">&lt;/</span><span class="nt">perl</span><span class="p">&gt;</span>
 </span><span id="__span-27-16"><a id="__codelineno-27-16" name="__codelineno-27-16" href="#__codelineno-27-16"></a>
 </span><span id="__span-27-17"><a id="__codelineno-27-17" name="__codelineno-27-17" href="#__codelineno-27-17"></a>
 </span><span id="__span-27-18"><a id="__codelineno-27-18" name="__codelineno-27-18" href="#__codelineno-27-18"></a><span class="cm">&lt;!-- Apache request record methods. Only methods that return a scalar result are usable --&gt;</span>
@@ -1681,7 +1703,7 @@ should provide an example of potential variable usage:</p>
 </span><span id="__span-27-23"><a id="__codelineno-27-23" name="__codelineno-27-23" href="#__codelineno-27-23"></a><span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
 </span><span id="__span-27-24"><a id="__codelineno-27-24" name="__codelineno-27-24" href="#__codelineno-27-24"></a><span class="cm">&lt;!-- Same as Perl code --&gt;</span>
 </span><span id="__span-27-25"><a id="__codelineno-27-25" name="__codelineno-27-25" href="#__codelineno-27-25"></a>Request Protocol: 
-</span><span id="__span-27-26"><a id="__codelineno-27-26" name="__codelineno-27-26" href="#__codelineno-27-26"></a><span class="p">&lt;</span><span class="nt">perl</span><span class="p">&gt;</span> my $self=shift(); my $r=$self-&gt;r(); \$r-&gt;protocol() <span class="p">&lt;/</span><span class="nt">perl</span><span class="p">&gt;</span>
+</span><span id="__span-27-26"><a id="__codelineno-27-26" name="__codelineno-27-26" href="#__codelineno-27-26"></a><span class="p">&lt;</span><span class="nt">perl</span><span class="p">&gt;</span> my $self=shift(); my $r=$self-&gt;r(); return $r-&gt;protocol() <span class="p">&lt;/</span><span class="nt">perl</span><span class="p">&gt;</span>
 </span><span id="__span-27-27"><a id="__codelineno-27-27" name="__codelineno-27-27" href="#__codelineno-27-27"></a>
 </span><span id="__span-27-28"><a id="__codelineno-27-28" name="__codelineno-27-28" href="#__codelineno-27-28"></a>
 </span><span id="__span-27-29"><a id="__codelineno-27-29" name="__codelineno-27-29" href="#__codelineno-27-29"></a><span class="cm">&lt;!-- CGI params --&gt;</span>
@@ -1697,14 +1719,14 @@ should provide an example of potential variable usage:</p>
 </span><span id="__span-27-39"><a id="__codelineno-27-39" name="__codelineno-27-39" href="#__codelineno-27-39"></a><span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
 </span><span id="__span-27-40"><a id="__codelineno-27-40" name="__codelineno-27-40" href="#__codelineno-27-40"></a><span class="cm">&lt;!-- Same as Perl code --&gt;</span>
 </span><span id="__span-27-41"><a id="__codelineno-27-41" name="__codelineno-27-41" href="#__codelineno-27-41"></a>You Entered: 
-</span><span id="__span-27-42"><a id="__codelineno-27-42" name="__codelineno-27-42" href="#__codelineno-27-42"></a><span class="p">&lt;</span><span class="nt">perl</span><span class="p">&gt;</span> my $self=shift(); my $cgi_or=$self-&gt;CGI(); \$cgi_or-&gt;param(&#39;name&#39;) <span class="p">&lt;/</span><span class="nt">perl</span><span class="p">&gt;</span>
+</span><span id="__span-27-42"><a id="__codelineno-27-42" name="__codelineno-27-42" href="#__codelineno-27-42"></a><span class="p">&lt;</span><span class="nt">perl</span><span class="p">&gt;</span> my $self=shift(); my $cgi_or=$self-&gt;CGI(); return $cgi_or-&gt;param(&#39;name&#39;) <span class="p">&lt;/</span><span class="nt">perl</span><span class="p">&gt;</span>
 </span><span id="__span-27-43"><a id="__codelineno-27-43" name="__codelineno-27-43" href="#__codelineno-27-43"></a><span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
 </span><span id="__span-27-44"><a id="__codelineno-27-44" name="__codelineno-27-44" href="#__codelineno-27-44"></a><span class="cm">&lt;!-- CGI vars are also loaded into the %_ global var, so the above is the same as --&gt;</span>
 </span><span id="__span-27-45"><a id="__codelineno-27-45" name="__codelineno-27-45" href="#__codelineno-27-45"></a>You Entered: 
 </span><span id="__span-27-46"><a id="__codelineno-27-46" name="__codelineno-27-46" href="#__codelineno-27-46"></a><span class="p">&lt;</span><span class="nt">perl</span><span class="p">&gt;</span> $_{&#39;name&#39;} <span class="p">&lt;/</span><span class="nt">perl</span><span class="p">&gt;</span>
 </span><span id="__span-27-47"><a id="__codelineno-27-47" name="__codelineno-27-47" href="#__codelineno-27-47"></a>
 </span><span id="__span-27-48"><a id="__codelineno-27-48" name="__codelineno-27-48" href="#__codelineno-27-48"></a>
-</span><span id="__span-27-49"><a id="__codelineno-27-49" name="__codelineno-27-49" href="#__codelineno-27-49"></a><span class="cm">&lt;!-- Arrays --&gt;</span>
+</span><span id="__span-27-49"><a id="__codelineno-27-49" name="__codelineno-27-49" href="#__codelineno-27-49"></a><span class="cm">&lt;!-- Array Syntax --&gt;</span>
 </span><span id="__span-27-50"><a id="__codelineno-27-50" name="__codelineno-27-50" href="#__codelineno-27-50"></a>
 </span><span id="__span-27-51"><a id="__codelineno-27-51" name="__codelineno-27-51" href="#__codelineno-27-51"></a><span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
 </span><span id="__span-27-52"><a id="__codelineno-27-52" name="__codelineno-27-52" href="#__codelineno-27-52"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
@@ -1712,7 +1734,7 @@ should provide an example of potential variable usage:</p>
 </span><span id="__span-27-54"><a id="__codelineno-27-54" name="__codelineno-27-54" href="#__codelineno-27-54"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">popup_menu</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;popup_menu&quot;</span> <span class="na">values</span><span class="o">=</span><span class="s">&quot;@{qw(red green blue)}&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-27-55"><a id="__codelineno-27-55" name="__codelineno-27-55" href="#__codelineno-27-55"></a>
 </span><span id="__span-27-56"><a id="__codelineno-27-56" name="__codelineno-27-56" href="#__codelineno-27-56"></a>
-</span><span id="__span-27-57"><a id="__codelineno-27-57" name="__codelineno-27-57" href="#__codelineno-27-57"></a><span class="cm">&lt;!-- Hashes --&gt;</span>
+</span><span id="__span-27-57"><a id="__codelineno-27-57" name="__codelineno-27-57" href="#__codelineno-27-57"></a><span class="cm">&lt;!-- Hashe Syntax --&gt;</span>
 </span><span id="__span-27-58"><a id="__codelineno-27-58" name="__codelineno-27-58" href="#__codelineno-27-58"></a>
 </span><span id="__span-27-59"><a id="__codelineno-27-59" name="__codelineno-27-59" href="#__codelineno-27-59"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
 </span><span id="__span-27-60"><a id="__codelineno-27-60" name="__codelineno-27-60" href="#__codelineno-27-60"></a>Favourite colour 2:
@@ -1741,6 +1763,14 @@ page source after loading it to see for yourself):</p>
 </span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="p">&lt;</span><span class="nt">end_html</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/cgi6.psp">Run</a></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The &lt;end_html&gt; tag can be omitted if desired, the HTML parser will
+auto close any dangling tags at the end of the document, including
+adding any omitted &lt;/body&gt; or &lt;/html&gt; tags. So even if omitted from
+the .psp file WebDyne should still generate valid HTML to be served to
+the browser.</p>
+</div>
 <p>The &lt;start_html&gt; tag generates all the &lt;html&gt;, &lt;head&gt;, &lt;title&gt;
 tags etc needed for a valid HTML page plus an opening body tag. Just
 enter the body content, then optionally finish with &lt;end_html&gt; to
@@ -1776,8 +1806,8 @@ and stylesheets:</p>
 <p><a href="https://demo.webdyne.org/start_html1.psp">Run</a></p>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
-<p>If make sure any attributes using the <code>@{..}</code> or <code>%{..}</code> convention are
-on one line - the parser will not interpret them correctly if spanning
+<p>Make sure any attributes using the <code>@{..}</code> or <code>%{..}</code> convention are on
+one line - the parser may not interpret them correctly if spanning
 multiple lines.</p>
 </div>
 <p>If using the &lt;start_html&gt; shortcut tag you can optionally insert
@@ -1919,7 +1949,7 @@ adjust options in a traditional HTML form to reflect the user's choice.</p>
 <p>Tags such as &lt;popup_menu&gt; output traditional HTML form tags such as
 &lt;select&gt;&lt;option&gt;...&lt;/select&gt;, but they have the advantage of
 allowing Perl data types as attributes. Take the following example:</p>
-<div class="language-text highlight"><pre><span></span><code>&lt;popup_menu value=&quot;%{red=&gt;Red, green=&gt;Green, blue=&gt;Blue}&quot;/&gt;
+<div class="language-text highlight"><pre><span></span><code>&lt;popup_menu values=&quot;%{red=&gt;Red, green=&gt;Green, blue=&gt;Blue}&quot;/&gt;
 </code></pre></div>
 <p>it is arguably easier to read than:</p>
 <div class="language-text highlight"><pre><span></span><code>&lt;select name=&quot;values&quot; tabindex=&quot;1&quot;&gt;
@@ -2013,6 +2043,13 @@ responses:</p>
 <p>From there you can all any method supported by the CGI::Simple module -
 see the CGI::Simple manual page (<code>man CGI::Simple</code>) or review on CPAN:
 <a href="https://metacpan.org/pod/CGI::Simple">CGI::Simple</a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>WebDyne actually wraps the CGI::Simple object to emulate aspects of a
+Plack::Request handler, including supporting Hash::MultiValue
+parameters. For the most part this is transparent but something to be
+aware of if working with parameters which may have multiple values.</p>
+</div>
 <p>Since one of the most common code tasks is to access query parameters,
 WebDyne stores them in the special <code>%_</code> global variable before any user
 defined Perl methods are called. For example:</p>
@@ -2082,6 +2119,13 @@ defined Perl methods are called. For example:</p>
 </span><span id="__span-33-64"><a id="__codelineno-33-64" name="__codelineno-33-64" href="#__codelineno-33-64"></a>}
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/cgi4.psp">Run</a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Values stored in the %_ variable are single value only, and reflect the
+"last" value of any multivalue parameter supplied. The %_ variable is a
+convenience for simple access - if more complex operations are required
+use the CGI() object.</p>
+</div>
 
 
 

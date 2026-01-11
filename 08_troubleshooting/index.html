@@ -12,13 +12,13 @@
         <meta name="author" content="Andrew Speer">
       
       
-        <link rel="canonical" href="https://webdyne.org/08_credits/">
+        <link rel="canonical" href="https://webdyne.org/08_troubleshooting/">
       
       
         <link rel="prev" href="../07_extending_webdyne/">
       
       
-        <link rel="next" href="../09_miscellaneous/">
+        <link rel="next" href="../09_credits/">
       
       
       <link rel="icon" href="../assets/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Credits - WebDyne</title>
+        <title>Troubleshooting - WebDyne</title>
       
     
     
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#credits" class="md-skip">
+        <a href="#troubleshooting" class="md-skip">
           Skip to content
         </a>
       
@@ -122,7 +122,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Credits
+              Troubleshooting
             
           </span>
         </div>
@@ -482,7 +482,7 @@
   
   
   <span class="md-ellipsis">
-    Credits
+    Troubleshooting
     
   </span>
   
@@ -500,7 +500,29 @@
   
   
     <li class="md-nav__item">
-      <a href="../09_miscellaneous/" class="md-nav__link">
+      <a href="../09_credits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Credits
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_miscellaneous/" class="md-nav__link">
         
   
   
@@ -522,7 +544,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../10_legal_information_licensing_and_copyright/" class="md-nav__link">
+      <a href="../11_legal_information_licensing_and_copyright/" class="md-nav__link">
         
   
   
@@ -556,12 +578,46 @@
   
 
 
-<h1 id="credits">Credits<a class="headerlink" href="#credits" title="Permanent link">&para;</a></h1>
-<p>WebDyne relies heavily on modules and code developed and open-sourced by
-other authors. Without Perl, and Perl modules such as mod_perl/PSGI,
-HTML::Tiny, HTML::TreeBuilder, Storable and many other, WebDyne would
-not be possible. To the authors of those modules - and all the other
-modules used to a lesser extent by WebDyne - I convey my thanks.</p>
+<h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h1>
+<p>At some stage a .psp file is not going to output what you expect. This
+could be for many reasons:</p>
+<ul>
+<li>
+<p>Incorrectly closed or matched HTML tags in the source</p>
+</li>
+<li>
+<p>Mismatched quotation symbols for attributes</p>
+</li>
+<li>
+<p>Incorrect syntax in WebDyne tags, code or attributes</p>
+</li>
+<li>
+<p>Failure by the HTML Parser to read complex or unusual HTML</p>
+</li>
+<li>
+<p>A bug in the WebDyne code at runtime</p>
+</li>
+</ul>
+<p>There are several troubleshooting steps:</p>
+<ol>
+<li>
+<p>Does the file render from the command line using <code>wdrender</code> ? Are
+    there any additional warnings or error messages generated from the
+    command line ?</p>
+</li>
+<li>
+<p>Is the file validly constructed and balanced HTML when read by the
+    WebDyne parser. Use <code>wdcompile</code> to check the parsed HTML and check
+    for any errors in attributes or tags</p>
+</li>
+<li>
+<p>Use the <code>wddebug --enable</code> and <code>WEBDYNE_DEBUG=1</code> environment
+    variable to elicit more information</p>
+</li>
+</ol>
+<p>If nothing obvious jumps out put a bug report on the <a href="https://github.com/aspeer/WebDyne">WebDyne
+Github</a> page for the author to
+review.</p>
 
 
 
@@ -608,13 +664,13 @@ modules used to a lesser extent by WebDyne - I convey my thanks.</p>
         
         
           
-          <a href="../09_miscellaneous/" class="md-footer__link md-footer__link--next" aria-label="Next: Miscellaneous">
+          <a href="../09_credits/" class="md-footer__link md-footer__link--next" aria-label="Next: Credits">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Miscellaneous
+                Credits
               </div>
             </div>
             <div class="md-footer__button md-icon">

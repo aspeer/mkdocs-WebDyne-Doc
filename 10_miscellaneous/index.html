@@ -12,13 +12,13 @@
         <meta name="author" content="Andrew Speer">
       
       
-        <link rel="canonical" href="https://webdyne.org/09_miscellaneous/">
+        <link rel="canonical" href="https://webdyne.org/10_miscellaneous/">
       
       
-        <link rel="prev" href="../08_credits/">
+        <link rel="prev" href="../09_credits/">
       
       
-        <link rel="next" href="../10_legal_information_licensing_and_copyright/">
+        <link rel="next" href="../11_legal_information_licensing_and_copyright/">
       
       
       <link rel="icon" href="../assets/favicon.png">
@@ -468,7 +468,29 @@
   
   
     <li class="md-nav__item">
-      <a href="../08_credits/" class="md-nav__link">
+      <a href="../08_troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_credits/" class="md-nav__link">
         
   
   
@@ -522,7 +544,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../10_legal_information_licensing_and_copyright/" class="md-nav__link">
+      <a href="../11_legal_information_licensing_and_copyright/" class="md-nav__link">
         
   
   
@@ -559,11 +581,11 @@
 <h1 id="miscellaneous">Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permanent link">&para;</a></h1>
 <p>Things to note or information not otherwise contained elsewhere</p>
 <dl>
-<dt>How to check syntax on a PSP file</dt>
+<dt>How to check syntax of a PSP file</dt>
 <dd>
 <p>To check the syntax of a PSP file, specifically any Perl code in the
-__PERL__ section make sure you have a #!perl shebang after the
-__PERL__ delimiter as here:</p>
+__PERL__ section you can use the wdlint command. Take this file
+with an assignment syntax error in the server_time() routine:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">&lt;</span><span class="nt">start_html</span><span class="p">&gt;</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Hello World <span class="cp">&lt;? server_time() ?&gt;</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>__PERL__
@@ -573,10 +595,10 @@ __PERL__ delimiter as here:</p>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    my 2==1; #Error here
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>}
 </span></code></pre></div>
-<p>Then run the command <code>perl -x -c -w &lt;filename.psp&gt;</code>. This will check
-the file for syntax error and report back:</p>
-<div class="language-text highlight"><pre><span></span><code>$ perl -c -w -x check.psp 
-syntax error at check.psp line 4, near &quot;my 2&quot;
+<p>Run the command<code>wdlint &lt;filename.psp&gt;</code> to check for syntax error and
+report back:</p>
+<div class="language-text highlight"><pre><span></span><code>$ wdlint check.psp 
+syntax error at check.psp line 8, near &quot;my 2&quot;
 check.psp had compilation errors.
 </code></pre></div>
 </dd>
@@ -595,8 +617,10 @@ your parameters:</p>
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>sub server_time {
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    #  Now we can get self ref
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    my ($self, $timezone)=@_;
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    #  Do something and return
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>}
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    #  Do something and return
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    $self-&gt;do_something()
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>}
 </span></code></pre></div>
 </dd>
 <dt>Use of hash characters for comments in .psp files</dt>
@@ -626,6 +650,15 @@ checkbox (boolean, checked or unchecked, i.e. 1 or 0) will always be
 the first value returned. So the code
 <code>if ($_{'checkbox_name'}) { .. do_something }</code> will work as
 expected - but just be careful if using in an array context.</p>
+</dd>
+<dt>About this documentation</dt>
+<dd>
+<p>This documentation is written with the <a href="https://www.xmlmind.com/xmleditor/">XMLMind XML
+Editor</a>, then converted to
+Markdown with <a href="https://pandoc.org">pandoc</a> and displayed using
+<a href="https://www.mkdocs.org">MKdocs</a>. The documentation for WebDyne is
+maintained on a <a href="https://github.com/aspeer/mkdocs-WebDyne-Doc">Github
+repository</a>.</p>
 </dd>
 </dl>
 
@@ -657,7 +690,7 @@ expected - but just be careful if using in an array context.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../08_credits/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Credits">
+          <a href="../09_credits/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Credits">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -674,7 +707,7 @@ expected - but just be careful if using in an array context.</p>
         
         
           
-          <a href="../10_legal_information_licensing_and_copyright/" class="md-footer__link md-footer__link--next" aria-label="Next: Legal Information - Licensing and Copyright">
+          <a href="../11_legal_information_licensing_and_copyright/" class="md-footer__link md-footer__link--next" aria-label="Next: Legal Information - Licensing and Copyright">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next

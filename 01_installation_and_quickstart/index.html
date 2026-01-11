@@ -594,7 +594,29 @@
   
   
     <li class="md-nav__item">
-      <a href="../08_credits/" class="md-nav__link">
+      <a href="../08_troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_credits/" class="md-nav__link">
         
   
   
@@ -616,7 +638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../09_miscellaneous/" class="md-nav__link">
+      <a href="../10_miscellaneous/" class="md-nav__link">
         
   
   
@@ -638,7 +660,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../10_legal_information_licensing_and_copyright/" class="md-nav__link">
+      <a href="../11_legal_information_licensing_and_copyright/" class="md-nav__link">
         
   
   
@@ -676,7 +698,7 @@
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <p>WebDyne will install and run on any modern Linux system that has a
 recent version of Perl installed and is capable of installing Perl
-module via CPAN. Installation via Docker is also supported.</p>
+modules via CPAN. Installation via Docker is also supported.</p>
 <p>When installing WebDyne there are two components which are required
 before you can begin serving .psp files:</p>
 <ul>
@@ -684,10 +706,10 @@ before you can begin serving .psp files:</p>
 <p>The core WebDyne Perl modules</p>
 </li>
 <li>
-<p>A web server configured to use WebDyne</p>
+<p>A web server or application configured to use WebDyne.</p>
 </li>
 </ul>
-<p>WebDyne will work with Apache mod_perl or PSGI compatible web servers
+<p>WebDyne will work with Apache mod_perl, or PSGI compatible web servers
 (such as Plack, Starman etc.).</p>
 <p>Docker containers with pre-built versions of WebDyne are also available.</p>
 <h2 id="installing-via-cpan-or-cpanminus">Installing via CPAN or CPANMinus<a class="headerlink" href="#installing-via-cpan-or-cpanminus" title="Permanent link">&para;</a></h2>
@@ -720,33 +742,48 @@ app.psp file:</p>
 My first WebDyne page. Server time: &lt;? localtime ?&gt;
 </code></pre></div>
 <p>Then test install:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#  Render the file to STDOUT to see the HTML and check basic installation</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#  Install WebDyne</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">#</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$<span class="w"> </span>wdrender<span class="w"> </span>app.psp
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$<span class="w"> </span>cpanm<span class="w"> </span>WebDyne
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1">#  Install Plack and some Plack Middleware</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1">#  Render the file to STDOUT to see the HTML and check basic installation</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1">#</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>$<span class="w"> </span>cpanm<span class="w"> </span>Plack
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>$<span class="w"> </span>cpanm<span class="w"> </span>Plack::Middleware::ForceEnv
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">#  Check all working</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1">#</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>--test
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1">#  Start serving only a single PSP file</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="c1">#</span>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>app.psp
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1"># Start serving any file in the current directory. If app.psp exists it will be served by</span>
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1"># default, otherwise an index page will be presented</span>
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="c1">#</span>
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>.
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
-</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="c1"># Start but listen on non-default port, only on localhost</span>
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="c1">#</span>
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>--port<span class="o">=</span><span class="m">5001</span><span class="w"> </span>--host<span class="o">=</span><span class="m">127</span>.0.0.1
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>$<span class="w"> </span>wdrender<span class="w"> </span>app.psp
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">#  Install Plack</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">#</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>$<span class="w"> </span>cpanm<span class="w"> </span>Plack
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1">#  Check all working</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1">#</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>--test
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1">#  Start serving only a single PSP file</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1">#</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>app.psp
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="c1"># Start serving any file in the current directory. If app.psp exists it will be served by</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="c1"># default, otherwise an index page will be presented</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="c1">#</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>.
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="c1"># Start but listen on non-default port, only on localhost</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="c1">#</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>$<span class="w"> </span>webdyne.psgi<span class="w"> </span>--port<span class="o">=</span><span class="m">5001</span><span class="w"> </span>--host<span class="o">=</span><span class="m">127</span>.0.0.1
 </span></code></pre></div>
-<p>Connect your browser to the host and you should see the WebDyne output</p>
+<p>Connect your browser to the host and you should see the WebDyne output.</p>
+<p>You can shortcut install of Plack/Starman versions via:</p>
+<div class="language-text highlight"><pre><span></span><code>#  Install WebDyne Plack (PSGI)
+#
+$ cpanm Task::WebDyne::Plack
+
+
+#  Or Starman. Note if Starman install fails you may need to force install of Net::Server via
+#  cpanm --force Net::Server
+#  and try again
+#
+$ cpanm Task::WebDyne::Starman
+</code></pre></div>
 <h2 id="apache-mod_perl">Apache mod_perl<a class="headerlink" href="#apache-mod_perl" title="Permanent link">&para;</a></h2>
 <p>If using Apache with mod_perl you can initialise WebDyne using the
 <code>wdapacheinit</code> command. This will attempt to auto-discover where the
@@ -780,12 +817,12 @@ Starting httpd:                                            [  OK  ]
 </code></pre></div>
 <h3 id="manual-configuration-of-apache">Manual configuration of Apache<a class="headerlink" href="#manual-configuration-of-apache" title="Permanent link">&para;</a></h3>
 <p>If the <code>wdapacheinit</code> command does not work as expected on your system
-then the Apache config files can be modified manually.</p>
-<p>Include the following section in the Apache httpd.conf file (or create a
-webdyne.conf file if you distribution supports conf.d style
-configuration files). These following config files are written with
+then the Apache configuration files can be modified manually.</p>
+<p>Include the following section in the Apache <code>httpd.conf</code> file (or create
+a <code>webdyne.conf</code> file if you distribution supports <code>conf.d</code> style
+configuration files). The following configuration files are written with
 Apache 2.4 syntax - adjust path and syntax as required:</p>
-<div class="language-text highlight"><pre><span></span><code>#  Need mod_perl, load up if not already done
+<div class="language-text highlight"><pre><span></span><code>#  Need mod_perl, load up if not already done. Adjust path according to your distro.
 #
 &lt;IfModule !mod_perl.c&gt;
 LoadModule perl_module &quot;/etc/httpd/modules/mod_perl.so&quot;
@@ -843,23 +880,31 @@ distribution - locate the correct one for your distribution)</p>
 </code></pre></div>
 <p>Restart Apache and check for any errors.</p>
 <h2 id="psgi">PSGI<a class="headerlink" href="#psgi" title="Permanent link">&para;</a></h2>
-<p>Ensure that Plack is installed on your system via CPAN:</p>
+<p>Ensure that Plack is installed on your system via CPAN after installing
+WebDyne:</p>
 <div class="language-text highlight"><pre><span></span><code># Via CPAN
 #
 perl -MCPAN -e &#39;install Plack&#39;
-perl -MCPAN -e &#39;install Plack::Middleware::ForceEnv&#39;
 
 # Modern systems
 #
 cpan Plack
-cpan Plack::Middleware::ForceEnv
 
 # Or better via CPANM
 #
 cpanm Plack
-cpanm Plack::Middleware::ForceEnv
+
+# Or just do the whole lot in one hit. For WebDyne + Plack
+#
+cpanm Task::WebDyne::Plack
+
+# Or WebDyne + Plack + Starman. Note if Starman install fails you may need to force install of
+# Net::Server via :
+# cpanm --force Net::Server
+#
+cpanm Task::WebDyne::Starman
 </code></pre></div>
-<p>You can then start a basic WebDyne server by running the webdyne.psgi
+<p>you can then start a basic WebDyne server by running the webdyne.psgi
 command with the --test parameter</p>
 <div class="language-text highlight"><pre><span></span><code>webdyne.psgi --test
 </code></pre></div>
@@ -869,7 +914,8 @@ the IP address of your server in your web browser to view the test page
 and validate the WebDyne is working correctly:</p>
 <p>Once verified as working correctly you can serve WebDyne content from a
 particular directory - or from a single file - using the syntax:</p>
-<div class="language-text highlight"><pre><span></span><code>#  To serve up all files in a directory:
+<div class="language-text highlight"><pre><span></span><code>#  To serve up all files in a directory. If app.psp exists in the directory it will be 
+#  served by default. If it does not exist a file index will be displayed
 #
 $ webdyne.psgi &lt;directory&gt;
 
@@ -882,6 +928,26 @@ $ webdyne.psgi /var/www/html
 #
 $ webdyne.psgi /var/www/html/time.psp
 </code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Starting WebDyne this way will enable "developer" mode in that a
+directory index will be displayed if an app.psp file does not exist, and
+full error messages with code backtraces are displayed.</p>
+</div>
+<p>To start with plackup:</p>
+<div class="language-text highlight"><pre><span></span><code>#  Start WebDyne via plackup in the current directory. A file named app.psp must exist,
+#  directory indexing will not be performed.
+#
+DOCUMENT_ROOT=. plackup `which webdyne.psgi`
+
+#  Start serving a single file
+#
+DOCUMENT_ROOT=./time.psp plackup /opt/perl5/bin/webdyne.psgi
+
+#  Start with some Plack middleware added
+#
+DOCUMENT_ROOT=./time.psp  plackup -e &#39;enable Plack::Middleware::Debug&#39; `which webdyne.psgi`
+</code></pre></div>
 <p>The above starts a single-threaded web server using Plack. To start the
 more performant Starman server (assuming installed):</p>
 <div class="language-text highlight"><pre><span></span><code>#  Start Starman instance. Substitute port + document root and location of webdyne.psgi
@@ -891,13 +957,14 @@ $ DOCUMENT_ROOT=/var/www/html starman --port 5001 /usr/local/bin/webdyne.psgi
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Plack (via webdyne.psgi) and Starman versions of WebDyne serve basic
-static files such as css, js, jpg etc. If you want more control over non
-.psp file you should us best practices for service such files via a
-traditional web server front end. Also note the Starman instance of
-WebDyne does not support the --test option or indexing - it assumes you
-are running in a production environment and have checked everything with
-the Plack implementation of webdyne.psgi first.</p>
+<p>Plack (via <code>webdyne.psgi</code> or <code>plackup</code>) and Starman versions of WebDyne
+serve basic static files such as css, js, jpg etc. If you want more
+control over non .psp file you should us best practices for service such
+files via a traditional web server front end. Also note the Starman and
+plackup instances of WebDyne do not support the --test option or
+indexing - it assumes you are running in a production environment and
+have checked everything with the Plack implementation of <code>webdyne.psgi</code>
+first.</p>
 </div>
 <p>Numerous options can be set from the command line via environment
 variables, including Webdyne configuration. See relevant section for all
@@ -916,9 +983,8 @@ $ docker pull ghcr.io/aspeer/webdyne:latest
 
 #  Or Alpine/Fedora/Perl versions
 #
-# docker pull ghcr.io/aspeer/webdyne-alpine:latest
-# docker pull ghcr.io/aspeer/webdyne-fedora:latest
-# docker pull ghcr.io/aspeer/webdyne-perl:latest
+# docker pull ghcr.io/aspeer/webdyne:alpine
+# docker pull ghcr.io/aspeer/webdyne:fedora
 </code></pre></div>
 <p>Start the docker container with the command:</p>
 <div class="language-text highlight"><pre><span></span><code>$ docker run -e PORT=5002 -p 5002:5002 --name=webdyne webdyne
@@ -927,7 +993,7 @@ $ docker pull ghcr.io/aspeer/webdyne:latest
 that location should show the server <em>localtime</em> test page</p>
 <p>To mount a local page and serve it through the docker container use the
 command:</p>
-<div class="language-text highlight"><pre><span></span><code>docker run --mount &lt;local_dir&gt;:/app:ro -e PORT=5011 -e DOCUMENT_ROOT=/app -p 5011:5011 --name=webdyne webdyne
+<div class="language-text highlight"><pre><span></span><code>docker run -v $(pwd):/app:ro -e PORT=5011 -e DOCUMENT_ROOT=/app -p 5011:5011 --name webdyne webdyne:latest
 </code></pre></div>
 <p>This will tell docker to mount the local directory into the docker
 container. If there is a default file named app.psp in the location it
