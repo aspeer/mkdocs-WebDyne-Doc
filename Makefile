@@ -8,7 +8,6 @@ PSP_FILES := $(shell find $(PSP_DIR) -type f -name '*.psp')
 DOC_DIR := docs
 SCRIPTS_DIR := scripts
 
-
 DOCKER_DIR := docker
 DOCKER_IMAGE := webdyne-mkdocs:latest
 DOCKER_STAMP := $(DOCKER_DIR)/.built

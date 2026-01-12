@@ -115,19 +115,15 @@ sub main {
         my $fh=IO::File->new($fn, O_WRONLY|O_TRUNC|O_CREAT) || 
             die ("unable to write to fn $fn, $!");
             
-        #  Update anchors
+        #  Update anchors to include file names
         #
         while (my($anchor, $title_fn)=each %anchor) {
-            #$md[$ix]=~s/\[(.*?)\]\(\#\Q${anchor}\E\)/\[$1\]\(${title_fn}#${anchor}\)/gs;
+        
+            #  Search for links and add the file name in before the anchor
+            #
             my $escaped_anchor = quotemeta($anchor);
-            $md[$ix] =~ s{
-              \[([^\]]+)\]            # match link text
-              \(
-                \#${escaped_anchor}   # match anchor
-              \)
-            }{
-              "[$1](${title_fn}#$anchor)"
-            }gsx;
+            $md[$ix] =~ s/\[([^\]]+)\]\(\#${escaped_anchor}\)/[$1](${title_fn}#$anchor)/gs;
+
         }
         print $fh $md[$ix];
         $fh->close();
@@ -135,10 +131,7 @@ sub main {
         
     }
     
-    #use Data::Dumper;
-    #die Dumper(\%anchor);
-    
-    
+
     #  All done
     #
     return \undef
