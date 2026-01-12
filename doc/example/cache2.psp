@@ -27,6 +27,11 @@ my %results=(
 
 sub cache {
 
+	#  Get self ref
+	#
+	my $self=shift();
+	
+
 	#  Return UID based on month
 	#
 	my $uid=undef;
