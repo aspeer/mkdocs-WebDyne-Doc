@@ -219,7 +219,7 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/aspeer/mkdocs-WebDyne-Doc" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/aspeer/WebDyne" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
@@ -272,7 +272,7 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/aspeer/mkdocs-WebDyne-Doc" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/aspeer/WebDyne" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
@@ -710,15 +710,11 @@ the entire page should be rendered once at compile time, then the static
 HTML resulting from that compile will be handed out on subsequent
 requests. Any active element or code in the page will only be run once.
 There are no API methods associated with this module</p>
-<p>See the 
-              "<a href="../03_advanced_usage/#static_sections">Static Sections</a>"
-             reference for more
+<p>See the <a href="../03_advanced_usage/#static_sections">Static Sections</a> reference for more
 information on how to use this module within an individual page.</p>
-<p>WebDyne::Static can also be used in conjunction with the</p>
-<div class="language-text highlight"><pre><span></span><code>          &quot;[WebDyne::Chain](07_extending_webdyne.md#webdyne_chain)&quot;
-         module to flag all files in a directory
-</code></pre></div>
-<p>or location as static. An example httpd.conf snippet:</p>
+<p>WebDyne::Static can also be used in conjunction with the
+<a href="./#webdyne_chain">WebDyne::Chain</a> module to flag all files in a directory
+or location as static. An example httpd.conf snippet:</p>
 <div class="language-text highlight"><pre><span></span><code>&lt;Location /static/&gt;
 
 PerlHandler     WebDyne::Chain
@@ -732,15 +728,11 @@ the page wants the engine to call a designated routine every time it is
 run. The called routine can generate a new UID (Unique ID) for the page,
 or force it to be recompiled. There are no API methods associated with
 this module.</p>
-<p>See the 
-              "<a href="../03_advanced_usage/#caching_section">Caching</a>"
-             section above for more information
+<p>See the <a href="../03_advanced_usage/#caching_section">Caching</a> section above for more information
 on how to use this module with an individual page.</p>
-<p>WebDyne::Cache can also be used in conjunction with the</p>
-<div class="language-text highlight"><pre><span></span><code>          &quot;[WebDyne::Chain](07_extending_webdyne.md#webdyne_chain)&quot;
-         module to flag all files in a
-</code></pre></div>
-<p>particular location are subject to a cache handling routine. An example
+<p>WebDyne::Cache can also be used in conjunction with the
+<a href="./#webdyne_chain">WebDyne::Chain</a> module to flag all files in a
+particular location are subject to a cache handling routine. An example
 httpd.conf snippet:</p>
 <div class="language-text highlight"><pre><span></span><code>&lt;Location /cache/&gt;
 
@@ -755,10 +747,8 @@ PerlSetVar      WebDyneCacheHandler &#39;&amp;MyModule::cache&#39;
 </code></pre></div>
 <p>Note that any package used as the WebDyneCacheHandler target should be
 already loaded via "PerlRequire" or similar mechanism.</p>
-<p>As an example of why this could be useful consider the 
-              "<a href="../03_advanced_usage/#caching_section">caching
-examples</a>"
-             above. Instead of flagging that an
+<p>As an example of why this could be useful consider the <a href="../03_advanced_usage/#caching_section">caching
+examples</a> above. Instead of flagging that an
 individual file should only be re-compiled every x seconds, that policy
 could be applied to a whole directory with no alteration to the
 individual pages.</p>
@@ -775,9 +765,7 @@ Call via $self-&gt;session_id() from perl code.</p>
 <dd>
 <p>Constant. Holds the name of the cookie that will be used to assign
 the session id in the users browser. Defaults to "session". Set as
-per 
-          "<a href="../05_webdyne_api/#webdyne_constants">WebDyne::Constants</a>"
-         section. Resides in the
+per <a href="../05_webdyne_api/#webdyne_constants">WebDyne::Constants</a> section. Resides in the
 <code>WebDyne::Session::Constant</code> package namespace.</p>
 </dd>
 </dl>
@@ -794,11 +782,9 @@ use WebDyne::Session;
 1;
 </code></pre></div>
 <p><a href="https://demo.webdyne.org/session1.psp">Run</a></p>
-<p>WebDyne::Session can also be used in conjunction with the</p>
-<div class="language-text highlight"><pre><span></span><code>          &quot;[WebDyne::Chain](07_extending_webdyne.md#webdyne_chain)&quot;
-         module to make session information
-</code></pre></div>
-<p>available to all pages within a location. An example httpd.conf snippet:</p>
+<p>WebDyne::Session can also be used in conjunction with the
+<a href="./#webdyne_chain">WebDyne::Chain</a> module to make session information
+available to all pages within a location. An example httpd.conf snippet:</p>
 <div class="language-text highlight"><pre><span></span><code>&lt;Location /&gt;
 
 # We want session cookies for our whole site
