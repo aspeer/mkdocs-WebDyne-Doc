@@ -695,7 +695,7 @@ PerlSetVar      WebDyneTemplate &#39;/path/to/template.psp&#39;
 &lt;/Location&gt;
 </code></pre></div>
 <p>The above example would place all pages within the named template, and
-make session information to all pages via $self-&gt;session_id(). A good
+make session information to all pages via <code>$self-&gt;session_id()</code>. A good
 start to a rudimentary CMS.</p>
 <dl>
 <dt>WebDyneChain</dt>
@@ -898,9 +898,9 @@ use WebDyne::Template qw(template1.psp);
 content file (as was done in the above example), nor would we want to
 have to "use WebDyne::Template" in every content file.</p>
 <p>To overcome this WebDyne::Template can read the template file name using
-the Apache dir_config function, and assign a template on a per location
-basis using the WebDyneTemplate directive. Here is a sample <code>httpd.conf</code>
-file:</p>
+the Apache <code>dir_config</code> function, and assign a template on a per
+location basis using the WebDyneTemplate directive. Here is a sample
+<code>httpd.conf</code> file:</p>
 <div class="language-text highlight"><pre><span></span><code>&lt;Location /&gt;
 
 PerlHandler     WebDyne::Chain

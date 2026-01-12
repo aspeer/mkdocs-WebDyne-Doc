@@ -768,7 +768,7 @@ can be implemented. First the most basic usage example:</p>
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/hello1.psp">Run</a></p>
 <p>So far not too exciting - after all we are mixing code and content. Lets
-try again - the &lt;perl&gt; tag can tag a "handler" attribute which
+try again - the &lt;perl&gt; tag can take a handler attribute which
 references (calls) a perl subroutine - in this case embedded in the .psp
 file under the __PERL__ token.</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
@@ -835,9 +835,9 @@ in the <code>@INC</code> path.</p>
 </span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/hello3.psp">Run</a></p>
-<p>If not already resident the module (in this case "Digest::MD5") will be
+<p>If not already resident the module (in this case <code>Digest::MD5</code>) will be
 loaded by WebDyne, so it must be available somewhere in the <code>@INC</code> path.
-Alternate syntaxes are supported - these work in the same way:</p>
+Alternate syntaxes are supported - these all work in the same way:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Hello World<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
@@ -926,8 +926,8 @@ attribute</p>
 <p>Which can be pretty handy, but looks a bit cumbersome - the tags
 interfere with the flow of the text, making it harder to read. For this
 reason in-line perl can also be flagged in a WebDyne page using the
-shortcuts !{! .. !}, or by the use of processing instructions (<strong>&lt;? ..
-?&gt;</strong>) e.g.:</p>
+shortcuts !<em>{! .. !}</em>, or by the use of processing instructions (<em>&lt;? ..
+?&gt;</em>) e.g.:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Hello World<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
@@ -945,8 +945,8 @@ shortcuts !{! .. !}, or by the use of processing instructions (<strong>&lt;? ..
 </span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/inline3.psp">Run</a></p>
-<p>The !{! .. !} denotation can also be used in tag attributes (processing
-instructions, and &lt;perl&gt; tags cannot):</p>
+<p>The <em>!{! .. !}</em> denotation can also be used in tag attributes
+(processing instructions, and &lt;perl&gt; tags cannot):</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Hello World<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
@@ -966,9 +966,9 @@ instructions, and &lt;perl&gt; tags cannot):</p>
 <h3 id="use-of-the-perl-tag-for-non-inline-code">Use of the &lt;perl&gt; tag for non-inline code.<a class="headerlink" href="#use-of-the-perl-tag-for-non-inline-code" title="Permanent link">&para;</a></h3>
 <p>Any code that is not co-mingled with the HTML of a document is
 <em>non-inline</em> code. It can be segmented from the content HTML using the
-__PERL__ delimiter, or by being kept in a completely different
-package and referenced as an external Perl subroutine call. An example
-of non-inline code:</p>
+__PERL__ token, or by being kept in a completely different package
+and referenced as an external Perl subroutine call. An example of
+non-inline code:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Hello World<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
@@ -1149,11 +1149,11 @@ follows:</p>
 <p>The import functionality is very basic - it only maps to the function in
 the module, it does not call the actual module import() facility. If the
 module you are importing does something sophisticated in its import()
-function (such as auto-creating methods) this will not work. Note also
-nothing is imported by default, even if automatically exported by a
-module.</p>
+function (such as auto-creating methods) this will not work.
+Additionally nothing is imported by default, even if automatically
+exported by a module.</p>
 </div>
-<p>So a very basic demo of the above would look as follows:</p>
+<p>A very basic demo of the above would look as follows:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="p">&lt;</span><span class="nt">start_html</span><span class="p">&gt;</span>
 </span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;</span>
 </span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
@@ -1691,7 +1691,7 @@ should provide an example of potential variable usage:</p>
 </span><span id="__span-27-11"><a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a>Request Method: *{REQUEST_METHOD}
 </span><span id="__span-27-12"><a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a><span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
 </span><span id="__span-27-13"><a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a><span class="cm">&lt;!-- Same as Perl code --&gt;</span>
-</span><span id="__span-27-14"><a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a>Request Method:: 
+</span><span id="__span-27-14"><a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a>Request Method: 
 </span><span id="__span-27-15"><a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a><span class="p">&lt;</span><span class="nt">perl</span><span class="p">&gt;</span> $ENV{&#39;REQUEST_METHOD&#39;} <span class="p">&lt;/</span><span class="nt">perl</span><span class="p">&gt;</span>
 </span><span id="__span-27-16"><a id="__codelineno-27-16" name="__codelineno-27-16" href="#__codelineno-27-16"></a>
 </span><span id="__span-27-17"><a id="__codelineno-27-17" name="__codelineno-27-17" href="#__codelineno-27-17"></a>
@@ -1796,7 +1796,7 @@ and stylesheets:</p>
 </span><span id="__span-29-15"><a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a>
 </span><span id="__span-29-16"><a id="__codelineno-29-16" name="__codelineno-29-16" href="#__codelineno-29-16"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
 </span><span id="__span-29-17"><a id="__codelineno-29-17" name="__codelineno-29-17" href="#__codelineno-29-17"></a><span class="w">  </span><span class="ow">new</span><span class="w"> </span><span class="nx">Typed</span><span class="p">(</span><span class="s1">&#39;#typed&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-29-18"><a id="__codelineno-29-18" name="__codelineno-29-18" href="#__codelineno-29-18"></a><span class="w">    </span><span class="nx">strings</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Lorem&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Ipsum&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;!{! localtime !}&quot;</span><span class="p">],</span>
+</span><span id="__span-29-18"><a id="__codelineno-29-18" name="__codelineno-29-18" href="#__codelineno-29-18"></a><span class="w">    </span><span class="nx">strings</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Lorem&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Ipsum&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Dictum&quot;</span><span class="p">],</span>
 </span><span id="__span-29-19"><a id="__codelineno-29-19" name="__codelineno-29-19" href="#__codelineno-29-19"></a><span class="w">    </span><span class="nx">typeSpeed</span><span class="o">:</span><span class="w"> </span><span class="mf">50</span><span class="p">,</span>
 </span><span id="__span-29-20"><a id="__codelineno-29-20" name="__codelineno-29-20" href="#__codelineno-29-20"></a><span class="w">    </span><span class="nx">backSpeed</span><span class="o">:</span><span class="w"> </span><span class="mf">25</span><span class="p">,</span>
 </span><span id="__span-29-21"><a id="__codelineno-29-21" name="__codelineno-29-21" href="#__codelineno-29-21"></a><span class="w">    </span><span class="nx">loop</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
@@ -2015,7 +2015,7 @@ responses:</p>
 </span><span id="__span-32-14"><a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a>
 </span><span id="__span-32-15"><a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a><span class="cm">&lt;!-- And print out name if we have it --&gt;</span>
 </span><span id="__span-32-16"><a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a>
-</span><span id="__span-32-17"><a id="__codelineno-32-17" name="__codelineno-32-17" href="#__codelineno-32-17"></a><span class="p">&lt;</span><span class="nt">perl</span> <span class="na">handler</span><span class="o">=</span><span class="s">&quot;hello&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-32-17"><a id="__codelineno-32-17" name="__codelineno-32-17" href="#__codelineno-32-17"></a><span class="p">&lt;</span><span class="nt">perl</span> <span class="na">handler</span><span class="o">=</span><span class="s">&quot;hello&quot;</span> <span class="na">run</span><span class="o">=</span><span class="s">&quot;+{name}&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-32-18"><a id="__codelineno-32-18" name="__codelineno-32-18" href="#__codelineno-32-18"></a>Hello ${name}, pleased to meet you.
 </span><span id="__span-32-19"><a id="__codelineno-32-19" name="__codelineno-32-19" href="#__codelineno-32-19"></a><span class="p">&lt;/</span><span class="nt">perl</span><span class="p">&gt;</span>
 </span><span id="__span-32-20"><a id="__codelineno-32-20" name="__codelineno-32-20" href="#__codelineno-32-20"></a>
@@ -2121,10 +2121,10 @@ defined Perl methods are called. For example:</p>
 <p><a href="https://demo.webdyne.org/cgi4.psp">Run</a></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Values stored in the %_ variable are single value only, and reflect the
-"last" value of any multivalue parameter supplied. The %_ variable is a
-convenience for simple access - if more complex operations are required
-use the CGI() object.</p>
+<p>Values stored in the <code>%_</code> variable are single value only, and reflect
+the "last" value of any multivalue parameter supplied. The <code>%_</code> variable
+is a convenience for simple access - if more complex operations are
+required use the <code>CGI()</code> object.</p>
 </div>
 
 

@@ -676,8 +676,10 @@ purposes.</p>
 </dd>
 <dt><code>wdlint</code></dt>
 <dd>
-<p>Run perl -c -w over code in __PERL__ sections on any .psp file
-to check for syntax errors.</p>
+<p>Run <code>perl -c -w</code> over code in __PERL__ sections on any .psp file
+to check for syntax errors. Will automatically skip HTML code. It
+only checks code in the __PERL__ area, and won't check syntax in
+in-line perl, dynamic attributes etc.</p>
 </dd>
 </dl>
 <h2 id="other-files-referenced-by-webdyne">Other files referenced by WebDyne<a class="headerlink" href="#other-files-referenced-by-webdyne" title="Permanent link">&para;</a></h2>

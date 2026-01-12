@@ -781,6 +781,20 @@ Javascript function in the page. Takes the same parameters as the
 type="application/json"&gt;[{"foo":1}]&lt;/script&gt;</p>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If returning JSON boolean values in code you should use the JSON::true
+and JSON::false values rather than 0 or 1, e.g.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;start_html&gt;
+&lt;json handler/&gt;
+...
+__PERL__
+use JSON:
+sub handler {
+    return { enabled =&gt; JSON::true }
+}
+</code></pre></div>
+</div>
 </dd>
 <dt>&lt;block&gt;</dt>
 <dd>
@@ -1048,6 +1062,11 @@ emulating say().</p>
 <p>Return the elapsed time since the WebDyne hander started rendering
 this page. Obviously only meaningful if called at the end of a page,
 just before final output to browser.</p>
+</dd>
+<dt>err()</dt>
+<dd>
+<p>Return and/or raise an error to the WebDyne handler. Supply the
+actual error message as text.</p>
 </dd>
 </dl>
 <h2 id="webdyne_constants">WebDyne Constants<a class="headerlink" href="#webdyne_constants" title="Permanent link">&para;</a></h2>
@@ -1364,8 +1383,8 @@ variables are available:</p>
 <dl>
 <dt>WEBDYNE_CONF</dt>
 <dd>
-<p>Location of the WebDyne configuration file to load. Loading an
-alternate configuration file will bypass loading of any other
+<p>Location of the WebDyne configuration file to load. Loading of an
+alternate configuration file will bypass loading of any/all other
 configuration files (e.g. /etc/webdyne.conf.pl). They are not
 additive - only configuration directives in the nominated by this
 environment variable will be processed. e.g.</p>

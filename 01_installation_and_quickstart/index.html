@@ -930,11 +930,12 @@ $ webdyne.psgi /var/www/html/time.psp
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Starting WebDyne this way will enable "developer" mode in that a
+<p>Starting WebDyne this way will enable "developer" mode such that a
 directory index will be displayed if an app.psp file does not exist, and
-full error messages with code backtraces are displayed.</p>
+full error messages with code backtraces are displayed if any errors are
+encounterd.</p>
 </div>
-<p>To start with plackup:</p>
+<p>To start with <code>plackup</code>:</p>
 <div class="language-text highlight"><pre><span></span><code>#  Start WebDyne via plackup in the current directory. A file named app.psp must exist,
 #  directory indexing will not be performed.
 #
@@ -968,14 +969,15 @@ first.</p>
 </div>
 <p>Numerous options can be set from the command line via environment
 variables, including Webdyne configuration. See relevant section for all
-WebDyne configuration options but assuming in a local file
-webdyne.conf.pl:</p>
+WebDyne configuration options but assuming a local file
+<code>webdyne.conf.pl</code>:</p>
 <div class="language-text highlight"><pre><span></span><code>#  Start instance webdyne.psgi using local config file
 #
 $ WEBDYNE_CONF=./webdyne.conf.pl webdyne.psgi --port=5012 .
 </code></pre></div>
 <h2 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h2>
-<p>Docker containers are available from the Github Container Registry.
+<p>Docker containers are available from the <a href="https://github.com/aspeer/WebDyne/pkgs/container/webdyne">Github Container
+Registry</a>.
 Install the default Docker container (based on Debian) via:</p>
 <div class="language-text highlight"><pre><span></span><code>#  Default debian version
 #
@@ -996,7 +998,7 @@ command:</p>
 <div class="language-text highlight"><pre><span></span><code>docker run -v $(pwd):/app:ro -e PORT=5011 -e DOCUMENT_ROOT=/app -p 5011:5011 --name webdyne webdyne:latest
 </code></pre></div>
 <p>This will tell docker to mount the local directory into the docker
-container. If there is a default file named app.psp in the location it
+container. If there is a default file named <code>app.psp</code> in the location it
 will be displayed. If there is a <code>cpanfile</code> in the mount directory any
 modules will be installed into the docker container automatically.</p>
 <h3 id="deploying-webdyne-apps-with-docker">Deploying WebDyne apps with Docker<a class="headerlink" href="#deploying-webdyne-apps-with-docker" title="Permanent link">&para;</a></h3>
