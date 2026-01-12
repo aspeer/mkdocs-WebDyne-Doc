@@ -413,7 +413,7 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
 
       <tip>
         <para>Starting WebDyne this way will enable "developer" mode such that a directory index will be displayed if an app.psp file does not exist, and full error messages with code
-        backtraces are displayed if any errors are encounterd. </para>
+        backtraces are displayed if any errors are encounterd.</para>
       </tip>
 
       <para>To start with <command>plackup</command>:</para>
@@ -1697,7 +1697,12 @@ END
 
             <para><programlisting language="html"><xi:include href="example/htmx_demo3.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
             xlink:href="https://demo.webdyne.org/example/htmx_demo3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-          </example><example>
+          </example><important>
+            <para>WebDyne does not support single quoted tags - you can use them in .psp files, but the rendered HTML will always emit tag attributes as double quoted. For attributes such as
+            <property>hx-vals</property> it is not possible to supply JSON strings within single quotes, i.e. this will not work: <tag>&lt;button hx-vals='{ "foo" : "bar" }'&gt;</tag> - the
+            single quotes will be emitted as double quotes, causing the browser to misinterpret the tag. If you need to supply quoted keys uses the <code>js:{}</code> syntax above.</para>
+          </important>Here is the HTML page used by the above example to fetch the requested time. You can run it, however nothing will be emitted unless you supply a
+        <code>?time_local=1</code> or <code>?time_utc=1</code> query parameter in your browser.<example>
             <info>
               <title>HTMX Example</title>
             </info>
@@ -2818,7 +2823,7 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
         </variablelist>
 
         <tip>
-          <para>Configuration items can be overridden by setting of environment variables of the same name with the desired value. </para>
+          <para>Configuration items can be overridden by setting of environment variables of the same name with the desired value.</para>
         </tip>
 
         <para>Extension modules (e.g., WebDyne::Session) have their own constants - see each package for details.</para>
@@ -3020,7 +3025,7 @@ PerlSetVar      WebDyneChain                 'WebDyne::Session'
 
           <listitem>
             <para>Run <command>perl -c -w</command> over code in <token>__PERL__</token> sections on any .psp file to check for syntax errors. Will automatically skip HTML code. It only checks
-            code in the <token>__PERL__</token> area, and won't check syntax in in-line perl, dynamic attributes etc. </para>
+            code in the <token>__PERL__</token> area, and won't check syntax in in-line perl, dynamic attributes etc.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -3306,7 +3311,7 @@ PerlSetVar      WebDyneTemplate '/path/to/template.psp'
 
     <itemizedlist>
       <listitem>
-        <para>Incorrectly closed or matched HTML tags in the source </para>
+        <para>Incorrectly closed or matched HTML tags in the source</para>
       </listitem>
 
       <listitem>

@@ -7,13 +7,11 @@
 
 <body>
 <p>
-
 This page will only update the time once every 10 seconds. Click refresh to test.
-
 <p>
-
 Hello World !{! localtime() !}
-
+<p>
+<button onclick="location.reload()">Refresh</button>
 </body>
 </html>
 

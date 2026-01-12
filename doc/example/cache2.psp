@@ -1,10 +1,11 @@
 <!-- Start to cheat by using start/end_html tags to save space -->
 
 <start_html>
-<form handler="GET">
+<start_form>
 Get sales results for:&nbsp;<popup_menu name="month" values="@{qw(January February March)}">
+<p>
 <submit>
-</form>
+<end_form>
 
 <perl handler="results">
 Sales results for +{month}: $${results}
@@ -25,30 +26,36 @@ my %results=(
 	March		=> 40
 );
 
+
 sub cache {
+
 
 	#  Get self ref
 	#
 	my $self=shift();
-	
 
-	#  Return UID based on month
+
+	#  Change page UUID based on month to cache
+	#  reults for that month to static HTML
 	#
-	my $uid=undef;
 	if (my $month=$_{'month'}) {
 
 		#  Make sure month is valid
 		#
-		$uid=$month if defined $results{$month}
+		if (defined(my $uid=$results{$month})) {
+		
+		    #   It is. Change page UUID (inode) using month as a seed
+		    #
+            $self->inode($uid)
+            
+        }
 
 	}
 	
-	
-	#  Update
-	#
-	if ($uid) {
-        $self->inode($uid);
-    }
+    
+    #  Done
+    #
+    return \undef;
 
 }
 

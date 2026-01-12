@@ -9,7 +9,7 @@ Click the button below to load time data from the server.</p>
   hx-get="/htmx_time3.psp"
   hx-target="#time-container"
   hx-swap="innerHTML"
-  hx-vals="js:{ time_local: 1 }"
+  hx-vals="js:{ 'time_local': 1 }"
 >
 Get Local Time
 </button>
@@ -22,7 +22,7 @@ Get Local Time
   hx-get="/htmx_time3.psp"
   hx-target="#time-container"
   hx-swap="innerHTML"
-  hx-vals="js:{ time_utc: 1 }"
+  hx-vals="js:{ 'time_utc': 1 }"
 >
 Get UTC Time
 </button>
