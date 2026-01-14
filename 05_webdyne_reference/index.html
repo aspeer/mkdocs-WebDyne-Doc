@@ -12,7 +12,7 @@
         <meta name="author" content="Andrew Speer">
       
       
-        <link rel="canonical" href="https://webdyne.org/05_webdyne_api/">
+        <link rel="canonical" href="https://webdyne.org/05_webdyne_reference/">
       
       
         <link rel="prev" href="../04_error_handling/">
@@ -26,7 +26,7 @@
     
     
       
-        <title>WebDyne API - WebDyne</title>
+        <title>WebDyne Reference - WebDyne</title>
       
     
     
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#webdyne-api" class="md-skip">
+        <a href="#webdyne-reference" class="md-skip">
           Skip to content
         </a>
       
@@ -122,7 +122,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              WebDyne API
+              WebDyne Reference
             
           </span>
         </div>
@@ -416,7 +416,7 @@
   
   
   <span class="md-ellipsis">
-    WebDyne API
+    WebDyne Reference
     
   </span>
   
@@ -429,7 +429,7 @@
   
   
   <span class="md-ellipsis">
-    WebDyne API
+    WebDyne Reference
     
   </span>
   
@@ -688,7 +688,7 @@
   
 
 
-<h1 id="webdyne-api">WebDyne API<a class="headerlink" href="#webdyne-api" title="Permanent link">&para;</a></h1>
+<h1 id="webdyne-reference">WebDyne Reference<a class="headerlink" href="#webdyne-reference" title="Permanent link">&para;</a></h1>
 <h2 id="webdyne-tags">WebDyne tags<a class="headerlink" href="#webdyne-tags" title="Permanent link">&para;</a></h2>
 <p>Reference of WebDyne tags and supported attributes</p>
 <dl>
@@ -709,10 +709,10 @@ module (Digest::MD5 in this example).</p>
 <dt>require|package=[Module::Name] | [Path/Filename.pm]</dt>
 <dd>
 <p>Load a Perl module or file needed to support a method call. E.g.
-&lt;perl require="Digest::MD5"/&gt; to load the Digest::MD5 module.
-Anything with a [./\] character is treated as file patch to a
-Perl file (e.g. "/home/user/module.pm"), otherwise it is treated
-as module name ("Digest::MD5")</p>
+&lt;perl require="Digest::MD5"/&gt; to load the <code>Digest::MD5</code>
+module. Anything with a [./\] character is treated as file
+patch to a Perl file (e.g. "<code>/home/user/module.pm</code>"), otherwise
+it is treated as module name ("<code>Digest::MD5</code>")</p>
 </dd>
 <dt>import=[function], &lt;function&gt;, &lt;function&gt; ..</dt>
 <dd>
@@ -725,16 +725,16 @@ Functions are then available anywhere in the file namespace.</p>
 <dt>param=scalar|hash</dt>
 <dd>
 <p>Parameters to be supplied to perl routine. Supply a hash
-reference using the "%{a=&gt;1, b=&gt;2}" convention e.g. &lt;perl
+reference using the "<code>%{a=&gt;1, b=&gt;2}</code>" convention e.g. &lt;perl
 method="showname" param="%{name =&gt;'Bob'}"/&gt; or as a simple
 scalar, e.g. &lt;perl method="showname", param=&gt;"Bob"/&gt;</p>
 </dd>
-<dt>static=1</dt>
+<dt>static</dt>
 <dd>
 <p>This Perl code to be run once only and the output cached for all
 subsequent requests.</p>
 </dd>
-<dt>run=1</dt>
+<dt>run</dt>
 <dd>
 <p>If the run attribute is supplied it is evaluated for a true
 value. If a true value exists the code is run, if not the code
@@ -743,23 +743,23 @@ is run by default. Useful for conditional running of code when a
 form has been submitted, e.g. &lt;perl handler="showname"
 run="+{name}"&gt; .. &lt;/perl&gt;</p>
 </dd>
-<dt>file=1</dt>
+<dt>file</dt>
 <dd>
 <p>Force package|require attribute to be treated as a file, even
 if it appears to "look like" a module name to the loader. Rarely
 needed, use case would be a Perl module in the current directory
 without an extension.</p>
 </dd>
-<dt>hidden=1</dt>
+<dt>hidden</dt>
 <dd>
 <p>The output from the Perl module will be hidden and no rendered
 to the page.</p>
 </dd>
-<dt>chomp=1</dt>
+<dt>chomp</dt>
 <dd>
 <p>Any new lines at the end of the output will be truncated.</p>
 </dd>
-<dt>autonewline=1</dt>
+<dt>autonewline</dt>
 <dd>
 <p>A newline character ("\n") will be inserted between each print
 statement in the perl block or code.</p>
@@ -770,15 +770,39 @@ statement in the perl block or code.</p>
 <dd>
 <p>Run Perl code similar to &lt;perl&gt; tag but expects code to return a
 HASH, ARRAY ref or plain scalar, which is encoded into JSON,
-outputting in a &lt;script&gt; tag with type="application/json". When
-supplied with an id attribute this data can be used by any
+outputting within a &lt;script&gt; tag with type="application/json".
+When supplied with an id attribute this data can be used by any
 Javascript function in the page. Takes the same parameters as the
 &lt;perl&gt; tag and specific attributes:</p>
 <dl>
 <dt>id=[name]</dt>
 <dd>
-<p>ID this &lt;script&gt; tag will be given, e.g. &lt;script id="mydata"
-type="application/json"&gt;[{"foo":1}]&lt;/script&gt;</p>
+<p>ID this &lt;script&gt; tag will be given, e.g.
+<code>&lt;script id="mydata" type="application/json"&gt;[{"foo":1}]&lt;/script&gt;</code></p>
+</dd>
+<dt>pretty</dt>
+<dd>
+<p>Use the JSON pretty() method to format the output data into
+something more human readable. Not enabled by default. Enable
+with pretty=1 attribute or globally via <code>$WEBDYNE_JSON_PRETTY=1</code>
+configuration setting.</p>
+</dd>
+<dt>canonical</dt>
+<dd>
+<p>Use the JSON canonical() method to sort JSON data. Enabled by
+default, disable using canonical=0 attribute value or via
+<code>$WEBDYNE_JSON_CANONICAL=0</code> configuration setting.</p>
+</dd>
+<dt>perl</dt>
+<dd>
+<p>Interpret content between starting and ending &lt;json&gt; tag as
+perl code and run it. The code should return a HASH, ARRAY or
+BOOLEAN value which will then be encoded to JSON data.</p>
+</dd>
+<dt>handler=[method]</dt>
+<dd>
+<p>Call the perl method nominated. The code should return a HASH,
+ARRAY or BOOLEAN value which will then be encoded to JSON data.</p>
 </dd>
 </dl>
 <div class="admonition note">
@@ -807,7 +831,7 @@ render_block Webdyne method:</p>
 rendering a particular block in perl code, e.g. return
 $self-&gt;render_block("foo");</p>
 </dd>
-<dt>display=1</dt>
+<dt>display</dt>
 <dd>
 <p>Force display of this block even if not invoked by render_block
 WebDyne method. Useful for prototyping or conditional display.
@@ -816,7 +840,7 @@ form parameter to only show a block when a form has been
 submitted, e.g. &lt;block name="showname" display="+{name}"&gt; ..
 &lt;/block&gt;</p>
 </dd>
-<dt>static=1</dt>
+<dt>static</dt>
 <dd>
 <p>This block rendered once only and the output cached for all
 subsequent requests</p>
@@ -835,12 +859,12 @@ context of the current page.</p>
 <p><em>Mandatory</em>. Name of file we want to include. Can be relative to
 current directory or absolute path.</p>
 </dd>
-<dt>head=1</dt>
+<dt>head</dt>
 <dd>
 <p>File is an HTML or <code>.psp</code> file and we want to include just the
 &lt;head&gt; section</p>
 </dd>
-<dt>body=1</dt>
+<dt>body</dt>
 <dd>
 <p>File is an HTML or <code>.psp</code> file and we want to include just the
 &lt;body&gt; section.</p>
@@ -856,7 +880,7 @@ from that file.</p>
 not use &lt;&gt; symbols, just the plain tag name, e.g.
 &lt;include="/etc/protocol" wrap="pre"/&gt;</p>
 </dd>
-<dt>nocache=1</dt>
+<dt>nocache</dt>
 <dd>
 <p>Don't cache the results of the include, bring them in off disk
 each time. Will incur performance penalty</p>
@@ -886,16 +910,34 @@ e.g. /api/{user}/:id</p>
 </dd>
 <dt>&lt;htmx&gt;</dt>
 <dd>
-<p>Serve HTML snippets. Takes the same parameters as the &lt;perl&gt; tag
+<p>Serve HTML fragments. Takes the same parameters as the &lt;perl&gt; tag
 and specific attributes:</p>
 <dl>
-<dt>display=1</dt>
+<dt>display</dt>
 <dd>
 <p>If evaluates to true then this &lt;htmx&gt; snippet fires. You can
 have multiple htmx tag sections in a page, but only one can fire
 at a time. Use this attribute in conjunction with dynamic
 evaluation (e.g. display="!{! $_{name} eq 'Bob' !}") to
 selectively fire a &lt;htmx&gt; section.</p>
+</dd>
+<dt>force</dt>
+<dd>
+<p>Force the code referenced by a &lt;htmx&gt; tag to run, and content
+be returned/displayed even if the request is not triggered by
+the htmx javascript module (which is determined by looking for a
+hx-request header).</p>
+</dd>
+<dt>perl</dt>
+<dd>
+<p>Interpret content between starting and ending &lt;json&gt; tag as
+perl code and run it. Anything returned by the perl code will be
+returned as a HTML fragment.</p>
+</dd>
+<dt>handler=[method]</dt>
+<dd>
+<p>Call the perl method nominated. Whatever is returned or rendered
+by the handler will be returned as a HTML fragment.</p>
 </dd>
 </dl>
 </dd>
@@ -907,7 +949,7 @@ set to 1 in WebDyne constants of the display|force attribute
 specified (see below). Useful while troubleshooting or debugging
 pages.</p>
 <dl>
-<dt>display|force=1</dt>
+<dt>display|force</dt>
 <dd>
 <p><em>Optional.</em> Force display even if <code>$WEBDYNE_DUMP_FLAG</code> global
 not set</p>
@@ -1179,7 +1221,8 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
 </div>
 <h3 id="constants-reference">Constants Reference<a class="headerlink" href="#constants-reference" title="Permanent link">&para;</a></h3>
 <p>The following constants can be altered to change the behaviour of the
-WebDyne package. All these constants reside in the <code>WebDyne::Constant</code>
+WebDyne package. All these constants reside in the
+<a href="https://github.com/aspeer/WebDyne/blob/main/lib/WebDyne/Constant.pm"><code>WebDyne::Constant</code></a>
 package namespace.</p>
 <dl>
 <dt><code>$WEBDYNE_CACHE_DN</code></dt>
@@ -1361,6 +1404,59 @@ page). This is dangerous and can cause confusion if different
 modules use the same name. In very strictly controlled
 environments - and even then only in some cases - it can result is
 faster throughput. Off by default, set to 1 to enable.</p>
+</dd>
+<dt>$WEBDYNE_ALPINE_VUE_ATTRIBUTE_HACK_ENABLE</dt>
+<dd>
+<p>The HTML parser use by WebDyne does not recognise the @ symbol as a
+valid attribute character, thus if using Alpine JS or Vue shortcuts
+in attributes such as &lt;button @click="open = true"&gt; the @click
+attribute won't be parsed corrected. The @click attribute is a
+shortcut to x-on, and thus the full attribute is &lt;button
+x-on:click="open = true"&gt;. This config item defaults to converting
+the "@" symbol in attributes to "x-on:". If using Vue change to
+"v-on:"</p>
+</dd>
+<dt>$WEBDYNE_HTTP_HEADER_AJAX_HR</dt>
+<dd>
+<p>A HASH reference of HTTP header names used to determine if a request
+is interpreted as a <a href="https://htmx.org">htmx</a> or<a href="https://alpine-ajax.js.org"> Alpine
+Ajax</a> type request, triggering only
+partial HTML return (either the body only of a normal PSP page, or a
+&lt;htmx&gt; tag fragment). Defaults to
+<code>{qw(hx-request x-alpine-request)}</code>.</p>
+</dd>
+<dt>$WEBDYNE_HTMX_FORCE</dt>
+<dd>
+<p>Under normal conditions a &lt;htmx&gt; tag isn't rendered unless the
+request contains a HTTP header name designating it as an AJAX type
+request from htmx or Alpine Ajax style libraries. Setting this
+config item will force rendering of a &lt;htmx&gt; tags even if the
+request doesn't contain a header designating it as a htmx style
+request. Equivalent to setting the force=1 attribute on all &lt;htmx&gt;
+tags. Defaults to 0 (do not render).</p>
+</dd>
+<dt>$WEBDYNE_PSGI_STATIC</dt>
+<dd>
+<p>Allow the <code>webdyne.psgi</code> Plack instance to serve static pages (non
+PSP pages) such as style sheets, javascript, images etc. Allowed
+static file extensions are designated by the <code>$WEBDYNE_MIME_TYPE_HR</code>
+config item - only files with extensions in that config item will be
+served. Defaults to 1 (allow static pages to be served)</p>
+</dd>
+<dt>$WEBDYNE_MIME_TYPE_HR</dt>
+<dd>
+<p>Hash reference of file extensions and MIME types which will be
+allowed to be served if <code>$WEBDYNE_PSGI_STATIC</code> is enabled. See
+source code of
+<a href="https://github.com/aspeer/WebDyne/blob/main/lib/WebDyne/Constant.pm"><code>WebDyne/Constant.pm</code></a>
+for defaults.</p>
+</dd>
+<dt>$WEBDYNE_HTTP_HEADER</dt>
+<dd>
+<p>Hash reference of default HTTP headers name and values to be sent in
+response to all WebDyne requests. See source code of
+<a href="https://github.com/aspeer/WebDyne/blob/main/lib/WebDyne/Constant.pm"><code>WebDyne/Constant.pm</code></a>
+for defaults.</p>
 </dd>
 </dl>
 <div class="admonition tip">

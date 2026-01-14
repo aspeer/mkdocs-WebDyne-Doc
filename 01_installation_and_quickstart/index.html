@@ -528,12 +528,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../05_webdyne_api/" class="md-nav__link">
+      <a href="../05_webdyne_reference/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    WebDyne API
+    WebDyne Reference
     
   </span>
   
@@ -700,7 +700,7 @@
 recent version of Perl installed and is capable of installing Perl
 modules via CPAN. Installation via Docker is also supported.</p>
 <p>When installing WebDyne there are two components which are required
-before you can begin serving .psp files:</p>
+before you can begin serving PSP files:</p>
 <ul>
 <li>
 <p>The core WebDyne Perl modules</p>
@@ -960,9 +960,9 @@ $ DOCUMENT_ROOT=/var/www/html starman --port 5001 /usr/local/bin/webdyne.psgi
 <p class="admonition-title">Note</p>
 <p>Plack (via <code>webdyne.psgi</code> or <code>plackup</code>) and Starman versions of WebDyne
 serve basic static files such as css, js, jpg etc. If you want more
-control over non .psp file you should us best practices for service such
-files via a traditional web server front end. Also note the Starman and
-plackup instances of WebDyne do not support the --test option or
+control over non .psp files you should us best practices for service
+such files via a traditional web server front end. Also note the Starman
+and plackup instances of WebDyne do not support the --test option or
 indexing - it assumes you are running in a production environment and
 have checked everything with the Plack implementation of <code>webdyne.psgi</code>
 first.</p>
