@@ -2354,8 +2354,8 @@ sub handler {
       </info>
 
       <para>When running Perl code within a WebDyne page the very first parameter passed to any routine (in-line or in a __PERL__ block) is an instance of the WebDyne page object (referred to
-      as <varname>$self</varname> in most of the examples). All methods return <returnvalue>undef</returnvalue> on failure, and raise an error using the <function>err()</function> function.
-      The following methods are available to any instance of the WebDyne object:</para>
+      as <varname>$self</varname> in most of the examples, e.g. <code>$self-&gt;print("Hello World")</code>). All methods return <returnvalue>undef</returnvalue> on failure, and raise an error
+      using the <function>err()</function> function. The following methods are available to any instance of the WebDyne object:</para>
 
       <variablelist>
         <varlistentry>
@@ -2405,7 +2405,8 @@ sub handler {
           <listitem>
             <para>Called to render a block of text or HTML between &lt;block&gt;..&lt;/block&gt; tags. Optional key and value pairs will be substituted into the output as per the variable
             section. Returns scalar ref of resulting HTML if called with from &lt;perl&gt;..&lt;/perl&gt; section containing the block to be rendered, or true (\undef) if the block is not
-            within the &lt;perl&gt;..&lt;/perl&gt; section (e.g. further into the document, see the block section for an example).</para>
+            within the &lt;perl&gt;..&lt;/perl&gt; section (e.g. further into the document, see the block section for an example). Rendered blocks must be "published' if visibility required
+            via return as array, or return of $self-&gt;render().</para>
           </listitem>
         </varlistentry>
 
@@ -2413,7 +2414,8 @@ sub handler {
           <term><methodname>render_reset()</methodname></term>
 
           <listitem>
-            <para>Erase anything previously set to render - it will not be sent to the browser.</para>
+            <para>Erase anything previously set to render - it will not be sent to the browser. Limited use, may be helpful in error handling to "pull" anything previously published and
+            replace with error message.</para>
           </listitem>
         </varlistentry>
 
@@ -2422,16 +2424,17 @@ sub handler {
 
           <listitem>
             <para>Will redirect to URI or file nominated, or display only nominated text. Any rendering done to prior to this method is abandoned. If supplying HTML text to be rendered supply
-            as a SCALAR reference.</para>
+            as a SCALAR reference. Content type header will be automatically adjusted to MIME type appropriate for type if redirecting to html, json or plain text content.</para>
           </listitem>
         </varlistentry>
 
         <varlistentry>
-          <term><methodname>inode( <replaceable>seed</replaceable> )</methodname></term>
+          <term><methodname>inode( <replaceable>seed</replaceable>, <replaceable>seed</replaceable> )</methodname></term>
 
           <listitem>
             <para>Returns the page unique ID (UID). Called inode for legacy reasons, as that is what the UID used to be based on. If a seed value is supplied a new UID will be generated based
-            on an MD5 of the seed combined with other information (such as $r-&gt;location) to generate a unique UUID. Seed only needs to be supplied if using advanced cache handlers.</para>
+            on an MD5 of the seed(s) combined with other information (such as $r-&gt;location) to generate a unique UUID. Seed only needs to be supplied if using cache handlers, see the "<link
+            linkend="caching_section">Caching</link>" section</para>
           </listitem>
         </varlistentry>
 
@@ -2496,7 +2499,7 @@ sub handler {
         </varlistentry>
 
         <varlistentry>
-          <term><methodname>print(), printf(), say()</methodname></term>
+          <term><methodname>print( <replaceable>output</replaceable> ), printf( <replaceable>output</replaceable> ), say( <replaceable>output</replaceable> )</methodname></term>
 
           <listitem>
             <para>Render the output of the <methodname>print()</methodname>, <methodname>printf()</methodname> or <methodname>say()</methodname> routines into the current HTML stream. The
@@ -2509,7 +2512,8 @@ sub handler {
           <term>autonewline()</term>
 
           <listitem>
-            <para>Get or set the autonewline flag. If set will add a new line automatically when using print() or $self-&gt;print(), essentially emulating say().</para>
+            <para>Get or set the autonewline flag. If set will add a new line automatically when using print() or $self-&gt;print(), essentially emulating say(). Supply undef or 0 to
+            clear.</para>
           </listitem>
         </varlistentry>
 
@@ -2523,7 +2527,7 @@ sub handler {
         </varlistentry>
 
         <varlistentry>
-          <term>err()</term>
+          <term>err( <replaceable>message</replaceable> )</term>
 
           <listitem>
             <para>Return and/or raise an error to the WebDyne handler. Supply the actual error message as text.</para>
@@ -3435,9 +3439,9 @@ PerlSetVar      WEBDYNE_SESSION_ID_COOKIE_NAME    'gingernut'
           <title>Template content</title>
         </info>
 
-        <para><programlisting><xi:include href="example/template_content1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting></para>
+        <para><programlisting><xi:include href="example/template_home1.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting></para>
 
-        <para><link xlink:href="https://demo.webdyne.org/example/template_content1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
+        <para><link xlink:href="https://demo.webdyne.org/example/template_home1.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example>
 
       <para>In real life it is not desirable to put the template name into every content file (as was done in the above example), nor would we want to have to "use WebDyne::Template" in every

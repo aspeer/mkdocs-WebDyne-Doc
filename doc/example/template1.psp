@@ -1,4 +1,4 @@
-<start_html title="Template" style="@{qw(https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css template1.css)}">
+<start_html title="Template" style="@{qw(https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css template1.css https://unpkg.com/gridjs/dist/theme/mermaid.min.css)}">
   <div class="app">
     <header class="topbar">
       <div class="topbar-inner">

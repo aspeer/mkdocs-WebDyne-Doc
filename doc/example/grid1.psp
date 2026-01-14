@@ -1,5 +1,4 @@
-<start_html script="https://unpkg.com/gridjs/dist/gridjs.umd.js"
-    style="@{'https://unpkg.com/gridjs/dist/theme/mermaid.min.css', 'https://cdn.jsdelivr.net/npm/water.css@2/out/water.css'}">
+<start_html style="@{qw(https://cdn.jsdelivr.net/npm/water.css@2/out/water.css https://unpkg.com/gridjs/dist/theme/mermaid.min.css)}">
 
   <h1>User Sales Dashboard</h1>
 
@@ -10,13 +9,15 @@
   <json id="data" handler="data" pretty>
 
   <!-- Grid.js table render -->
-  <script>
+  <script type=module>
 
+    import { Grid, html } from "https://unpkg.com/gridjs?module";
+    
     // Parse JSON from script tag
     const json = JSON.parse(document.getElementById("data").textContent);
 
     // Initialize Grid.js
-    new gridjs.Grid({
+    new Grid({
       columns: [
         { id: "id", name: "ID" },
         { id: "name", name: "Name" },
@@ -41,10 +42,9 @@ __PERL__
 
 sub data {
 
-    #  Build dummy data for display by grid.js, would come from DB or similar in 
-    #  practice
+    #  Build dummy data for display by grid.js
     #
-    my @cols=(qw(id name email sales));
+    my @rows=(qw(id name email sales));
     my @data=(
         [qw(1 Alice alice@example.com 320)],
         [qw(2 Bob bob@example.com 150)],
@@ -52,7 +52,7 @@ sub data {
         [qw(4 Diana diana@example.com 290)],
         [qw(6 Evan evan@example.com 510)],
     );
-    my @json=map {my %data; @data{@cols}=@{$data[$_]}; \%data} (0..$#data);
+    my @json=map {my %data; @data{@rows}=@{$data[$_]}; \%data} (0..$#data);
     return \@json;
     
 }
