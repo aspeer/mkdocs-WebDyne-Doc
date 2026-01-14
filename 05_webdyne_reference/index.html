@@ -981,9 +981,9 @@ not set</p>
 <p>When running Perl code within a WebDyne page the very first parameter
 passed to any routine (in-line or in a __PERL__ block) is an
 instance of the WebDyne page object (referred to as <code>$self</code> in most of
-the examples). All methods return undef on failure, and raise an error
-using the <code>err()</code> function. The following methods are available to any
-instance of the WebDyne object:</p>
+the examples, e.g. <code>$self-&gt;print("Hello World")</code>). All methods return
+undef on failure, and raise an error using the <code>err()</code> function. The
+following methods are available to any instance of the WebDyne object:</p>
 <dl>
 <dt>CGI()</dt>
 <dd>
@@ -1020,27 +1020,33 @@ substituted into the output as per the variable section. Returns
 scalar ref of resulting HTML if called with from &lt;perl&gt;..&lt;/perl&gt;
 section containing the block to be rendered, or true (\undef) if
 the block is not within the &lt;perl&gt;..&lt;/perl&gt; section (e.g.
-further into the document, see the block section for an example).</p>
+further into the document, see the block section for an example).
+Rendered blocks must be "published' if visibility required via
+return as array, or return of $self-&gt;render().</p>
 </dd>
 <dt>render_reset()</dt>
 <dd>
 <p>Erase anything previously set to render - it will not be sent to the
-browser.</p>
+browser. Limited use, may be helpful in error handling to "pull"
+anything previously published and replace with error message.</p>
 </dd>
 <dt>redirect( uri=&gt;uri | file=&gt;filename | html=&gt;\html_text | json=&gt;\json_text | text=&gt;\plain_text)</dt>
 <dd>
 <p>Will redirect to URI or file nominated, or display only nominated
 text. Any rendering done to prior to this method is abandoned. If
-supplying HTML text to be rendered supply as a SCALAR reference.</p>
+supplying HTML text to be rendered supply as a SCALAR reference.
+Content type header will be automatically adjusted to MIME type
+appropriate for type if redirecting to html, json or plain text
+content.</p>
 </dd>
-<dt>inode( &lt;seed&gt; )</dt>
+<dt>inode( &lt;seed&gt;, &lt;seed&gt; )</dt>
 <dd>
 <p>Returns the page unique ID (UID). Called inode for legacy reasons,
 as that is what the UID used to be based on. If a seed value is
-supplied a new UID will be generated based on an MD5 of the seed
+supplied a new UID will be generated based on an MD5 of the seed(s)
 combined with other information (such as $r-&gt;location) to generate
-a unique UUID. Seed only needs to be supplied if using advanced
-cache handlers.</p>
+a unique UUID. Seed only needs to be supplied if using cache
+handlers, see the "<a href="../03_advanced_usage/#caching_section">Caching</a>" section</p>
 </dd>
 <dt>cache_mtime( &lt;uid&gt; )</dt>
 <dd>
@@ -1086,7 +1092,7 @@ Alterations to meta data are persistent for this process, and carry
 across Apache requests (although not across different Apache
 processes)</p>
 </dd>
-<dt>print(), printf(), say()</dt>
+<dt>print( &lt;output&gt; ), printf( &lt;output&gt; ), say( &lt;output&gt; )</dt>
 <dd>
 <p>Render the output of the print(), printf() or say() routines into
 the current HTML stream. The print() and printf() methods emulate
@@ -1097,7 +1103,7 @@ their Perl functions in not appending a new line into the output
 <dd>
 <p>Get or set the autonewline flag. If set will add a new line
 automatically when using print() or $self-&gt;print(), essentially
-emulating say().</p>
+emulating say(). Supply undef or 0 to clear.</p>
 </dd>
 <dt>render_time()</dt>
 <dd>
@@ -1105,7 +1111,7 @@ emulating say().</p>
 this page. Obviously only meaningful if called at the end of a page,
 just before final output to browser.</p>
 </dd>
-<dt>err()</dt>
+<dt>err( &lt;message&gt; )</dt>
 <dd>
 <p>Return and/or raise an error to the WebDyne handler. Supply the
 actual error message as text.</p>
