@@ -12,7 +12,7 @@
         <meta name="author" content="Andrew Speer">
       
       
-        <link rel="canonical" href="https://webdyne.org/05_webdyne_reference/">
+        <link rel="canonical" href="https://webdyne.org/05_reference/">
       
       
         <link rel="prev" href="../04_error_handling/">
@@ -26,7 +26,7 @@
     
     
       
-        <title>WebDyne Reference - WebDyne</title>
+        <title>Reference - WebDyne</title>
       
     
     
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#webdyne-reference" class="md-skip">
+        <a href="#reference" class="md-skip">
           Skip to content
         </a>
       
@@ -122,7 +122,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              WebDyne Reference
+              Reference
             
           </span>
         </div>
@@ -416,7 +416,7 @@
   
   
   <span class="md-ellipsis">
-    WebDyne Reference
+    Reference
     
   </span>
   
@@ -429,7 +429,7 @@
   
   
   <span class="md-ellipsis">
-    WebDyne Reference
+    Reference
     
   </span>
   
@@ -688,81 +688,146 @@
   
 
 
-<h1 id="webdyne-reference">WebDyne Reference<a class="headerlink" href="#webdyne-reference" title="Permanent link">&para;</a></h1>
+<h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
 <h2 id="webdyne-tags">WebDyne tags<a class="headerlink" href="#webdyne-tags" title="Permanent link">&para;</a></h2>
 <p>Reference of WebDyne tags and supported attributes</p>
 <dl>
 <dt>&lt;perl&gt;</dt>
 <dd>
 <p>Run Perl code either in-line (between the &lt;perl&gt;..&lt;/perl&gt;) tags,
-or non-inline via the method attribute. Tags are shown with primary
-name first, then any supported aliases.</p>
+or non-inline via the subroutine/method nominated by the handler
+attribute. If this tag is invoked without a handler attribute, text
+between the tags will be interpreted as perl code and executed. If
+invoked with a handler attribute, text between the tags will be
+interpreted as a template - which can be output by a call to the
+WebDyne render() method within the handler.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;perl
+  [handler=METHOD]
+  [require=MODULE | FILE]
+  [import=FUNCTION [, FUNCTION ...]]
+  [param=SCALAR | HASHREF]
+  [run]
+  [file]
+  [hidden]
+  [chomp]
+  [autonewline]
+&gt;
+</code></pre></div>
 <dl>
-<dt>handler|method=subroutine</dt>
+<dt>handler=METHOD</dt>
 <dd>
-<p>Call an external Perl subroutine in from a module, or a
-subroutine in the __PERL__ block at the end of the .psp
-file. If the handler is specified a module call (e.g.
-Digest::MD5::md5_hex()) then a require call will be load the
-module (Digest::MD5 in this example).</p>
+<p>Call an external Perl method from a module, or a subroutine in
+the __PERL__ block at the end of the PSP file. If the
+handler is specified as "fully qualified" module call (e.g.
+<code>Digest::MD5::md5_hex()</code>) then a require will be made
+automatically to load the module (<code>Digest::MD5</code> in this example)</p>
+<div class="language-text highlight"><pre><span></span><code>#  Call method in the same file
+#
+&lt;perl handler=&quot;hello&quot;&gt;
+__PERL__
+sub hello {
+...
+}
+
+#  Call method in another class
+#
+&lt;perl handler=&quot;Digest::MD5::md5_hex()&quot;&gt;
+</code></pre></div>
 </dd>
-<dt>require|package=[Module::Name] | [Path/Filename.pm]</dt>
+<dt>require=MODULE | FILE</dt>
 <dd>
 <p>Load a Perl module or file needed to support a method call. E.g.
 &lt;perl require="Digest::MD5"/&gt; to load the <code>Digest::MD5</code>
 module. Anything with a [./\] character is treated as file
 patch to a Perl file (e.g. "<code>/home/user/module.pm</code>"), otherwise
 it is treated as module name ("<code>Digest::MD5</code>")</p>
+<div class="language-text highlight"><pre><span></span><code>#  Load a module
+#
+&lt;perl require=&quot;Digest::MD5&quot;&gt;
+
+#  Load a file
+#
+&lt;perl require=&quot;module.pm&quot;&gt;
+</code></pre></div>
 </dd>
-<dt>import=[function], &lt;function&gt;, &lt;function&gt; ..</dt>
+<dt>import=FUNCTION [, FUNCTION …]</dt>
 <dd>
 <p>Import a single or multiple functions into the file namespace.
-Use "import=name" for a single function, or pass an array ref
-(import="@{'name1', 'name2'}" for multiple functions. E.g.
-&lt;perl require="Digest::SHA" import="@{qw(sha1 sha1_hex)}"/&gt;.
-Functions are then available anywhere in the file namespace.</p>
+Use a single SCALAR for importing one function, or pass an ARRAY
+reference for multiple functions.</p>
+<div class="language-text highlight"><pre><span></span><code># Import single function
+#
+&lt;perl require=&quot;Digest::MD5&quot; import=&quot;md5_hex&quot;&gt;
+
+# Import multiple functions
+#
+&lt;perl require=&quot;Digest::MD5&quot; import=&quot;@{&#39;md5_hex&#39;, &#39;md5_base64&#39;}&quot;&gt;
+&lt;perl require=&quot;Digest::MD5&quot; import=&quot;@{qw(md5_hex md5_base64)}&quot;&gt;
+</code></pre></div>
+<p>Imported methods available anywhere in the namespace of that
+page.</p>
 </dd>
-<dt>param=scalar|hash</dt>
+<dt>param=SCALAR | HASHREF</dt>
 <dd>
-<p>Parameters to be supplied to perl routine. Supply a hash
-reference using the "<code>%{a=&gt;1, b=&gt;2}</code>" convention e.g. &lt;perl
-method="showname" param="%{name =&gt;'Bob'}"/&gt; or as a simple
-scalar, e.g. &lt;perl method="showname", param=&gt;"Bob"/&gt;</p>
+<p>Parameters to be supplied to perl routine, can be a single
+SCALAR value (string, numeric etc.) or a HASH reference.</p>
+<div class="language-text highlight"><pre><span></span><code>#  Pass parameters to a handler. Single parameter
+#
+&lt;perl handler=&quot;hello&quot; param=&quot;Bob&quot;&gt;
+
+#  Pass hash ref
+#
+&lt;perl handler=&quot;hello&quot; param=&quot;%{ name=&gt; &#39;Bob&#39;, age =&gt; 42 }&quot;&gt;
+</code></pre></div>
 </dd>
 <dt>static</dt>
 <dd>
-<p>This Perl code to be run once only and the output cached for all
-subsequent requests.</p>
+<p>Boolean flag. The Perl code to be run once only and the output
+cached for all subsequent requests. If omitted the code is not
+cached (i.e. it is run each time). If omitted the page is</p>
 </dd>
 <dt>run</dt>
 <dd>
-<p>If the run attribute is supplied it is evaluated for a true
-value. If a true value exists the code is run, if not the code
-is skipped. If the run attribute does not exist at all the code
-is run by default. Useful for conditional running of code when a
-form has been submitted, e.g. &lt;perl handler="showname"
-run="+{name}"&gt; .. &lt;/perl&gt;</p>
+<p>Boolean flag. If evaluated to a true value exists the code is
+run, if not the code is skipped. If omitted the code is run by
+default. Useful for conditional running of code when a form has
+been submitted or a particular logic threshold reached.</p>
+<div class="language-text highlight"><pre><span></span><code>#  Run code only at 4am
+#
+&lt;perl handler=&quot;banner&quot; run=&quot;(localtime)[2] == 4&quot;&gt;
+
+#  Run code only if a &quot;name&quot; form parameter supplied, all below equivalent
+#
+&lt;perl handler=&quot;hello&quot; run=&quot;+{name}&quot;&gt; ...
+&lt;perl handler=&quot;hello&quot; run=&quot;!{! exists $_{&#39;name&#39;} !}&quot;&gt; ...
+&lt;perl handler=&quot;hello&quot; run=&quot;!{! defined shift()-&gt;CGI-&gt;param(&#39;name&#39;) !}
+</code></pre></div>
 </dd>
 <dt>file</dt>
 <dd>
-<p>Force package|require attribute to be treated as a file, even
-if it appears to "look like" a module name to the loader. Rarely
-needed, use case would be a Perl module in the current directory
-without an extension.</p>
+<p>Boolean flag. Force package|require attribute value to be
+treated as a file, even if it appears to "look like" a module
+name to the loader. Rarely needed, use case would be a Perl
+module in the current directory without an extension.</p>
 </dd>
 <dt>hidden</dt>
 <dd>
-<p>The output from the Perl module will be hidden and no rendered
-to the page.</p>
+<p>Boolean flag. The output from the Perl module will be hidden and
+no rendered to the page.</p>
+</dd>
+<dt>display=0</dt>
+<dd>
+<p>Equivalent to setting hidden attribute.</p>
 </dd>
 <dt>chomp</dt>
 <dd>
-<p>Any new lines at the end of the output will be truncated.</p>
+<p>Boolean flag. Any new lines at the end of the output will be
+truncated.</p>
 </dd>
 <dt>autonewline</dt>
 <dd>
-<p>A newline character ("\n") will be inserted between each print
-statement in the perl block or code.</p>
+<p>Boolean flag. A newline character will be inserted between each
+print statement.</p>
 </dd>
 </dl>
 </dd>
@@ -772,26 +837,37 @@ statement in the perl block or code.</p>
 HASH, ARRAY ref or plain scalar, which is encoded into JSON,
 outputting within a &lt;script&gt; tag with type="application/json".
 When supplied with an id attribute this data can be used by any
-Javascript function in the page. Takes the same parameters as the
-&lt;perl&gt; tag and specific attributes:</p>
+Javascript function in the page. Takes the same options as the
+&lt;perl&gt; tag and behaves similarly - if a handler attribute is given
+it is called, if the perl attribute is given text between the
+&lt;json&gt; tags in treated as in-line perl code and executed.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;json
+  [id=NAME]
+  [handler=METHOD]
+  [pretty]
+  [canonical]
+  [perl]
+&gt;
+</code></pre></div>
 <dl>
-<dt>id=[name]</dt>
+<dt>id=NAME</dt>
 <dd>
-<p>ID this &lt;script&gt; tag will be given, e.g.
-<code>&lt;script id="mydata" type="application/json"&gt;[{"foo":1}]&lt;/script&gt;</code></p>
+<p>the DOM ID the &lt;script&gt; tag output from the tag will be given,
+e.g.
+<code>&lt;script id="mydata" type="application/json"&gt;{"foo":1}&lt;/script&gt;</code></p>
 </dd>
 <dt>pretty</dt>
 <dd>
-<p>Use the JSON pretty() method to format the output data into
-something more human readable. Not enabled by default. Enable
-with pretty=1 attribute or globally via <code>$WEBDYNE_JSON_PRETTY=1</code>
-configuration setting.</p>
+<p>Boolean flag. Use the JSON pretty() method to format the output
+data into something more human readable. Not enabled by default.
+Enable with pretty=1 attribute or globally via
+<code>$WEBDYNE_JSON_PRETTY=1</code> configuration setting.</p>
 </dd>
 <dt>canonical</dt>
 <dd>
-<p>Use the JSON canonical() method to sort JSON data. Enabled by
-default, disable using canonical=0 attribute value or via
-<code>$WEBDYNE_JSON_CANONICAL=0</code> configuration setting.</p>
+<p>Boolean flah. Use the JSON canonical() method to sort JSON data.
+Enabled by default, disable using canonical=0 attribute value or
+via <code>$WEBDYNE_JSON_CANONICAL=0</code> configuration setting.</p>
 </dd>
 <dt>perl</dt>
 <dd>
@@ -799,7 +875,7 @@ default, disable using canonical=0 attribute value or via
 perl code and run it. The code should return a HASH, ARRAY or
 BOOLEAN value which will then be encoded to JSON data.</p>
 </dd>
-<dt>handler=[method]</dt>
+<dt>handler=METHOD</dt>
 <dd>
 <p>Call the perl method nominated. The code should return a HASH,
 ARRAY or BOOLEAN value which will then be encoded to JSON data.</p>
@@ -823,62 +899,86 @@ sub handler {
 <dt>&lt;block&gt;</dt>
 <dd>
 <p>Block of HTML code to be optionally rendered if desired by call to
-render_block Webdyne method:</p>
+render_block() Webdyne method:</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;block
+  name=NAME
+  [display]
+  [static]
+&gt;
+</code></pre></div>
 <dl>
-<dt>name=identifier</dt>
+<dt>name=NAME</dt>
 <dd>
-<p><em>Mandatory.</em> The name for this block of HTML. Referenced when
-rendering a particular block in perl code, e.g. return
-$self-&gt;render_block("foo");</p>
+<p><em>Mandatory.</em> The name for this block of PSP or HTML. Referenced
+when rendering a particular block within perl code, e.g.
+<code>return $self-&gt;render_block("foo")</code></p>
 </dd>
 <dt>display</dt>
 <dd>
-<p>Force display of this block even if not invoked by render_block
-WebDyne method. Useful for prototyping or conditional display.
-Any true value will force display, so this can be coupled with a
-form parameter to only show a block when a form has been
-submitted, e.g. &lt;block name="showname" display="+{name}"&gt; ..
-&lt;/block&gt;</p>
+<p>Boolean flag. Force display of this block even if not invoked by
+render_block() method in handler. Useful for prototyping or
+conditional display. Any true value will force display, so this
+can be coupled with a form parameter to only show a block when a
+form has been submitted in a similar form to the &lt;perl&gt; tag
+run attribute.</p>
+<div class="language-text highlight"><pre><span></span><code>#  Only show a block if a name parameter has been supplied 
+#
+&lt;block name=&quot;showname&quot; display=&quot;+{name}&quot;&gt;
+Thank you for registering +{name} !
+&lt;/block&gt;
+</code></pre></div>
 </dd>
 <dt>static</dt>
 <dd>
-<p>This block rendered once only and the output cached for all
-subsequent requests</p>
+<p>Boolean flag. This block is rendered once only and the output
+cached for all subsequent requests</p>
 </dd>
 </dl>
 </dd>
 <dt>&lt;include&gt;</dt>
 <dd>
-<p>Include HTML or text from an external file. This includes pulling in
-the &lt;head&gt; or &lt;body&gt; section from another HTML or .psp file. If
-pulled in from a .psp file it will compiled and interpreted in the
-context of the current page.</p>
+<p>Include HTML, PSP or text from an external file. Capable of just
+pulling in just the &lt;head&gt;,&lt;body&gt; or a &lt;block&gt; section from
+another HTML or PSP file. If pulled in from a PSP file it will
+compiled and interpreted in the context of the current page.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;include
+  file=PATH
+  [block=NAME]
+  [wrap=TAG]
+  [head]
+  [body]
+  [nocache]
+&gt;
+</code></pre></div>
 <dl>
-<dt>file=filename</dt>
+<dt>file=PATH</dt>
 <dd>
 <p><em>Mandatory</em>. Name of file we want to include. Can be relative to
 current directory or absolute path.</p>
 </dd>
 <dt>head</dt>
 <dd>
-<p>File is an HTML or <code>.psp</code> file and we want to include just the
-&lt;head&gt; section</p>
+<p>Boolean flag. File is an HTML or PSP file and we want to include
+just the &lt;head&gt; section</p>
 </dd>
 <dt>body</dt>
 <dd>
-<p>File is an HTML or <code>.psp</code> file and we want to include just the
-&lt;body&gt; section.</p>
+<p>Boolean flag/ File is an HTML or PSP file and we want to include
+just the &lt;body&gt; section.</p>
 </dd>
-<dt>block=blockname</dt>
+<dt>block=NAME</dt>
 <dd>
-<p>File is a <code>.psp</code> file and we want to include a &lt;block&gt; section
-from that file.</p>
+<p>File is a PSP file and we want to include a &lt;block&gt; section
+from that file with the nominated name.</p>
 </dd>
-<dt>wrap=tag</dt>
+<dt>wrap=TAG</dt>
 <dd>
 <p>Wrap the text from the included file in the nominated tag. Do
-not use &lt;&gt; symbols, just the plain tag name, e.g.
-&lt;include="/etc/protocol" wrap="pre"/&gt;</p>
+not use &lt;&gt; symbols, just the plain tag name:</p>
+<div class="language-text highlight"><pre><span></span><code>#  Include the protocols file and wrap in &lt;pre&gt;
+#
+&lt;include=&quot;/etc/protocols&quot; wrap=&quot;pre&quot;&gt;
+</code></pre></div>
 </dd>
 <dt>nocache</dt>
 <dd>
@@ -889,92 +989,491 @@ each time. Will incur performance penalty</p>
 </dd>
 <dt>&lt;api&gt;</dt>
 <dd>
-<p>Respond to a JSON request made from a client. Takes the same
-parameters as the &lt;perl&gt; tag and specific attributes:</p>
+<p>Respond to a JSON request made from a client. Takes the same options
+as the &lt;perl&gt; tag and behaves similarly - if a handler attribute
+is given it is called, if the perl attribute is given text between
+the &lt;api&gt; tags in treated as in-line perl code and executed.
+Responses from perl code are encoded as JSON and returned.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;api
+  pattern=ROUTE
+  [destination=HASHREF | dest=HASHREF | data=HASHREF]
+  [option=HASHREF]
+&gt;
+</code></pre></div>
 <dl>
-<dt>pattern=string</dt>
+<dt>pattern=ROUTE</dt>
 <dd>
-<p><em>Mandatory</em>. Name of <code>Route::Simple</code> pattern we want to serve,
+<p><em>Mandatory</em>. Name of <code>Router::Simple</code> pattern we want to serve,
 e.g. /api/{user}/:id</p>
 </dd>
-<dt>destination | dest | data=hash ref</dt>
+<dt>destination=HASHREF</dt>
 <dd>
 <p>Hash we want to supply to perl routine if match made. See
 <code>Route::Simple</code></p>
 </dd>
-<dt>option=hash ref</dt>
+<dt>option=HASHREF</dt>
 <dd>
-<p>Match options, GET, PUT etc. <code>Route::Simple</code></p>
+<p>Match options, GET, PUT etc. <code>Router::Simple</code></p>
 </dd>
 </dl>
 </dd>
 <dt>&lt;htmx&gt;</dt>
 <dd>
-<p>Serve HTML fragments. Takes the same parameters as the &lt;perl&gt; tag
-and specific attributes:</p>
+<p>Serve HTML fragments in response to <a href="https://htmx.org">htmx</a> type
+requests (or similar clients). Takes the same options as the
+&lt;perl&gt; tag and behaves similarly - if a handler attribute is given
+it is called, if the perl attribute is given text between the
+&lt;api&gt; tags in treated as in-line perl code and executed.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;htmx
+  [handler=METHOD]
+  [perl]
+  [display]
+  [force]
+&gt;
+</code></pre></div>
 <dl>
 <dt>display</dt>
 <dd>
-<p>If evaluates to true then this &lt;htmx&gt; snippet fires. You can
-have multiple htmx tag sections in a page, but only one can fire
-at a time. Use this attribute in conjunction with dynamic
-evaluation (e.g. display="!{! $_{name} eq 'Bob' !}") to
-selectively fire a &lt;htmx&gt; section.</p>
+<p>Boolean. If evaluates to true then this &lt;htmx&gt; snippet fires.
+You can have multiple htmx tag sections in a page, but only one
+can fire at a time. Use this attribute in conjunction with
+dynamic evaluation</p>
+<div class="language-text highlight"><pre><span></span><code>#  Fire htmx tag only if a name parameter matches
+#
+&lt;htmx display=&quot;!{! $_{name} eq &#39;Bob&#39; !}&quot;&gt;
+Hello Bob
+&lt;/htmx&gt;
+
+#  Or Alice. Both tags can live in same document as only one will ever fire
+#
+&lt;htmx display=&quot;!{! $_{name} eq &#39;Alice&#39; !}&quot;&gt;
+Hello Alice
+&lt;/htmx&gt;
+</code></pre></div>
 </dd>
 <dt>force</dt>
 <dd>
-<p>Force the code referenced by a &lt;htmx&gt; tag to run, and content
-be returned/displayed even if the request is not triggered by
-the htmx javascript module (which is determined by looking for a
-hx-request header).</p>
+<p>Boolean. Force the code referenced by a &lt;htmx&gt; tag to run, and
+content be returned/displayed even if the request is not
+triggered by the htmx javascript module (which is determined by
+looking for a <code>hx-request</code> HTTP header). Useful for
+troubleshooting/debugging and/or showing what the generated HTML
+snippet will look like. Can be dynamic and be triggered by GET
+parameter:</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;htmx force=&quot;+{debug}&quot;&gt;
+This is my output
+&lt;/htmx&gt;
+</code></pre></div>
 </dd>
 <dt>perl</dt>
 <dd>
-<p>Interpret content between starting and ending &lt;json&gt; tag as
-perl code and run it. Anything returned by the perl code will be
-returned as a HTML fragment.</p>
+<p>Boolean. Interpret content between starting and ending &lt;htmx&gt;
+tags as perl code and run it. Anything returned by the perl code
+will be sent as the HTML fragment.</p>
 </dd>
-<dt>handler=[method]</dt>
+<dt>handler=METHOD</dt>
 <dd>
 <p>Call the perl method nominated. Whatever is returned or rendered
-by the handler will be returned as a HTML fragment.</p>
+by the handler will be returned as the HTML fragment.</p>
 </dd>
 </dl>
 </dd>
 <dt>&lt;dump&gt;</dt>
 <dd>
-<p>Display CGI parameters in dump format via CGI::Simple-&gt;Dump call.
+<p>Display CGI and other parameters in <code>Data::Dumper</code> dump format.
 Useful for debugging. Only rendered if <code>$WEBDYNE_DUMP_FLAG</code> global
-set to 1 in WebDyne constants of the display|force attribute
+set to 1 in WebDyne constants or the display|force attribute
 specified (see below). Useful while troubleshooting or debugging
 pages.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;dump
+  [display]
+  [force]
+  [all]
+  [cgi]
+  [env]
+  [constant]
+  [version]
+&gt;
+</code></pre></div>
 <dl>
 <dt>display|force</dt>
 <dd>
-<p><em>Optional.</em> Force display even if <code>$WEBDYNE_DUMP_FLAG</code> global
-not set</p>
+<p>Boolean. Force display even if <code>$WEBDYNE_DUMP_FLAG</code> global not
+set</p>
 </dd>
 <dt>all</dt>
 <dd>
-<p>Display all diagnostic blocks</p>
+<p>Boolean. Display all diagnostic blocks</p>
 </dd>
 <dt>cgi</dt>
 <dd>
-<p>Display CGI parameters and query strings</p>
+<p>Boolean. Display CGI parameters and query strings</p>
 </dd>
 <dt>env</dt>
 <dd>
-<p>Display environment variables</p>
+<p>Boolean. Display environment variables</p>
 </dd>
 <dt>constant</dt>
 <dd>
-<p>Display Webdyne constants</p>
+<p>Boolean. Display Webdyne configurationconstants</p>
 </dd>
 <dt>version</dt>
 <dd>
-<p>Display version strings</p>
+<p>Boolean. Display version strings</p>
 </dd>
 </dl>
+</dd>
+<dt>&lt;start_html&gt;</dt>
+<dd>
+<p>Start a HTML page with all conventional tags. This will produce the
+output:</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;html&gt;&lt;head&gt;&lt;title&gt;&lt;/title&gt;&lt;meta&gt;&lt;/head&gt;&lt;body&gt;
+</code></pre></div>
+<p>with appropriate content attributes as output.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;start_html
+  [title=TEXT]
+  [meta=HASHREF]
+  [style=URL | ARRAYREF]
+  [script=URL | ARRAYREF]
+  [base=URL]
+  [target=TARGET]
+  [include=PATH | ARRAYREF]
+  [include_script=PATH | ARRAYREF]
+  [include_style=PATH | ARRAYREF]
+  [static]
+  [cache=METHOD]
+&gt;
+</code></pre></div>
+<dl>
+<dt>title=TEXT</dt>
+<dd>
+<p>Content to be inserted into the &lt;title&gt; section tag.</p>
+</dd>
+<dt>meta=HASHREF</dt>
+<dd>
+<p>Meta section content, supplied as a hash reference. Processing
+is nuanced. Standard <em>key</em>=&gt;<em>value</em> hash pairs are displayed as
+&lt;meta name=key content=value&gt; meta tags. Pairs of the type
+<em>"property=name"=&gt;value</em> are displayed as &lt;meta property=name
+content=value&gt;.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;start_html meta=&quot;%{ author =&gt; &#39;Bob Smith&#39;, &#39;http-equiv=refresh&#39; =&gt; &#39;5; url=https://www.example.com&#39; }&quot;&gt;
+</code></pre></div>
+<p>Will produce:</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;meta name=&quot;author&quot; content=&quot;Bob Smith&quot;&gt;
+&lt;meta http-equiv=&quot;refresh&quot; content=&quot;5; url=https://www.example.com&quot; &gt;
+</code></pre></div>
+</dd>
+<dt>style=URL | ARRAYREF</dt>
+<dd>
+<p>Stylesheets to load. Values to this attribute will be output as
+href attributes of type rel=stylesheet in a &lt;link&gt; tag.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;start_html style=&quot;https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4&quot;&gt;
+</code></pre></div>
+<p>Will produce:</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;link href=&quot;https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4&quot; rel=&quot;stylesheet&quot;&gt;
+</code></pre></div>
+<p>Array types are supported as values to the style property to
+allow multiple style sheet &lt;link&gt; tags to be created at once,
+e.g.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;start_html style=&quot;@{
+    &#39;https://cdn.jsdelivr.net/npm/water.css@2/out/water.css&#39;,
+    &#39;https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css&#39;
+}&quot;&gt;
+</code></pre></div>
+<p>Will produce:</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;link href=&quot;https://cdn.jsdelivr.net/npm/water.css@2/out/water.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;link href=&quot;https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+</code></pre></div>
+</dd>
+<dt>script=URL | ARRAYREF</dt>
+<dd>
+<p>Similar facility to the style attribute. Any values supplied to
+this attribute will be output as src attributes to a &lt;script&gt;
+tag.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;start_html script=&quot;https://cdn.jsdelivr.net/npm/chart.js&quot;&gt;
+</code></pre></div>
+<p>Will produce:</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;script src=&quot;https://cdn.jsdelivr.net/npm/chart.js&quot;&gt;
+</code></pre></div>
+<p>Anything supplied after the URL section as an anchor will be
+used in the script tag as an attribute, e.g.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;start_html script=&quot;https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js#defer&amp;integrity=sha..&quot;&gt;
+</code></pre></div>
+<p>Will produce:</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;script defer integrity=sha.. src=&quot;https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js&quot;&gt;
+</code></pre></div>
+<p>As per the style attribute you can supply an array of resources
+to load using the same syntax.</p>
+</dd>
+<dt>base, target = URL, TARGET</dt>
+<dd>
+<p>Generate a &lt;base&gt; tag within the &lt;head&gt; section containing
+attributes equivalent to href=value of the base attribute,
+target=value of the target attribute</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;start_html base=&quot;https://example.com&quot; target=&quot;_blank&quot;&gt;
+</code></pre></div>
+<p>Will produce:</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;base href=&quot;https://example.com/&quot; target=&quot;_blank&quot;&gt;
+</code></pre></div>
+</dd>
+<dt>include=PATH | ARRAYREF</dt>
+<dd>
+<p>Will include the raw text from the nominated file (supplied as
+the value) within the &lt;head&gt; section. No processing is done,
+the file contents are inserted verbatim.</p>
+</dd>
+<dt>include_script=PATH | ARRAYREF</dt>
+<dd>
+<p>As per above include attribute, raw text from the nominated file
+is inserted into the &lt;head&gt; section, however it is wrapped in
+a &lt;script&gt; tag.</p>
+</dd>
+<dt>include_style=PATH | ARRAYREF</dt>
+<dd>
+<p>As per standard include attribute raw text from the nominated
+file is inserted into the &lt;head&gt; section, however it is
+wrapped in a &lt;style&gt; tag.</p>
+</dd>
+<dt>static</dt>
+<dd>
+<p>Boolean. If the static attribute is present in the
+&lt;start_html&gt; tag the entire page is designated static. It will
+be compiled and generated once (at first load) and the resulting
+HTML will be cached and served on subsequent loads.</p>
+</dd>
+<dt>cache=METHOD</dt>
+<dd>
+<p>Use a cache handler to determine how often the page should be
+recompiled. See the <a href="../03_advanced_usage/#caching_section">Caching</a> section. Sample:</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;start_html cache=&quot;&amp;cache&quot;&gt;
+</code></pre></div>
+</dd>
+</dl>
+</dd>
+<dt>&lt;end_html&gt;</dt>
+<dd>
+<p>End a HTML page. This will produce the &lt;/body&gt;&lt;/html&gt; tags. It
+is not strictly necessary as the parser will automatically close
+dangling tags if it gets to the end of the file without seeing them,
+however is provided for completeness.</p>
+</dd>
+<dt>&lt;popup_menu&gt;</dt>
+<dd>
+<p>Provided a drop-down menu of options for user to select from.</p>
+<dl>
+<dt>name=scalar</dt>
+<dd>
+<p>The name associated with this form component. This is the CGI
+parameter to be interrogated for value(s) once the form is
+submitted.</p>
+</dd>
+<dt>values=[array ref | hash ref]</dt>
+<dd>
+<p>List of items to be presented in the drop down. If an array ref
+labels will be the same as values. If a hash ref the value will
+be the hash key, the label the hash label.</p>
+</dd>
+<dt>labels=hash ref</dt>
+<dd>
+<p>If values is presented as an array ref a hash ref of labels to
+be associated with each value can be supplied.</p>
+</dd>
+<dt>multiple</dt>
+<dd>
+<p>If enabled allows multiple options to be selected. If not
+present (disabled) only one option can be selected.</p>
+</dd>
+<dt>disabled=[scalar | array ref]</dt>
+<dd>
+<p>Single (scalar) or multiple (array ref) items which should be
+greyed out (not selectable) in menu options.</p>
+</dd>
+<dt>selected | defaults | default=[scalar | array ref]</dt>
+<dd>
+<p>Single (scalar) or multiple (array ref) items which should be
+pre-selected in menu options.</p>
+</dd>
+</dl>
+</dd>
+<dt>&lt;radio_group&gt;</dt>
+<dd>
+<p>Provide a grouped list of radio buttons for a user to choose from.
+Only one radio button item can be selected.</p>
+<dl>
+<dt>name=scalar</dt>
+<dd>
+<p>The name associated with this form component. This is the CGI
+parameter to be interrogated for value(s) once the form is
+submitted.</p>
+</dd>
+<dt>values=[array ref | hash ref]</dt>
+<dd>
+<p>List of items to be presented. If an array ref labels will be
+the same as values. If a hash ref the value will be the hash
+key, the label the hash label.</p>
+</dd>
+<dt>labels=hash ref</dt>
+<dd>
+<p>If values is presented as an array ref a hash ref of labels to
+be associated with each value can be supplied.</p>
+</dd>
+<dt>disabled=[scalar | array ref]</dt>
+<dd>
+<p>Single (scalar) or multiple (array ref) items which should be
+greyed out (not selectable) in menu options.</p>
+</dd>
+<dt>checked | defaults | default=[scalar | array ref]</dt>
+<dd>
+<p>Single (scalar) or multiple (array ref) items which should be
+pre-selected in menu options.</p>
+</dd>
+</dl>
+</dd>
+<dt>&lt;checkbox_group&gt;</dt>
+<dd>
+<p>Provide a grouped list of checkbox items for a user to choose form.
+Multiple checkboxes can be selected.</p>
+<dl>
+<dt>name=scalar</dt>
+<dd>
+<p>The name associated with this form component. This is the CGI
+parameter to be interrogated for value(s) once the form is
+submitted.</p>
+</dd>
+<dt>values=[array ref | hash ref]</dt>
+<dd>
+<p>List of items to be presented. If an array ref labels will be
+the same as values. If a hash ref the value will be the hash
+key, the label the hash label.</p>
+</dd>
+<dt>labels=hash ref</dt>
+<dd>
+<p>If values is presented as an array ref a hash ref of labels to
+be associated with each value can be supplied.</p>
+</dd>
+<dt>disabled=[scalar | array ref]</dt>
+<dd>
+<p>Single (scalar) or multiple (array ref) items which should be
+greyed out (not selectable) in menu options.</p>
+</dd>
+<dt>checked|defaults|default=[scalar | array ref]</dt>
+<dd>
+<p>Single (scalar) or multiple (array ref) items which should be
+pre-selected in menu options.</p>
+</dd>
+</dl>
+</dd>
+<dt>&lt;checkbox&gt;</dt>
+<dd>
+<p>Single checkbox for a user to select of unselect.</p>
+<dl>
+<dt>name=scalar</dt>
+<dd>
+<p>The name associated with this form component. This is the CGI
+parameter to be interrogated for value(s) once the form is
+submitted.</p>
+</dd>
+<dt>value=[boolean | scalar ]</dt>
+<dd>
+<p>The value to be returned in the CGI parameter if this checkbox
+is ticked (selected). If not supplied defaults to 1.</p>
+</dd>
+<dt>disabled=boolean</dt>
+<dd>
+<p>If enabled the checkbox will be presented but will not be
+selectable.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In order to retain state all checkbox form items will actually present a
+hidden parameter with the same name as the checkbox. This is notable
+because querying the parameter associated with a checkbox component will
+always return a Hash::MultiValue object with two items, the last of
+which is the checkbox value. When using $self-&gt;CGI-&gt;param(&lt;checkbox
+name&gt;) form of query, or $_{&lt;checkbox name&gt;} the user selected
+checkbox value will always be returned as a boolean or scalar value.</p>
+</div>
+</dd>
+<dt>&lt;scrolling_lost&gt;</dt>
+<dd>
+<p>Presents a scrolling list of options for a user to choose from.
+Attributes are identical to those of the popup_menu tag with the
+addition of a size attribute.</p>
+<dl>
+<dt>name=scalar</dt>
+<dd>
+<p>The name associated with this form component. This is the CGI
+parameter to be interrogated for value(s) once the form is
+submitted.</p>
+</dd>
+<dt>size=integer</dt>
+<dd>
+<p>Number of rows to make visible in user interface for the
+scrolling list.</p>
+</dd>
+</dl>
+</dd>
+<dt>&lt;textarea&gt;</dt>
+<dd>
+<p>A text box for freeform text entry. All attributes are the same as
+the HTML standard &lt;textarea&gt; tag with the addition of</p>
+<dl>
+<dt>name=scalar</dt>
+<dd>
+<p>The name associated with this form component. This is the CGI
+parameter to be interrogated for value(s) once the form is
+submitted.</p>
+</dd>
+<dt>default=scalar</dt>
+<dd>
+<p>The default content to be pre-filled out in the textarea
+component</p>
+</dd>
+<dt>force=boolean</dt>
+<dd>
+<p>By default the component is stateful, and user entered text will
+persist after form submission. Setting the force attribute will
+always present the default content regardless of user input.</p>
+</dd>
+</dl>
+</dd>
+<dt>&lt;textfield&gt;</dt>
+<dd>
+<p>The standard &lt;input type="text"&gt; tag type. User input with this
+tag is persistent. All standard &lt;input&gt; tag attributes are
+supported. The name and force attributes are supported as per other
+tags.</p>
+</dd>
+<dt>&lt;password_field&gt;</dt>
+<dd>
+<p>The standard &lt;input type="password"&gt; tag type. User input with
+this tag is persistent. The name and force attributes are supported
+as per other tags.</p>
+</dd>
+<dt>&lt;filefield&gt;</dt>
+<dd>
+<p>The standard &lt;input type="file"&gt; tag type. User input with this
+tag is persistent. When querying this parameter after form
+submission responses will be in the form of a Plack::Request::Upload
+object. User input with this tag is persistent.</p>
+</dd>
+<dt>&lt;image_button&gt;</dt>
+<dd>
+<p>The standard &lt;input type="image"&gt; tag type.</p>
+</dd>
+<dt>&lt;button&gt;</dt>
+<dd>
+<p>The standard &lt;input type="button"&gt; tag type.</p>
+</dd>
+<dt>&lt;submit&gt;</dt>
+<dd>
+<p>The standard &lt;input type="submit"&gt; tag type to initiate form
+submission.</p>
+</dd>
+<dt>&lt;hidden&gt;</dt>
+<dd>
+<p>The standard &lt;input type="button"&gt; tag type.</p>
 </dd>
 </dl>
 <h2 id="webdyne-methods">WebDyne methods<a class="headerlink" href="#webdyne-methods" title="Permanent link">&para;</a></h2>
@@ -1057,7 +1556,7 @@ WebDyne::Cache code (e.g if page &gt; x minutes old, recompile).</p>
 </dd>
 <dt>source_mtime()</dt>
 <dd>
-<p>Returns the mtime (modification time) of the source .psp file
+<p>Returns the mtime (modification time) of the source PSP file
 currently being rendered.</p>
 </dd>
 <dt>cache_compile()</dt>
@@ -1311,7 +1810,7 @@ results from CGI-&gt;dump(). Use when debugging forms. default=0</p>
 <dt><code>$WEBDYNE_HEAD_INSERT</code></dt>
 <dd>
 <p>Any HTML you want inserted before the closing &lt;/head&gt; tag, e.g.
-stylesheet or script includes to be added to every <code>.psp</code> page. Must
+stylesheet or script includes to be added to every <code>PSP</code> page. Must
 be valid HTML &lt;head&gt; directives, not interpreted or compiled by
 WebDyne, incorporated as-is</p>
 </dd>
@@ -1371,7 +1870,7 @@ Useful in internal WebDyne development only. By default this is 0
 </dd>
 <dt><code>$WEBDYNE_ERROR_SOURCE_CONTEXT_SHOW</code></dt>
 <dd>
-<p>Display a fragment of the <code>.psp</code> source file around where the error
+<p>Display a fragment of the <code>PSP</code> source file around where the error
 occurred to give some context of where the error happened. Set to 0
 to not display context.</p>
 </dd>

@@ -582,12 +582,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../05_webdyne_reference/" class="md-nav__link">
+      <a href="../05_reference/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    WebDyne Reference
+    Reference
     
   </span>
   
@@ -769,7 +769,7 @@ can be implemented. First the most basic usage example:</p>
 <p><a href="https://demo.webdyne.org/hello1.psp">Run</a></p>
 <p>So far not too exciting - after all we are mixing code and content. Lets
 try again - the &lt;perl&gt; tag can take a handler attribute which
-references (calls) a perl subroutine - in this case embedded in the .psp
+references (calls) a perl subroutine - in this case embedded in the PSP
 file under the __PERL__ token.</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Hello World<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -1194,7 +1194,7 @@ or imported will be available to any code within the page:</p>
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/require2.psp">Run</a></p>
 <h3 id="alternate-output-methods-from-perl-handlers">Alternate output methods from Perl handlers<a class="headerlink" href="#alternate-output-methods-from-perl-handlers" title="Permanent link">&para;</a></h3>
-<p>When calling a perl handler from a .psp file at some stage you will want
+<p>When calling a perl handler from a PSP file at some stage you will want
 your code to deliver output to the browser. Various examples have been
 given throughout this document, here is a summary of various output
 options:</p>
@@ -1768,7 +1768,7 @@ page source after loading it to see for yourself):</p>
 <p>The &lt;end_html&gt; tag can be omitted if desired, the HTML parser will
 auto close any dangling tags at the end of the document, including
 adding any omitted &lt;/body&gt; or &lt;/html&gt; tags. So even if omitted from
-the .psp file WebDyne should still generate valid HTML to be served to
+the PSP file WebDyne should still generate valid HTML to be served to
 the browser.</p>
 </div>
 <p>The &lt;start_html&gt; tag generates all the &lt;html&gt;, &lt;head&gt;, &lt;title&gt;
@@ -1847,7 +1847,7 @@ END
     }
 }
 </code></pre></div>
-<p>Then any <code>.psp</code> file with a &lt;start_html&gt; tag will have the following
+<p>Then any <code>PSP</code> file with a &lt;start_html&gt; tag will have the following
 content:</p>
 <div class="language-text highlight"><pre><span></span><code>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;de&quot;&gt;
 &lt;head&gt;

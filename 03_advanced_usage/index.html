@@ -483,7 +483,7 @@
           <li class="md-nav__item">
   <a href="#using-multiple-htmx-tags-in-one-psp-file" class="md-nav__link">
     <span class="md-ellipsis">
-      Using multiple &lt;htmx> tags in one .psp file
+      Using multiple &lt;htmx> tags in one PSP file
     </span>
   </a>
   
@@ -549,12 +549,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../05_webdyne_reference/" class="md-nav__link">
+      <a href="../05_reference/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    WebDyne Reference
+    Reference
     
   </span>
   
@@ -1030,9 +1030,9 @@ and parsed every time, significantly slowing down page display. There
 are betters ways to build a CMS with WebDyne - use the include tag
 sparingly !</p>
 </div>
-<p>You can include just the head or body section of a HTML or .psp file by
+<p>You can include just the head or body section of a HTML or PSP file by
 using the head or body attributes. Here is the reference file (file to
-be included). It does not have to be a .psp file - a standard HTML file
+be included). It does not have to be a PSP file - a standard HTML file
 can be supplied :</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>#  This file is named include2.psp and used in the next example
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>#
@@ -1051,9 +1051,9 @@ the reference file).</p>
 </span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>Body from include3.psp file
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/include3.psp">Run</a></p>
-<p>You can also include block sections from <code>.psp</code> files. If this is the
+<p>You can also include block sections from <code>PSP</code> files. If this is the
 reference file (the file to be included) containing two blocks. This is
-a renderable <code>.psp</code> file in it's own right. The blocks use the <code>display</code>
+a renderable <code>PSP</code> file in it's own right. The blocks use the <code>display</code>
 attribute to demonstrate that they will produce output, but it's not
 required:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">&lt;</span><span class="nt">start_html</span><span class="p">&gt;</span>
@@ -1673,16 +1673,16 @@ that:</p>
     discarded.</p>
 </li>
 <li>
-<p>Any .psp file file an &lt;api&gt; tag will only emit JSON data with a
+<p>Any PSP file file an &lt;api&gt; tag will only emit JSON data with a
     content type of "<code>application/json</code>"</p>
 </li>
 <li>
-<p>The REST api path must correspond to a .psp file at some path level,
+<p>The REST api path must correspond to a PSP file at some path level,
     e.g. if your path is <code>/api/user/42</code> you must have a file called
     either "<code>api.psp</code>" or "<code>api/user.psp</code>" in your path.</p>
 </li>
 <li>
-<p>A .psp file can contain multiple &lt;api&gt; tags corresponding to
+<p>A PSP file can contain multiple &lt;api&gt; tags corresponding to
     different <code>Router::Simple</code> routes</p>
 </li>
 </ul>
@@ -1731,9 +1731,17 @@ libraries such as <a href="https://alpine-ajax.js.org">Alpine Ajax</a>. WebDyne 
 support just supplying HTML snippet to pages in response to htmx or
 similar calls. HTMX/Alpine Ajax and WebDyne are complementary libraries
 which can be combined together to support dynamic pages with in-place
-updates from a WebDyne Perl backend. Here is a simple HTML file
-(<code>htmx_demo1.psp</code>) incorporating HTMX calls to a backend file called
-<code>htmx_time1.psp</code>. Here is the display file, <code>htmx_demo1.psp</code></p>
+updates from a WebDyne Perl backend.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The htmx javascript library must be activated in any file that utilises
+htmx calls (initiates a <code>hx-get</code> or similar operation). The javascript
+can be loaded in any convenient way, via a &lt;start_html&gt; script
+attribute, traditional &lt;script&gt; tags etc.</p>
+</div>
+<p>Here is a simple HTML file (<code>htmx_demo1.psp</code>) incorporating HTMX calls
+to a backend file called <code>htmx_time1.psp</code>. Here is the display file,
+<code>htmx_demo1.psp</code></p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="p">&lt;</span><span class="nt">start_html</span> <span class="na">script</span><span class="o">=</span><span class="s">&quot;https://unpkg.com/htmx.org@1.9.10&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Current time<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 </span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Click the button below to load time data from the server<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
@@ -1766,11 +1774,11 @@ will render correctly as a full HTML page - however if WebDyne detects a
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Only one &lt;htmx&gt; section from a file will ever be rendered. You can
-have multiple &lt;htmx&gt; sections in a .psp file however only one can be
+have multiple &lt;htmx&gt; sections in a PSP file however only one can be
 rendered at any time. You can use the display attribute with dynamic
-matching (see later) to render different &lt;htmx&gt; sections in a .psp
+matching (see later) to render different &lt;htmx&gt; sections in a PSP
 file, or you can keep them all in different files (e.g. one &lt;htmx&gt;
-section per .psp file</p>
+section per PSP file</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -1822,9 +1830,9 @@ now with the HTML fragment generated by Perl:</p>
 </span><span id="__span-25-16"><a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>}
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/htmx_time2.psp">Run</a></p>
-<h3 id="using-multiple-htmx-tags-in-one-psp-file">Using multiple &lt;htmx&gt; tags in one .psp file<a class="headerlink" href="#using-multiple-htmx-tags-in-one-psp-file" title="Permanent link">&para;</a></h3>
+<h3 id="using-multiple-htmx-tags-in-one-psp-file">Using multiple &lt;htmx&gt; tags in one PSP file<a class="headerlink" href="#using-multiple-htmx-tags-in-one-psp-file" title="Permanent link">&para;</a></h3>
 <p>As is mentioned above only one &lt;htmx&gt; fragment can be returned by a
-.psp page at a time - but you can use techniques to select which tag
+PSP page at a time - but you can use techniques to select which tag
 should be rendered. The &lt;htmx&gt; tag supports the display attribute. If
 this attribute exists and is a "true" value then the &lt;htmx&gt; fragment
 will be returned. At first this doesn't seem very useful - but when
@@ -1869,7 +1877,7 @@ two button example:</p>
 <p><a href="https://demo.webdyne.org/htmx_demo3.psp">Run</a></p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>WebDyne does not support single quoted tags - you can use them in .psp
+<p>WebDyne does not support single quoted tags - you can use them in PSP
 files, but the rendered HTML will always emit tag attributes as double
 quoted. For attributes such as hx-vals it is not possible to supply JSON
 strings within single quotes, i.e. this will not work: &lt;button
@@ -1885,7 +1893,7 @@ a <code>?time_local=1</code> or <code>?time_utc=1</code> query parameter in your
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/htmx_time3.psp">Run</a></p>
 <p>Normally you would expect to have the hx-get attribute for each button
-go to a different .psp page. But in this instance they refer to the same
+go to a different PSP page. But in this instance they refer to the same
 page. So how do we discriminate ? The key is in the supply of the
 hx-vals attribute, which allows us to send query strings to the htmx
 resource page. We can then use them to select which &lt;htmx&gt; block is

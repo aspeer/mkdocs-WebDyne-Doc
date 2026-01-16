@@ -402,12 +402,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../05_webdyne_reference/" class="md-nav__link">
+      <a href="../05_reference/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    WebDyne Reference
+    Reference
     
   </span>
   
@@ -583,7 +583,7 @@
 <dl>
 <dt>How to check syntax of a PSP file</dt>
 <dd>
-<p>To check the syntax of a .psp file - or more specifically any Perl
+<p>To check the syntax of a PSP file - or more specifically any Perl
 code in the __PERL__ section - you can use the <code>wdlint</code> command.
 Take this file with an assignment syntax error in the server_time()
 routine:</p>
@@ -624,13 +624,13 @@ your own parameters:</p>
 </span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>}
 </span></code></pre></div>
 </dd>
-<dt>Use of hash characters for comments in .psp files</dt>
+<dt>Use of hash characters for comments in PSP files</dt>
 <dd>
 <p>Any # characters at the very start of a PSP file before a &lt;html&gt;
 or &lt;start_html&gt; tag are treated as comments and discarded - they
 will not be stored or displayed (they are <strong>not</strong> translated into
 HTML comments). This allows easy to read comments at the start of
-.psp files. Any # characters after the first valid tag are not
+PSP files. Any # characters after the first valid tag are not
 treated specially - they will be rendered as normal HTML:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>#  This is my server time display file
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>#  
