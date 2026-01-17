@@ -1260,38 +1260,47 @@ however is provided for completeness.</p>
 <dt>&lt;popup_menu&gt;</dt>
 <dd>
 <p>Provided a drop-down menu of options for user to select from.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;popup_menu
+  name=NAME
+  values=ARRAYREF | HASHREF
+  [labels=HASHREF]
+  [multiple]
+  [disabled=VALUE | ARRAYREF]
+  [selected|defaults|default=VALUE | ARRAYREF]
+&gt;
+</code></pre></div>
 <dl>
-<dt>name=scalar</dt>
+<dt>name=NAME</dt>
 <dd>
 <p>The name associated with this form component. This is the CGI
 parameter to be interrogated for value(s) once the form is
 submitted.</p>
 </dd>
-<dt>values=[array ref | hash ref]</dt>
+<dt>values=ARRAYREF | HASHREF</dt>
 <dd>
 <p>List of items to be presented in the drop down. If an array ref
 labels will be the same as values. If a hash ref the value will
 be the hash key, the label the hash label.</p>
 </dd>
-<dt>labels=hash ref</dt>
+<dt>labels=HASHREF</dt>
 <dd>
-<p>If values is presented as an array ref a hash ref of labels to
+<p>If values is presented as an array ref, a hash ref of labels to
 be associated with each value can be supplied.</p>
 </dd>
 <dt>multiple</dt>
 <dd>
-<p>If enabled allows multiple options to be selected. If not
-present (disabled) only one option can be selected.</p>
+<p>Boolean. If enabled allows multiple options to be selected. If
+not present (disabled) only one option can be selected.</p>
 </dd>
-<dt>disabled=[scalar | array ref]</dt>
+<dt>disabled=VALUE | ARRAYREF</dt>
 <dd>
-<p>Single (scalar) or multiple (array ref) items which should be
-greyed out (not selectable) in menu options.</p>
+<p>Single (string scalar) item or multiple (array ref) items which
+should be greyed out (not selectable) in menu options.</p>
 </dd>
-<dt>selected | defaults | default=[scalar | array ref]</dt>
+<dt>selected | defaults | default=VALUE | ARRAYREF</dt>
 <dd>
-<p>Single (scalar) or multiple (array ref) items which should be
-pre-selected in menu options.</p>
+<p>Single (string scalar) item or multiple (array ref) items which
+should be pre-selected in menu options.</p>
 </dd>
 </dl>
 </dd>
@@ -1299,33 +1308,41 @@ pre-selected in menu options.</p>
 <dd>
 <p>Provide a grouped list of radio buttons for a user to choose from.
 Only one radio button item can be selected.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;radio_group
+  name=NAME
+  values=ARRAYREF | HASHREF
+  [labels=HASHREF]
+  [disabled=VALUE | ARRAYREF]
+  [checked|defaults|default=VALUE | ARRAYREF]
+&gt;
+</code></pre></div>
 <dl>
-<dt>name=scalar</dt>
+<dt>name=NAME</dt>
 <dd>
 <p>The name associated with this form component. This is the CGI
 parameter to be interrogated for value(s) once the form is
 submitted.</p>
 </dd>
-<dt>values=[array ref | hash ref]</dt>
+<dt>values=ARRAYREF | HASHREF</dt>
 <dd>
-<p>List of items to be presented. If an array ref labels will be
-the same as values. If a hash ref the value will be the hash
-key, the label the hash label.</p>
+<p>List of items to be presented. If an array reference, labels
+will be the same as values. If a hash refence the value will be
+the hash key, the label the hash value.</p>
 </dd>
-<dt>labels=hash ref</dt>
+<dt>labels=HASHREF</dt>
 <dd>
 <p>If values is presented as an array ref a hash ref of labels to
 be associated with each value can be supplied.</p>
 </dd>
-<dt>disabled=[scalar | array ref]</dt>
+<dt>disabled=VALUE | ARRAYREF</dt>
 <dd>
-<p>Single (scalar) or multiple (array ref) items which should be
-greyed out (not selectable) in menu options.</p>
+<p>Single (string) or multiple (array ref) of items which should be
+greyed out (not selectable) in radio group items.</p>
 </dd>
-<dt>checked | defaults | default=[scalar | array ref]</dt>
+<dt>checked | defaults | default=VALUE | ARRAYREF</dt>
 <dd>
-<p>Single (scalar) or multiple (array ref) items which should be
-pre-selected in menu options.</p>
+<p>Single (string) or multiple (array ref) items which shoul be
+pre-selected in radio group items.</p>
 </dd>
 </dl>
 </dd>
@@ -1333,104 +1350,153 @@ pre-selected in menu options.</p>
 <dd>
 <p>Provide a grouped list of checkbox items for a user to choose form.
 Multiple checkboxes can be selected.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;checkbox_group
+  name=NAME
+  values=ARRAYREF | HASHREF
+  [labels=HASHREF]
+  [disabled=VALUE | ARRAYREF]
+  [checked|defaults|default=VALUE | ARRAYREF]
+&gt;
+</code></pre></div>
 <dl>
-<dt>name=scalar</dt>
+<dt>name=NAME</dt>
 <dd>
-<p>The name associated with this form component. This is the CGI
-parameter to be interrogated for value(s) once the form is
-submitted.</p>
+<p>The name associated with this form component. This is the
+<code>$self-&gt;CGI()</code> parameter to be interrogated for value(s) once
+the form is submitted.</p>
 </dd>
-<dt>values=[array ref | hash ref]</dt>
+<dt>values=ARRAYREF | HASHREF</dt>
 <dd>
 <p>List of items to be presented. If an array ref labels will be
 the same as values. If a hash ref the value will be the hash
 key, the label the hash label.</p>
 </dd>
-<dt>labels=hash ref</dt>
+<dt>labels=HASHREF</dt>
 <dd>
 <p>If values is presented as an array ref a hash ref of labels to
 be associated with each value can be supplied.</p>
 </dd>
-<dt>disabled=[scalar | array ref]</dt>
+<dt>disabled=VALUE | ARRAYREF</dt>
 <dd>
-<p>Single (scalar) or multiple (array ref) items which should be
-greyed out (not selectable) in menu options.</p>
+<p>Single (string) or multiple (array ref) items which should be
+greyed out (not selectable) in checkbox group items.</p>
 </dd>
-<dt>checked|defaults|default=[scalar | array ref]</dt>
+<dt>checked|defaults|default=VALUE | ARRAYREF</dt>
 <dd>
 <p>Single (scalar) or multiple (array ref) items which should be
-pre-selected in menu options.</p>
+pre-selected in checkbox group items.</p>
 </dd>
 </dl>
 </dd>
 <dt>&lt;checkbox&gt;</dt>
 <dd>
-<p>Single checkbox for a user to select of unselect.</p>
+<p>Single checkbox for a user to select or clear.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;checkbox
+  name=NAME
+  [value=VALUE | BOOLEAN]
+  [disabled]
+&gt;
+</code></pre></div>
 <dl>
-<dt>name=scalar</dt>
+<dt>name=NAME</dt>
 <dd>
 <p>The name associated with this form component. This is the CGI
 parameter to be interrogated for value(s) once the form is
 submitted.</p>
 </dd>
-<dt>value=[boolean | scalar ]</dt>
+<dt>value=VALUE | BOOLEAN</dt>
 <dd>
 <p>The value to be returned in the CGI parameter if this checkbox
 is ticked (selected). If not supplied defaults to 1.</p>
 </dd>
-<dt>disabled=boolean</dt>
+<dt>disabled</dt>
 <dd>
-<p>If enabled the checkbox will be presented but will not be
-selectable.</p>
+<p>If present the checkbox will be displayed but cannot be
+selected.</p>
 </dd>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In order to retain state all checkbox form items will actually present a
-hidden parameter with the same name as the checkbox. This is notable
-because querying the parameter associated with a checkbox component will
-always return a Hash::MultiValue object with two items, the last of
-which is the checkbox value. When using $self-&gt;CGI-&gt;param(&lt;checkbox
-name&gt;) form of query, or $_{&lt;checkbox name&gt;} the user selected
-checkbox value will always be returned as a boolean or scalar value.</p>
+<p>In order to retain state all checkbox form items will present a hidden
+parameter with the same name as the checkbox. This is notable because
+querying the parameter associated with a checkbox component will always
+return a <code>Hash::MultiValue</code> object with two items, the last of which is
+the checkbox value. When using <code>$self-&gt;CGI-&gt;param(&lt;checkbox name&gt;)</code> form
+of query, or <code>$_{&lt;checkbox name&gt;}</code> the user selected checkbox value will
+always be returned as a boolean or scalar value.</p>
 </div>
 </dd>
-<dt>&lt;scrolling_lost&gt;</dt>
+<dt>&lt;scrolling_list&gt;</dt>
 <dd>
 <p>Presents a scrolling list of options for a user to choose from.
-Attributes are identical to those of the popup_menu tag with the
+Attributes are identical to those of the &lt;popup_menu&gt; tag with the
 addition of a size attribute.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;scrolling_list
+  name=NAME
+  size=ROWS
+  values=ARRAYREF | HASHREF
+  [labels=HASHREF]
+  [multiple]
+  [disabled=VALUE | ARRAYREF]
+  [selected|defaults|default=VALUE | ARRAYREF]
+&gt;
+</code></pre></div>
 <dl>
-<dt>name=scalar</dt>
+<dt>name=NAME</dt>
 <dd>
 <p>The name associated with this form component. This is the CGI
 parameter to be interrogated for value(s) once the form is
 submitted.</p>
 </dd>
-<dt>size=integer</dt>
+<dt>size=ROWS</dt>
 <dd>
 <p>Number of rows to make visible in user interface for the
 scrolling list.</p>
 </dd>
 </dl>
+<p>The following attributes behave identically to &lt;popup_menu&gt;:</p>
+<ul>
+<li>
+<p>values=ARRAYREF | HASHREF</p>
+</li>
+<li>
+<p>labels=HASHREF</p>
+</li>
+<li>
+<p>multiple</p>
+</li>
+<li>
+<p>disabled=VALUE | ARRAYREF</p>
+</li>
+<li>
+<p>selected|defaults|default=VALUE | ARRAYREF</p>
+</li>
+</ul>
 </dd>
 <dt>&lt;textarea&gt;</dt>
 <dd>
 <p>A text box for freeform text entry. All attributes are the same as
-the HTML standard &lt;textarea&gt; tag with the addition of</p>
+the HTML standard &lt;textarea&gt; tag with attributes:</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;textarea
+  name=NAME
+  [default=TEXT]
+  [force]
+  (all standard HTML &lt;textarea&gt; attributes)
+&gt;
+</code></pre></div>
 <dl>
-<dt>name=scalar</dt>
+<dt>name=NAME</dt>
 <dd>
 <p>The name associated with this form component. This is the CGI
 parameter to be interrogated for value(s) once the form is
 submitted.</p>
 </dd>
-<dt>default=scalar</dt>
+<dt>default=TEXT</dt>
 <dd>
-<p>The default content to be pre-filled out in the textarea
+<p>The default content to be pre-filled out in the &lt;textarea&gt;
 component</p>
 </dd>
-<dt>force=boolean</dt>
+<dt>force</dt>
 <dd>
 <p>By default the component is stateful, and user entered text will
 persist after form submission. Setting the force attribute will
@@ -1457,6 +1523,28 @@ as per other tags.</p>
 tag is persistent. When querying this parameter after form
 submission responses will be in the form of a Plack::Request::Upload
 object. User input with this tag is persistent.</p>
+<div class="language-text highlight"><pre><span></span><code>&lt;start_html title=&quot;File Upload&quot;&gt;
+&lt;start_multipart_form&gt;
+&lt;filefield name=&quot;file&quot; multiple required&gt;
+&lt;p&gt;
+&lt;submit name=Upload&gt;
+&lt;end_form&gt;
+
+&lt;pre&gt;
+&lt;perl handler/&gt;
+&lt;/pre&gt;
+
+__PERL__
+
+use Data::Dumper;
+sub handler {
+
+    my $self=shift();
+    my $cgi_or=$self-&gt;CGI();
+    return Dumper($cgi_or-&gt;uploads()-&gt;flatten);
+
+}
+</code></pre></div>
 </dd>
 <dt>&lt;image_button&gt;</dt>
 <dd>
@@ -1474,6 +1562,16 @@ submission.</p>
 <dt>&lt;hidden&gt;</dt>
 <dd>
 <p>The standard &lt;input type="button"&gt; tag type.</p>
+</dd>
+<dt>&lt;start_form&gt;</dt>
+<dd>
+<p>Start a form with method=POST and encoding type
+enctype="application/x-www-form-urlencoded" (implicit)</p>
+</dd>
+<dt>&lt;start_multipart_form&gt;</dt>
+<dd>
+<p>Start a form with method=POST and encoding type
+enctype="multipart/form-data"</p>
 </dd>
 </dl>
 <h2 id="webdyne-methods">WebDyne methods<a class="headerlink" href="#webdyne-methods" title="Permanent link">&para;</a></h2>
