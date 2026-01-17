@@ -745,12 +745,12 @@ PerlSetVar      WebDyneCacheHandler &#39;&amp;MyModule::cache&#39;
 
 &lt;/Location&gt;
 </code></pre></div>
-<p>Note that any package used as the WebDyneCacheHandler target should be
+<p>Note that any package used as the <code>WebDyneCacheHandler</code> target should be
 already loaded via "PerlRequire" or similar mechanism.</p>
 <p>As an example of why this could be useful consider the <a href="../03_advanced_usage/#caching_section">caching
 examples</a> above. Instead of flagging that an
-individual file should only be re-compiled every x seconds, that policy
-could be applied to a whole directory with no alteration to the
+individual file should only be re-compiled every "x" seconds, that
+policy could be applied to a whole directory with no alteration to the
 individual pages.</p>
 <h2 id="webdynesession">WebDyne::Session<a class="headerlink" href="#webdynesession" title="Permanent link">&para;</a></h2>
 <p>WebDyne::Session generates a unique session ID for each browser

@@ -719,8 +719,7 @@ Installs dependencies if required (also from CPAN).</p>
 configuration, however in most cases it will be to the Perl site library
 location. WebDyne supports installation to an alternate location using
 the PREFIX option in CPAN. Binaries are usually installed to <code>/usr/bin</code>
-or <code>/usr/local/bin</code> by CPAN, but may vary by distribution/local
-configuration.</p>
+or <code>/usr/local/bin</code>, but may vary by distribution/local configuration.</p>
 <p>Assuming your CPAN environment is setup correctly you can run the
 command:</p>
 <p><code>perl -MCPAN -e "install WebDyne"</code></p>
@@ -729,10 +728,13 @@ command:</p>
 <p>This will install the base WebDyne modules, which includes the Apache
 config utility and PSGI version. Note that Apache or PSGI servers and
 dependencies such as Plack or Starman are <strong>not</strong> installed by default
-and need to be installed separately - see the relevant section.</p>
-<p>Once installed you will need to configure your web server to use WebDyne
-to serve files with the <code>.psp</code> extension if using Apache - see section
-below.</p>
+and need to be installed separately - see the relevant section, or just
+run:</p>
+<div class="language-text highlight"><pre><span></span><code>cpanm Task::WebDyne::Plack
+</code></pre></div>
+<p>to get everything needed to run with Plack/PSGI.</p>
+<p>If using Apache you will need to configure your system to use WebDyne to
+serve files with the <code>.psp</code> extension - see Apache install section.</p>
 <h2 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">&para;</a></h2>
 <p>If using PSGI you can start a quick web server by creating a simple
 app.psp file:</p>
@@ -750,7 +752,7 @@ My first WebDyne page. Server time: &lt;? localtime ?&gt;
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1">#</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>$<span class="w"> </span>wdrender<span class="w"> </span>app.psp
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">#  Install Plack</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">#  Install Plack if not already done.</span>
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">#</span>
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>$<span class="w"> </span>cpanm<span class="w"> </span>Plack
 </span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
@@ -933,7 +935,7 @@ $ webdyne.psgi /var/www/html/time.psp
 <p>Starting WebDyne this way will enable "developer" mode such that a
 directory index will be displayed if an app.psp file does not exist, and
 full error messages with code backtraces are displayed if any errors are
-encounterd.</p>
+encountered.</p>
 </div>
 <p>To start with <code>plackup</code>:</p>
 <div class="language-text highlight"><pre><span></span><code>#  Start WebDyne via plackup in the current directory. A file named app.psp must exist,
@@ -959,7 +961,7 @@ $ DOCUMENT_ROOT=/var/www/html starman --port 5001 /usr/local/bin/webdyne.psgi
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Plack (via <code>webdyne.psgi</code> or <code>plackup</code>) and Starman versions of WebDyne
-serve basic static files such as css, js, jpg etc. If you want more
+will serve basic static files such as css, js, jpg etc. If you want more
 control over non PSP files you should us best practices for service such
 files via a traditional web server front end. Also note the Starman and
 plackup instances of WebDyne do not support the --test option or

@@ -1522,29 +1522,30 @@ as per other tags.</p>
 <p>The standard &lt;input type="file"&gt; tag type. User input with this
 tag is persistent. When querying this parameter after form
 submission responses will be in the form of a Plack::Request::Upload
-object. User input with this tag is persistent.</p>
-<div class="language-text highlight"><pre><span></span><code>&lt;start_html title=&quot;File Upload&quot;&gt;
-&lt;start_multipart_form&gt;
-&lt;filefield name=&quot;file&quot; multiple required&gt;
-&lt;p&gt;
-&lt;submit name=Upload&gt;
-&lt;end_form&gt;
-
-&lt;pre&gt;
-&lt;perl handler/&gt;
-&lt;/pre&gt;
-
-__PERL__
-
-use Data::Dumper;
-sub handler {
-
-    my $self=shift();
-    my $cgi_or=$self-&gt;CGI();
-    return Dumper($cgi_or-&gt;uploads()-&gt;flatten);
-
-}
-</code></pre></div>
+object. User input with this tag is persistent. Example to
+demonstrate minimal file upload facility:</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">&lt;</span><span class="nt">start_html</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;File Upload&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="p">&lt;</span><span class="nt">start_multipart_form</span><span class="p">&gt;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">&lt;</span><span class="nt">filefield</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;file&quot;</span> <span class="na">multiple</span> <span class="na">required</span><span class="p">&gt;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">&lt;</span><span class="nt">submit</span> <span class="na">name</span><span class="o">=</span><span class="s">Upload</span><span class="p">&gt;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">&lt;</span><span class="nt">end_form</span><span class="p">&gt;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">&lt;</span><span class="nt">perl</span> <span class="na">handler</span><span class="p">/&gt;</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>__PERL__
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>use Data::Dumper;
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>sub handler {
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    my $self=shift();
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    my $cgi_or=$self-&gt;CGI();
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    return Dumper($cgi_or-&gt;uploads()-&gt;flatten);
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>}
+</span></code></pre></div>
 </dd>
 <dt>&lt;image_button&gt;</dt>
 <dd>

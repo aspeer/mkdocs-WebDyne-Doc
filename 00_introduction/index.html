@@ -658,8 +658,8 @@ Perl:</p>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>The local server time is: <span class="p">&lt;</span><span class="nt">div</span> <span class="na">data-webdyne-perl</span><span class="p">&gt;</span> localtime() <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/introduction7.psp">Run</a></p>
-<p>Don't like &lt;div&gt; style syntax ? Put the code in a &lt;script&gt; block -
-it will be interpreted on the server, not the client:</p>
+<p>Alternatively, put the code in a &lt;script&gt; block - it will be
+interpreted on the server, not the client:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">&lt;</span><span class="nt">start_html</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;Server Time&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Server local time is: 
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;application/perl&quot;</span><span class="p">&gt;</span>
@@ -667,7 +667,7 @@ it will be interpreted on the server, not the client:</p>
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p><a href="https://demo.webdyne.org/introduction7.psp">Run</a></p>
-<p>Template blocks and variable replacement is supported also:</p>
+<p>Template blocks and variable replacement are supported also:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">&lt;</span><span class="nt">start_html</span><span class="p">&gt;</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="cm">&lt;!-- Call perl code to render server time --&gt;</span>
