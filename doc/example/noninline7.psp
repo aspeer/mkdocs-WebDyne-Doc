@@ -9,7 +9,7 @@
 <perl handler="hello" param="Bob"/>
 <p>
 
-<!-- We can pass an array or hashref also - see variables section for more info on this syntax -->
+<!-- We can pass an hashref also - see variables section for more info on this syntax -->
 
 <perl handler="hello_again" param="%{ firstname=>'Alice', lastname=>'Smith' }"/>
 

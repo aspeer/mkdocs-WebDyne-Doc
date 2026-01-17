@@ -15,7 +15,7 @@ Request Method:
 <perl> $ENV{'REQUEST_METHOD'} </perl>
 
 
-<!-- Apache request record methods. Only methods that return a scalar result are usable -->
+<!-- Request record methods. Only methods that return a scalar result are usable -->
 
 <p>
 <!-- Short Way -->
@@ -51,18 +51,29 @@ You Entered:
 <form>
 <p>
 Favourite colour 1:
-<p><popup_menu name="popup_menu" values="@{qw(red green blue)}">
+<p><popup_menu name="popup_menu1" values="@{qw(red green blue)}">
 
 
-<!-- Hashe Syntax -->
+<!-- Hash Syntax -->
 
 <p>
-Favourite colour 2:
-<p><popup_menu name="popup_menu" 
-	values="%{red=>Red, green=>Green, blue=>Blue}">
+Favourite colour 2 (pick multiple):
+<p><popup_menu multiple name="popup_menu2" values="%{red=>Red, green=>Green, blue=>Blue, orange=>'Orange', yellow=>'Yellow'}" default='green'>
+<p><submit name="Submit">
 
 </form>
+
+<perl handler run="+{popup_menu1}">
+Favourite colour 1: +{popup_menu1}
+<p>
+Favourite colour 2: ${popup_menu2_values}
+</perl>
 
 </body>
 </html>
 
+__PERL__
+
+sub handler {
+	return join(',', shift->CGI->param('popup_menu2'));
+}

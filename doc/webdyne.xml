@@ -26,8 +26,9 @@
 
     <para>WebDyne is a Perl based dynamic HTML engine. It works with web servers (or from the command line) to render HTML documents with embedded Perl code.</para>
 
-    <para>Once WebDyne is installed and initialised any file with a <filename>.psp</filename> extension is treated as a WebDyne source file. It is parsed for WebDyne pseudo-tags (such as
-    <markup>&lt;perl&gt;</markup> and <markup>&lt;block&gt;</markup>) which are interpreted and executed on the server. The resulting output is then sent to the browser.</para>
+    <para>Once WebDyne is installed and initialised any file with a <filename>.psp</filename> extension (designated a PSP file) is treated as a WebDyne source file. It is parsed for WebDyne
+    pseudo-tags (such as <markup>&lt;perl&gt;</markup> and <markup>&lt;block&gt;</markup>) which are interpreted and executed on the server. The resulting output is then sent to the
+    browser.</para>
 
     <para>WebDyne works with common web server persistent Perl interpreters - such as Apache <command>mod_perl</command> and <command>PSGI</command> - to provide fast dynamic content. It works
     with PSGI servers such as Plack and <productname>Starman</productname>, and can be implemented as a Docker container to run HTML with embedded Perl code.</para>
@@ -119,7 +120,7 @@
         xlink:href="https://demo.webdyne.org/example/introduction7.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example></para>
 
-    <para>Don't like <tag>&lt;div&gt;</tag> style syntax ? Put the code in a <tag>&lt;script&gt;</tag> block - it will be interpreted on the server, not the client:</para>
+    <para>Alternatively, put the code in a <tag>&lt;script&gt;</tag> block - it will be interpreted on the server, not the client:</para>
 
     <para><example>
         <info>
@@ -130,7 +131,7 @@
         xlink:href="https://demo.webdyne.org/example/introduction7.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example></para>
 
-    <para>Template blocks and variable replacement is supported also:</para>
+    <para>Template blocks and variable replacement are supported also:</para>
 
     <example>
       <info>
@@ -176,7 +177,7 @@
       <para>Install from the Perl CPAN library using <command>cpan</command> or <command>cpanm</command> utilities. Installs dependencies if required (also from CPAN).</para>
 
       <para>Destination of the installed files is dependent on the local CPAN configuration, however in most cases it will be to the Perl site library location. WebDyne supports installation
-      to an alternate location using the PREFIX option in CPAN. Binaries are usually installed to <filename>/usr/bin</filename> or <filename>/usr/local/bin</filename> by CPAN, but may vary by
+      to an alternate location using the PREFIX option in CPAN. Binaries are usually installed to <filename>/usr/bin</filename> or <filename>/usr/local/bin</filename>, but may vary by
       distribution/local configuration.</para>
 
       <para>Assuming your CPAN environment is setup correctly you can run the command:</para>
@@ -188,9 +189,13 @@
       <para><command>cpanm WebDyne</command></para>
 
       <para>This will install the base WebDyne modules, which includes the Apache config utility and PSGI version. Note that Apache or PSGI servers and dependencies such as Plack or Starman
-      are <emphasis role="bold">not</emphasis> installed by default and need to be installed separately - see the relevant section.</para>
+      are <emphasis role="bold">not</emphasis> installed by default and need to be installed separately - see the relevant section, or just run:</para>
 
-      <para>Once installed you will need to configure your web server to use WebDyne to serve files with the <filename>.psp</filename> extension if using Apache - see section below.</para>
+      <screen><command>cpanm Task::WebDyne::Plack</command></screen>
+
+      <para>to get everything needed to run with Plack/PSGI.</para>
+
+      <para>If using Apache you will need to configure your system to use WebDyne to serve files with the <filename>.psp</filename> extension - see Apache install section.</para>
     </section>
 
     <section>
@@ -213,7 +218,7 @@ $ <command>cpanm WebDyne</command>
 #
 $ <command>wdrender app.psp</command>
 
-#  Install Plack
+#  Install Plack if not already done.
 #
 $ <command>cpanm Plack</command>
 
@@ -413,7 +418,7 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
 
       <tip>
         <para>Starting WebDyne this way will enable "developer" mode such that a directory index will be displayed if an app.psp file does not exist, and full error messages with code
-        backtraces are displayed if any errors are encounterd.</para>
+        backtraces are displayed if any errors are encountered.</para>
       </tip>
 
       <para>To start with <command>plackup</command>:</para>
@@ -439,8 +444,8 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
 $ <command>DOCUMENT_ROOT=/var/www/html starman --port 5001 /usr/local/bin/webdyne.psgi</command></screen>
 
       <note>
-        <para>Plack (via <command>webdyne.psgi</command> or <command>plackup</command>) and Starman versions of WebDyne serve basic static files such as css, js, jpg etc. If you want more
-        control over non .psp files you should us best practices for service such files via a traditional web server front end. Also note the Starman and plackup instances of WebDyne do not
+        <para>Plack (via <command>webdyne.psgi</command> or <command>plackup</command>) and Starman versions of WebDyne will serve basic static files such as css, js, jpg etc. If you want more
+        control over non PSP files you should us best practices for service such files via a traditional web server front end. Also note the Starman and plackup instances of WebDyne do not
         support the --test option or indexing - it assumes you are running in a production environment and have checked everything with the Plack implementation of
         <command>webdyne.psgi</command> first.</para>
       </note>
@@ -596,7 +601,7 @@ COPY webdyne.conf.pl /etc</screen>
         </example></para>
 
       <para>So far not too exciting - after all we are mixing code and content. Lets try again - the &lt;perl&gt; tag can take a <property>handler</property> attribute which references (calls)
-      a perl subroutine - in this case embedded in the .psp file under the <token>__PERL__</token> token.</para>
+      a perl subroutine - in this case embedded in the PSP file under the <token>__PERL__</token> token.</para>
 
       <para><example>
           <info>
@@ -855,7 +860,7 @@ sub greeting { return \undef }
           <title>Alternate output methods from Perl handlers</title>
         </info>
 
-        <para>When calling a perl handler from a .psp file at some stage you will want your code to deliver output to the browser. Various examples have been given throughout this document,
+        <para>When calling a perl handler from a PSP file at some stage you will want your code to deliver output to the browser. Various examples have been given throughout this document,
         here is a summary of various output options:</para>
 
         <example>
@@ -1049,7 +1054,7 @@ sub greeting { return \undef }
             xlink:href="https://demo.webdyne.org/example/cgi6.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
           </example><tip>
             <para>The <tag>&lt;end_html&gt;</tag> tag can be omitted if desired, the HTML parser will auto close any dangling tags at the end of the document, including adding any omitted
-            <tag>&lt;/body&gt;</tag> or <tag>&lt;/html&gt;</tag> tags. So even if omitted from the .psp file WebDyne should still generate valid HTML to be served to the browser.</para>
+            <tag>&lt;/body&gt;</tag> or <tag>&lt;/html&gt;</tag> tags. So even if omitted from the PSP file WebDyne should still generate valid HTML to be served to the browser.</para>
           </tip></para>
 
         <para>The <tag>&lt;start_html&gt;</tag> tag generates all the <tag>&lt;html&gt;</tag>, <tag>&lt;head&gt;</tag>, <tag>&lt;title&gt;</tag> tags etc needed for a valid HTML page plus an
@@ -1107,7 +1112,7 @@ END
     }
 }</screen>
 
-        <para>Then any <filename>.psp</filename> file with a <tag>&lt;start_html&gt;</tag> tag will have the following content:</para>
+        <para>Then any <filename>PSP</filename> file with a <tag>&lt;start_html&gt;</tag> tag will have the following content:</para>
 
         <screen>&lt;!DOCTYPE html&gt;&lt;html lang="de"&gt;
 &lt;head&gt;
@@ -1366,8 +1371,8 @@ END
           ways to build a CMS with WebDyne - use the include tag sparingly !</para>
         </important></para>
 
-      <para>You can include just the head or body section of a HTML or .psp file by using the head or body attributes. Here is the reference file (file to be included). It does not have to be
-      a .psp file - a standard HTML file can be supplied :</para>
+      <para>You can include just the head or body section of a HTML or PSP file by using the head or body attributes. Here is the reference file (file to be included). It does not have to be a
+      PSP file - a standard HTML file can be supplied :</para>
 
       <example>
         <info>
@@ -1389,8 +1394,8 @@ END
         xlink:href="https://demo.webdyne.org/example/include3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
       </example>
 
-      <para>You can also include block sections from <filename>.psp</filename> files. If this is the reference file (the file to be included) containing two blocks. This is a renderable
-      <filename>.psp</filename> file in it's own right. The blocks use the <parameter>display</parameter> attribute to demonstrate that they will produce output, but it's not required:</para>
+      <para>You can also include block sections from <filename>PSP</filename> files. If this is the reference file (the file to be included) containing two blocks. This is a renderable
+      <filename>PSP</filename> file in it's own right. The blocks use the <parameter>display</parameter> attribute to demonstrate that they will produce output, but it's not required:</para>
 
       <example>
         <info>
@@ -1598,16 +1603,16 @@ END
         </listitem>
 
         <listitem>
-          <para>Any .psp file file an <tag>&lt;api&gt;</tag> tag will only emit JSON data with a content type of "<type>application/json</type>"</para>
+          <para>Any PSP file file an <tag>&lt;api&gt;</tag> tag will only emit JSON data with a content type of "<type>application/json</type>"</para>
         </listitem>
 
         <listitem>
-          <para>The REST api path must correspond to a .psp file at some path level, e.g. if your path is <filename>/api/user/42</filename> you must have a file called either
+          <para>The REST api path must correspond to a PSP file at some path level, e.g. if your path is <filename>/api/user/42</filename> you must have a file called either
           "<filename>api.psp</filename>" or "<filename>api/user.psp</filename>" in your path.</para>
         </listitem>
 
         <listitem>
-          <para>A .psp file can contain multiple <tag>&lt;api&gt;</tag> tags corresponding to different <classname>Router::Simple</classname> routes</para>
+          <para>A PSP file can contain multiple <tag>&lt;api&gt;</tag> tags corresponding to different <classname>Router::Simple</classname> routes</para>
         </listitem>
       </itemizedlist>
 
@@ -1637,8 +1642,12 @@ END
       <para>WebDyne has support for <tag>&lt;htmx&gt;</tag> tags to supply fragmented HTML to pages using the <link xlink:href="https://htmx.org"
       xmlns:xlink="http://www.w3.org/1999/xlink">HTMX Javascript Library</link> and similar libraries such as <link xlink:href="https://alpine-ajax.js.org"
       xmlns:xlink="http://www.w3.org/1999/xlink">Alpine Ajax</link>. WebDyne can support just supplying HTML snippet to pages in response to htmx or similar calls. HTMX/Alpine Ajax and WebDyne
-      are complementary libraries which can be combined together to support dynamic pages with in-place updates from a WebDyne Perl backend. Here is a simple HTML file
-      (<filename>htmx_demo1.psp</filename>) incorporating HTMX calls to a backend file called <filename>htmx_time1.psp</filename>. Here is the display file,
+      are complementary libraries which can be combined together to support dynamic pages with in-place updates from a WebDyne Perl backend. <important>
+          <para>The htmx javascript library must be activated in any file that utilises htmx calls (initiates a <command>hx-get</command> or similar operation). The javascript can be loaded in
+          any convenient way, via a <tag>&lt;start_html&gt;</tag> <property>script</property> attribute, traditional <tag>&lt;script&gt;</tag> tags etc.</para>
+        </important></para>
+
+      <para>Here is a simple HTML file (<filename>htmx_demo1.psp</filename>) incorporating HTMX calls to a backend file called <filename>htmx_time1.psp</filename>. Here is the display file,
       <filename>htmx_demo1.psp</filename></para>
 
       <para><example>
@@ -1663,9 +1672,9 @@ END
       '<property>hx-request</property>' HTTP header it will only send the fragment back.</para>
 
       <important>
-        <para>Only one <tag>&lt;htmx&gt;</tag> section from a file will ever be rendered. You can have multiple <tag>&lt;htmx&gt;</tag> sections in a .psp file however only one can be rendered
-        at any time. You can use the display attribute with dynamic matching (see later) to render different <tag>&lt;htmx&gt;</tag> sections in a .psp file, or you can keep them all in
-        different files (e.g. one <tag>&lt;htmx&gt;</tag> section per .psp file</para>
+        <para>Only one <tag>&lt;htmx&gt;</tag> section from a file will ever be rendered. You can have multiple <tag>&lt;htmx&gt;</tag> sections in a PSP file however only one can be rendered
+        at any time. You can use the display attribute with dynamic matching (see later) to render different <tag>&lt;htmx&gt;</tag> sections in a PSP file, or you can keep them all in
+        different files (e.g. one <tag>&lt;htmx&gt;</tag> section per PSP file</para>
       </important>
 
       <important>
@@ -1699,9 +1708,9 @@ END
       </section>
 
       <section>
-        <title>Using multiple <tag>&lt;htmx&gt;</tag> tags in one .psp file</title>
+        <title>Using multiple <tag>&lt;htmx&gt;</tag> tags in one PSP file</title>
 
-        <para>As is mentioned above only one <tag>&lt;htmx&gt;</tag> fragment can be returned by a .psp page at a time - but you can use techniques to select which tag should be rendered. The
+        <para>As is mentioned above only one <tag>&lt;htmx&gt;</tag> fragment can be returned by a PSP page at a time - but you can use techniques to select which tag should be rendered. The
         <tag>&lt;htmx&gt;</tag> tag supports the display attribute. If this attribute exists and is a "true" value then the <tag>&lt;htmx&gt;</tag> fragment will be returned. At first this
         doesn't seem very useful - but when combined with dynamic evaluation via either page query parameters or <code>!{! .. !}</code> evaluation it becomes more compelling. Take the
         following two button example:</para>
@@ -1714,7 +1723,7 @@ END
             <para><programlisting language="html"><xi:include href="example/htmx_demo3.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
             xlink:href="https://demo.webdyne.org/example/htmx_demo3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
           </example><important>
-            <para>WebDyne does not support single quoted tags - you can use them in .psp files, but the rendered HTML will always emit tag attributes as double quoted. For attributes such as
+            <para>WebDyne does not support single quoted tags - you can use them in PSP files, but the rendered HTML will always emit tag attributes as double quoted. For attributes such as
             <property>hx-vals</property> it is not possible to supply JSON strings within single quotes, i.e. this will not work: <tag>&lt;button hx-vals='{ "foo" : "bar" }'&gt;</tag> - the
             single quotes will be emitted as double quotes, causing the browser to misinterpret the tag. If you need to supply quoted keys uses the <code>js:{}</code> syntax above.</para>
           </important>Here is the HTML page used by the above example to fetch the requested time. You can run it, however nothing will be emitted unless you supply a
@@ -1725,7 +1734,7 @@ END
 
             <para><programlisting language="html"><xi:include href="example/htmx_time3.psp" parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting><link
             xlink:href="https://demo.webdyne.org/example/htmx_time3.psp" xmlns:xlink="http://www.w3.org/1999/xlink">Run</link></para>
-          </example>Normally you would expect to have the hx-get attribute for each button go to a different .psp page. But in this instance they refer to the same page. So how do we
+          </example>Normally you would expect to have the hx-get attribute for each button go to a different PSP page. But in this instance they refer to the same page. So how do we
         discriminate ? The key is in the supply of the hx-vals attribute, which allows us to send query strings to the htmx resource page. We can then use them to select which &lt;htmx&gt;
         block is returned.</para>
 
@@ -1935,7 +1944,7 @@ sub hello {
 
   <section>
     <info>
-      <title>WebDyne Reference</title>
+      <title>Reference</title>
     </info>
 
     <section>
@@ -1950,44 +1959,96 @@ sub hello {
           <term>&lt;perl&gt;</term>
 
           <listitem>
-            <para>Run Perl code either in-line (between the &lt;perl&gt;..&lt;/perl&gt;) tags, or non-inline via the method attribute. Tags are shown with primary name first, then any
-            supported aliases.</para>
+            <para>Run Perl code either in-line (between the <tag>&lt;perl&gt;..&lt;/perl&gt;</tag>) tags, or non-inline via the subroutine/method nominated by the <property>handler</property>
+            attribute. If this tag is invoked without a <property>handler</property> attribute, text between the tags will be interpreted as perl code and executed. If invoked with a
+            <tag>handler</tag> attribute, text between the tags will be interpreted as a template - which can be output by a call to the WebDyne <methodname>render()</methodname> method within
+            the handler.</para>
+
+            <programlisting>&lt;perl
+  [handler=METHOD]
+  [require=MODULE | FILE]
+  [import=FUNCTION [, FUNCTION ...]]
+  [param=SCALAR | HASHREF]
+  [run]
+  [file]
+  [hidden]
+  [chomp]
+  [autonewline]
+&gt;</programlisting>
 
             <variablelist>
               <varlistentry>
-                <term>handler|method=subroutine</term>
+                <term>handler=METHOD</term>
 
                 <listitem>
-                  <para>Call an external Perl subroutine in from a module, or a subroutine in the __PERL__ block at the end of the .psp file. If the handler is specified a module call (e.g.
-                  Digest::MD5::md5_hex()) then a require call will be load the module (Digest::MD5 in this example).</para>
+                  <para>Call an external Perl method from a module, or a subroutine in the <token>__PERL__</token> block at the end of the PSP file. If the handler is specified as "fully
+                  qualified" module call (e.g. <classname>Digest::MD5::md5_hex()</classname>) then a <methodname>require</methodname> will be made automatically to load the module
+                  (<classname>Digest::MD5</classname> in this example)</para>
+
+                  <programlisting>#  Call method in the same file
+#
+&lt;perl handler="hello"&gt;
+__PERL__
+sub hello {
+...
+}
+
+#  Call method in another class
+#
+&lt;perl handler="Digest::MD5::md5_hex()"&gt;</programlisting>
                 </listitem>
               </varlistentry>
 
               <varlistentry>
-                <term>require|package=[Module::Name] | [Path/Filename.pm]</term>
+                <term>require=MODULE | FILE</term>
 
                 <listitem>
                   <para>Load a Perl module or file needed to support a method call. E.g. <tag>&lt;perl require="Digest::MD5"/&gt;</tag> to load the <classname>Digest::MD5</classname> module.
                   Anything with a [./\] character is treated as file patch to a Perl file (e.g. "<filename>/home/user/module.pm</filename>"), otherwise it is treated as module name
                   ("<classname>Digest::MD5</classname>")</para>
+
+                  <programlisting>#  Load a module
+#
+&lt;perl require="Digest::MD5"&gt;
+
+#  Load a file
+#
+&lt;perl require="module.pm"&gt;</programlisting>
                 </listitem>
               </varlistentry>
 
               <varlistentry>
-                <term>import=[function], &lt;function&gt;, &lt;function&gt; ..</term>
+                <term>import=FUNCTION [, FUNCTION …]</term>
 
                 <listitem>
-                  <para>Import a single or multiple functions into the file namespace. Use "import=name" for a single function, or pass an array ref (import="@{'name1', 'name2'}" for multiple
-                  functions. E.g. <tag>&lt;perl require="Digest::SHA" import="@{qw(sha1 sha1_hex)}"/&gt;</tag>. Functions are then available anywhere in the file namespace.</para>
+                  <para>Import a single or multiple functions into the file namespace. Use a single SCALAR for importing one function, or pass an ARRAY reference for multiple functions.</para>
+
+                  <programlisting># Import single function
+#
+&lt;perl require="Digest::MD5" import="md5_hex"&gt;
+
+# Import multiple functions
+#
+&lt;perl require="Digest::MD5" import="@{'md5_hex', 'md5_base64'}"&gt;
+&lt;perl require="Digest::MD5" import="@{qw(md5_hex md5_base64)}"&gt;</programlisting>
+
+                  <para>Imported methods available anywhere in the namespace of that page.</para>
                 </listitem>
               </varlistentry>
 
               <varlistentry>
-                <term>param=scalar|hash</term>
+                <term>param=SCALAR | HASHREF</term>
 
                 <listitem>
-                  <para>Parameters to be supplied to perl routine. Supply a hash reference using the "<code>%{a=&gt;1, b=&gt;2}</code>" convention e.g. <tag>&lt;perl method="showname"
-                  param="%{name =&gt;'Bob'}"/&gt;</tag> or as a simple scalar, e.g. <tag>&lt;perl method="showname", param=&gt;"Bob"/&gt;</tag></para>
+                  <para>Parameters to be supplied to perl routine, can be a single SCALAR value (string, numeric etc.) or a HASH reference.</para>
+
+                  <programlisting>#  Pass parameters to a handler. Single parameter
+#
+&lt;perl handler="hello" param="Bob"&gt;
+
+#  Pass hash ref
+#
+&lt;perl handler="hello" param="%{ name=&gt; 'Bob', age =&gt; 42 }"&gt;</programlisting>
                 </listitem>
               </varlistentry>
 
@@ -1995,7 +2056,8 @@ sub hello {
                 <term>static</term>
 
                 <listitem>
-                  <para>This Perl code to be run once only and the output cached for all subsequent requests.</para>
+                  <para>Boolean flag. The Perl code to be run once only and the output cached for all subsequent requests. If omitted the code is not cached (i.e. it is run each time). If
+                  omitted the page is</para>
                 </listitem>
               </varlistentry>
 
@@ -2003,9 +2065,18 @@ sub hello {
                 <term>run</term>
 
                 <listitem>
-                  <para>If the run attribute is supplied it is evaluated for a true value. If a true value exists the code is run, if not the code is skipped. If the run attribute does not
-                  exist at all the code is run by default. Useful for conditional running of code when a form has been submitted, e.g. <tag>&lt;perl handler="showname" run="+{name}"&gt; ..
-                  &lt;/perl&gt;</tag></para>
+                  <para>Boolean flag. If evaluated to a true value exists the code is run, if not the code is skipped. If omitted the code is run by default. Useful for conditional running of
+                  code when a form has been submitted or a particular logic threshold reached.</para>
+
+                  <programlisting>#  Run code only at 4am
+#
+&lt;perl handler="banner" run="(localtime)[2] == 4"&gt;
+
+#  Run code only if a "name" form parameter supplied, all below equivalent
+#
+&lt;perl handler="hello" run="+{name}"&gt; ...
+&lt;perl handler="hello" run="!{! exists $_{'name'} !}"&gt; ...
+&lt;perl handler="hello" run="!{! defined shift()-&gt;CGI-&gt;param('name') !}</programlisting>
                 </listitem>
               </varlistentry>
 
@@ -2013,8 +2084,8 @@ sub hello {
                 <term>file</term>
 
                 <listitem>
-                  <para>Force package|require attribute to be treated as a file, even if it appears to "look like" a module name to the loader. Rarely needed, use case would be a Perl module
-                  in the current directory without an extension.</para>
+                  <para>Boolean flag. Force package|require attribute value to be treated as a file, even if it appears to "look like" a module name to the loader. Rarely needed, use case
+                  would be a Perl module in the current directory without an extension.</para>
                 </listitem>
               </varlistentry>
 
@@ -2022,7 +2093,15 @@ sub hello {
                 <term>hidden</term>
 
                 <listitem>
-                  <para>The output from the Perl module will be hidden and no rendered to the page.</para>
+                  <para>Boolean flag. The output from the Perl module will be hidden and no rendered to the page.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>display=0</term>
+
+                <listitem>
+                  <para>Equivalent to setting hidden attribute.</para>
                 </listitem>
               </varlistentry>
 
@@ -2030,7 +2109,7 @@ sub hello {
                 <term>chomp</term>
 
                 <listitem>
-                  <para>Any new lines at the end of the output will be truncated.</para>
+                  <para>Boolean flag. Any new lines at the end of the output will be truncated.</para>
                 </listitem>
               </varlistentry>
 
@@ -2038,7 +2117,7 @@ sub hello {
                 <term>autonewline</term>
 
                 <listitem>
-                  <para>A newline character ("\n") will be inserted between each <methodname>print</methodname> statement in the perl block or code.</para>
+                  <para>Boolean flag. A newline character will be inserted between each <methodname>print</methodname> statement.</para>
                 </listitem>
               </varlistentry>
             </variablelist>
@@ -2051,14 +2130,24 @@ sub hello {
           <listitem>
             <para>Run Perl code similar to <tag>&lt;perl&gt;</tag> tag but expects code to return a HASH, ARRAY ref or plain scalar, which is encoded into JSON, outputting within a
             &lt;script&gt; tag with <property>type="application/json"</property>. When supplied with an id attribute this data can be used by any Javascript function in the page. Takes the
-            same parameters as the <tag>&lt;perl&gt;</tag> tag and specific attributes:</para>
+            same options as the <tag>&lt;perl&gt;</tag> tag and behaves similarly - if a <property>handler</property> attribute is given it is called, if the <property>perl</property>
+            attribute is given text between the <tag>&lt;json&gt;</tag> tags in treated as in-line perl code and executed.</para>
+
+            <programlisting>&lt;json
+  [id=NAME]
+  [handler=METHOD]
+  [pretty]
+  [canonical]
+  [perl]
+&gt;</programlisting>
 
             <variablelist>
               <varlistentry>
-                <term>id=[name]</term>
+                <term>id=NAME</term>
 
                 <listitem>
-                  <para>ID this <tag>&lt;script&gt;</tag> tag will be given, e.g. <code>&lt;script id="mydata" type="application/json"&gt;[{"foo":1}]&lt;/script&gt;</code></para>
+                  <para>the DOM ID the <tag>&lt;script&gt;</tag> tag output from the tag will be given, e.g. <code>&lt;script id="mydata"
+                  type="application/json"&gt;{"foo":1}&lt;/script&gt;</code></para>
                 </listitem>
               </varlistentry>
 
@@ -2066,8 +2155,8 @@ sub hello {
                 <term>pretty</term>
 
                 <listitem>
-                  <para>Use the JSON pretty() method to format the output data into something more human readable. Not enabled by default. Enable with <property>pretty=1</property> attribute
-                  or globally via <varname>$WEBDYNE_JSON_PRETTY=1</varname> configuration setting.</para>
+                  <para>Boolean flag. Use the JSON <methodname>pretty()</methodname> method to format the output data into something more human readable. Not enabled by default. Enable with
+                  <property>pretty=1</property> attribute or globally via <varname>$WEBDYNE_JSON_PRETTY=1</varname> configuration setting.</para>
                 </listitem>
               </varlistentry>
 
@@ -2075,8 +2164,8 @@ sub hello {
                 <term>canonical</term>
 
                 <listitem>
-                  <para>Use the JSON canonical() method to sort JSON data. Enabled by default, disable using <property>canonical=0</property> attribute value or via
-                  <varname>$WEBDYNE_JSON_CANONICAL=0</varname> configuration setting.</para>
+                  <para>Boolean flah. Use the JSON <methodname>canonical()</methodname> method to sort JSON data. Enabled by default, disable using <property>canonical=0</property> attribute
+                  value or via <varname>$WEBDYNE_JSON_CANONICAL=0</varname> configuration setting.</para>
                 </listitem>
               </varlistentry>
 
@@ -2090,7 +2179,7 @@ sub hello {
               </varlistentry>
 
               <varlistentry>
-                <term>handler=[method]</term>
+                <term>handler=METHOD</term>
 
                 <listitem>
                   <para>Call the perl method nominated. The code should return a HASH, ARRAY or BOOLEAN value which will then be encoded to JSON data.</para>
@@ -2117,15 +2206,21 @@ sub handler {
           <term>&lt;block&gt;</term>
 
           <listitem>
-            <para>Block of HTML code to be optionally rendered if desired by call to <methodname>render_block</methodname> Webdyne method:</para>
+            <para>Block of HTML code to be optionally rendered if desired by call to <methodname>render_block()</methodname> Webdyne method:</para>
+
+            <programlisting>&lt;block
+  name=NAME
+  [display]
+  [static]
+&gt;</programlisting>
 
             <variablelist>
               <varlistentry>
-                <term>name=identifier</term>
+                <term>name=NAME</term>
 
                 <listitem>
-                  <para><emphasis>Mandatory.</emphasis> The name for this block of HTML. Referenced when rendering a particular block in perl code, e.g. return
-                  $self-&gt;render_block("foo");</para>
+                  <para><emphasis>Mandatory.</emphasis> The name for this block of PSP or HTML. Referenced when rendering a particular block within perl code, e.g. <code>return
+                  $self-&gt;render_block("foo")</code></para>
                 </listitem>
               </varlistentry>
 
@@ -2133,8 +2228,15 @@ sub handler {
                 <term>display</term>
 
                 <listitem>
-                  <para>Force display of this block even if not invoked by render_block WebDyne method. Useful for prototyping or conditional display. Any true value will force display, so
-                  this can be coupled with a form parameter to only show a block when a form has been submitted, e.g. &lt;block name="showname" display="+{name}"&gt; .. &lt;/block&gt;</para>
+                  <para>Boolean flag. Force display of this block even if not invoked by <methodname>render_block()</methodname> method in handler. Useful for prototyping or conditional
+                  display. Any true value will force display, so this can be coupled with a form parameter to only show a block when a form has been submitted in a similar form to the
+                  <tag>&lt;perl&gt;</tag> tag <property>run</property> attribute.</para>
+
+                  <programlisting>#  Only show a block if a name parameter has been supplied 
+#
+&lt;block name="showname" display="+{name}"&gt;
+Thank you for registering +{name} !
+&lt;/block&gt;</programlisting>
                 </listitem>
               </varlistentry>
 
@@ -2142,7 +2244,7 @@ sub handler {
                 <term>static</term>
 
                 <listitem>
-                  <para>This block rendered once only and the output cached for all subsequent requests</para>
+                  <para>Boolean flag. This block is rendered once only and the output cached for all subsequent requests</para>
                 </listitem>
               </varlistentry>
             </variablelist>
@@ -2153,12 +2255,21 @@ sub handler {
           <term>&lt;include&gt;</term>
 
           <listitem>
-            <para>Include HTML or text from an external file. This includes pulling in the &lt;head&gt; or &lt;body&gt; section from another HTML or .psp file. If pulled in from a .psp file it
-            will compiled and interpreted in the context of the current page.</para>
+            <para>Include HTML, PSP or text from an external file. Capable of just pulling in just the <tag>&lt;head&gt;</tag>,<tag>&lt;body&gt;</tag> or a <tag>&lt;block&gt;</tag> section
+            from another HTML or PSP file. If pulled in from a PSP file it will compiled and interpreted in the context of the current page.</para>
+
+            <programlisting>&lt;include
+  file=PATH
+  [block=NAME]
+  [wrap=TAG]
+  [head]
+  [body]
+  [nocache]
+&gt;</programlisting>
 
             <variablelist>
               <varlistentry>
-                <term>file=filename</term>
+                <term>file=PATH</term>
 
                 <listitem>
                   <para><emphasis>Mandatory</emphasis>. Name of file we want to include. Can be relative to current directory or absolute path.</para>
@@ -2169,7 +2280,7 @@ sub handler {
                 <term>head</term>
 
                 <listitem>
-                  <para>File is an HTML or <filename>.psp</filename> file and we want to include just the <tag>&lt;head&gt;</tag> section</para>
+                  <para>Boolean flag. File is an HTML or PSP file and we want to include just the <tag>&lt;head&gt;</tag> section</para>
                 </listitem>
               </varlistentry>
 
@@ -2177,23 +2288,27 @@ sub handler {
                 <term>body</term>
 
                 <listitem>
-                  <para>File is an HTML or <filename>.psp</filename> file and we want to include just the <tag>&lt;body&gt;</tag> section.</para>
+                  <para>Boolean flag/ File is an HTML or PSP file and we want to include just the <tag>&lt;body&gt;</tag> section.</para>
                 </listitem>
               </varlistentry>
 
               <varlistentry>
-                <term>block=blockname</term>
+                <term>block=NAME</term>
 
                 <listitem>
-                  <para>File is a <filename>.psp</filename> file and we want to include a <tag>&lt;block&gt;</tag> section from that file.</para>
+                  <para>File is a PSP file and we want to include a <tag>&lt;block&gt;</tag> section from that file with the nominated name.</para>
                 </listitem>
               </varlistentry>
 
               <varlistentry>
-                <term>wrap=tag</term>
+                <term>wrap=TAG</term>
 
                 <listitem>
-                  <para>Wrap the text from the included file in the nominated tag. Do not use &lt;&gt; symbols, just the plain tag name, e.g. &lt;include="/etc/protocol" wrap="pre"/&gt;</para>
+                  <para>Wrap the text from the included file in the nominated tag. Do not use &lt;&gt; symbols, just the plain tag name:</para>
+
+                  <programlisting>#  Include the protocols file and wrap in &lt;pre&gt;
+#
+&lt;include="/etc/protocols" wrap="pre"&gt;</programlisting>
                 </listitem>
               </varlistentry>
 
@@ -2212,19 +2327,27 @@ sub handler {
           <term>&lt;api&gt;</term>
 
           <listitem>
-            <para>Respond to a JSON request made from a client. Takes the same parameters as the <tag>&lt;perl&gt;</tag> tag and specific attributes:</para>
+            <para>Respond to a JSON request made from a client. Takes the same options as the <tag>&lt;perl&gt;</tag> tag and behaves similarly - if a <property>handler</property> attribute is
+            given it is called, if the <property>perl</property> attribute is given text between the <tag>&lt;api&gt;</tag> tags in treated as in-line perl code and executed. Responses from
+            perl code are encoded as JSON and returned.</para>
+
+            <programlisting>&lt;api
+  pattern=ROUTE
+  [destination=HASHREF | dest=HASHREF | data=HASHREF]
+  [option=HASHREF]
+&gt;</programlisting>
 
             <para><variablelist>
                 <varlistentry>
-                  <term>pattern=string</term>
+                  <term>pattern=ROUTE</term>
 
                   <listitem>
-                    <para><emphasis>Mandatory</emphasis>. Name of <classname>Route::Simple</classname> pattern we want to serve, e.g. /api/{user}/:id</para>
+                    <para><emphasis>Mandatory</emphasis>. Name of <classname>Router::Simple</classname> pattern we want to serve, e.g. /api/{user}/:id</para>
                   </listitem>
                 </varlistentry>
 
                 <varlistentry>
-                  <term>destination | dest | data=hash ref</term>
+                  <term>destination=HASHREF</term>
 
                   <listitem>
                     <para>Hash we want to supply to perl routine if match made. See <classname>Route::Simple</classname></para>
@@ -2232,10 +2355,10 @@ sub handler {
                 </varlistentry>
 
                 <varlistentry>
-                  <term>option=hash ref</term>
+                  <term>option=HASHREF</term>
 
                   <listitem>
-                    <para>Match options, GET, PUT etc. <classname>Route::Simple</classname></para>
+                    <para>Match options, GET, PUT etc. <classname>Router::Simple</classname></para>
                   </listitem>
                 </varlistentry>
               </variablelist></para>
@@ -2246,15 +2369,37 @@ sub handler {
           <term>&lt;htmx&gt;</term>
 
           <listitem>
-            <para>Serve HTML fragments. Takes the same parameters as the <tag>&lt;perl&gt;</tag> tag and specific attributes:</para>
+            <para>Serve HTML fragments in response to <link xlink:href="https://htmx.org" xmlns:xlink="http://www.w3.org/1999/xlink">htmx</link> type requests (or similar clients). Takes the
+            same options as the <tag>&lt;perl&gt;</tag> tag and behaves similarly - if a <property>handler</property> attribute is given it is called, if the <property>perl</property>
+            attribute is given text between the <tag>&lt;api&gt;</tag> tags in treated as in-line perl code and executed.</para>
+
+            <programlisting>&lt;htmx
+  [handler=METHOD]
+  [perl]
+  [display]
+  [force]
+&gt;</programlisting>
 
             <para><variablelist>
                 <varlistentry>
                   <term>display</term>
 
                   <listitem>
-                    <para>If evaluates to true then this &lt;htmx&gt; snippet fires. You can have multiple htmx tag sections in a page, but only one can fire at a time. Use this attribute in
-                    conjunction with dynamic evaluation (e.g. display="!{! $_{name} eq 'Bob' !}") to selectively fire a &lt;htmx&gt; section.</para>
+                    <para>Boolean. If evaluates to true then this <tag>&lt;htmx&gt;</tag> snippet fires. You can have multiple htmx tag sections in a page, but only one can fire at a time. Use
+                    this attribute in conjunction with dynamic evaluation</para>
+
+                    <programlisting>#  Fire htmx tag only if a name parameter matches
+#
+&lt;htmx display="!{! $_{name} eq 'Bob' !}"&gt;
+Hello Bob
+&lt;/htmx&gt;
+
+
+#  Or Alice. Both tags can live in same document as only one will ever fire
+#
+&lt;htmx display="!{! $_{name} eq 'Alice' !}"&gt;
+Hello Alice
+&lt;/htmx&gt;</programlisting>
                   </listitem>
                 </varlistentry>
 
@@ -2262,8 +2407,13 @@ sub handler {
                   <term>force</term>
 
                   <listitem>
-                    <para>Force the code referenced by a &lt;htmx&gt; tag to run, and content be returned/displayed even if the request is not triggered by the htmx javascript module (which is
-                    determined by looking for a hx-request header).</para>
+                    <para>Boolean. Force the code referenced by a <tag>&lt;htmx&gt;</tag> tag to run, and content be returned/displayed even if the request is not triggered by the htmx
+                    javascript module (which is determined by looking for a <varname>hx-request</varname> HTTP header). Useful for troubleshooting/debugging and/or showing what the generated
+                    HTML snippet will look like. Can be dynamic and be triggered by GET parameter:</para>
+
+                    <programlisting>&lt;htmx force="+{debug}"&gt;
+This is my output
+&lt;/htmx&gt;</programlisting>
                   </listitem>
                 </varlistentry>
 
@@ -2271,16 +2421,16 @@ sub handler {
                   <term>perl</term>
 
                   <listitem>
-                    <para>Interpret content between starting and ending <tag>&lt;json&gt;</tag> tag as perl code and run it. Anything returned by the perl code will be returned as a HTML
-                    fragment.</para>
+                    <para>Boolean. Interpret content between starting and ending <tag>&lt;htmx&gt;</tag> tags as perl code and run it. Anything returned by the perl code will be sent as the
+                    HTML fragment.</para>
                   </listitem>
                 </varlistentry>
 
                 <varlistentry>
-                  <term>handler=[method]</term>
+                  <term>handler=METHOD</term>
 
                   <listitem>
-                    <para>Call the perl method nominated. Whatever is returned or rendered by the handler will be returned as a HTML fragment.</para>
+                    <para>Call the perl method nominated. Whatever is returned or rendered by the handler will be returned as the HTML fragment.</para>
                   </listitem>
                 </varlistentry>
               </variablelist></para>
@@ -2291,15 +2441,25 @@ sub handler {
           <term>&lt;dump&gt;</term>
 
           <listitem>
-            <para>Display CGI parameters in dump format via CGI::Simple-&gt;Dump call. Useful for debugging. Only rendered if <varname>$WEBDYNE_DUMP_FLAG</varname> global set to 1 in WebDyne
-            constants of the display|force attribute specified (see below). Useful while troubleshooting or debugging pages.</para>
+            <para>Display CGI and other parameters in <classname>Data::Dumper</classname> dump format. Useful for debugging. Only rendered if <varname>$WEBDYNE_DUMP_FLAG</varname> global set
+            to 1 in WebDyne constants or the <property>display|force</property> attribute specified (see below). Useful while troubleshooting or debugging pages.</para>
+
+            <programlisting>&lt;dump
+  [display]
+  [force]
+  [all]
+  [cgi]
+  [env]
+  [constant]
+  [version]
+&gt;</programlisting>
 
             <variablelist>
               <varlistentry>
                 <term>display|force</term>
 
                 <listitem>
-                  <para><emphasis>Optional.</emphasis> Force display even if <varname>$WEBDYNE_DUMP_FLAG</varname> global not set</para>
+                  <para>Boolean. Force display even if <varname>$WEBDYNE_DUMP_FLAG</varname> global not set</para>
                 </listitem>
               </varlistentry>
 
@@ -2307,7 +2467,7 @@ sub handler {
                 <term>all</term>
 
                 <listitem>
-                  <para>Display all diagnostic blocks</para>
+                  <para>Boolean. Display all diagnostic blocks</para>
                 </listitem>
               </varlistentry>
 
@@ -2315,7 +2475,7 @@ sub handler {
                 <term>cgi</term>
 
                 <listitem>
-                  <para>Display CGI parameters and query strings</para>
+                  <para>Boolean. Display CGI parameters and query strings</para>
                 </listitem>
               </varlistentry>
 
@@ -2323,7 +2483,7 @@ sub handler {
                 <term>env</term>
 
                 <listitem>
-                  <para>Display environment variables</para>
+                  <para>Boolean. Display environment variables</para>
                 </listitem>
               </varlistentry>
 
@@ -2331,7 +2491,7 @@ sub handler {
                 <term>constant</term>
 
                 <listitem>
-                  <para>Display Webdyne constants</para>
+                  <para>Boolean. Display Webdyne configurationconstants</para>
                 </listitem>
               </varlistentry>
 
@@ -2339,10 +2499,614 @@ sub handler {
                 <term>version</term>
 
                 <listitem>
-                  <para>Display version strings</para>
+                  <para>Boolean. Display version strings</para>
                 </listitem>
               </varlistentry>
             </variablelist>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;start_html&gt;</term>
+
+          <listitem>
+            <para>Start a HTML page with all conventional tags. This will produce the output:<programlisting><tag>&lt;html&gt;&lt;head&gt;&lt;title&gt;&lt;/title&gt;&lt;meta&gt;&lt;/head&gt;&lt;body&gt;</tag></programlisting>
+            with appropriate content attributes as output.</para>
+
+            <programlisting>&lt;start_html
+  [title=TEXT]
+  [meta=HASHREF]
+  [style=URL | ARRAYREF]
+  [script=URL | ARRAYREF]
+  [base=URL]
+  [target=TARGET]
+  [include=PATH | ARRAYREF]
+  [include_script=PATH | ARRAYREF]
+  [include_style=PATH | ARRAYREF]
+  [static]
+  [cache=METHOD]
+&gt;</programlisting>
+
+            <variablelist>
+              <varlistentry>
+                <term>title=TEXT</term>
+
+                <listitem>
+                  <para>Content to be inserted into the <tag>&lt;title&gt;</tag> section tag.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>meta=HASHREF</term>
+
+                <listitem>
+                  <para>Meta section content, supplied as a hash reference. Processing is nuanced. Standard <emphasis>key</emphasis>=&gt;<emphasis>value</emphasis> hash pairs are displayed as
+                  &lt;meta name=key content=value&gt; meta tags. Pairs of the type <emphasis>"property=name"=&gt;value</emphasis> are displayed as <tag>&lt;meta property=name
+                  content=value&gt;</tag>.</para>
+
+                  <programlisting>&lt;start_html meta="%{ author =&gt; 'Bob Smith', 'http-equiv=refresh' =&gt; '5; url=https://www.example.com' }"&gt;</programlisting>
+
+                  <para>Will produce:</para>
+
+                  <programlisting>&lt;meta name="author" content="Bob Smith"&gt;
+&lt;meta http-equiv="refresh" content="5; url=https://www.example.com" &gt;</programlisting>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>style=URL | ARRAYREF</term>
+
+                <listitem>
+                  <para>Stylesheets to load. Values to this attribute will be output as <property>href</property> attributes of type <property>rel=stylesheet</property> in a
+                  <tag>&lt;link&gt;</tag> tag.</para>
+
+                  <programlisting>&lt;start_html style="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"&gt;</programlisting>
+
+                  <para>Will produce:</para>
+
+                  <programlisting>&lt;link href="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4" rel="stylesheet"&gt;</programlisting>
+
+                  <para>Array types are supported as values to the style property to allow multiple style sheet <tag>&lt;link&gt;</tag> tags to be created at once, e.g.</para>
+
+                  <programlisting>&lt;start_html style="@{
+    'https://cdn.jsdelivr.net/npm/water.css@2/out/water.css',
+    'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'
+}"&gt;</programlisting>
+
+                  <para>Will produce:</para>
+
+                  <programlisting>&lt;link href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css" rel="stylesheet"&gt;
+&lt;link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet"&gt;</programlisting>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>script=URL | ARRAYREF</term>
+
+                <listitem>
+                  <para>Similar facility to the style attribute. Any values supplied to this attribute will be output as <property>src</property> attributes to a <tag>&lt;script&gt;</tag>
+                  tag.</para>
+
+                  <programlisting>&lt;start_html script="https://cdn.jsdelivr.net/npm/chart.js"&gt;</programlisting>
+
+                  <para>Will produce:</para>
+
+                  <programlisting>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;</programlisting>
+
+                  <para>Anything supplied after the URL section as an anchor will be used in the script tag as an attribute, e.g.</para>
+
+                  <programlisting>&lt;start_html script="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js#defer&amp;integrity=sha.."&gt;</programlisting>
+
+                  <para>Will produce:</para>
+
+                  <programlisting>&lt;script defer integrity=sha.. src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"&gt;</programlisting>
+
+                  <para>As per the style attribute you can supply an array of resources to load using the same syntax.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>base, target = URL, TARGET</term>
+
+                <listitem>
+                  <para>Generate a &lt;base&gt; tag within the &lt;head&gt; section containing attributes equivalent to <property>href=value</property> of the base attribute,
+                  <property>target=value</property> of the target attribute</para>
+
+                  <programlisting>&lt;start_html base="https://example.com" target="_blank"&gt;</programlisting>
+
+                  <para>Will produce:</para>
+
+                  <programlisting>&lt;base href="https://example.com/" target="_blank"&gt;</programlisting>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>include=PATH | ARRAYREF</term>
+
+                <listitem>
+                  <para>Will include the raw text from the nominated file (supplied as the value) within the <tag>&lt;head&gt;</tag> section. No processing is done, the file contents are
+                  inserted verbatim.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>include_script=PATH | ARRAYREF</term>
+
+                <listitem>
+                  <para>As per above <property>include</property> attribute, raw text from the nominated file is inserted into the <tag>&lt;head&gt;</tag> section, however it is wrapped in a
+                  <tag>&lt;script&gt;</tag> tag.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>include_style=PATH | ARRAYREF</term>
+
+                <listitem>
+                  <para>As per standard <property>include</property> attribute raw text from the nominated file is inserted into the <tag>&lt;head&gt;</tag> section, however it is wrapped in a
+                  <tag>&lt;style&gt;</tag> tag.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>static</term>
+
+                <listitem>
+                  <para>Boolean. If the static attribute is present in the <tag>&lt;start_html&gt;</tag> tag the entire page is designated static. It will be compiled and generated once (at
+                  first load) and the resulting HTML will be cached and served on subsequent loads.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>cache=METHOD</term>
+
+                <listitem>
+                  <para>Use a cache handler to determine how often the page should be recompiled. See the <link linkend="caching_section">Caching</link> section. Sample:</para>
+
+                  <programlisting>&lt;start_html cache="&amp;cache"&gt;</programlisting>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;end_html&gt;</term>
+
+          <listitem>
+            <para>End a HTML page. This will produce the <tag>&lt;/body&gt;&lt;/html&gt;</tag> tags. It is not strictly necessary as the parser will automatically close dangling tags if it
+            gets to the end of the file without seeing them, however is provided for completeness.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;popup_menu&gt;</term>
+
+          <listitem>
+            <para>Provided a drop-down menu of options for user to select from.</para>
+
+            <programlisting>&lt;popup_menu
+  name=NAME
+  values=ARRAYREF | HASHREF
+  [labels=HASHREF]
+  [multiple]
+  [disabled=VALUE | ARRAYREF]
+  [selected|defaults|default=VALUE | ARRAYREF]
+&gt;</programlisting>
+
+            <variablelist>
+              <varlistentry>
+                <term>name=NAME</term>
+
+                <listitem>
+                  <para>The name associated with this form component. This is the CGI parameter to be interrogated for value(s) once the form is submitted.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>values=ARRAYREF | HASHREF</term>
+
+                <listitem>
+                  <para>List of items to be presented in the drop down. If an array ref labels will be the same as values. If a hash ref the value will be the hash key, the label the hash
+                  label.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>labels=HASHREF</term>
+
+                <listitem>
+                  <para>If values is presented as an array ref, a hash ref of labels to be associated with each value can be supplied.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>multiple</term>
+
+                <listitem>
+                  <para>Boolean. If enabled allows multiple options to be selected. If not present (disabled) only one option can be selected.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>disabled=VALUE | ARRAYREF</term>
+
+                <listitem>
+                  <para>Single (string scalar) item or multiple (array ref) items which should be greyed out (not selectable) in menu options.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>selected | defaults | default=VALUE | ARRAYREF</term>
+
+                <listitem>
+                  <para>Single (string scalar) item or multiple (array ref) items which should be pre-selected in menu options.</para>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;radio_group&gt;</term>
+
+          <listitem>
+            <para>Provide a grouped list of radio buttons for a user to choose from. Only one radio button item can be selected.</para>
+
+            <programlisting>&lt;radio_group
+  name=NAME
+  values=ARRAYREF | HASHREF
+  [labels=HASHREF]
+  [disabled=VALUE | ARRAYREF]
+  [checked|defaults|default=VALUE | ARRAYREF]
+&gt;</programlisting>
+
+            <variablelist>
+              <varlistentry>
+                <term>name=NAME</term>
+
+                <listitem>
+                  <para>The name associated with this form component. This is the CGI parameter to be interrogated for value(s) once the form is submitted.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>values=ARRAYREF | HASHREF</term>
+
+                <listitem>
+                  <para>List of items to be presented. If an array reference, labels will be the same as values. If a hash refence the value will be the hash key, the label the hash
+                  value.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>labels=HASHREF</term>
+
+                <listitem>
+                  <para>If values is presented as an array ref a hash ref of labels to be associated with each value can be supplied.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>disabled=VALUE | ARRAYREF</term>
+
+                <listitem>
+                  <para>Single (string) or multiple (array ref) of items which should be greyed out (not selectable) in radio group items.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>checked | defaults | default=VALUE | ARRAYREF</term>
+
+                <listitem>
+                  <para>Single (string) or multiple (array ref) items which shoul be pre-selected in radio group items.</para>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;checkbox_group&gt;</term>
+
+          <listitem>
+            <para>Provide a grouped list of checkbox items for a user to choose form. Multiple checkboxes can be selected.</para>
+
+            <programlisting>&lt;checkbox_group
+  name=NAME
+  values=ARRAYREF | HASHREF
+  [labels=HASHREF]
+  [disabled=VALUE | ARRAYREF]
+  [checked|defaults|default=VALUE | ARRAYREF]
+&gt;</programlisting>
+
+            <variablelist>
+              <varlistentry>
+                <term>name=NAME</term>
+
+                <listitem>
+                  <para>The name associated with this form component. This is the <code>$self-&gt;CGI()</code> parameter to be interrogated for value(s) once the form is submitted.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>values=ARRAYREF | HASHREF</term>
+
+                <listitem>
+                  <para>List of items to be presented. If an array ref labels will be the same as values. If a hash ref the value will be the hash key, the label the hash label.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>labels=HASHREF</term>
+
+                <listitem>
+                  <para>If values is presented as an array ref a hash ref of labels to be associated with each value can be supplied.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>disabled=VALUE | ARRAYREF</term>
+
+                <listitem>
+                  <para>Single (string) or multiple (array ref) items which should be greyed out (not selectable) in checkbox group items.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>checked|defaults|default=VALUE | ARRAYREF</term>
+
+                <listitem>
+                  <para>Single (scalar) or multiple (array ref) items which should be pre-selected in checkbox group items.</para>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;checkbox&gt;</term>
+
+          <listitem>
+            <para>Single checkbox for a user to select or clear.</para>
+
+            <programlisting>&lt;checkbox
+  name=NAME
+  [value=VALUE | BOOLEAN]
+  [disabled]
+&gt;</programlisting>
+
+            <variablelist>
+              <varlistentry>
+                <term>name=NAME</term>
+
+                <listitem>
+                  <para>The name associated with this form component. This is the CGI parameter to be interrogated for value(s) once the form is submitted.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>value=VALUE | BOOLEAN</term>
+
+                <listitem>
+                  <para>The value to be returned in the CGI parameter if this checkbox is ticked (selected). If not supplied defaults to 1.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>disabled</term>
+
+                <listitem>
+                  <para>If present the checkbox will be displayed but cannot be selected.</para>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+
+            <note>
+              <para>In order to retain state all checkbox form items will present a hidden parameter with the same name as the checkbox. This is notable because querying the parameter
+              associated with a checkbox component will always return a <classname>Hash::MultiValue</classname> object with two items, the last of which is the checkbox value. When using
+              <code>$self-&gt;CGI-&gt;param(&lt;checkbox name&gt;)</code> form of query, or <code>$_{&lt;checkbox name&gt;}</code> the user selected checkbox value will always be returned as a
+              boolean or scalar value.</para>
+            </note>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;scrolling_list&gt;</term>
+
+          <listitem>
+            <para>Presents a scrolling list of options for a user to choose from. Attributes are identical to those of the <tag>&lt;popup_menu&gt;</tag> tag with the addition of a
+            <property>size</property> attribute.</para>
+
+            <programlisting>&lt;scrolling_list
+  name=NAME
+  size=ROWS
+  values=ARRAYREF | HASHREF
+  [labels=HASHREF]
+  [multiple]
+  [disabled=VALUE | ARRAYREF]
+  [selected|defaults|default=VALUE | ARRAYREF]
+&gt;</programlisting>
+
+            <variablelist>
+              <varlistentry>
+                <term>name=NAME</term>
+
+                <listitem>
+                  <para>The name associated with this form component. This is the CGI parameter to be interrogated for value(s) once the form is submitted.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>size=ROWS</term>
+
+                <listitem>
+                  <para>Number of rows to make visible in user interface for the scrolling list.</para>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+
+            <para>The following attributes behave identically to &lt;popup_menu&gt;:</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>values=ARRAYREF | HASHREF</para>
+              </listitem>
+
+              <listitem>
+                <para>labels=HASHREF</para>
+              </listitem>
+
+              <listitem>
+                <para>multiple</para>
+              </listitem>
+
+              <listitem>
+                <para>disabled=VALUE | ARRAYREF</para>
+              </listitem>
+
+              <listitem>
+                <para>selected|defaults|default=VALUE | ARRAYREF</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;textarea&gt;</term>
+
+          <listitem>
+            <para>A text box for freeform text entry. All attributes are the same as the HTML standard <tag>&lt;textarea&gt;</tag> tag with attributes:</para>
+
+            <programlisting>&lt;textarea
+  name=NAME
+  [default=TEXT]
+  [force]
+  (all standard HTML &lt;textarea&gt; attributes)
+&gt;</programlisting>
+
+            <variablelist>
+              <varlistentry>
+                <term>name=NAME</term>
+
+                <listitem>
+                  <para>The name associated with this form component. This is the CGI parameter to be interrogated for value(s) once the form is submitted.</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>default=TEXT</term>
+
+                <listitem>
+                  <para>The default content to be pre-filled out in the <tag>&lt;textarea&gt;</tag> component</para>
+                </listitem>
+              </varlistentry>
+
+              <varlistentry>
+                <term>force</term>
+
+                <listitem>
+                  <para>By default the component is stateful, and user entered text will persist after form submission. Setting the <property>force</property> attribute will always present the
+                  default content regardless of user input.</para>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;textfield&gt;</term>
+
+          <listitem>
+            <para>The standard &lt;input type="text"&gt; tag type. User input with this tag is persistent. All standard &lt;input&gt; tag attributes are supported. The
+            <property>name</property> and <property>force</property> attributes are supported as per other tags.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;password_field&gt;</term>
+
+          <listitem>
+            <para>The standard &lt;input type="password"&gt; tag type. User input with this tag is persistent. The <property>name</property> and <property>force</property> attributes are
+            supported as per other tags.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;filefield&gt;</term>
+
+          <listitem>
+            <para>The standard &lt;input type="file"&gt; tag type. User input with this tag is persistent. When querying this parameter after form submission responses will be in the form of a
+            Plack::Request::Upload object. User input with this tag is persistent. Example to demonstrate minimal file upload facility:</para>
+
+            <programlisting language="html">&lt;start_html title="File Upload"&gt;
+&lt;start_multipart_form&gt;
+&lt;filefield name="file" multiple required&gt;
+&lt;p&gt;
+&lt;submit name=Upload&gt;
+&lt;end_form&gt;
+
+&lt;pre&gt;
+&lt;perl handler/&gt;
+&lt;/pre&gt;
+
+__PERL__
+
+use Data::Dumper;
+sub handler {
+
+    my $self=shift();
+    my $cgi_or=$self-&gt;CGI();
+    return Dumper($cgi_or-&gt;uploads()-&gt;flatten);
+    
+}</programlisting>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;image_button&gt;</term>
+
+          <listitem>
+            <para>The standard &lt;input type="image"&gt; tag type.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;button&gt;</term>
+
+          <listitem>
+            <para>The standard &lt;input type="button"&gt; tag type.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;submit&gt;</term>
+
+          <listitem>
+            <para>The standard &lt;input type="submit"&gt; tag type to initiate form submission.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;hidden&gt;</term>
+
+          <listitem>
+            <para>The standard &lt;input type="button"&gt; tag type.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;start_form&gt;</term>
+
+          <listitem>
+            <para>Start a form with <property>method=POST</property> and encoding type <property>enctype="application/x-www-form-urlencoded"</property> (implicit)</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>&lt;start_multipart_form&gt;</term>
+
+          <listitem>
+            <para>Start a form with method=POST and encoding type <property>enctype="multipart/form-data"</property></para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -2451,7 +3215,7 @@ sub handler {
           <term><methodname>source_mtime()</methodname></term>
 
           <listitem>
-            <para>Returns the mtime (modification time) of the source .psp file currently being rendered.</para>
+            <para>Returns the mtime (modification time) of the source PSP file currently being rendered.</para>
           </listitem>
         </varlistentry>
 
@@ -2783,7 +3547,7 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
             <term><varname>$WEBDYNE_HEAD_INSERT</varname></term>
 
             <listitem>
-              <para>Any HTML you want inserted before the closing <tag>&lt;/head&gt;</tag> tag, e.g. stylesheet or script includes to be added to every <filename>.psp</filename> page. Must be
+              <para>Any HTML you want inserted before the closing <tag>&lt;/head&gt;</tag> tag, e.g. stylesheet or script includes to be added to every <filename>PSP</filename> page. Must be
               valid HTML &lt;head&gt; directives, not interpreted or compiled by WebDyne, incorporated as-is</para>
             </listitem>
           </varlistentry>
@@ -2875,7 +3639,7 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
             <term><varname>$WEBDYNE_ERROR_SOURCE_CONTEXT_SHOW</varname></term>
 
             <listitem>
-              <para>Display a fragment of the <filename>.psp</filename> source file around where the error occurred to give some context of where the error happened. Set to 0 to not display
+              <para>Display a fragment of the <filename>PSP</filename> source file around where the error occurred to give some context of where the error happened. Set to 0 to not display
               context.</para>
             </listitem>
           </varlistentry>
@@ -2943,7 +3707,7 @@ $WebDyne::WEBDYNE_ERROR_SHOW_EXTENDED=1;
           </varlistentry>
 
           <varlistentry>
-            <term> $WEBDYNE_HTTP_HEADER_AJAX_HR</term>
+            <term>$WEBDYNE_HTTP_HEADER_AJAX_HR</term>
 
             <listitem>
               <para>A HASH reference of HTTP header names used to determine if a request is interpreted as a <link xlink:href="https://htmx.org"
@@ -3152,7 +3916,7 @@ PerlSetVar      WebDyneChain                 'WebDyne::Session'
           <term><command>wdcompile</command></term>
 
           <listitem>
-            <para>Usage: <command>wdcompile filename.psp</command>. Will compile a .psp file and use Data::Dumper to display the WebDyne internal representation of the page tree structure.
+            <para>Usage: <command>wdcompile filename.psp</command>. Will compile a PSP file and use Data::Dumper to display the WebDyne internal representation of the page tree structure.
             Useful as a troubleshooting tool to see how HTML::TreeBuilder has parsed your source file, and to show up any misplaced tags etc.</para>
           </listitem>
         </varlistentry>
@@ -3170,8 +3934,8 @@ PerlSetVar      WebDyneChain                 'WebDyne::Session'
           <term><command>wddump</command></term>
 
           <listitem>
-            <para>Usage: <command>wddump filename</command>. Where filename is a compiled WebDyne source file (usually in /var/webdyne/cache). Will dump out the saved data structure of the
-            compiled file.</para>
+            <para>Usage: <command>wddump filename</command>. Where filename is a compiled WebDyne source file (usually in <filename>/var/webdyne/cache</filename>). Will dump out the saved data
+            structure of the compiled file.</para>
           </listitem>
         </varlistentry>
 
@@ -3188,7 +3952,8 @@ PerlSetVar      WebDyneChain                 'WebDyne::Session'
           <term><command>webdyne.psgi</command></term>
 
           <listitem>
-            <para>Used to run WebDyne as a PSGI process- usually invoked by Plack via plackup or starman, but can be run directly for development purposes.</para>
+            <para>Used to run WebDyne as a PSGI process- usually invoked by Plack via <command>plackup</command> or <command>starman</command>, but can be run directly for development
+            purposes.</para>
           </listitem>
         </varlistentry>
 
@@ -3196,7 +3961,7 @@ PerlSetVar      WebDyneChain                 'WebDyne::Session'
           <term><command>wdlint</command></term>
 
           <listitem>
-            <para>Run <command>perl -c -w</command> over code in <token>__PERL__</token> sections on any .psp file to check for syntax errors. Will automatically skip HTML code. It only checks
+            <para>Run <command>perl -c -w</command> over code in <token>__PERL__</token> sections on any PSP file to check for syntax errors. Will automatically skip HTML code. It only checks
             code in the <token>__PERL__</token> area, and won't check syntax in in-line perl, dynamic attributes etc.</para>
           </listitem>
         </varlistentry>
@@ -3322,10 +4087,10 @@ PerlSetVar      WebDyneCacheHandler '&amp;MyModule::cache'
 &lt;/Location&gt;
 </programlisting></para>
 
-      <para>Note that any package used as the WebDyneCacheHandler target should be already loaded via "PerlRequire" or similar mechanism.</para>
+      <para>Note that any package used as the <varname>WebDyneCacheHandler</varname> target should be already loaded via "PerlRequire" or similar mechanism.</para>
 
       <para>As an example of why this could be useful consider the <link linkend="caching_section">caching examples</link> above. Instead of flagging that an individual file should only be
-      re-compiled every x seconds, that policy could be applied to a whole directory with no alteration to the individual pages.</para>
+      re-compiled every "x" seconds, that policy could be applied to a whole directory with no alteration to the individual pages.</para>
     </section>
 
     <section>
@@ -3479,7 +4244,7 @@ PerlSetVar      WebDyneTemplate '/path/to/template.psp'
   <section>
     <title>Troubleshooting</title>
 
-    <para>At some stage a .psp file is not going to output what you expect. This could be for many reasons:</para>
+    <para>At some stage a PSP file is not going to output what you expect. This could be for many reasons:</para>
 
     <itemizedlist>
       <listitem>
@@ -3546,7 +4311,7 @@ PerlSetVar      WebDyneTemplate '/path/to/template.psp'
         <term>How to check syntax of a PSP file</term>
 
         <listitem>
-          <para>To check the syntax of a .psp file - or more specifically any Perl code in the __PERL__ section - you can use the <command>wdlint</command> command. Take this file with an
+          <para>To check the syntax of a PSP file - or more specifically any Perl code in the __PERL__ section - you can use the <command>wdlint</command> command. Take this file with an
           assignment syntax error in the server_time() routine:</para>
 
           <programlisting language="html">&lt;start_html&gt;
@@ -3590,12 +4355,12 @@ sub server_time {
       </varlistentry>
 
       <varlistentry>
-        <term>Use of hash characters for comments in .psp files</term>
+        <term>Use of hash characters for comments in PSP files</term>
 
         <listitem>
-          <para>Any # characters at the very start of a PSP file before a &lt;html&gt; or &lt;start_html&gt; tag are treated as comments and discarded - they will not be stored or displayed
-          (they are <emphasis role="bold">not</emphasis> translated into HTML comments). This allows easy to read comments at the start of .psp files. Any # characters after the first valid
-          tag are not treated specially - they will be rendered as normal HTML:</para>
+          <para>Any # characters at the very start of a PSP file (before a <tag>&lt;html&gt;</tag> or <tag>&lt;start_html&gt;</tag>) tag are treated as comments and discarded - they will not
+          be stored or displayed (they are <emphasis role="bold">not</emphasis> translated into HTML comments). This allows easy to read comments at the start of PSP files. Any # characters
+          after the first valid tag are not treated specially - they will be rendered as normal HTML:</para>
 
           <programlisting language="html">#  This is my server time display file
 #  
