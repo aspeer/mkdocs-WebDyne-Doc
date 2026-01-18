@@ -1,5 +1,5 @@
 <start_html>
-<htmx handler="server_time">
+<htmx force handler="server_time">
 <p>
 Server local time: ${server_time}
 </htmx>
