@@ -17,7 +17,7 @@ Server time is:
 <perl handler="time1"/>
 
 <!-- subroutine, templated output -->
-<perl handler="time2">
+<perl handler="time2" chomp>
 ${time}
 </perl>
 
