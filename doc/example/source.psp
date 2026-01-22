@@ -173,7 +173,7 @@ sub test_fn {
     #
     my $ext=lc((fileparse($test_fn, qr/\.[^.]*/))[2]);
     $ext=~s/^\.//;
-    unless ($WEBDYNE_MIME_TYPE_HR->{$ext} || $WEBDYNE_INDEX_EXT_ALLOWED_HR->{$ext} || $WEBDYNE_INDEX_FN_ALLOWED_HR->{$fn_only}) {
+    unless ($WEBDYNE_MIME_TYPE_HR->{$ext} || $WEBDYNE_INDEX_EXT_ALLOWED_HR->{$ext}) {
         debug("fail, file extenstion: $ext not supported MIME type for fn: $test_fn");
         return undef;
     }
