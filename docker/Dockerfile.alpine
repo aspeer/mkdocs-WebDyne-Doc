@@ -14,6 +14,12 @@ COPY docker/webdyne.conf.pl /etc
 COPY docker/cpanfile .
 COPY doc/example/*.psp .
 COPY doc/example/*.css .
+COPY doc/example/*.js .
+
+
+#  Install Faker
+#
+RUN cpanm --notest Faker
 
 
 # Expose port 8080
