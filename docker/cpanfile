@@ -1,1 +1,2 @@
 requires 'Locale::Country';
+requires 'Faker';
